@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Guide: Professional Policing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --header-bg: #1f2937;
+            --bg-color: #f3f4f6;
+            --tab-active-bg: #3b82f6;
+            --tab-active-text: #ffffff;
+            --card-bg: #ffffff;
+            --text-color: #111827;
+            --link-color: #2563eb;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://rsms.me/inter/inter.css');
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab.active {
+            background-color: var(--tab-active-bg);
+            color: var(--tab-active-text);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tab {
+            transition: all 0.3s ease-in-out;
+        }
+        .comparison-table td {
+            padding: 0.75rem;
+            vertical-align: top;
+            border-bottom: 1px solid #e5e7eb;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="bg-gray-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">
+                <i class="fas fa-history mr-2"></i>Professional Policing Study Guide
+            </h1>
+            <p class="text-sm text-gray-300">BPOC Chapter 2 | TCOLE Preparation</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-4 md:p-6">
+        <!-- Tab Navigation -->
+        <div class="mb-6 bg-white rounded-lg shadow-md overflow-x-auto">
+            <nav id="tabs" class="flex flex-row space-x-1 p-2">
+                <button data-tab="history" class="tab active flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-landmark mr-2"></i> <span class="hidden md:inline">History</span>
+                </button>
+                <button data-tab="texas-policing" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-star mr-2"></i> <span class="hidden md:inline">Texas Policing</span>
+                </button>
+                <button data-tab="service-models" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-cogs mr-2"></i> <span class="hidden md:inline">Service Models</span>
+                </button>
+                <button data-tab="community-partners" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-hands-helping mr-2"></i> <span class="hidden md:inline">Community Partners</span>
+                </button>
+                 <button data-tab="tcole-rules" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-scroll mr-2"></i> <span class="hidden md:inline">TCOLE Rules</span>
+                </button>
+                <button data-tab="organization" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-sitemap mr-2"></i> <span class="hidden md:inline">Organization</span>
+                </button>
+                <button data-tab="knowledge-check" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-question-circle mr-2"></i> <span class="hidden md:inline">Knowledge Check</span>
+                </button>
+                <button data-tab="resources" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-link mr-2"></i> <span class="hidden md:inline">Resources</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Tab Content -->
+        <div id="tab-contents">
+            <!-- History Tab -->
+            <div id="history" class="tab-content active space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Historical Development of Policing</h2>
+                    <p class="mb-4">American policing has its roots in European methods, particularly from England, with concepts like the Sheriff, County, and Common Law. Early American policing in the northeast used the "watch and ward" system ("watch" at night, "ward" during the day).</p>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="font-semibold text-lg text-gray-800">1900 - 1940s: The Reform Era</h3>
+                            <ul class="list-disc list-inside ml-4 text-gray-700">
+                                <li>Use of the automobile and radio communications led to rapid response but distanced officers from the community.</li>
+                                <li>Marked by contributions from August Vollmer and J. Edgar Hoover (FBI) to professionalize policing.</li>
+                                <li>Wickersham Commission (1931) stated the "greatest promise for the future of policing is the college or university."</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg text-gray-800">1950 - 1970s: The Professional Era</h3>
+                            <ul class="list-disc list-inside ml-4 text-gray-700">
+                                <li>Technology (computers, improved communications) became more common.</li>
+                                <li>Emphasis on accountability, standards, and performance metrics (response time, crime stats).</li>
+                                <li>President's Commission (1967) recommended 2-4 years of college education for officers.</li>
+                                <li>Specialized units (traffic, investigations) became common, removing patrol from follow-up activities.</li>
+                                <li>Patrol became an "incident-driven" model, with officers often acting as mere report takers.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg text-gray-800">1980 - Present: Community Era</h3>
+                            <ul class="list-disc list-inside ml-4 text-gray-700">
+                                <li>Continued technological advancements.</li>
+                                <li>Development of Community-Oriented and Problem-Oriented Policing models.</li>
+                                <li>Renewed emphasis on walking beats and positive citizen interaction as part of professionalization.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Texas Policing Tab -->
+            <div id="texas-policing" class="tab-content space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Evolution of Policing in Texas</h2>
+                    <p class="mb-4">During its time as a province of Mexico, policing in Texas was handled by the Spanish military. After the Battle of San Jacinto in 1836, Texas developed its own unique law enforcement traditions due to its large territory and lack of large urban centers.</p>
+                    
+                    <div class="space-y-4">
+                        <!-- Texas Rangers -->
+                        <div class="border border-gray-200 p-4 rounded-lg">
+                            <h3 class="text-xl font-semibold mb-1">Texas Rangers</h3>
+                            <h4 class="font-semibold mt-3">Legal Definition:</h4>
+                            <p class="text-gray-700 text-sm">Stephen F. Austin employed a militia group to protect settlers from Indian and bandit raids. This group became known as the Texas Rangers and served as the primary law enforcement in early Texas.</p>
+                            <h4 class="font-semibold mt-3">Key Roles:</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>Statewide law enforcement agency.</li>
+                                <li>Major violent crime investigations.</li>
+                                <li>Public corruption investigations.</li>
+                                <li>Officer-involved shooting investigations.</li>
+                                <li>Border security operations.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Elected County Law Enforcement -->
+                        <div class="border border-gray-200 p-4 rounded-lg">
+                            <h3 class="text-xl font-semibold mb-1">Elected County Law Enforcement</h3>
+                             <h4 class="font-semibold mt-3">Legal Authority:</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li><strong>Constables:</strong> <a href="https://statutes.capitol.texas.gov/Docs/CN/htm/CN.5.htm#5.18" target="_blank" class="text-blue-600 hover:underline">Texas Constitution Art. 5, Sec. 18</a></li>
+                                <li><strong>Sheriffs:</strong> <a href="https://statutes.capitol.texas.gov/Docs/CN/htm/CN.5.htm#5.23" target="_blank" class="text-blue-600 hover:underline">Texas Constitution Art. 5, Sec. 23</a></li>
+                            </ul>
+                            <h4 class="font-semibold mt-3">Key Roles:</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li><strong>Sheriff:</strong> Chief law enforcement officer of the county; operates the county jail; serves civil process.</li>
+                                <li><strong>Constable:</strong> Works with the Justice of the Peace courts; serves warrants and civil papers.</li>
+                            </ul>
+                        </div>
+                        
+                         <!-- Municipal Law Enforcement -->
+                        <div class="border border-gray-200 p-4 rounded-lg">
+                            <h3 class="text-xl font-semibold mb-1">Municipal Law Enforcement</h3>
+                             <h4 class="font-semibold mt-3">Legal Authority:</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li><strong>Type A General-law:</strong> <a href="https://statutes.capitol.texas.gov/Docs/LG/htm/LG.341.htm#341.001" target="_blank" class="text-blue-600 hover:underline">Local Gov't Code 341.001</a></li>
+                                <li><strong>Type C General-law:</strong> <a href="https://statutes.capitol.texas.gov/Docs/LG/htm/LG.341.htm#341.002" target="_blank" class="text-blue-600 hover:underline">Local Gov't Code 341.002</a></li>
+                                <li><strong>Home-Rule:</strong> <a href="https://statutes.capitol.texas.gov/Docs/LG/htm/LG.341.htm#341.003" target="_blank" class="text-blue-600 hover:underline">Local Gov't Code 341.003</a></li>
+                            </ul>
+                            <h4 class="font-semibold mt-3">Key Roles:</h4>
+                            <p class="text-sm text-gray-700">Provide police services to cities and towns, handling everything from traffic enforcement to criminal investigations within their municipal boundaries.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service Models Tab -->
+            <div id="service-models" class="tab-content space-y-6">
+                <!-- Traditional Police Service Model -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Traditional Police Service Model</h2>
+                    <h4 class="font-semibold mt-3">Model Definition:</h4>
+                    <p class="text-gray-700 text-sm">A reactive, incident-driven model where success is measured by statistics like crime rates and response times. Officers act as report takers responding to calls for service.</p>
+                    <h4 class="font-semibold mt-3">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Reactive Response:</strong> Handling crimes that have already occurred.</li>
+                        <li><strong>Incident-Driven:</strong> Focuses on resolving one incident at a time.</li>
+                        <li><strong>Use of Criminal Justice System:</strong> Primary method of resolution is arrest and prosecution.</li>
+                        <li><strong>Use of Aggregate Statistics:</strong> Performance measured by citywide crime/arrest rates.</li>
+                        <li><strong>Lack of Community Involvement:</strong> Decisions made at management level.</li>
+                        <li><strong>Citizen & Employee Expectations:</strong> Expectations are often not met, as officers have a low impact on preventing crime in this model.</li>
+                        <li><strong>Specialized Units:</strong> High use of traffic, investigative, and other specialized units.</li>
+                    </ul>
+                    <h4 class="font-semibold mt-3">Practical Example:</h4>
+                    <p class="text-sm text-gray-700 italic">An officer spends their entire shift driving from one dispatched call to the next (a burglary, a theft, a disturbance), writing reports for each, and then waiting for the next call from dispatch. There is little time for proactive work or follow-up.</p>
+                </div>
+                <!-- Community Policing Model -->
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Community Policing Model</h2>
+                     <h4 class="font-semibold mt-3">Model Definition:</h4>
+                    <p class="text-gray-700 text-sm">A philosophy that police and citizens working together can solve community problems related to crime, fear of crime, and social disorder. It shifts focus from handling random calls to proactive problem-solving.</p>
+                    <h4 class="font-semibold mt-3">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>New Relationship with Community:</strong> Citizens have a voice in setting police priorities.</li>
+                        <li><strong>Community Policing Officers (CPOs):</strong> Officers assigned to a specific beat to build rapport and trust.</li>
+                        <li><strong>Proactive Element:</strong> Officers act as problem solvers, planners, and community organizers.</li>
+                        <li><strong>Focus on Vulnerable Populations:</strong> Stresses protecting juveniles, the elderly, LGBTQIA+, people of color, and other at-risk groups.</li>
+                        <li><strong>Partnerships:</strong> Works with citizens and other public/private agencies.</li>
+                    </ul>
+                    <h4 class="font-semibold mt-3">Practical Example:</h4>
+                    <p class="text-sm text-gray-700 italic">A CPO notices a rise in car break-ins at a city park. Instead of just taking reports, the officer works with the Parks Dept. to improve lighting, organizes a "Park Watch" with local residents, and increases their own random patrols during peak times, leading to a reduction in incidents.</p>
+                </div>
+                 <!-- Key Concepts -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Key Concepts in Community Policing</h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="font-semibold text-lg mb-2">Importance of Community Involvement</h3>
+                            <ul class="list-disc list-inside text-gray-700">
+                                <li>Reducing fear by addressing problems of crime.</li>
+                                <li>Establishing trust and harmony.</li>
+                                <li>Exchanging information to enhance safety.</li>
+                                <li>Assisting in identifying and resolving problems.</li>
+                                <li>Clarifying responsibilities for citizens and police.</li>
+                                <li>Helping define service needs.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg mb-2">Philosophical Differences</h3>
+                            <ul class="list-disc list-inside text-gray-700">
+                                <li>Traditional model is incident-driven and **reactive**.</li>
+                                <li>Community policing is problem-oriented, **pro-active**, and **co-active**.</li>
+                                <li>The CPO's role is more complex: Law enforcer, planner, problem solver, and community organizer.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- Comparison -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Community Policing vs. Police-Community Relations</h2>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm comparison-table">
+                            <thead>
+                                <tr class="bg-gray-100">
+                                    <th class="text-left p-3">Feature</th>
+                                    <th class="text-left p-3 font-semibold text-blue-600">Community Policing</th>
+                                    <th class="text-left p-3 font-semibold text-gray-600">Police-Community Relations</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Goal</strong></td>
+                                    <td>Solve problems; improved relations are a byproduct.</td>
+                                    <td>Change attitudes and project a positive image; improved relations are the main focus.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Function</strong></td>
+                                    <td>Line function: Regular, direct contact between officers and citizens.</td>
+                                    <td>Staff function: Irregular contact, often through a specific PCR unit.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Officer's Role</strong></td>
+                                    <td>A full-service officer; leader and catalyst for change.</td>
+                                    <td>Consultant on crime issues; focus on strained relations.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Agenda Setting</strong></td>
+                                    <td>"Bottom-up": Citizens nominate problems and help set the police agenda.</td>
+                                    <td>"Top-down": Committees or leadership identify problems and "preach" to the police.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Accountability</strong></td>
+                                    <td>Ensured by citizens receiving the service, in addition to administration.</td>
+                                    <td>Ensured by civilian review boards and formal police supervision.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Impact</strong></td>
+                                    <td>Meaningful organizational change and restructuring.</td>
+                                    <td>Traditional organization stays intact with new programs added periodically.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Community Partners Tab -->
+            <div id="community-partners" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Networking with Community Partners</h2>
+                    <p>To effectively solve problems, officers must network with other professionals. It is crucial to recognize when to call on the expertise of other agencies to improve the quality of life in the community.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-semibold text-lg mb-2">Legal Services</h3>
+                    <ul class="list-disc list-inside space-y-2 text-sm text-gray-700">
+                        <li><strong>Private Attorneys/Bail Bondsmen:</strong> An officer should <span class="font-bold text-red-600">NEVER</span> make a referral to a private attorney or bail bondsman due to potential conflicts of interest and liability.</li>
+                        <li><strong>Local Lawyer Referral Service:</strong> Operated by County or District Bar Associations to connect citizens with legal help.</li>
+                        <li><strong>County/District Attorney:</strong> To directly file criminal cases or apply for protective orders.</li>
+                        <li><strong>Small Claims Court:</strong> For civil cases involving money matters up to $10,000 where parties can represent themselves (<a href="https://statutes.capitol.texas.gov/Docs/GV/htm/GV.28.htm#28.003" target="_blank" class="text-blue-600 hover:underline">GC 28.003</a>).</li>
+                        <li><strong>Grand Jury:</strong> Citizens may apply directly to a grand jury to hear a criminal action.</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-semibold text-lg mb-2">Social & Victim Services</h3>
+                    <ul class="list-disc list-inside space-y-2 text-sm text-gray-700">
+                        <li><strong>State Dept. of Mental Health and Mental Retardation (MHMR):</strong> For issues related to alcohol problems, mental illness, and counseling services.</li>
+                        <li><strong>Texas Dept. of Health and Human Services:</strong> Handles Child Protective Services (CPS) and Adult Protective Services (APS).</li>
+                        <li><strong>Local Crisis Centers:</strong> Provide shelter and resources for battered/abused women and children.</li>
+                        <li><strong>Sexual Assault Response Teams (SARTs):</strong> County-level, multi-disciplinary teams (LE, prosecutors, advocates, healthcare) that work to improve the response to adult sexual assault.</li>
+                        <li><strong>Multidisciplinary Teams (MDTs):</strong> Focus on the investigation and prosecution of child abuse and treatment for child victims.</li>
+                        <li><strong>Domestic Violence High Risk Teams (DVHRTs):</strong> Multi-disciplinary teams focused on reducing the risk of lethal violence for family violence victims.</li>
+                        <li><strong>Commercially Sexually Exploited Youth (CSEY) Teams:</strong> Provide comprehensive, holistic services to CSEY victims.</li>
+                        <li><strong>Child Fatality Review Teams:</strong> Investigate unexpected or preventable deaths of persons under 18.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-semibold text-lg mb-2">Crime Stoppers</h3>
+                     <h4 class="font-semibold mt-3">Program Definition:</h4>
+                    <p class="text-gray-700 text-sm">A community program that allows citizens to provide anonymous information about criminal activity. Cash rewards are offered for information that leads to an arrest or indictment, encouraging community involvement in fighting crime.</p>
+                    <h4 class="font-semibold mt-3">Key Elements:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Anonymity:</strong> Tipsters are guaranteed anonymity to protect them from retaliation.</li>
+                        <li><strong>Partnership:</strong> Operates as a partnership between the community, media, and law enforcement.</li>
+                        <li><strong>Rewards:</strong> Offers financial incentives for useful information.</li>
+                    </ul>
+                     <p class="text-sm mt-3">For more information, visit the <a href="https://gov.texas.gov/crime-stoppers" target="_blank" class="text-blue-600 hover:underline">Texas Crime Stoppers</a> website.</p>
+                </div>
+            </div>
+
+            <!-- TCOLE Rules Tab -->
+             <div id="tcole-rules" class="tab-content">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Selected TCOLE Rules & Requirements</h2>
+                    <p class="mb-4">The <a href="https://statutes.capitol.texas.gov/Docs/OC/htm/OC.1701.htm" target="_blank" class="text-blue-600 hover:underline">Occupations Code Chapter 1701</a> is the statutory authority for TCOLE to establish rules that law enforcement agencies and officers must follow. It is each officer's responsibility to know and comply with these rules.</p>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white">
+                            <thead class="bg-gray-200">
+                                <tr>
+                                    <th class="py-2 px-4 text-left">Topic</th>
+                                    <th class="py-2 px-4 text-left">TCOLE Rule</th>
+                                    <th class="py-2 px-4 text-left">Occupations Code</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b">
+                                    <td class="py-2 px-4">Reporting Responsibilities of Individuals</td>
+                                    <td class="py-2 px-4"><a href="https://www.tcole.texas.gov/content/commission-rules" target="_blank" class="text-blue-600 hover:underline">211.27</a></td>
+                                    <td class="py-2 px-4"><a href="https://statutes.capitol.texas.gov/Docs/OC/htm/OC.1701.htm#1701.502" target="_blank" class="text-blue-600 hover:underline">1701.502</a></td>
+                                </tr>
+                                <tr class="border-b">
+                                    <td class="py-2 px-4">Minimum Standards for Initial Licensure</td>
+                                    <td class="py-2 px-4"><a href="https://www.tcole.texas.gov/content/commission-rules" target="_blank" class="text-blue-600 hover:underline">217.1</a></td>
+                                    <td class="py-2 px-4"><a href="https://statutes.capitol.texas.gov/Docs/OC/htm/OC.1701.htm#1701.301" target="_blank" class="text-blue-600 hover:underline">1701.301, .307</a></td>
+                                </tr>
+                                <tr class="border-b">
+                                    <td class="py-2 px-4">Eligibility to take State Examinations</td>
+                                    <td class="py-2 px-4"><a href="https://www.tcole.texas.gov/content/commission-rules" target="_blank" class="text-blue-600 hover:underline">219.1</a></td>
+                                    <td class="py-2 px-4"><a href="https://statutes.capitol.texas.gov/Docs/OC/htm/OC.1701.htm#1701.304" target="_blank" class="text-blue-600 hover:underline">1701.304</a></td>
+                                </tr>
+                                 <tr class="border-b">
+                                    <td class="py-2 px-4">Examinee Requirements</td>
+                                    <td class="py-2 px-4"><a href="https://www.tcole.texas.gov/content/commission-rules" target="_blank" class="text-blue-600 hover:underline">219.5</a></td>
+                                    <td class="py-2 px-4"><a href="https://statutes.capitol.texas.gov/Docs/OC/htm/OC.1701.htm#1701.304" target="_blank" class="text-blue-600 hover:underline">1701.304</a></td>
+                                </tr>
+                                <tr class="border-b">
+                                    <td class="py-2 px-4">Legislatively Required Continuing Education</td>
+                                    <td class="py-2 px-4"><a href="https://www.tcole.texas.gov/content/commission-rules" target="_blank" class="text-blue-600 hover:underline">218.3</a></td>
+                                    <td class="py-2 px-4"><a href="https://statutes.capitol.texas.gov/Docs/OC/htm/OC.1701.htm#1701.351" target="_blank" class="text-blue-600 hover:underline">1701.351-.354</a></td>
+                                </tr>
+                                <tr class="border-b">
+                                    <td class="py-2 px-4">Firearms Proficiency Requirements</td>
+                                    <td class="py-2 px-4"><a href="https://www.tcole.texas.gov/content/commission-rules" target="_blank" class="text-blue-600 hover:underline">218.9</a></td>
+                                    <td class="py-2 px-4"><a href="https://statutes.capitol.texas.gov/Docs/OC/htm/OC.1701.htm#1701.355" target="_blank" class="text-blue-600 hover:underline">1701.355</a></td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4">Reactivation of a License</td>
+                                    <td class="py-2 px-4"><a href="https://www.tcole.texas.gov/content/commission-rules" target="_blank" class="text-blue-600 hover:underline">217.19</a></td>
+                                    <td class="py-2 px-4"><a href="https://statutes.capitol.texas.gov/Docs/OC/htm/OC.1701.htm#1701.316" target="_blank" class="text-blue-600 hover:underline">1701.316</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                     <p class="text-sm mt-4 text-gray-600 italic">Note: Course coordinators are also responsible for reviewing rules related to Law Enforcement Achievement Awards (211.33), Proficiency Certificates (221.1), and License Actions/Suspension/Revocation (223.1, 223.3, 223.15, 223.19).</p>
+                </div>
+            </div>
+
+            <!-- Organization Tab -->
+            <div id="organization" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Procedural Justice & Police Legitimacy</h2>
+                    <h4 class="font-semibold mt-3">Legal Definition:</h4>
+                    <p class="text-gray-700 text-sm"><strong>Procedural Justice</strong> argues that police legitimacy is linked to public judgments about the fairness of the processes through which police make decisions and exercise authority. <strong>Police Legitimacy</strong> is the community's view of whether police have acted lawfully and legally.</p>
+                    <h4 class="font-semibold mt-3">The Four Principles of Procedural Justice (Elements):</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Give People a Voice:</strong> Allow people to tell their side of the story and listen.</li>
+                        <li><strong>Neutrality:</strong> Make decisions based on facts, not bias (be fair).</li>
+                        <li><strong>Respectful Treatment:</strong> Treat everyone with dignity and respect.</li>
+                        <li><strong>Trustworthiness:</strong> Comes from a fair and transparent process where you explain the reason for your actions.</li>
+                    </ul>
+                    <h4 class="font-semibold mt-3">Practical Example:</h4>
+                    <p class="text-sm text-gray-700 italic">During a traffic stop for speeding, an officer politely explains the reason for the stop, listens to the driver's explanation without interrupting (Voice), treats the driver with courtesy (Respect), explains that the radar reading requires a citation based on policy (Neutrality), and issues the citation while explaining the court process clearly (Trustworthiness). Even if the driver is unhappy with the ticket, they are more likely to perceive the officer and the process as fair.</p>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Quality Customer Service</h2>
+                    <h4 class="font-semibold mt-3">Values:</h4>
+                     <p class="text-gray-700 text-sm">A quality-driven agency sees itself as a business where customer service is highly valued. The desired outcome is a well-served community and a professional, respected, service-oriented organization.</p>
+                    <h4 class="font-semibold mt-3">Rewards:</h4>
+                     <p class="text-gray-700 text-sm">The rewards include building pride within the agency and the community, and enjoying strong, loyal support from the community on a day-to-day basis.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Police Subculture</h2>
+                     <p class="text-gray-700 mb-4">The informal values, beliefs, and expectations passed on to new officers. Understanding the subculture is key to understanding officer behavior and public perception.</p>
+                     <div class="grid md:grid-cols-2 gap-6">
+                         <div>
+                            <h3 class="font-semibold text-lg mb-2">Characteristics of Police Subculture</h3>
+                            <ul class="list-disc list-inside text-gray-700">
+                                <li>Curiosity and suspiciousness</li>
+                                <li>Solidarity (taking care of one another)</li>
+                                <li>Secrecy (protection from a perceived hostile environment)</li>
+                                <li>Political and social conservatism</li>
+                                <li>Cynicism</li>
+                                <li>Social isolation</li>
+                                <li>Authoritarian approach to control</li>
+                            </ul>
+                         </div>
+                         <div>
+                            <h3 class="font-semibold text-lg mb-2">Subculture Problems & Benefits</h3>
+                            <p class="font-semibold text-red-600">Problems:</p>
+                             <ul class="list-disc list-inside text-sm text-red-500">
+                                <li>Stress (continuous reinforcement cycle)</li>
+                                <li>Commitment to community needs becomes secondary</li>
+                                <li>Cynicism and alienation</li>
+                             </ul>
+                             <p class="font-semibold text-green-600 mt-2">Benefits:</p>
+                             <ul class="list-disc list-inside text-sm text-green-500">
+                                <li>Support during difficult and stressful times</li>
+                             </ul>
+                             <p class="mt-2 text-gray-800">Officers must ultimately choose between the negative aspects of subculture and true professionalism.</p>
+                         </div>
+                     </div>
+                </div>
+            </div>
+
+            <!-- Knowledge Check Tab -->
+            <div id="knowledge-check" class="tab-content">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Knowledge Check</h2>
+                    <p class="mb-6 text-gray-600">Test your understanding of the material. Select an answer for each question and then click "Check Answers" at the bottom.</p>
+                    <div id="quiz-container" class="space-y-8">
+                        <!-- Question 1 -->
+                        <div class="quiz-question">
+                            <p class="font-semibold mb-2">1. The historical policing system in the northeastern U.S. that involved nighttime and daytime police was known as:</p>
+                            <div class="space-y-2">
+                                <label class="block"><input type="radio" name="q1" value="a" class="mr-2">a) The Bobby System</label>
+                                <label class="block"><input type="radio" name="q1" value="b" class="mr-2">b) The Sheriff and County System</label>
+                                <label class="block"><input type="radio" name="q1" value="c" class="mr-2">c) The Watch and Ward System</label>
+                                <label class="block"><input type="radio" name="q1" value="d" class="mr-2">d) The Vollmer System</label>
+                            </div>
+                            <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                        </div>
+
+                        <!-- Question 2 -->
+                        <div class="quiz-question">
+                            <p class="font-semibold mb-2">2. Which police service model is characterized by being reactive, incident-driven, and measuring performance by aggregate statistics?</p>
+                            <div class="space-y-2">
+                                <label class="block"><input type="radio" name="q2" value="a" class="mr-2">a) Community Policing Model</label>
+                                <label class="block"><input type="radio" name="q2" value="b" class="mr-2">b) Traditional Police Service Model</label>
+                                <label class="block"><input type="radio" name="q2" value="c" class="mr-2">c) Procedural Justice Model</label>
+                                <label class="block"><input type="radio" name="q2" value="d" class="mr-2">d) Participative Model</label>
+                            </div>
+                            <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                        </div>
+                        
+                        <!-- Question 3 -->
+                        <div class="quiz-question">
+                            <p class="font-semibold mb-2">3. An officer who listens to a citizen's explanation during a stop, treats them respectfully, and explains the reason for their action is demonstrating the principles of:</p>
+                            <div class="space-y-2">
+                                <label class="block"><input type="radio" name="q3" value="a" class="mr-2">a) Police Subculture</label>
+                                <label class="block"><input type="radio" name="q3" value="b" class="mr-2">b) The Paramilitary Model</label>
+                                <label class="block"><input type="radio" name="q3" value="c" class="mr-2">c) Procedural Justice</label>
+                                <label class="block"><input type="radio" name="q3" value="d" class="mr-2">d) The Watch and Ward System</label>
+                            </div>
+                            <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                        </div>
+                        
+                        <!-- Question 4 -->
+                        <div class="quiz-question">
+                            <p class="font-semibold mb-2">4. According to the handout, an officer should NEVER make a referral to which of the following?</p>
+                            <div class="space-y-2">
+                                <label class="block"><input type="radio" name="q4" value="a" class="mr-2">a) A local crisis center</label>
+                                <label class="block"><input type="radio" name="q4" value="b" class="mr-2">b) The District Attorney's office</label>
+                                <label class="block"><input type="radio" name="q4" value="c" class="mr-2">c) A private attorney or bail bondsman</label>
+                                <label class="block"><input type="radio" name="q4" value="d" class="mr-2">d) Child Protective Services</label>
+                            </div>
+                            <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                        </div>
+
+                        <!-- Question 5 -->
+                        <div class="quiz-question">
+                            <p class="font-semibold mb-2">5. The main goal of ______ is to solve community problems, with improved relations being a byproduct, while the main goal of ______ is to change attitudes and project a positive image.</p>
+                            <div class="space-y-2">
+                                <label class="block"><input type="radio" name="q5" value="a" class="mr-2">a) Traditional Policing / Community Policing</label>
+                                <label class="block"><input type="radio" name="q5" value="b" class="mr-2">b) Police-Community Relations / Community Policing</label>
+                                <label class="block"><input type="radio" name="q5" value="c" class="mr-2">c) Community Policing / Police-Community Relations</label>
+                                <label class="block"><input type="radio" name="q5" value="d" class="mr-2">d) Procedural Justice / Traditional Policing</label>
+                            </div>
+                            <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                        </div>
+                        
+                         <!-- Question 6 -->
+                        <div class="quiz-question">
+                            <p class="font-semibold mb-2">6. Which of the following is NOT one of the four principles of Procedural Justice?</p>
+                            <div class="space-y-2">
+                                <label class="block"><input type="radio" name="q6" value="a" class="mr-2">a) Give people a voice</label>
+                                <label class="block"><input type="radio" name="q6" value="b" class="mr-2">b) Neutrality</label>
+                                <label class="block"><input type="radio" name="q6" value="c" class="mr-2">c) Arrest and Control</label>
+                                <label class="block"><input type="radio" name="q6" value="d" class="mr-2">d) Respectful Treatment</label>
+                            </div>
+                            <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                        </div>
+                    </div>
+                    <div class="mt-8 text-center">
+                        <button id="check-answers-btn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors">Check Answers</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resources Tab -->
+            <div id="resources" class="tab-content">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Statutory Resources</h2>
+                    <p class="mb-6 text-gray-600">Quick links to the legal statutes and rules referenced in this guide.</p>
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="font-semibold text-lg text-gray-800">Texas Constitution</h3>
+                             <ul class="list-disc list-inside ml-4">
+                                <li><a href="https://statutes.capitol.texas.gov/Docs/CN/htm/CN.5.htm#5.18" target="_blank" class="text-blue-600 hover:underline">Art. 5, Sec. 18 - Constables</a></li>
+                                <li><a href="https://statutes.capitol.texas.gov/Docs/CN/htm/CN.5.htm#5.23" target="_blank" class="text-blue-600 hover:underline">Art. 5, Sec. 23 - Sheriffs</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg text-gray-800">Texas Government Code</h3>
+                             <ul class="list-disc list-inside ml-4">
+                                <li><a href="https://statutes.capitol.texas.gov/Docs/GV/htm/GV.28.htm#28.003" target="_blank" class="text-blue-600 hover:underline">GC 28.003 - Small Claims Court Jurisdiction</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg text-gray-800">Texas Local Government Code</h3>
+                             <ul class="list-disc list-inside ml-4">
+                                <li><a href="https://statutes.capitol.texas.gov/Docs/LG/htm/LG.341.htm#341.001" target="_blank" class="text-blue-600 hover:underline">341.001 - Police Force of a Type A General-law Municipality</a></li>
+                                <li><a href="https://statutes.capitol.texas.gov/Docs/LG/htm/LG.341.htm#341.002" target="_blank" class="text-blue-600 hover:underline">341.002 - Police Force of a Type C General-law Municipality</a></li>
+                                <li><a href="https://statutes.capitol.texas.gov/Docs/LG/htm/LG.341.htm#341.003" target="_blank" class="text-blue-600 hover:underline">341.003 - Police Force of Home-Rule Municipality</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg text-gray-800">Texas Occupations Code & TCOLE Rules</h3>
+                             <ul class="list-disc list-inside ml-4">
+                                <li><a href="https://statutes.capitol.texas.gov/Docs/OC/htm/OC.1701.htm" target="_blank" class="text-blue-600 hover:underline">Chapter 1701 - Law Enforcement Officers</a></li>
+                                <li><a href="https://www.tcole.texas.gov/content/commission-rules" target="_blank" class="text-blue-600 hover:underline">TCOLE - Current Commission Rules</a></li>
+                             </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('#tabs button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                });
+            });
+
+            const quizAnswers = {
+                q1: 'c',
+                q2: 'b',
+                q3: 'c',
+                q4: 'c',
+                q5: 'c',
+                q6: 'c'
+            };
+
+            const quizExplanations = {
+                 q1: 'Correct! The "watch and ward" system involved "watch" for nighttime and "ward" for daytime police, representing an early form of American policing.',
+                 q2: 'Correct! The Traditional Model is reactive and incident-driven, relying heavily on statistics for performance measurement, unlike the proactive, problem-solving approach of Community Policing.',
+                 q3: 'Correct! These actions (Voice, Respect, Neutrality) are the core principles of Procedural Justice, which builds police legitimacy.',
+                 q4: 'Correct! The handout explicitly warns officers to never make referrals to private attorneys or bail bondsmen to avoid conflicts of interest and potential liability.',
+                 q5: 'Correct! This is a key distinction. Community Policing aims to solve problems, while Police-Community Relations focuses on improving perception and changing attitudes.',
+                 q6: 'Correct! The four principles are Voice, Neutrality, Respectful Treatment, and Trustworthiness. Arrest and Control is a function of policing but not a principle of Procedural Justice.'
+            };
+
+            const checkAnswersBtn = document.getElementById('check-answers-btn');
+            checkAnswersBtn.addEventListener('click', () => {
+                const questions = document.querySelectorAll('.quiz-question');
+                questions.forEach((question, index) => {
+                    const qName = `q${index + 1}`;
+                    const selected = document.querySelector(`input[name="${qName}"]:checked`);
+                    const feedback = question.querySelector('.feedback');
+                    
+                    feedback.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800', 'bg-yellow-100', 'text-yellow-800');
+
+                    if (selected) {
+                        if (selected.value === quizAnswers[qName]) {
+                            feedback.textContent = quizExplanations[qName];
+                            feedback.classList.add('bg-green-100', 'text-green-800');
+                        } else {
+                            feedback.textContent = `Incorrect. The correct answer is (${quizAnswers[qName].toUpperCase()}). ${quizExplanations[qName]}`;
+                            feedback.classList.add('bg-red-100', 'text-red-800');
+                        }
+                    } else {
+                        feedback.textContent = 'Please select an answer.';
+                        feedback.classList.add('bg-yellow-100', 'text-yellow-800');
+                    }
+                    feedback.classList.remove('hidden');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+

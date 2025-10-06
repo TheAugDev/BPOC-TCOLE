@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Guide: Asset Forfeiture</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --header-bg: #1f2937;
+            --bg-color: #f3f4f6;
+            --tab-active-bg: #3b82f6;
+            --tab-active-text: #ffffff;
+            --card-bg: #ffffff;
+            --text-color: #111827;
+            --link-color: #2563eb;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://rsms.me/inter/inter.css');
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab.active {
+            background-color: var(--tab-active-bg);
+            color: var(--tab-active-text);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tab {
+            transition: all 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="bg-gray-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">
+                <i class="fas fa-dollar-sign mr-2"></i>Asset Forfeiture
+            </h1>
+            <p class="text-sm text-gray-300">BPOC Chapter 11 | TCOLE Preparation</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-4 md:p-6">
+        <!-- Tab Navigation -->
+        <div class="mb-6 bg-white rounded-lg shadow-md overflow-x-auto">
+            <nav id="tabs" class="flex flex-row space-x-1 p-2">
+                <button data-tab="concepts" class="tab active flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-lightbulb mr-2"></i> <span class="hidden md:inline">Key Concepts</span>
+                </button>
+                <button data-tab="seizure" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-search-dollar mr-2"></i> <span class="hidden md:inline">Seizure Process</span>
+                </button>
+                <button data-tab="legal" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-balance-scale mr-2"></i> <span class="hidden md:inline">Legal Process</span>
+                </button>
+                <button data-tab="proceeds" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-money-bill-wave mr-2"></i> <span class="hidden md:inline">Proceeds</span>
+                </button>
+                <button data-tab="knowledge-check" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-question-circle mr-2"></i> <span class="hidden md:inline">Knowledge Check</span>
+                </button>
+                <button data-tab="resources" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-link mr-2"></i> <span class="hidden md:inline">Resources</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Tab Content -->
+        <div id="tab-contents">
+            <!-- Key Concepts Tab -->
+            <div id="concepts" class="tab-content active space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Philosophy of Forfeiture</h2>
+                    <p class="text-sm text-gray-700 mb-2"><strong>Legal Definition:</strong> The main goal of forfeiture is to deprive criminals of the profits and instrumentalities of their crimes in a manner that benefits law enforcement and the State. It is considered a civil, remedial action, not an extra form of punishment.</p>
+                    <h4 class="font-semibold mt-3">Elements Checklist (Guiding Principles):</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>It is remedial, not punitive.</li>
+                        <li>The 8th Amendment's "Excessive Fines" clause applies.</li>
+                        <li>The amount seized must be proportional to the seriousness of the underlying offense.</li>
+                        <li>It is not intended to be a means of oppression.</li>
+                        <li>The ultimate goal is to seek justice.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Definitions</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold">Contraband (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.59.htm#59.01" target="_blank" class="text-blue-600 hover:underline">CCP 59.01</a>)</h4>
+                            <p class="text-sm text-gray-700">Property of any nature that is used in, intended to be used in, proceeds from, or acquired with proceeds from the commission of certain offenses.</p>
+                             <h4 class="font-semibold mt-2">Elements Checklist (Predicate Offenses):</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>Any 1st or 2nd-degree felony under the Penal Code.</li>
+                                <li>Any felony under PC Chapters 29 (Robbery), 30 (Burglary), 31 (Theft), 32 (Fraud), 33 (Computer Crimes), 34 (Money Laundering), or 35 (Insurance Fraud).</li>
+                                <li>Any felony under the Health and Safety Code (e.g., Texas Controlled Substances Act).</li>
+                                <li>Any felony involving a health care program.</li>
+                                <li>Any felony under PC Chapter 71 (Engaging in Organized Criminal Activity).</li>
+                                <li>Any offense under PC 42.10 (Dog Fighting).</li>
+                             </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Proceeds (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.59.htm#59.01" target="_blank" class="text-blue-600 hover:underline">CCP 59.01(7)</a>)</h4>
+                            <p class="text-sm text-gray-700">Includes income a person receives from reenacting a crime (e.g., movies, books) or from the sale of tangible property whose value is increased by the notoriety of the crime.</p>
+                            <p class="text-sm mt-1"><strong>Practical Example:</strong> A "mom and pop" grocery store knowingly accepts blank checks from a man named Cinco, who pays them a 20% premium in cash. The cash is part of a money-laundering scheme. The extra cash the owners receive, and the new SUV they bought with it, are considered "proceeds" gained from the commission of a felony and are subject to seizure.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seizure Process Tab -->
+            <div id="seizure" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Pre-Seizure Planning</h2>
+                    <p class="text-sm text-gray-700 mb-2">Before seizing property, an officer must conduct planning to assess risks, liabilities, and the value of the asset.</p>
+                    <h4 class="font-semibold mt-3">Elements Checklist (Planning Steps):</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Know the Property Owner:</strong> Is it community or separate property? Is it leased?</li>
+                        <li><strong>Check for Liens:</strong> Are there existing liens or mortgages? Is there enough equity to make the seizure worthwhile?</li>
+                        <li><strong>Assess Businesses:</strong> Review leases of real property and liens against inventory.</li>
+                        <li><strong>Evaluate Bank Accounts:</strong> Identify account numbers and signatories. Monitor the account to determine the best time to seize funds.</li>
+                    </ul>
+                    <p class="text-sm mt-1"><strong>Practical Example:</strong> Officers are investigating a used car lot for money laundering. Before seizing the lot, they determine the property is leased, not owned. They also discover through tax records that the cars on the lot have large liens against them, leaving little to no equity. They decide to focus on seizing the business's bank account instead, after monitoring it to find when the balance is highest.</p>
+                </div>
+
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Methods of Seizure</h2>
+                    <p class="text-sm text-gray-700 mb-2">Property can be seized with or without a warrant, depending on the circumstances.</p>
+                    <div class="grid md:grid-cols-2 gap-6 text-sm">
+                        <div>
+                            <h4 class="font-semibold">Without a Warrant:</h4>
+                             <ul class="list-disc list-inside">
+                                <li>Owner knowingly consents.</li>
+                                <li>Incident to a search consented to.</li>
+                                <li>Property is subject to a prior judgment of forfeiture.</li>
+                                <li>Incident to a lawful arrest, search, or lawful search incident to arrest.</li>
+                             </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">With a Warrant:</h4>
+                             <ul class="list-disc list-inside">
+                                <li>Rules of CCP Chapter 18 apply.</li>
+                                <li>The warrant affidavit must show probable cause that a specific felony occurred.</li>
+                                <li>The affidavit must describe how the property is contraband under CCP 59.01.</li>
+                             </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Post-Seizure Procedures</h2>
+                    <p class="text-sm text-gray-700 mb-2">A peace officer who seizes property has custody of it and must follow specific procedures.</p>
+                    <h4 class="font-semibold mt-3">Elements Checklist (Officer's Duties):</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>Provide the attorney representing the state with a sworn statement containing a schedule of property seized, an acknowledgment of the seizure, and the reasons supporting it.</li>
+                        <li><strong>No later than 72 hours after seizure,</strong> the officer must either place the property under seal, remove it to a place ordered by the court, or have the agency take custody.</li>
+                        <li>If currency is seized, it must be deposited in an interest-bearing account in the jurisdiction of the state's attorney.</li>
+                    </ul>
+                    <p class="text-sm text-red-600 mt-2 font-semibold"><strong>Warning:</strong> An officer cannot commit any act which could be construed as inducing a person to waive their rights to their seized property (could be <a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.39.htm#39.03" target="_blank" class="text-blue-600 hover:underline">Official Oppression PC 39.03</a>).</p>
+                </div>
+
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Affidavit & Petition Requirements</h2>
+                     <div class="grid md:grid-cols-2 gap-6 text-sm">
+                        <div>
+                            <h4 class="font-semibold">Affidavit Best Practices:</h4>
+                             <ul class="list-disc list-inside">
+                                <li>Should be written by the seizing officer in the first person ("I," not "Officer X").</li>
+                                <li>Justify the seizure based on facts; circumstantial evidence is okay.</li>
+                                <li>Identify key factors connecting the property to the crime (e.g., proximity to drugs, canine alert).</li>
+                                <li>Keep it simple; avoid jargon and acronyms.</li>
+                                <li>Avoid hearsay unless it falls under a recognized exception.</li>
+                             </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Petition Requirements:</h4>
+                             <ul class="list-disc list-inside">
+                                <li>Must include all property seized.</li>
+                                <li>Must list all owners or interest holders, including lien holders.</li>
+                                <li>Must identify the person who had custody of the property when seized.</li>
+                             </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Legal Process Tab -->
+            <div id="legal" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Defenses to Forfeiture (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.59.htm#59.02" target="_blank" class="text-blue-600 hover:underline">CCP 59.02</a>)</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold">Statutory Defense: Innocent Owner</h4>
+                            <p class="text-sm text-gray-700">This is an affirmative defense where the owner claims they were not a party to the criminal act.</p>
+                             <h4 class="font-semibold mt-2">Elements Checklist (Owner must prove they):</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>Acquired the property before the illegal act; AND</li>
+                                <li>Did not know or should not reasonably have known of the act or that it was likely to occur.</li>
+                                <li>OR, that the property was used without their effective consent (e.g., it was stolen).</li>
+                            </ul>
+                            <p class="text-sm mt-1"><strong>Practical Example:</strong> A man uses his wife's car, which she owns separately, to deliver drugs without her knowledge. She can claim the innocent owner defense because she did not know about or consent to the illegal use of her vehicle.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Non-Statutory Defenses & Other Issues</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li><strong>Dismissal/Acquittal:</strong> Dismissal or acquittal of related criminal charges raises a presumption that the property should not be forfeited.</li>
+                                <li><strong>Homestead:</strong> Homestead protection against forfeiture is not resolved in Texas.</li>
+                                <li><strong>Legitimate Source of Income:</strong> A defendant can argue the property was acquired through legitimate means.</li>
+                                <li><strong>Fifth Amendment:</strong> Invoking the 5th Amendment in a civil forfeiture case can be used against the defendant.</li>
+                                <li><strong>Suppression of Evidence:</strong> If evidence is suppressed in the criminal case, it generally has no effect on the civil forfeiture case due to different rules.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Forfeiture Proceedings (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.59.htm#59.04" target="_blank" class="text-blue-600 hover:underline">CCP 59.04</a>)</h2>
+                     <p class="text-sm text-gray-700 mb-2">The legal process for forfeiting property is a civil proceeding.</p>
+                    <h4 class="font-semibold mt-3">Elements Checklist (Procedural Steps):</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>The District Attorney must begin forfeiture proceedings within 30 days of the seizure.</li>
+                        <li>It is a civil case, so the standard of proof is "preponderance of the evidence."</li>
+                        <li>The respondent is not entitled to a court-appointed counsel.</li>
+                        <li>All filed documents are public record.</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Other Considerations in Forfeiture Cases</h2>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Civil Discovery:</strong> The process can involve interrogatories (written questions) and depositions (sworn out-of-court testimony).</li>
+                        <li><strong>Settlement:</strong> Many cases are resolved through negotiated settlements.</li>
+                        <li><strong>Local Agreement / Federal Adoption:</strong> Cases may be handled locally, or a local agency may adopt a federal seizure, which operates under federal rules.</li>
+                        <li><strong>Drug Trafficking:</strong> A significant source of forfeitable assets, with drug profits in the U.S. estimated to be as high as $100 billion per year.</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- Proceeds Tab -->
+            <div id="proceeds" class="tab-content space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Use of Forfeited Proceeds (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.59.htm#59.06" target="_blank" class="text-blue-600 hover:underline">CCP 59.06</a>)</h2>
+                    <p class="text-sm text-gray-700 mb-2">Proceeds from forfeitures are governed by state law and must be spent for a "law enforcement purpose."</p>
+                    <div class="grid md:grid-cols-2 gap-6 text-sm">
+                        <div>
+                            <h4 class="font-semibold text-green-700">Permitted Uses:</h4>
+                             <ul class="list-disc list-inside">
+                                <li>Equipment & Supplies</li>
+                                <li>Investigative and training-related travel</li>
+                                <li>Crime prevention programs</li>
+                                <li>Facility costs</li>
+                                <li>Witness-related costs</li>
+                                <li>Legal fees and dues</li>
+                             </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-red-700">Prohibited Uses:</h4>
+                             <ul class="list-disc list-inside">
+                                <li>Political campaign donations</li>
+                                <li>Training for any member of the judiciary</li>
+                                <li>Purchasing alcoholic beverages</li>
+                                <li>Increasing salaries (unless approved by the governing body)</li>
+                                <li>Any expenditure not approved by the governing body</li>
+                             </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Knowledge Check Tab -->
+            <div id="knowledge-check" class="tab-content">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Knowledge Check</h2>
+                    <p class="mb-6 text-gray-600">Test your understanding of the material.</p>
+                    <div id="quiz-container" class="space-y-8">
+                        <!-- Questions will be dynamically inserted here -->
+                    </div>
+                    <div class="mt-8 text-center">
+                        <button id="check-answers-btn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors">Check Answers</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resources Tab -->
+            <div id="resources" class="tab-content">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Statutory Resources</h2>
+                    <p class="mb-6 text-gray-600">Quick links to the Texas Codes referenced in this guide.</p>
+                    <div id="resources-list" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-sm">
+                        <!-- Links will be dynamically inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('#tabs button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                });
+            });
+
+            // --- QUIZ DATA ---
+            const quizData = [
+                {
+                    question: "1. According to CCP 59.01, property used in the commission of any first or second-degree felony under the Penal Code is defined as:",
+                    options: ["Proceeds", "Evidence", "Contraband", "Instrumentality"],
+                    answer: "Contraband",
+                    explanation: "CCP 59.01 defines contraband as property of any nature used in the commission of specified offenses, including any first or second-degree felony."
+                },
+                {
+                    question: "2. The primary philosophy behind asset forfeiture is to be:",
+                    options: ["Punitive, as an extra punishment", "Remedial, to deprive criminals of profits", "A means of funding police departments", "A way to bypass criminal court"],
+                    answer: "Remedial, to deprive criminals of profits",
+                    explanation: "The main goal is remedial: to deprive criminals of the profits and instrumentalities of crime, not to serve as extra punishment."
+                },
+                {
+                    question: "3. After seizing property, a peace officer must provide a sworn statement to the attorney representing the state and, no later than _______ after the seizure, place the property under seal or move it as ordered by the court.",
+                    options: ["24 hours", "48 hours", "72 hours", "30 days"],
+                    answer: "72 hours",
+                    explanation: "The law requires officers to act on seized property (seal, move, etc.) no later than 72 hours after the seizure."
+                },
+                {
+                    question: "4. A wife claims she did not know her husband was using their jointly owned boat to smuggle drugs. This is an example of what defense?",
+                    options: ["Homestead Defense", "Spousal Privilege", "Innocent Owner Defense", "Legitimate Source of Income"],
+                    answer: "Innocent Owner Defense",
+                    explanation: "The Innocent Owner Defense (CCP 59.02) applies when an owner can prove they did not know, and shouldn't have reasonably known, about the illegal act."
+                },
+                {
+                    question: "5. A district attorney must begin forfeiture proceedings within what time frame after the date of seizure?",
+                    options: ["72 hours", "15 days", "30 days", "90 days"],
+                    answer: "30 days",
+                    explanation: "Under CCP 59.04, the attorney representing the state must begin proceedings within 30 days of the seizure."
+                },
+                {
+                    question: "6. Forfeiture proceedings are what type of legal action?",
+                    options: ["Criminal", "Civil", "Administrative", "Federal"],
+                    answer: "Civil",
+                    explanation: "Forfeiture is a civil proceeding where the rules of civil procedure apply and the standard of proof is preponderance of the evidence."
+                },
+                {
+                    question: "7. Which of the following is a PROHIBITED use of asset forfeiture funds under CCP 59.06?",
+                    options: ["Purchasing new police vehicles", "Donating to a political campaign", "Paying for investigative travel expenses", "Funding a crime prevention program"],
+                    answer: "Donating to a political campaign",
+                    explanation: "CCP 59.06(d-1) explicitly prohibits using forfeiture funds for political campaign donations."
+                },
+                {
+                    question: "8. Before seizing a business, which of the following is a crucial pre-seizure planning step?",
+                    options: ["Interviewing all employees", "Notifying the local media", "Determining if the property is leased and checking for liens", "Getting a verbal agreement from the owner"],
+                    answer: "Determining if the property is leased and checking for liens",
+                    explanation: "Pre-seizure planning involves assessing the value and liabilities of an asset, including leases and liens, to see if forfeiture is worthwhile."
+                },
+                {
+                    question: "9. An officer seizes a large sum of currency as contraband. What must be done with the money?",
+                    options: ["It must be stored in the agency's property room.", "It must be given to the attorney representing the state.", "It must be deposited in an interest-bearing account.", "It can be immediately used for department expenses."],
+                    answer: "It must be deposited in an interest-bearing account.",
+                    explanation: "Post-seizure procedure requires that seized currency be deposited in an interest-bearing account in the jurisdiction of the prosecuting attorney."
+                },
+                {
+                    question: "10. If a person is acquitted of the related criminal charge, what is the effect on the civil forfeiture case?",
+                    options: ["The forfeiture case is automatically dismissed.", "It has no effect on the forfeiture case.", "It raises a presumption that the property should not be forfeited.", "It shifts the burden of proof to the state."],
+                    answer: "It raises a presumption that the property should not be forfeited.",
+                    explanation: "While not an automatic bar, an acquittal in the criminal case raises a legal presumption that the property is not subject to forfeiture, which the state must then overcome."
+                },
+                {
+                    question: "11. An officer convinces a suspect to sign a waiver to their seized car by telling them, 'If you sign this, I won't file these other charges.' This action could be considered:",
+                    options: ["Good police work", "A valid settlement", "Official Oppression", "A non-consensual waiver"],
+                    answer: "Official Oppression",
+                    explanation: "Inducing a person to waive their rights to seized property through threats or deception can constitute the criminal offense of Official Oppression under PC 39.03."
+                },
+                {
+                    question: "12. For an asset to be considered contraband, a 'substantial connection' must exist between the property and what?",
+                    options: ["The owner's criminal history", "The location of the seizure", "A known drug trafficking organization", "The defined criminal activity"],
+                    answer: "The defined criminal activity",
+                    explanation: "The probable cause affidavit must show a reasonable belief that a substantial connection exists between the property to be forfeited and the criminal activity defined by statute."
+                },
+                {
+                    question: "13. Which of the following is a PERMITTED use of asset forfeiture funds?",
+                    options: ["Increasing the police chief's salary", "Purchasing alcoholic beverages for a department function", "Paying for specialized officer training", "Donating to a local charity"],
+                    answer: "Paying for specialized officer training",
+                    explanation: "Investigative and training-related travel and expenses are explicitly listed as a 'law enforcement purpose' for which forfeiture funds can be used under CCP 59.06."
+                },
+                {
+                    question: "14. What training on asset forfeiture is required for an officer to receive an intermediate proficiency certificate in Texas?",
+                    options: ["A 40-hour advanced course", "A program established by their local agency", "An education and training program established by TCOLE", "No specific training is required"],
+                    answer: "An education and training program established by TCOLE",
+                    explanation: "Occupations Code 1701.402(d) requires completion of the TCOLE-established asset forfeiture program for an intermediate certificate."
+                },
+                {
+                    question: "15. The 8th Amendment's 'Excessive Fines' clause is relevant to asset forfeiture because:",
+                    options: ["It prevents any forfeiture over $10,000", "It requires the value of the seized property to be proportional to the offense", "It applies only to federal, not state, forfeitures", "It makes all civil forfeitures unconstitutional"],
+                    answer: "It requires the value of the seized property to be proportional to the offense",
+                    explanation: "The philosophy of forfeiture requires that the amount of property seized must bear some reasonable relationship to the gravity of the underlying crime to avoid being an excessive fine."
+                }
+            ];
+
+            const quizContainer = document.getElementById('quiz-container');
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'quiz-question';
+                let optionsHtml = q.options.map(option => `
+                    <label class="block"><input type="radio" name="q${index}" value="${option}" class="mr-2">${option}</label>
+                `).join('');
+                questionDiv.innerHTML = `
+                    <p class="font-semibold mb-2">${q.question}</p>
+                    <div class="space-y-2">${optionsHtml}</div>
+                    <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                `;
+                quizContainer.appendChild(questionDiv);
+            });
+
+            document.getElementById('check-answers-btn').addEventListener('click', () => {
+                quizData.forEach((q, index) => {
+                    const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                    const feedback = document.querySelectorAll('.feedback')[index];
+                    feedback.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+                    if (selected && selected.value === q.answer) {
+                        feedback.textContent = `Correct! ${q.explanation}`;
+                        feedback.classList.add('bg-green-100', 'text-green-800');
+                    } else {
+                        feedback.textContent = `Incorrect. The correct answer is "${q.answer}". ${q.explanation}`;
+                        feedback.classList.add('bg-red-100', 'text-red-800');
+                    }
+                });
+            });
+
+            // --- RESOURCES LIST ---
+            const resources = [
+                { name: "OC 1701.253", url: "https://statutes.capitol.texas.gov/Docs/OC/htm/OC.1701.htm#1701.253" },
+                { name: "OC 1701.402", url: "https://statutes.capitol.texas.gov/Docs/OC/htm/OC.1701.htm#1701.402" },
+                { name: "CCP 59.01", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.59.htm#59.01" },
+                { name: "CCP 59.02", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.59.htm#59.02" },
+                { name: "CCP 59.04", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.59.htm#59.04" },
+                { name: "CCP 59.06", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.59.htm#59.06" },
+                { name: "PC 39.03", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.39.htm#39.03" },
+            ];
+            const resourcesList = document.getElementById('resources-list');
+            resources.sort((a, b) => a.name.localeCompare(b.name));
+            resources.forEach(res => {
+                const link = document.createElement('a');
+                link.href = res.url;
+                link.target = '_blank';
+                link.className = 'text-blue-600 hover:underline';
+                link.textContent = res.name;
+                resourcesList.appendChild(link);
+            });
+        });
+    </script>
+</body>
+</html>
+

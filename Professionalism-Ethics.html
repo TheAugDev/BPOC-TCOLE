@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Guide: Professionalism & Ethics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Custom Styles */
+        :root {
+            --header-bg: #1f2937; /* Gray-800 */
+            --bg-color: #f3f4f6; /* Gray-100 */
+            --tab-bg: #ffffff;
+            --tab-active-bg: #3b82f6; /* Blue-500 */
+            --tab-active-text: #ffffff;
+            --tab-inactive-text: #4b5563; /* Gray-600 */
+            --card-bg: #ffffff;
+            --card-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --text-color: #111827; /* Gray-900 */
+            --punishment-felony: #ef4444; /* Red-500 */
+            --punishment-misdemeanor: #3b82f6; /* Blue-500 */
+            --punishment-federal: #4f46e5; /* Indigo-600 */
+            --link-color: #2563eb; /* Blue-600 */
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://rsms.me/inter/inter.css');
+        .punishment-label {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: white;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
+        }
+        .felony { background-color: var(--punishment-felony); }
+        .misdemeanor { background-color: var(--punishment-misdemeanor); }
+        .federal { background-color: var(--punishment-federal); }
+        
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .tab.active {
+            background-color: var(--tab-active-bg);
+            color: var(--tab-active-text);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tab {
+            transition: all 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="bg-gray-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">
+                <i class="fas fa-shield-alt mr-2"></i>Professionalism & Ethics Study Guide
+            </h1>
+            <p class="text-sm text-gray-300">BPOC Chapter 1 | TCOLE Preparation</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-4 md:p-6">
+        <!-- Tab Navigation -->
+        <div class="mb-6 bg-white rounded-lg shadow-md overflow-x-auto">
+            <nav id="tabs" class="flex flex-row space-x-1 p-2">
+                <button data-tab="professionalism" class="tab active flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-user-tie mr-2"></i> <span class="hidden md:inline">Professionalism</span>
+                </button>
+                <button data-tab="legitimacy" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-balance-scale mr-2"></i> <span class="hidden md:inline">Legitimacy</span>
+                </button>
+                <button data-tab="ethics" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-gavel mr-2"></i> <span class="hidden md:inline">Ethics</span>
+                </button>
+                <button data-tab="texas-penal-code" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-book mr-2"></i> <span class="hidden md:inline">TPC Offenses</span>
+                </button>
+                 <button data-tab="federal-civil" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-flag-usa mr-2"></i> <span class="hidden md:inline">Federal & Civil</span>
+                </button>
+                <button data-tab="knowledge-check" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-question-circle mr-2"></i> <span class="hidden md:inline">Knowledge Check</span>
+                </button>
+                <button data-tab="resources" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-link mr-2"></i> <span class="hidden md:inline">Resources</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Tab Content -->
+        <div id="tab-contents">
+            <!-- Professionalism Tab -->
+            <div id="professionalism" class="tab-content active space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">The Concept of Professionalism</h2>
+                    <div class="grid md:grid-cols-2 gap-6 mb-4">
+                        <div>
+                            <h3 class="font-semibold text-lg mb-2">Formal Definitions</h3>
+                            <p class="mb-2"><strong class="text-gray-800">Oxford English Dictionary:</strong> "The occupation which one professes to be skilled in and to follow. A vocation in which professed knowledge of some branch of learning is used in its application to the affairs of others..."</p>
+                            <p><strong class="text-gray-800">Webster's Dictionary:</strong> "A vocation or occupation requiring advanced training in some liberal art or science, and usually involving mental rather than manual work..."</p>
+                        </div>
+                        <div>
+                             <h3 class="font-semibold text-lg mb-2">Value of the Professional Model</h3>
+                            <div class="space-y-4">
+                               <div>
+                                   <h4 class="font-semibold text-green-600">Advantages</h4>
+                                   <ul class="list-disc list-inside text-sm text-gray-600">
+                                       <li>Public is better served</li>
+                                       <li>Quality of peace officers is improved</li>
+                                       <li>Stronger community support and respect</li>
+                                       <li>More effective problem-solving</li>
+                                       <li>Financial rewards</li>
+                                   </ul>
+                               </div>
+                               <div>
+                                   <h4 class="font-semibold text-red-600">Disadvantages</h4>
+                                   <ul class="list-disc list-inside text-sm text-gray-600">
+                                       <li>Higher cost of training and development</li>
+                                       <li>Higher salaries required</li>
+                                       <li>Limited entry into the workforce for some due to educational requirements</li>
+                                   </ul>
+                               </div>
+                            </div>
+                        </div>
+                    </div>
+                     <h3 class="font-semibold text-lg mb-2 border-t pt-4">Characteristics of a Profession</h3>
+                     <ul class="list-disc list-inside space-y-2 text-gray-700">
+                         <li>Specialized body of knowledge obtained through advanced education or training.</li>
+                         <li>Commitment to serving the public and promoting the common good.</li>
+                         <li>A professional creed or code of ethics holding members to a higher standard.</li>
+                         <li>Standards for entry, practice, and ethical conduct.</li>
+                         <li>A professional association to maintain standards.</li>
+                         <li>Requirement for continuing education and lifelong learning.</li>
+                     </ul>
+                </div>
+            </div>
+
+            <!-- Legitimacy Tab -->
+            <div id="legitimacy" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Police Legitimacy & Procedural Justice</h2>
+                    <p class="mb-4"><strong>Police Legitimacy</strong> means the community has trust and confidence in the police, accepts police authority, and believes officers are fair. Officers build this trust by treating people with dignity and respect, making fair decisions, and giving people a voice.</p>
+                    
+                    <h3 class="font-semibold text-lg mb-3">The Four Pillars of Procedural Justice</h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-blue-800"><i class="fas fa-balance-scale-right mr-2"></i>Fairness & Consistency</h4>
+                            <p class="text-sm text-blue-700">Decisions are made based on fair and consistently applied processes, not just outcomes.</p>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-green-800"><i class="fas fa-comments mr-2"></i>Giving Voice</h4>
+                            <p class="text-sm text-green-700">All people want to be heard. Allowing individuals to tell their side of the story builds trust.</p>
+                        </div>
+                        <div class="bg-yellow-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-yellow-800"><i class="fas fa-eye mr-2"></i>Transparency</h4>
+                            <p class="text-sm text-yellow-700">Processes are open and clear, not secret. This helps people understand and accept decisions.</p>
+                        </div>
+                        <div class="bg-purple-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-purple-800"><i class="fas fa-gavel mr-2"></i>Impartiality</h4>
+                            <p class="text-sm text-purple-700">Decisions are based on relevant evidence and data, free from personal opinion or bias.</p>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-semibold text-lg mb-3">Objectivity and Implicit Bias</h3>
+                    <p class="mb-2 text-gray-700"><strong>Objectivity</strong> involves the expression or use of facts without distortion by personal feelings or prejudices. In contrast, <strong>Implicit Bias</strong> describes the automatic association people make between groups of people and stereotypes about those groups. These biases can exist even in the absence of conscious bigotry.</p>
+                    <p class="text-gray-700">Awareness of personal feelings, prejudices, and blind spots is the first step toward achieving objectivity and mitigating the negative influence of implicit bias in law enforcement decisions.</p>
+                </div>
+
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-semibold text-lg mb-3">Community Policing Model</h3>
+                     <div class="space-y-4">
+                         <div>
+                             <h4 class="font-bold"><i class="fas fa-handshake mr-2"></i>Partnerships</h4>
+                             <p class="text-gray-700 ml-6">Collaborative partnerships between law enforcement and the community to develop solutions and increase trust.</p>
+                         </div>
+                         <div>
+                             <h4 class="font-bold"><i class="fas fa-search mr-2"></i>Problem-Solving (S.A.R.A.)</h4>
+                             <p class="text-gray-700 ml-6">Proactive and systematic examination of problems to develop effective responses.</p>
+                             <ul class="list-decimal list-inside ml-8 text-sm text-gray-600">
+                                 <li><span class="font-semibold">Scanning:</span> Identifying and prioritizing problems.</li>
+                                 <li><span class="font-semibold">Analysis:</span> Researching what is known about the problem.</li>
+                                 <li><span class="font-semibold">Response:</span> Developing solutions for lasting reductions.</li>
+                                 <li><span class="font-semibold">Assessment:</span> Evaluating the success of the responses.</li>
+                             </ul>
+                         </div>
+                         <div>
+                             <h4 class="font-bold"><i class="fas fa-building mr-2"></i>Organizational Transformation</h4>
+                             <p class="text-gray-700 ml-6">Aligning agency management, structure, and personnel to support community partnerships and proactive problem-solving.</p>
+                         </div>
+                     </div>
+                </div>
+            </div>
+            
+            <!-- Ethics Tab -->
+            <div id="ethics" class="tab-content space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                     <h2 class="text-xl font-bold mb-4 border-b pb-2">Ethics in Law Enforcement</h2>
+                     <p class="mb-4">Ethics involves defining and achieving what is good or bad, right or wrong, in relation to moral duty. For law enforcement, the motive is as important as the act. The ethical role is performed by being objective, impartial, neutral, and ethical.</p>
+                    <div class="grid md:grid-cols-2 gap-6">
+                         <div>
+                             <h3 class="font-semibold text-lg mb-2">Pillars of Character</h3>
+                             <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                 <li>Trustworthiness</li>
+                                 <li>Respect</li>
+                                 <li>Responsibility</li>
+                                 <li>Fairness</li>
+                                 <li>Caring</li>
+                                 <li>Citizenship</li>
+                             </ul>
+                         </div>
+                         <div>
+                             <h3 class="font-semibold text-lg mb-2">Ethical Decision-Making Model</h3>
+                             <ul class="list-decimal list-inside space-y-1 text-gray-700">
+                                <li>Is it legal?</li>
+                                <li>Is it permitted by your organization's code of conduct?</li>
+                                <li>How would it be viewed by your organization's code of ethics?</li>
+                                <li>Does your personal code of ethics approve?</li>
+                                <li>Is it a true ethical dilemma (both choices appear right)?</li>
+                                <li>Can you apply your organization's ethical decision-making model?</li>
+                            </ul>
+                         </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-semibold text-lg mb-3">Career Attitude Stages</h3>
+                    <p class="mb-4 text-gray-600">Officers often progress through various attitude stages in their careers, which can influence ethical behavior. </p>
+                    <ol class="list-decimal list-inside space-y-2 text-gray-700">
+                        <li><strong>Idealistic:</strong> New officers, confident in their values and ability to succeed.</li>
+                        <li><strong>Frustrated:</strong> Realism sets in; initial goals clash with the reality of the job.</li>
+                        <li><strong>Defiant:</strong> Fear is overcome, but actions can be negative or destructive, driven by resentment.</li>
+                        <li><strong>Resigned:</strong> Slips into disappointment and aimlessness; "punching the clock."</li>
+                        <li><strong>Aware:</strong> Realizes the damage caused by negative stages and recognizes the need for change.</li>
+                        <li><strong>Decisive:</strong> Consciously takes positive steps to take responsibility for one's own life and happiness.</li>
+                        <li><strong>Commitment:</strong> A prudent and purposeful devotion to one's ideals and abilities.</li>
+                    </ol>
+                    <p class="text-sm text-red-600 mt-3 italic">Officers are most vulnerable to making poor ethical decisions in the <strong>Defiant</strong> and <strong>Resigned</strong> stages.</p>
+                </div>
+                
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-semibold text-lg mb-3">Physical vs. Moral Courage</h3>
+                     <div class="grid md:grid-cols-2 gap-6">
+                         <div>
+                             <h4 class="font-bold">Physical Courage</h4>
+                             <p class="text-gray-600">The state of mind that enables one to face danger with self-possession, confidence, and resolution.</p>
+                             <ul class="list-disc list-inside mt-2 text-sm">
+                                 <li>Facing a barricaded, armed suspect.</li>
+                                 <li>Physically intervening to stop another's misconduct (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.2.htm#2.1387" target="_blank" class="text-blue-600 hover:underline">CCP 2.1387</a> Duty to Intervene).</li>
+                             </ul>
+                         </div>
+                         <div>
+                             <h4 class="font-bold">Moral Courage</h4>
+                             <p class="text-gray-600">The courage to take action for moral reasons despite the risk of adverse consequences.</p>
+                             <ul class="list-disc list-inside mt-2 text-sm">
+                                 <li>Refusing gratuities.</li>
+                                 <li>Refusing to participate in a cover-up.</li>
+                                 <li>Refusing to participate in inappropriate humor or jokes.</li>
+                                 <li>Reporting misconduct of a fellow officer.</li>
+                             </ul>
+                         </div>
+                     </div>
+                 </div>
+
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-semibold text-lg mb-3">Law Enforcement Canons of Ethics</h3>
+                    <p class="mb-4 text-gray-600">These canons outline the fundamental duties and responsibilities of a law enforcement officer.</p>
+                    <ul class="list-disc list-inside space-y-2 text-gray-700">
+                        <li><strong>Primary Responsibility:</strong> Protection of the people through upholding laws, especially the Constitution.</li>
+                        <li><strong>Limitations of Authority:</strong> Know and respect the legal bounds placed upon them.</li>
+                        <li><strong>Duty to be Familiar with the Law:</strong> Assiduously study and understand the laws they are sworn to uphold.</li>
+                        <li><strong>Utilization of Proper Means:</strong> The ends do not justify illegal means.</li>
+                        <li><strong>Cooperation with Public Officials:</strong> Cooperate with other officials in the discharge of their duties.</li>
+                        <li><strong>Private Conduct:</strong> Lead a decent and honorable life, as their conduct reflects on the entire service.</li>
+                        <li><strong>Conduct Toward the Public:</strong> Be neither overbearing nor subservient; inspire confidence and trust.</li>
+                        <li><strong>Gifts and Favors:</strong> Firmly refuse gifts, favors, or gratuities that could be interpreted as influencing their judgment.</li>
+                        <li><strong>Presentation of Evidence:</strong> Be concerned equally with the prosecution of the wrongdoer and the defense of the innocent. Present evidence impartially.</li>
+                        <li><strong>Attitude Toward Profession:</strong> Regard their duties as a public trust and an honorable profession.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Texas Penal Code Tab -->
+            <div id="texas-penal-code" class="tab-content space-y-6">
+                <!-- TPC Chapter 36 -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-1">Chapter 36: Bribery and Corrupt Influence</h2>
+                    <p class="text-gray-500 mb-4">Offenses related to improperly influencing public servants.</p>
+                    <div class="space-y-4">
+                        <!-- Bribery -->
+                        <div class="border p-4 rounded-lg">
+                            <h3 class="font-semibold mb-1">Bribery <span class="punishment-label felony">2nd Degree Felony</span></h3>
+                            <p class="text-sm text-gray-500 mb-2"><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.36.htm#36.02" target="_blank" class="text-blue-600 hover:underline">TPC 36.02</a></p>
+                            <h4 class="font-semibold mt-3">Elements Checklist:</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>A person intentionally or knowingly</li>
+                                <li>Offers, gives, solicits, or accepts</li>
+                                <li>A "benefit"</li>
+                                <li>In exchange for an official action or decision.</li>
+                            </ul>
+                            <h4 class="font-semibold mt-3">Practical Example:</h4>
+                            <p class="text-sm text-gray-700 italic">A driver offers an officer $100 to not write a speeding ticket. If the officer accepts, both have committed Bribery.</p>
+                        </div>
+                        <!-- Coercion of Public Servant -->
+                        <div class="border p-4 rounded-lg">
+                             <h3 class="font-semibold mb-1">Coercion of Public Servant <span class="punishment-label misdemeanor">Class A Misd.</span></h3>
+                            <p class="text-sm text-gray-500 mb-2"><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.36.htm#36.03" target="_blank" class="text-blue-600 hover:underline">TPC 36.03</a></p>
+                            <h4 class="font-semibold mt-3">Elements Checklist:</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>A person uses coercion (a threat)</li>
+                                <li>To influence or attempt to influence a public servant's official duty.</li>
+                            </ul>
+                            <h4 class="font-semibold mt-3">Practical Example:</h4>
+                            <p class="text-sm text-gray-700 italic">A city council member threatens to have an officer fired unless the officer drops a ticket for the council member's son.</p>
+                        </div>
+                        <!-- Tampering with Witness -->
+                         <div class="border p-4 rounded-lg">
+                            <h3 class="font-semibold mb-1">Tampering with Witness <span class="punishment-label felony">3rd Degree Felony</span></h3>
+                            <p class="text-sm text-gray-500 mb-2"><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.36.htm#36.05" target="_blank" class="text-blue-600 hover:underline">TPC 36.05</a></p>
+                            <h4 class="font-semibold mt-3">Elements Checklist:</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>A person, knowing an investigation or proceeding is pending or in progress</li>
+                                <li>Offers a benefit, coerces, or harms a witness</li>
+                                <li>To influence their testimony or cause them to elude process.</li>
+                            </ul>
+                            <h4 class="font-semibold mt-3">Practical Example:</h4>
+                            <p class="text-sm text-gray-700 italic">A suspect in a robbery case offers the convenience store clerk $1,000 to "forget what you saw" when testifying in court.</p>
+                        </div>
+                        <!-- Obstruction or Retaliation -->
+                        <div class="border p-4 rounded-lg">
+                            <h3 class="font-semibold mb-1">Obstruction or Retaliation <span class="punishment-label felony">3rd Degree Felony</span></h3>
+                            <p class="text-sm text-gray-500 mb-2"><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.36.htm#36.06" target="_blank" class="text-blue-600 hover:underline">TPC 36.06</a></p>
+                            <h4 class="font-semibold mt-3">Elements Checklist:</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>A person intentionally or knowingly</li>
+                                <li>Harms or threatens to harm another</li>
+                                <li>In retaliation for or to prevent their service as a public servant, witness, or informant.</li>
+                            </ul>
+                            <h4 class="font-semibold mt-3">Practical Example:</h4>
+                            <p class="text-sm text-gray-700 italic">An individual who was arrested finds out which citizen reported them and slashes the tires on that citizen's car.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TPC Chapter 37 -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-1">Chapter 37: Perjury and Other Falsification</h2>
+                     <p class="text-gray-500 mb-4">Offenses related to false statements and tampering with evidence or records.</p>
+                     <div class="space-y-4">
+                        <!-- Aggravated Perjury -->
+                        <div class="border p-4 rounded-lg">
+                            <h3 class="font-semibold mb-1">Aggravated Perjury <span class="punishment-label felony">3rd Degree Felony</span></h3>
+                            <p class="text-sm text-gray-500 mb-2"><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.37.htm#37.03" target="_blank" class="text-blue-600 hover:underline">TPC 37.03</a></p>
+                            <h4 class="font-semibold mt-3">Elements Checklist:</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>A person commits Perjury (false statement under oath)</li>
+                                <li>The false statement is made during or in connection with an official proceeding</li>
+                                <li>And the statement is "material" (could have affected the outcome).</li>
+                            </ul>
+                            <h4 class="font-semibold mt-3">Practical Example:</h4>
+                            <p class="text-sm text-gray-700 italic">In a murder trial, a witness testifies under oath that the defendant was with them across town at the time of the killing, knowing this is false. This alibi is material to the case.</p>
+                        </div>
+                        <!-- Tampering with or Fabricating Physical Evidence -->
+                         <div class="border p-4 rounded-lg">
+                            <h3 class="font-semibold mb-1">Tampering w/ Physical Evidence <span class="punishment-label felony">3rd Degree Felony</span></h3>
+                            <p class="text-sm text-gray-500 mb-2"><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.37.htm#37.09" target="_blank" class="text-blue-600 hover:underline">TPC 37.09</a></p>
+                            <h4 class="font-semibold mt-3">Elements Checklist:</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>Knowing an investigation or official proceeding is pending or in progress</li>
+                                <li>A person alters, destroys, or conceals any record, document, or thing</li>
+                                <li>With intent to impair its verity or availability as evidence.</li>
+                            </ul>
+                            <h4 class="font-semibold mt-3">Practical Example:</h4>
+                            <p class="text-sm text-gray-700 italic">An officer finds a small amount of drugs on a suspect but, feeling sympathetic, flushes them down a toilet before they can be logged into evidence.</p>
+                        </div>
+                         <!-- Tampering with Governmental Record -->
+                         <div class="border p-4 rounded-lg">
+                             <h3 class="font-semibold mb-1">Tampering w/ Governmental Record <span class="punishment-label misdemeanor">Class A Misd.*</span></h3>
+                             <p class="text-sm text-gray-500 mb-2"><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.37.htm#37.10" target="_blank" class="text-blue-600 hover:underline">TPC 37.10</a></p>
+                             <h4 class="font-semibold mt-3">Elements Checklist:</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>Knowingly makes a false entry in, or alteration of, a governmental record.</li>
+                                <li>Or presents/uses a fake document intending for it to be treated as real.</li>
+                                <li>*Can be enhanced to a felony if done with intent to defraud or harm.</li>
+                            </ul>
+                            <h4 class="font-semibold mt-3">Practical Example:</h4>
+                            <p class="text-sm text-gray-700 italic">An officer intentionally writes in an offense report that a witness identified a suspect, when the witness actually said they weren't sure.</p>
+                         </div>
+                    </div>
+                </div>
+
+                <!-- TPC Chapter 39 -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-1">Chapter 39: Abuse of Office</h2>
+                    <p class="text-gray-500 mb-4">Offenses involving public servants misusing their official position.</p>
+                     <div class="space-y-4">
+                        <!-- Abuse of Official Capacity -->
+                        <div class="border p-4 rounded-lg">
+                            <h3 class="font-semibold mb-1">Abuse of Official Capacity <span class="punishment-label misdemeanor">Class A Misd.*</span></h3>
+                            <p class="text-sm text-gray-500 mb-2"><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.39.htm#39.02" target="_blank" class="text-blue-600 hover:underline">TPC 39.02</a></p>
+                            <h4 class="font-semibold mt-3">Elements Checklist:</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>A public servant</li>
+                                <li>With intent to obtain a benefit or harm another</li>
+                                <li>Intentionally or knowingly violates a law relating to their office or misuses government property, services, or personnel.</li>
+                                <li>*Punishment varies by the value of the property/service misused.</li>
+                            </ul>
+                            <h4 class="font-semibold mt-3">Practical Example:</h4>
+                            <p class="text-sm text-gray-700 italic">A city mechanic uses city tools and the city garage after hours to run a private auto repair business for personal profit.</p>
+                        </div>
+                        <!-- Official Oppression -->
+                        <div class="border p-4 rounded-lg">
+                            <h3 class="font-semibold mb-1">Official Oppression <span class="punishment-label misdemeanor">Class A Misd.</span></h3>
+                            <p class="text-sm text-gray-500 mb-2"><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.39.htm#39.03" target="_blank" class="text-blue-600 hover:underline">TPC 39.03</a></p>
+                            <h4 class="font-semibold mt-3">Elements Checklist:</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>A public servant acting under color of law</li>
+                                <li>Intentionally subjects another to mistreatment, unlawful arrest/search, etc.</li>
+                                <li>Or intentionally denies someone's rights, knowing the conduct is unlawful.</li>
+                                <li>Or intentionally subjects another to sexual harassment.</li>
+                            </ul>
+                            <h4 class="font-semibold mt-3">Practical Example:</h4>
+                            <p class="text-sm text-gray-700 italic">An officer detains a citizen for "contempt of cop" and conducts a search of their car without probable cause, simply because the citizen was disrespectful.</p>
+                        </div>
+                        <!-- Misuse of Official Information -->
+                         <div class="border p-4 rounded-lg">
+                             <h3 class="font-semibold mb-1">Misuse of Official Information <span class="punishment-label felony">3rd Degree Felony</span></h3>
+                             <p class="text-sm text-gray-500 mb-2"><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.39.htm#39.06" target="_blank" class="text-blue-600 hover:underline">TPC 39.06</a></p>
+                            <h4 class="font-semibold mt-3">Elements Checklist:</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>A public servant</li>
+                                <li>Uses confidential information obtained through their job</li>
+                                <li>To gain a financial benefit for themselves or another.</li>
+                            </ul>
+                            <h4 class="font-semibold mt-3">Practical Example:</h4>
+                            <p class="text-sm text-gray-700 italic">An officer learns through an investigation that a new highway will be built at a specific location. Before this is public, the officer tells a friend to buy the land there to sell it for a profit later.</p>
+                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Federal & Civil Tab -->
+            <div id="federal-civil" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-1">Federal Criminal Law</h2>
+                    <p class="text-gray-500 mb-4">Unethical conduct can lead to federal prosecution for civil rights violations, often investigated by the FBI out of Washington D.C. to prevent conflicts of interest.</p>
+                    <div class="space-y-4">
+                        <!-- Conspiracy Against Rights -->
+                        <div class="border border-gray-200 p-4 rounded-lg">
+                            <div class="flex justify-between items-start">
+                                <h3 class="text-xl font-semibold mb-1">Conspiracy Against Rights</h3>
+                                <span class="punishment-label federal">Federal Crime</span>
+                            </div>
+                            <p class="text-sm text-gray-500 mb-2"><a href="https://www.law.cornell.edu/uscode/text/18/241" target="_blank" class="text-blue-600 hover:underline">18 U.S.C. § 241</a></p>
+                            <h4 class="font-semibold mt-3">Elements Checklist:</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>Two or more people</li>
+                                <li>Conspire (agree)</li>
+                                <li>To injure, oppress, threaten, or intimidate someone</li>
+                                <li>In the exercise of their constitutional rights.</li>
+                            </ul>
+                            <h4 class="font-semibold mt-3">Practical Example:</h4>
+                             <p class="text-sm text-gray-700 italic">Two officers agree to pull over and harass a specific journalist to intimidate them into stopping their reporting on the police department. This infringes on the journalist's First Amendment rights.</p>
+                        </div>
+
+                        <!-- Deprivation of Rights Under Color of Law -->
+                        <div class="border border-gray-200 p-4 rounded-lg">
+                            <div class="flex justify-between items-start">
+                                <h3 class="text-xl font-semibold mb-1">Deprivation of Rights Under Color of Law</h3>
+                                <span class="punishment-label federal">Federal Crime</span>
+                            </div>
+                            <p class="text-sm text-gray-500 mb-2"><a href="https://www.law.cornell.edu/uscode/text/18/242" target="_blank" class="text-blue-600 hover:underline">18 U.S.C. § 242</a></p>
+                            <h4 class="font-semibold mt-3">Elements Checklist:</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>A person acting "under color of law" (on duty)</li>
+                                <li>Willfully</li>
+                                <li>Deprives someone of their constitutional rights.</li>
+                            </ul>
+                            <h4 class="font-semibold mt-3">Practical Example:</h4>
+                            <p class="text-sm text-gray-700 italic">An officer, during a traffic stop, intentionally uses excessive force against a compliant subject, violating their Fourth Amendment right to be free from unreasonable seizure.</p>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-1">Civil Penalties & Sexual Harassment</h2>
+                    <p class="text-gray-500 mb-4">Inappropriate conduct can subject an officer and their department to civil lawsuits and financial penalties.</p>
+                     <p>Sexual harassment is prohibited under both state and federal law. Key statutes and agencies include:</p>
+                     <ul class="list-disc list-inside text-gray-600 mt-2 space-y-1">
+                        <li><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.39.htm#39.03" target="_blank" class="text-blue-600 hover:underline">TPC 39.03 - Official Oppression</a> (as a criminal offense).</li>
+                        <li><a href="https://www.twc.texas.gov/jobseekers/how-submit-employment-discrimination-complaint" target="_blank" class="text-blue-600 hover:underline">Texas Commission on Human Rights Act</a> (Civil penalties).</li>
+                        <li><a href="https://www.eeoc.gov/sexual-harassment" target="_blank" class="text-blue-600 hover:underline">Equal Employment Opportunity Commission (EEOC)</a> (Federal oversight).</li>
+                        <li><a href="https://www.law.cornell.edu/uscode/text/42/1983" target="_blank" class="text-blue-600 hover:underline">42 U.S.C. § 1983 - Civil Action for Deprivation of Rights</a> (Allows civil suits for rights violations).</li>
+                     </ul>
+                </div>
+            </div>
+
+            <!-- Knowledge Check Tab -->
+            <div id="knowledge-check" class="tab-content">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Knowledge Check</h2>
+                    <p class="mb-6 text-gray-600">Test your understanding of the material. Select an answer for each question and then click "Check Answers" at the bottom.</p>
+                    
+                    <div id="quiz-container" class="space-y-8">
+                        <!-- Question 1 -->
+                        <div class="quiz-question">
+                            <p class="font-semibold mb-2">1. An officer pulls over a driver for speeding. The driver offers the officer courtside tickets to a basketball game in exchange for not getting a ticket. This is an example of:</p>
+                            <div class="space-y-2">
+                                <label class="block"><input type="radio" name="q1" value="a" class="mr-2">a) Official Oppression</label>
+                                <label class="block"><input type="radio" name="q1" value="b" class="mr-2">b) Bribery</label>
+                                <label class="block"><input type="radio" name="q1" value="c" class="mr-2">c) Coercion of a Public Servant</label>
+                                <label class="block"><input type="radio" name="q1" value="d" class="mr-2">d) A common courtesy</label>
+                            </div>
+                            <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                        </div>
+
+                        <!-- Question 2 -->
+                        <div class="quiz-question">
+                            <p class="font-semibold mb-2">2. Which of the following is NOT one of the Four Pillars of Procedural Justice?</p>
+                            <div class="space-y-2">
+                                <label class="block"><input type="radio" name="q2" value="a" class="mr-2">a) Giving Voice</label>
+                                <label class="block"><input type="radio" name="q2" value="b" class="mr-2">b) Transparency</label>
+                                <label class="block"><input type="radio" name="q2" value="c" class="mr-2">c) Absolute Authority</label>
+                                <label class="block"><input type="radio" name="q2" value="d" class="mr-2">d) Impartiality</label>
+                            </div>
+                            <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                        </div>
+                        
+                        <!-- Question 3 -->
+                        <div class="quiz-question">
+                            <p class="font-semibold mb-2">3. An officer intentionally writes in his report that an arrestee confessed, when the arrestee actually remained silent. Under the Texas Penal Code, this crime is best described as:</p>
+                            <div class="space-y-2">
+                                <label class="block"><input type="radio" name="q3" value="a" class="mr-2">a) Perjury</label>
+                                <label class="block"><input type="radio" name="q3" value="b" class="mr-2">b) Abuse of Official Capacity</label>
+                                <label class="block"><input type="radio" name="q3" value="c" class="mr-2">c) Obstruction or Retaliation</label>
+                                <label class="block"><input type="radio" name="q3" value="d" class="mr-2">d) Tampering with a Governmental Record</label>
+                            </div>
+                            <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                        </div>
+                        
+                        <!-- Question 4 -->
+                        <div class="quiz-question">
+                            <p class="font-semibold mb-2">4. Two officers agree beforehand to conduct an illegal search on a suspect's home to intimidate him. This action could be prosecuted federally under:</p>
+                            <div class="space-y-2">
+                                <label class="block"><input type="radio" name="q4" value="a" class="mr-2">a) 18 U.S.C. § 241 (Conspiracy Against Rights)</label>
+                                <label class="block"><input type="radio" name="q4" value="b" class="mr-2">b) The RICO Act</label>
+                                <label class="block"><input type="radio" name="q4" value="c" class="mr-2">c) 18 U.S.C. § 242 (Deprivation of Rights)</label>
+                                <label class="block"><input type="radio" name="q4" value="d" class="mr-2">d) The Patriot Act</label>
+                            </div>
+                            <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                        </div>
+
+                        <!-- Question 5 -->
+                        <div class="quiz-question">
+                            <p class="font-semibold mb-2">5. Refusing to participate in a cover-up of a fellow officer's misconduct, despite potential backlash from peers, is an example of:</p>
+                            <div class="space-y-2">
+                                <label class="block"><input type="radio" name="q5" value="a" class="mr-2">a) Physical Courage</label>
+                                <label class="block"><input type="radio" name="q5" value="b" class="mr-2">b) Procedural Justice</label>
+                                <label class="block"><input type="radio" name="q5" value="c" class="mr-2">c) Moral Courage</label>
+                                <label class="block"><input type="radio" name="q5" value="d" class="mr-2">d) Idealism</label>
+                            </div>
+                            <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                        </div>
+                        
+                        <!-- Question 6 -->
+                        <div class="quiz-question">
+                            <p class="font-semibold mb-2">6. An officer uses their police computer to look up the address of a person they met at a bar for personal reasons. This act is best described as:</p>
+                            <div class="space-y-2">
+                                <label class="block"><input type="radio" name="q6" value="a" class="mr-2">a) Bribery</label>
+                                <label class="block"><input type="radio" name="q6" value="b" class="mr-2">b) Misuse of Official Information</label>
+                                <label class="block"><input type="radio" name="q6" value="c" class="mr-2">c) Official Oppression</label>
+                                <label class="block"><input type="radio" name="q6" value="d" class="mr-2">d) Tampering with a Governmental Record</label>
+                            </div>
+                            <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                        </div>
+                        
+                        <!-- Question 7 -->
+                        <div class="quiz-question">
+                            <p class="font-semibold mb-2">7. The problem-solving model involving Scanning, Analysis, Response, and Assessment is known as:</p>
+                            <div class="space-y-2">
+                                <label class="block"><input type="radio" name="q7" value="a" class="mr-2">a) The Four Pillars Model</label>
+                                <label class="block"><input type="radio" name="q7" value="b" class="mr-2">b) The Community Policing Model</label>
+                                <label class="block"><input type="radio" name="q7" value="c" class="mr-2">c) The S.A.R.A. Model</label>
+                                <label class="block"><input type="radio" name="q7" value="d" class="mr-2">d) The Ethical Decision-Making Model</label>
+                            </div>
+                            <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                        </div>
+
+                        <!-- Question 8 -->
+                        <div class="quiz-question">
+                            <p class="font-semibold mb-2">8. Which of the following best defines "Police Legitimacy"?</p>
+                            <div class="space-y-2">
+                                <label class="block"><input type="radio" name="q8" value="a" class="mr-2">a) The legal authority granted to officers by statute.</label>
+                                <label class="block"><input type="radio" name="q8" value="b" class="mr-2">b) The community's trust and confidence in the police and acceptance of their authority as fair.</label>
+                                <label class="block"><input type="radio" name="q8" value="c" class="mr-2">c) The process of making arrests and enforcing the law.</label>
+                                <label class="block"><input type="radio" name="q8" value="d" class="mr-2">d) An officer's ability to command respect through a strong presence.</label>
+                            </div>
+                            <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                        </div>
+
+                        <!-- Question 9 -->
+                        <div class="quiz-question">
+                            <p class="font-semibold mb-2">9. An on-duty officer intentionally subjects a person in custody to unwanted sexual comments and advances. This specific act falls under which offense?</p>
+                            <div class="space-y-2">
+                                <label class="block"><input type="radio" name="q9" value="a" class="mr-2">a) Coercion of a Public Servant</label>
+                                <label class="block"><input type="radio" name="q9" value="b" class="mr-2">b) Tampering with a Witness</label>
+                                <label class="block"><input type="radio" name="q9" value="c" class="mr-2">c) Official Oppression</label>
+                                <label class="block"><input type="radio" name="q9" value="d" class="mr-2">d) Improper Influence</label>
+                            </div>
+                            <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                        </div>
+                        
+                        <!-- Question 10 -->
+                        <div class="quiz-question">
+                            <p class="font-semibold mb-2">10. An officer who has become cynical and resentful, and may engage in covertly destructive behavior, is likely in which attitude stage of their career?</p>
+                            <div class="space-y-2">
+                                <label class="block"><input type="radio" name="q10" value="a" class="mr-2">a) Idealistic</label>
+                                <label class="block"><input type="radio" name="q10" value="b" class="mr-2">b) Frustrated</label>
+                                <label class="block"><input type="radio" name="q10" value="c" class="mr-2">c) Defiant</label>
+                                <label class="block"><input type="radio" name="q10" value="d" class="mr-2">d) Resigned</label>
+                            </div>
+                            <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                        </div>
+
+                    </div>
+                    
+                    <div class="mt-8 text-center">
+                        <button id="check-answers-btn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors">Check Answers</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resources Tab -->
+            <div id="resources" class="tab-content">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Statutory Resources</h2>
+                    <p class="mb-6 text-gray-600">Quick links to the legal statutes referenced in this guide.</p>
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="font-semibold text-lg text-gray-800">Texas Code of Criminal Procedure</h3>
+                             <ul class="list-disc list-inside ml-4">
+                                <li><a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.2.htm#2.1387" target="_blank" class="text-blue-600 hover:underline">CCP 2.1387 - Duty to Intervene</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg text-gray-800">Texas Penal Code - Title 8</h3>
+                            <h4 class="font-semibold text-md text-gray-700 mt-2 ml-4">Chapter 36: Bribery and Corrupt Influence</h4>
+                            <ul class="list-disc list-inside ml-8">
+                                <li><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.36.htm#36.02" target="_blank" class="text-blue-600 hover:underline">TPC 36.02 - Bribery</a></li>
+                                <li><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.36.htm#36.03" target="_blank" class="text-blue-600 hover:underline">TPC 36.03 - Coercion of Public Servant or Voter</a></li>
+                                <li><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.36.htm#36.04" target="_blank" class="text-blue-600 hover:underline">TPC 36.04 - Improper Influence</a></li>
+                                <li><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.36.htm#36.05" target="_blank" class="text-blue-600 hover:underline">TPC 36.05 - Tampering with Witness</a></li>
+                                <li><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.36.htm#36.06" target="_blank" class="text-blue-600 hover:underline">TPC 36.06 - Obstruction or Retaliation</a></li>
+                                <li><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.36.htm#36.07" target="_blank" class="text-blue-600 hover:underline">TPC 36.07 - Acceptance of Honorarium</a></li>
+                                <li><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.36.htm#36.08" target="_blank" class="text-blue-600 hover:underline">TPC 36.08 - Gifts to Public Servants</a></li>
+                            </ul>
+                            <h4 class="font-semibold text-md text-gray-700 mt-2 ml-4">Chapter 37: Perjury and Other Falsification</h4>
+                             <ul class="list-disc list-inside ml-8">
+                                <li><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.37.htm#37.02" target="_blank" class="text-blue-600 hover:underline">TPC 37.02 - Perjury</a></li>
+                                <li><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.37.htm#37.03" target="_blank" class="text-blue-600 hover:underline">TPC 37.03 - Aggravated Perjury</a></li>
+                                <li><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.37.htm#37.08" target="_blank" class="text-blue-600 hover:underline">TPC 37.08 - False Report to Peace Officer</a></li>
+                                <li><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.37.htm#37.09" target="_blank" class="text-blue-600 hover:underline">TPC 37.09 - Tampering with or Fabricating Physical Evidence</a></li>
+                                <li><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.37.htm#37.10" target="_blank" class="text-blue-600 hover:underline">TPC 37.10 - Tampering with Governmental Record</a></li>
+                            </ul>
+                            <h4 class="font-semibold text-md text-gray-700 mt-2 ml-4">Chapter 39: Abuse of Office</h4>
+                             <ul class="list-disc list-inside ml-8">
+                                <li><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.39.htm#39.02" target="_blank" class="text-blue-600 hover:underline">TPC 39.02 - Abuse of Official Capacity</a></li>
+                                <li><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.39.htm#39.03" target="_blank" class="text-blue-600 hover:underline">TPC 39.03 - Official Oppression</a></li>
+                                <li><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.39.htm#39.04" target="_blank" class="text-blue-600 hover:underline">TPC 39.04 - Violation of Civil Rights of Person in Custody; Improper Sexual Activity</a></li>
+                                <li><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.39.htm#39.05" target="_blank" class="text-blue-600 hover:underline">TPC 39.05 - Failure to Report Death of Prisoner</a></li>
+                                <li><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.39.htm#39.06" target="_blank" class="text-blue-600 hover:underline">TPC 39.06 - Misuse of Official Information</a></li>
+                            </ul>
+                        </div>
+                         <div>
+                            <h3 class="font-semibold text-lg text-gray-800">United States Code (U.S.C.)</h3>
+                             <ul class="list-disc list-inside ml-4">
+                                <li><a href="https://www.law.cornell.edu/uscode/text/18/241" target="_blank" class="text-blue-600 hover:underline">18 U.S.C. § 241 - Conspiracy Against Rights</a></li>
+                                <li><a href="https://www.law.cornell.edu/uscode/text/18/242" target="_blank" class="text-blue-600 hover:underline">18 U.S.C. § 242 - Deprivation of Rights Under Color of Law</a></li>
+                                <li><a href="https://www.law.cornell.edu/uscode/text/42/1983" target="_blank" class="text-blue-600 hover:underline">42 U.S.C. § 1983 - Civil action for deprivation of rights</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('#tabs button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Deactivate all tabs and content
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+
+                    // Activate the clicked tab and its content
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                });
+            });
+
+            // Quiz Logic
+            const quizAnswers = {
+                q1: 'b',
+                q2: 'c',
+                q3: 'd',
+                q4: 'a',
+                q5: 'c',
+                q6: 'b',
+                q7: 'c',
+                q8: 'b',
+                q9: 'c',
+                q10: 'c'
+            };
+
+            const quizExplanations = {
+                 q1: 'Correct! Bribery involves offering a "benefit" (the tickets) in exchange for an officer\'s official action (not writing a ticket).',
+                 q2: 'Correct! The four pillars are Fairness, Giving Voice, Transparency, and Impartiality. Absolute Authority is contrary to the principles of legitimacy.',
+                 q3: 'Correct! Intentionally making a false entry in an official report is a classic example of Tampering with a Governmental Record under TPC 37.10.',
+                 q4: 'Correct! Since two officers agreed (conspired) to violate the suspect\'s rights, this falls under 18 U.S.C. § 241. If only one officer had acted, § 242 would be more appropriate.',
+                 q5: 'Correct! Moral courage is taking action for moral reasons despite the risk of adverse consequences, such as peer disapproval.',
+                 q6: 'Correct! The officer is using non-public information (from a police database) gained through their job for a non-governmental purpose, which is Misuse of Official Information under TPC 39.06.',
+                 q7: 'Correct! S.A.R.A. is the acronym for the four steps of this widely used problem-solving process in community policing.',
+                 q8: 'Correct! Legitimacy is not just about legal power; it is rooted in the public\'s perception of the police as being fair, trustworthy, and respectful.',
+                 q9: 'Correct! TPC 39.03 (Official Oppression) explicitly includes "intentionally subjects another to sexual harassment" as a violation while acting under color of office.',
+                 q10: 'Correct! The "Defiant" stage is characterized by overcoming fear with a negative or destructive attitude, often involving hidden resentment and harmful actions.'
+            };
+
+            const checkAnswersBtn = document.getElementById('check-answers-btn');
+            checkAnswersBtn.addEventListener('click', () => {
+                const questions = document.querySelectorAll('.quiz-question');
+                questions.forEach((question, index) => {
+                    const qName = `q${index + 1}`;
+                    const selected = document.querySelector(`input[name="${qName}"]:checked`);
+                    const feedback = question.querySelector('.feedback');
+                    
+                    feedback.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+
+                    if (selected) {
+                        if (selected.value === quizAnswers[qName]) {
+                            feedback.textContent = quizExplanations[qName];
+                            feedback.classList.add('bg-green-100', 'text-green-800');
+                        } else {
+                            feedback.textContent = `Incorrect. The correct answer is (${quizAnswers[qName].toUpperCase()}). ${quizExplanations[qName]}`;
+                            feedback.classList.add('bg-red-100', 'text-red-800');
+                        }
+                    } else {
+                        feedback.textContent = 'You did not select an answer for this question.';
+                        feedback.classList.add('bg-yellow-100', 'text-yellow-800');
+                    }
+                     feedback.classList.remove('hidden');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+

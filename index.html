@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCOLE Study Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://rsms.me/inter/inter.css');
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Header -->
+    <header class="bg-gray-800 text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <i class="fas fa-shield-alt text-3xl text-blue-400 mr-3"></i>
+                    <h1 class="text-2xl font-bold tracking-tight">TCOLE Study Hub</h1>
+                </div>
+                <p class="text-sm text-gray-300 hidden md:block">Your Central Dashboard for TCOLE Preparation</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-4 md:p-8">
+        
+        <!-- Study Guides Section -->
+        <section id="study-guides" class="mb-16">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-gray-800">My Study Materials</h2>
+                <p class="text-gray-600 mt-2">Select a topic below to open its comprehensive guide or start a quiz.</p>
+            </div>
+
+            <!-- Grid for Study Guide Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Card 1: Professionalism & Ethics -->
+                <div class="card bg-white rounded-xl shadow-md overflow-hidden flex flex-col">
+                    <div class="p-6 flex-grow">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center">
+                                <i class="fas fa-user-shield text-2xl"></i>
+                            </div>
+                            <h3 class="ml-4 text-xl font-bold text-gray-900">Professionalism & Ethics</h3>
+                        </div>
+                        <p class="text-gray-600 text-sm">Foundational principles of law enforcement ethics, conduct, and the professional model.</p>
+                    </div>
+                    <div class="px-6 pb-6 mt-auto grid grid-cols-2 gap-4">
+                        <a href="professionalism_and_ethics_study_guide.html" class="block w-full text-center bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
+                            <i class="fas fa-book-open mr-2"></i>Guide
+                        </a>
+                        <a href="professionalism_and_ethics_quiz.html" class="block w-full text-center bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors">
+                            <i class="fas fa-vial mr-2"></i>Quiz
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 2: Professional Policing -->
+                <div class="card bg-white rounded-xl shadow-md overflow-hidden flex flex-col">
+                    <div class="p-6 flex-grow">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+                                <i class="fas fa-landmark text-2xl"></i>
+                            </div>
+                            <h3 class="ml-4 text-xl font-bold text-gray-900">Professional Policing</h3>
+                        </div>
+                        <p class="text-gray-600 text-sm">The history of policing, service models, and the evolution of community-oriented policing.</p>
+                    </div>
+                    <div class="px-6 pb-6 mt-auto grid grid-cols-2 gap-4">
+                        <a href="professional_policing_study_guide.html" class="block w-full text-center bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
+                            <i class="fas fa-book-open mr-2"></i>Guide
+                        </a>
+                        <a href="professional_policing_quiz.html" class="block w-full text-center bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors">
+                            <i class="fas fa-vial mr-2"></i>Quiz
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 3: Fitness, Wellness, and Stress Management -->
+                <div class="card bg-white rounded-xl shadow-md overflow-hidden flex flex-col">
+                    <div class="p-6 flex-grow">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center">
+                                <i class="fas fa-heartbeat text-2xl"></i>
+                            </div>
+                            <h3 class="ml-4 text-xl font-bold text-gray-900">Fitness & Wellness</h3>
+                        </div>
+                        <p class="text-gray-600 text-sm">Covers physical fitness, nutrition, stress management, and critical incident response for officers.</p>
+                    </div>
+                    <div class="px-6 pb-6 mt-auto grid grid-cols-2 gap-4">
+                        <a href="fitness_wellness_stress_management_study_guide.html" class="block w-full text-center bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
+                            <i class="fas fa-book-open mr-2"></i>Guide
+                        </a>
+                        <a href="fitness_wellness_stress_management_quiz.html" class="block w-full text-center bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors">
+                            <i class="fas fa-vial mr-2"></i>Quiz
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 4: Arrest, Search, & Seizure -->
+                <div class="card bg-white rounded-xl shadow-md overflow-hidden flex flex-col">
+                    <div class="p-6 flex-grow">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center">
+                                <i class="fas fa-gavel text-2xl"></i>
+                            </div>
+                            <h3 class="ml-4 text-xl font-bold text-gray-900">Arrest, Search, & Seizure</h3>
+                        </div>
+                        <p class="text-gray-600 text-sm">Key legal concepts, case law, and procedures governing arrest, search, and seizure.</p>
+                    </div>
+                    <div class="px-6 pb-6 mt-auto grid grid-cols-2 gap-4">
+                        <a href="arrest_search_seizure_study_guide.html" class="block w-full text-center bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
+                            <i class="fas fa-book-open mr-2"></i>Guide
+                        </a>
+                        <a href="arrest_search_seizure_quiz.html" class="block w-full text-center bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors">
+                           <i class="fas fa-vial mr-2"></i>Quiz
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 5: Asset Forfeiture -->
+                <div class="card bg-white rounded-xl shadow-md overflow-hidden flex flex-col">
+                    <div class="p-6 flex-grow">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center">
+                                <i class="fas fa-dollar-sign text-2xl"></i>
+                            </div>
+                            <h3 class="ml-4 text-xl font-bold text-gray-900">Asset Forfeiture</h3>
+                        </div>
+                        <p class="text-gray-600 text-sm">The legal process for seizing assets connected to criminal activity, including defenses and procedures.</p>
+                    </div>
+                    <div class="px-6 pb-6 mt-auto grid grid-cols-2 gap-4">
+                        <a href="asset_forfeiture_study_guide.html" class="block w-full text-center bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
+                            <i class="fas fa-book-open mr-2"></i>Guide
+                        </a>
+                        <a href="asset_forfeiture_quiz.html" class="block w-full text-center bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors">
+                           <i class="fas fa-vial mr-2"></i>Quiz
+                        </a>
+                    </div>
+                </div>
+
+                 <!---
+                =============================================================================
+                === SNIPPET FOR NEW STUDY GUIDE & QUIZ ===
+                To add a new topic, copy the entire block of code below, from
+                '<!-- Card X: ... ' to '</div>', and paste it right above this comment.
+                Then, update the following items in your new pasted block:
+                1. The title comment (e.g., "Card 6: New Study Guide Title")
+                2. The href="" for the Guide button (e.g., href="new_guide.html")
+                3. The href="" for the Quiz button (e.g., href="new_quiz.html")
+                4. The icon class in the <i> tag (e.g., from "fa-book" to "fa-file-alt").
+                5. The <h3> and <p> tags with the new title and description.
+                =============================================================================
+                --->
+                <!-- Card X: [NEW STUDY GUIDE TITLE] -->
+                <!--
+                <div class="card bg-white rounded-xl shadow-md overflow-hidden flex flex-col">
+                    <div class="p-6 flex-grow">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center">
+                                <i class="fas fa-book text-2xl"></i>
+                            </div>
+                            <h3 class="ml-4 text-xl font-bold text-gray-900">[New Study Guide Title]</h3>
+                        </div>
+                        <p class="text-gray-600 text-sm">[A brief description of the new study guide topic goes here.]</p>
+                    </div>
+                    <div class="px-6 pb-6 mt-auto grid grid-cols-2 gap-4">
+                        <a href="[new_guide_name.html]" class="block w-full text-center bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
+                            <i class="fas fa-book-open mr-2"></i>Guide
+                        </a>
+                        <a href="[new_quiz_name.html]" class="block w-full text-center bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors">
+                           <i class="fas fa-vial mr-2"></i>Quiz
+                        </a>
+                    </div>
+                </div>
+                --->
+            
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white mt-12">
+        <div class="container mx-auto px-6 py-4 text-center text-sm">
+            <p>&copy; 2025 TCOLE Study Hub. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
+

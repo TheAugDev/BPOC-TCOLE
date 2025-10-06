@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Guide: Arrest, Search, and Seizure</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --header-bg: #1f2937;
+            --bg-color: #f3f4f6;
+            --tab-active-bg: #3b82f6;
+            --tab-active-text: #ffffff;
+            --card-bg: #ffffff;
+            --text-color: #111827;
+            --link-color: #2563eb;
+            --punishment-misdemeanor: #fef08a; /* Yellow */
+            --punishment-felony: #fed7aa;   /* Orange */
+            --punishment-state-jail: #fca5a5;  /* Red */
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://rsms.me/inter/inter.css');
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab.active {
+            background-color: var(--tab-active-bg);
+            color: var(--tab-active-text);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tab {
+            transition: all 0.3s ease-in-out;
+        }
+        .punishment-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+        .punishment-misdemeanor { background-color: var(--punishment-misdemeanor); color: #92400e;}
+        .punishment-felony { background-color: var(--punishment-felony); color: #9a3412;}
+        .punishment-state-jail { background-color: var(--punishment-state-jail); color: #991b1b;}
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="bg-gray-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">
+                <i class="fas fa-gavel mr-2"></i>Arrest, Search, & Seizure
+            </h1>
+            <p class="text-sm text-gray-300">BPOC Chapter 10 | TCOLE Preparation</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-4 md:p-6">
+        <!-- Tab Navigation -->
+        <div class="mb-6 bg-white rounded-lg shadow-md overflow-x-auto">
+            <nav id="tabs" class="flex flex-row space-x-1 p-2">
+                <button data-tab="concepts" class="tab active flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-lightbulb mr-2"></i> <span class="hidden md:inline">Key Concepts</span>
+                </button>
+                <button data-tab="arrest" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-handcuffs mr-2"></i> <span class="hidden md:inline">Arrest</span>
+                </button>
+                <button data-tab="search" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-search mr-2"></i> <span class="hidden md:inline">Search</span>
+                </button>
+                <button data-tab="warrants" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-file-alt mr-2"></i> <span class="hidden md:inline">Warrants</span>
+                </button>
+                <button data-tab="court" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-balance-scale mr-2"></i> <span class="hidden md:inline">Court & Bail</span>
+                </button>
+                <button data-tab="knowledge-check" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-question-circle mr-2"></i> <span class="hidden md:inline">Knowledge Check</span>
+                </button>
+                <button data-tab="resources" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-link mr-2"></i> <span class="hidden md:inline">Resources</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Tab Content -->
+        <div id="tab-contents">
+            <!-- Key Concepts Tab -->
+            <div id="concepts" class="tab-content active space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Levels of Suspicion</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold">Mere Suspicion</h4>
+                            <p class="text-sm text-gray-700">A hunch or the feeling of intuition. While a useful skill, it is insufficient proof of any fact in court. It allows for computer checks, surveillance, and consensual encounters.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Reasonable Suspicion</h4>
+                            <p class="text-sm text-gray-700">Sufficient articulable facts and circumstances, and reasonable inferences drawn from those facts, that would lead a reasonable officer to conclude that criminal activity is afoot. This is the standard for an investigatory detention (Terry Stop). (See <a href="https://supreme.justia.com/cases/federal/us/392/1/" target="_blank" class="text-blue-600 hover:underline">Terry v. Ohio</a>).</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Probable Cause</h4>
+                            <p class="text-sm text-gray-700">Facts and circumstances within the officer's knowledge, and of which they have reasonably trustworthy information, sufficient to warrant a person of reasonable caution to believe that a crime has been or is being committed. This is the standard for arrest and search. (See <a href="https://supreme.justia.com/cases/federal/us/338/160/" target="_blank" class="text-blue-600 hover:underline">Brinegar v. United States</a>).</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Proof Beyond a Reasonable Doubt</h4>
+                            <p class="text-sm text-gray-700">The standard required to convict a person of a crime. All persons are presumed to be innocent and no person may be convicted of an offense unless each element of the offense is proved beyond a reasonable doubt. (See <a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.2.htm#2.01" target="_blank" class="text-blue-600 hover:underline">PC 2.01</a>).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Classifications of Interactions</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold">Consensual Encounters</h4>
+                            <p class="text-sm text-gray-700">An officer is free to approach and ask questions, but the person can refuse to identify themselves, refuse to cooperate, and simply walk away. The person must feel free to leave. (See <a href="https://supreme.justia.com/cases/federal/us/460/491/" target="_blank" class="text-blue-600 hover:underline">Florida v. Royer</a>).</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Investigatory Stops/Detentions (Terry Stop)</h4>
+                            <p class="text-sm text-gray-700">A temporary seizure of a person for investigation based on an officer's reasonable suspicion of criminal activity.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Arrests</h4>
+                            <p class="text-sm text-gray-700">Taking a person into custody for the purpose of charging them with a crime, based on an officer's establishment of probable cause.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Arrest Tab -->
+            <div id="arrest" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">When a Person is Arrested (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.15.htm#15.22" target="_blank" class="text-blue-600 hover:underline">CCP 15.22</a>)</h2>
+                     <p class="text-sm mb-4">A person is arrested when he has been actually placed under restraint or taken into custody by an officer or person executing a warrant of arrest, or by an officer or person arresting without a warrant.</p>
+                     <h4 class="font-semibold">Elements Checklist (Conditions for Arrest):</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Intent:</strong> The officer's purpose is to take the person into the custody of the law.</li>
+                        <li><strong>Authority:</strong> The arrest is made under real authority (authorized by law and supported by probable cause).</li>
+                        <li><strong>Actual Seizure:</strong> The person is taken into custody either by physical force or submission to authority.</li>
+                        <li><strong>Understanding:</strong> The person to be arrested understands the officer's intention to arrest.</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Warrantless Arrests</h2>
+                     <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold">Offense Within View (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.14.htm#14.01" target="_blank" class="text-blue-600 hover:underline">CCP 14.01</a>)</h4>
+                            <p class="text-sm text-gray-700">A peace officer or any other person may, without a warrant, arrest an offender when the offense is committed in his presence or within his view, if the offense is one classed as a felony or as an offense against the public peace.</p>
+                             <h4 class="font-semibold mt-2">Authority of Peace Officers (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.14.htm#14.03" target="_blank" class="text-blue-600 hover:underline">CCP 14.03</a>)</h4>
+                             <p class="text-sm text-gray-700">An officer may arrest, without warrant, persons found in suspicious places and under circumstances which reasonably show that such persons have been guilty of some felony, violation of Title 9, Chapter 42, Penal Code, breach of the peace, or offense under Section 49.02, Penal Code, or are about to commit some offense against the laws. Also covers violations of protective orders, family violence, and other specific situations.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">When Felony Has Been Committed (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.14.htm#14.04" target="_blank" class="text-blue-600 hover:underline">CCP 14.04</a>)</h4>
+                            <p class="text-sm text-gray-700">An officer may arrest, without warrant, when a felony has been committed in the presence or within the view of a magistrate, and that magistrate verbally orders the arrest of the offender. Also, where it is shown by satisfactory proof to a peace officer, upon the representation of a credible person, that a felony has been committed, and that the offender is about to escape.</p>
+                        </div>
+                         <div>
+                            <h4 class="font-semibold">Preventing Consequences of Theft (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.18.htm#18.16" target="_blank" class="text-blue-600 hover:underline">CCP 18.16</a>)</h4>
+                            <p class="text-sm text-gray-700">Any person has a right to prevent the consequences of theft by seizing any personal property that has been stolen and bringing it, with the person suspected of committing the theft, before a magistrate for examination.</p>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Special Circumstances & Immunities</h2>
+                     <div class="space-y-4">
+                        <div>
+                             <h4 class="font-semibold">Diplomatic Immunity (<a href="https://www.law.cornell.edu/uscode/text/22/254d" target="_blank" class="text-blue-600 hover:underline">22 USC 254d</a>)</h4>
+                            <p class="text-sm text-gray-700">Diplomatic agents are, with some exceptions, immune from the criminal jurisdiction of the host country's authorities. This immunity can be waived by the agent's home country. Verification of diplomatic status is a critical step.</p>
+                        </div>
+                         <div>
+                             <h4 class="font-semibold">Privilege of Legislators (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.1.htm#1.21" target="_blank" class="text-blue-600 hover:underline">CCP 1.21</a>)</h4>
+                            <p class="text-sm text-gray-700">Senators and Representatives shall, except in cases of treason, felony, or breach of the peace, be privileged from arrest during the session of the Legislature, and in going to and returning from the same.</p>
+                        </div>
+                     </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Custodial Statements (Miranda Rights)</h2>
+                    <p class="text-sm mb-4">Persons in custody must be clearly informed of their rights prior to interrogation. (See <a href="https://supreme.justia.com/cases/federal/us/384/436/" target="_blank" class="text-blue-600 hover:underline">Miranda v. Arizona</a> & <a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.38.htm#38.22" target="_blank" class="text-blue-600 hover:underline">CCP 38.22</a>).</p>
+                    <h4 class="font-semibold">Elements Checklist (The Warnings):</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>You have the right to remain silent.</li>
+                        <li>Anything you say can and will be used against you in a court of law.</li>
+                        <li>You have the right to an attorney.</li>
+                        <li>If you cannot afford an attorney, one will be appointed to you.</li>
+                    </ul>
+                     <p class="text-sm mt-2"><strong>Practical Example:</strong> An officer arrests a suspect for burglary. Before asking any questions about the crime at the station, the officer reads the Miranda warnings from a card. The suspect then states, "I want a lawyer." At this point, the officer must cease all interrogation until an attorney is present.</p>
+                </div>
+            </div>
+            
+            <!-- Search Tab -->
+            <div id="search" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Warrantless Searches (Exceptions to the Warrant Requirement)</h2>
+                    <p class="text-sm text-gray-600 mb-4">The Fourth Amendment protects against unreasonable searches and seizures, but there are several established exceptions to the warrant requirement.</p>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold">Consent Search</h4>
+                            <p class="text-sm text-gray-700">A person with authority can give free and voluntary consent to a search. The person must have the ability to withdraw consent at any time. Written consent is preferable to verbal, but voluntariness can still be challenged.</p>
+                            <p class="text-sm mt-1"><strong>Practical Example:</strong> An officer asks a driver during a traffic stop, "Do you mind if I search your vehicle?" The driver says, "Go ahead." The officer finds illegal narcotics. The search is valid because the driver consented.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Exigent Circumstances</h4>
+                            <p class="text-sm text-gray-700">Emergency situations that justify a warrantless entry or search. Officers cannot create the exigency through illegal actions. (See <a href="https://supreme.justia.com/cases/federal/us/563/452/" target="_blank" class="text-blue-600 hover:underline">Kentucky v. King</a>).</p>
+                            <h4 class="font-semibold mt-2">Elements Checklist (Types of Exigencies):</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li><strong>Preventing escape:</strong> A dangerous suspect is likely to flee before a warrant can be obtained.</li>
+                                <li><strong>Preventing destruction of evidence:</strong> Imminent destruction of evidence is likely.</li>
+                                <li><strong>Safety of officers or others:</strong> A need to protect or preserve life or avoid serious injury (e.g., breaking up a violent fight, responding to a report of gunfire).</li>
+                                <li><strong>Fresh pursuit:</strong> Pursuit of a fleeing felon. (See <a href="https://supreme.justia.com/cases/federal/us/427/38/" target="_blank" class="text-blue-600 hover:underline">United States v. Santana</a>).</li>
+                            </ul>
+                            <p class="text-sm mt-1"><strong>Practical Example:</strong> An officer dispatched to a family violence call hears screams from inside a residence. The officer can make a warrantless entry to prevent further violence and render aid.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Search Incident to Lawful Arrest</h4>
+                            <p class="text-sm text-gray-700">When making a lawful arrest, an officer can search the person and the area within their immediate control (the "wingspan").</p>
+                        </div>
+                         <div>
+                            <h4 class="font-semibold">Automobile Exception</h4>
+                            <p class="text-sm text-gray-700">If officers have probable cause to believe a vehicle contains evidence of a crime, they can search the vehicle without a warrant due to its mobility. (See <a href="https://supreme.justia.com/cases/federal/us/267/132/" target="_blank" class="text-blue-600 hover:underline">Carroll v. United States</a>).</p>
+                        </div>
+                         <div>
+                            <h4 class="font-semibold">Plain View Doctrine</h4>
+                            <p class="text-sm text-gray-700">An officer may seize evidence and contraband found in plain view during a lawful observation.</p>
+                            <h4 class="font-semibold mt-2">Elements Checklist:</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>The officer must be lawfully in the place from where the object can be plainly seen.</li>
+                                <li>The incriminating character of the item must be "immediately apparent."</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Warrants Tab -->
+            <div id="warrants" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Arrest Warrants</h2>
+                    <p class="text-sm mb-4">A written order from a magistrate, directed to a peace officer, commanding him to take the body of the person accused of an offense, to be dealt with according to law. (See <a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.15.htm#15.01" target="_blank" class="text-blue-600 hover:underline">CCP 15.01</a>).</p>
+                    <h4 class="font-semibold">Requisites of Warrant (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.15.htm#15.02" target="_blank" class="text-blue-600 hover:underline">CCP 15.02</a>):</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>Issued in the name of "The State of Texas".</li>
+                        <li>Specifies the name of the person whose arrest is ordered, or if unknown, a reasonably definite description.</li>
+                        <li>States the offense the person is accused of.</li>
+                        <li>Must be signed by the magistrate.</li>
+                    </ul>
+                    <p class="text-sm mt-2"><strong>Execution (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.15.htm#15.16" target="_blank" class="text-blue-600 hover:underline">CCP 15.16</a>):</strong> The officer need not have the warrant in possession at the time of arrest, but upon request, shall show the warrant to the person arrested as soon as possible.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Search Warrants</h2>
+                    <p class="text-sm mb-4">A written order, issued by a magistrate and directed to a peace officer, commanding him to search for any property or thing and to seize the same and bring it before such magistrate. (See <a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.18.htm#18.01" target="_blank" class="text-blue-600 hover:underline">CCP 18.01</a>).</p>
+                     <h4 class="font-semibold">Grounds for Issuance (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.18.htm#18.02" target="_blank" class="text-blue-600 hover:underline">CCP 18.02</a>):</h4>
+                    <p class="text-sm text-gray-700 mb-2">A search warrant may be issued to search for and seize:</p>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>Property acquired by theft or in any other manner which makes its acquisition a penal offense.</li>
+                        <li>Property specially designed, made, or adapted for or commonly used in the commission of an offense.</li>
+                        <li>Arms and munitions kept or prepared for the purposes of insurrection or riot.</li>
+                        <li>Contraband subject to forfeiture.</li>
+                        <li>A cellular telephone or other wireless communications device. (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.18.htm#18.0215" target="_blank" class="text-blue-600 hover:underline">CCP 18.0215</a>)</li>
+                        <li>To photograph an injured child. (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.18.htm#18.021" target="_blank" class="text-blue-600 hover:underline">CCP 18.021</a>)</li>
+                    </ul>
+                     <p class="text-sm mt-2"><strong>Execution (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.18.htm#18.06" target="_blank" class="text-blue-600 hover:underline">CCP 18.06</a>):</strong> An officer must present a copy of the warrant and an inventory of property seized. It must be executed within 3 days (excluding day of issuance and day of execution).</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Knock-and-Announce vs. No-Knock Warrants</h2>
+                    <div class="grid md:grid-cols-2 gap-6 text-sm">
+                        <div>
+                            <h4 class="font-semibold">Knock-and-Announce</h4>
+                            <p>Officers knock, announce their presence and authority, and wait a reasonable amount of time before making forced entry. This is the standard and is designed to reduce risk to both officers and occupants.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">No-Knock Entry</h4>
+                            <p>Allows officers to enter without prior notification. Requires specific justification in the warrant affidavit that announcing would be dangerous, futile, or would result in the destruction of evidence.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Court & Bail Tab -->
+            <div id="court" class="tab-content space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Charging Documents</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold">Complaint (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.15.htm#15.04" target="_blank" class="text-blue-600 hover:underline">CCP 15.04</a>)</h4>
+                            <p class="text-sm text-gray-700">The affidavit made before the magistrate or district or county attorney is called a "complaint" if it charges the commission of an offense.</p>
+                             <h4 class="font-semibold mt-2">Requisites of Complaint (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.15.htm#15.05" target="_blank" class="text-blue-600 hover:underline">CCP 15.05</a>):</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>Must state the name of the accused, or a reasonably definite description.</li>
+                                <li>Must show the accused has committed some offense against the laws of the State.</li>
+                                <li>Must state the time and place of the commission of the offense.</li>
+                                <li>Must be signed by the affiant.</li>
+                             </ul>
+                        </div>
+                         <div>
+                            <h4 class="font-semibold">Probable Cause Affidavit</h4>
+                            <p class="text-sm text-gray-700">A sworn statement by a law enforcement officer that details the officer's reasons and beliefs that there are sufficient grounds to arrest someone or search their property.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Bail Procedures</h2>
+                    <p class="text-sm mb-4">"Bail" is the security given by the accused that he will appear and answer before the proper court the accusation brought against him. (See <a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.17.htm#17.01" target="_blank" class="text-blue-600 hover:underline">CCP 17.01</a>).</p>
+                    <h4 class="font-semibold">Rules for Setting Amount of Bail (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.17.htm#17.15" target="_blank" class="text-blue-600 hover:underline">CCP 17.15</a>):</h4>
+                    <p class="text-sm text-gray-700 mb-2">The amount of bail is to be regulated by the court, judge, magistrate or officer taking the bail; they are to be governed in the exercise of this discretion by the following rules:</p>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>The bail shall be sufficiently high to give reasonable assurance that the undertaking will be complied with.</li>
+                        <li>The power to require bail is not to be so used as to make it an instrument of oppression.</li>
+                        <li>The nature of the offense and the circumstances under which it was committed are to be considered.</li>
+                        <li>The ability to make bail is to be regarded, and proof may be taken upon this point.</li>
+                        <li>The future safety of a victim of the alleged offense and the community shall be considered.</li>
+                    </ul>
+                     <p class="text-sm mt-2"><strong>Denial of Bail:</strong> Bail can be denied in specific circumstances, such as for violations of certain court orders or conditions of bond in a family violence case (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.17.htm#17.152" target="_blank" class="text-blue-600 hover:underline">CCP 17.152</a>).</p>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Victim Rights & Emergency Protection</h2>
+                     <p class="text-sm text-gray-700 mb-2">Victims have general rights to be protected, informed, and present at all public court proceedings (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.56A.htm#56A.051" target="_blank" class="text-blue-600 hover:underline">CCP 56A.051</a>). Victims of sexual assault, stalking, or trafficking have additional rights, including the right to a pseudonym and to have an advocate present during forensic exams (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.56A.htm#56A.052" target="_blank" class="text-blue-600 hover:underline">CCP 56A.052</a>).</p>
+                     <p class="text-sm text-gray-700">A magistrate may issue an Order for Emergency Protection (EPO) at a bail hearing after an arrest for an offense involving family violence or sexual assault (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.17.htm#17.292" target="_blank" class="text-blue-600 hover:underline">CCP 17.292</a>).</p>
+                </div>
+            </div>
+
+            <!-- Knowledge Check Tab -->
+            <div id="knowledge-check" class="tab-content">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Knowledge Check</h2>
+                    <p class="mb-6 text-gray-600">Test your understanding of the material.</p>
+                    <div id="quiz-container" class="space-y-8">
+                        <!-- Questions will be dynamically inserted here -->
+                    </div>
+                    <div class="mt-8 text-center">
+                        <button id="check-answers-btn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors">Check Answers</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resources Tab -->
+            <div id="resources" class="tab-content">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Statutory & Case Law Resources</h2>
+                    <p class="mb-6 text-gray-600">Quick links to the Texas Codes and U.S. Supreme Court cases referenced in this guide.</p>
+                    <div id="resources-list" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-sm">
+                        <!-- Links will be dynamically inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('#tabs button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                });
+            });
+
+            // --- QUIZ DATA ---
+            const quizData = [
+                {
+                    question: "1. Which level of proof is required for an officer to make an arrest or conduct a search?",
+                    options: ["Mere Suspicion", "Reasonable Suspicion", "Probable Cause", "Proof Beyond a Reasonable Doubt"],
+                    answer: "Probable Cause",
+                    explanation: "Probable Cause is the standard for arrests and searches, requiring facts sufficient to warrant a belief that a crime has been committed."
+                },
+                {
+                    question: "2. An officer detains a person for questioning based on articulable facts that criminal activity is afoot. This is known as a(n):",
+                    options: ["Consensual Encounter", "Arrest", "Investigatory Stop (Terry Stop)", "Interrogation"],
+                    answer: "Investigatory Stop (Terry Stop)",
+                    explanation: "An Investigatory Stop, established in Terry v. Ohio, allows for temporary detention based on reasonable suspicion."
+                },
+                {
+                    question: "3. An officer arrests a suspect and, before asking questions about the crime, must inform them of their rights. This is required by:",
+                    options: ["Terry v. Ohio", "Brinegar v. United States", "Miranda v. Arizona", "Payton v. New York"],
+                    answer: "Miranda v. Arizona",
+                    explanation: "Miranda v. Arizona established the requirement for police to advise suspects in custody of their rights before interrogation."
+                },
+                {
+                    question: "4. An officer is chasing a fleeing felon who runs into a house. Which exception to the warrant rule may allow the officer to enter the house?",
+                    options: ["Consent", "Plain View", "Exigent Circumstances (Fresh Pursuit)", "Automobile Exception"],
+                    answer: "Exigent Circumstances (Fresh Pursuit)",
+                    explanation: "The fresh pursuit of a fleeing felon is an exigent circumstance that can justify a warrantless entry into a residence."
+                },
+                {
+                    question: "5. A search warrant in Texas must be executed within how many days?",
+                    options: ["1 day", "3 days", "5 days", "10 days"],
+                    answer: "3 days",
+                    explanation: "CCP 18.06 states a search warrant must be executed within three whole days, excluding the day of its issuance and the day of its execution."
+                },
+                {
+                    question: "6. An officer sees a bag of marijuana on the passenger seat of a car during a lawful traffic stop. The officer can seize the marijuana under which doctrine?",
+                    options: ["Plain View Doctrine", "Carroll Doctrine", "Exclusionary Rule", "Fruit of the Poisonous Tree"],
+                    answer: "Plain View Doctrine",
+                    explanation: "The Plain View Doctrine allows an officer to seize contraband that is seen from a lawful vantage point and is immediately apparent as illegal."
+                },
+                {
+                    question: "7. An officer needs to get a warrant to arrest a suspect believed to be at a friend's house. According to Steagald v. U.S., what does the officer need?",
+                    options: ["Only an arrest warrant for the suspect.", "Only a search warrant for the friend's house.", "An arrest warrant and a search warrant.", "Verbal permission from a magistrate."],
+                    answer: "An arrest warrant and a search warrant.",
+                    explanation: "Steagald v. U.S. requires officers to obtain a search warrant to look for a suspect in a third party's home, in addition to having an arrest warrant for the suspect."
+                },
+                 {
+                    question: "8. A citizen may make a warrantless arrest for which of the following offenses committed in their view?",
+                    options: ["Any traffic violation", "A Class C misdemeanor theft", "A felony or an offense against the public peace", "Any offense"],
+                    answer: "A felony or an offense against the public peace",
+                    explanation: "CCP 14.01 allows any person to arrest without a warrant for a felony or an offense against the public peace committed in their presence."
+                },
+                {
+                    question: "9. Which of the following is NOT a required requisite of a valid arrest warrant under CCP 15.02?",
+                    options: ["Issued in the name of 'The State of Texas'", "Signed by the magistrate", "The officer's home address", "Name or description of the accused"],
+                    answer: "The officer's home address",
+                    explanation: "The officer's personal information is not a requisite for an arrest warrant. The warrant must name the accused, state the offense, be issued in the name of the state, and be signed by a magistrate."
+                },
+                 {
+                    question: "10. An officer stops a car based on a hunch that the driver 'looks suspicious'. Any evidence found during this stop is likely to be suppressed because the officer lacked:",
+                    options: ["Mere suspicion", "Reasonable suspicion", "Probable cause", "A warrant"],
+                    answer: "Reasonable suspicion",
+                    explanation: "A traffic stop is a detention that requires at least reasonable suspicion. A mere hunch is not enough to justify the stop."
+                },
+                 {
+                    question: "11. 'The security given by the accused that he will appear and answer before the proper court' is the definition of:",
+                    options: ["A complaint", "An indictment", "Bail", "A summons"],
+                    answer: "Bail",
+                    explanation: "This is the definition of 'Bail' as defined in CCP 17.01."
+                },
+                {
+                    question: "12. If a person in custody requests an attorney, interrogation must cease until:",
+                    options: ["The person changes their mind", "A supervisor arrives", "An attorney is present", "24 hours have passed"],
+                    answer: "An attorney is present",
+                    explanation: "Once the right to counsel is invoked, all questioning must stop until an attorney is present."
+                },
+                {
+                    question: "13. What is the highest level of proof, required for a criminal conviction?",
+                    options: ["Probable Cause", "Reasonable Suspicion", "Preponderance of the Evidence", "Proof Beyond a Reasonable Doubt"],
+                    answer: "Proof Beyond a Reasonable Doubt",
+                    explanation: "Proof Beyond a Reasonable Doubt is the legal standard required for a jury to find a defendant guilty in a criminal trial."
+                },
+                {
+                    question: "14. An officer is granted verbal consent to search a home but leaves the homeowner handcuffed in the back of a patrol car during the search. Why might this consent be challenged in court?",
+                    options: ["Because the consent was not written", "Because the homeowner could not withdraw consent", "Because the officer did not have a warrant", "Because the homeowner was under arrest"],
+                    answer: "Because the homeowner could not withdraw consent",
+                    explanation: "For consent to be valid, the person must have the ability to revoke it at any time. Being secured in a vehicle prevents this, making the consent potentially involuntary."
+                },
+                 {
+                    question: "15. An officer arrests a person for Public Intoxication. Which of the following is NOT one of the required elements of PC 49.02?",
+                    options: ["In a public place", "To the degree that the person may endanger the person or another", "Appears in a public place while intoxicated", "Holding an open container of alcohol"],
+                    answer: "Holding an open container of alcohol",
+                    explanation: "While often related, holding an open container is a separate offense and not a required element for Public Intoxication under PC 49.02."
+                }
+            ];
+
+            const quizContainer = document.getElementById('quiz-container');
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'quiz-question';
+                let optionsHtml = q.options.map(option => `
+                    <label class="block"><input type="radio" name="q${index}" value="${option}" class="mr-2">${option}</label>
+                `).join('');
+                questionDiv.innerHTML = `
+                    <p class="font-semibold mb-2">${q.question}</p>
+                    <div class="space-y-2">${optionsHtml}</div>
+                    <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                `;
+                quizContainer.appendChild(questionDiv);
+            });
+
+            document.getElementById('check-answers-btn').addEventListener('click', () => {
+                quizData.forEach((q, index) => {
+                    const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                    const feedback = document.querySelectorAll('.feedback')[index];
+                    feedback.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+                    if (selected && selected.value === q.answer) {
+                        feedback.textContent = `Correct! ${q.explanation}`;
+                        feedback.classList.add('bg-green-100', 'text-green-800');
+                    } else {
+                        feedback.textContent = `Incorrect. The correct answer is "${q.answer}". ${q.explanation}`;
+                        feedback.classList.add('bg-red-100', 'text-red-800');
+                    }
+                });
+            });
+
+            // --- RESOURCES LIST ---
+            const resources = [
+                // Penal Code
+                { name: "PC 1.07", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.1.htm#1.07" },
+                { name: "PC 2.01", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.2.htm#2.01" },
+                { name: "PC 2.02", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.2.htm#2.02" },
+                { name: "PC 38.01", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.38.htm#38.01" },
+                // Code of Criminal Procedure
+                { name: "CCP 1.21", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.1.htm#1.21" },
+                { name: "CCP 11.21", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.11.htm#11.21" },
+                { name: "CCP 11.22", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.11.htm#11.22" },
+                { name: "CCP 14.01", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.14.htm#14.01" },
+                { name: "CCP 14.02", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.14.htm#14.02" },
+                { name: "CCP 14.03", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.14.htm#14.03" },
+                { name: "CCP 14.031", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.14.htm#14.031" },
+                { name: "CCP 14.04", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.14.htm#14.04" },
+                { name: "CCP 14.05", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.14.htm#14.05" },
+                { name: "CCP 14.051", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.14.htm#14.051" },
+                { name: "CCP 14.06", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.14.htm#14.06" },
+                { name: "CCP 15.01", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.15.htm#15.01" },
+                { name: "CCP 15.02", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.15.htm#15.02" },
+                { name: "CCP 15.04", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.15.htm#15.04" },
+                { name: "CCP 15.05", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.15.htm#15.05" },
+                { name: "CCP 15.16", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.15.htm#15.16" },
+                { name: "CCP 15.17", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.15.htm#15.17" },
+                { name: "CCP 15.22", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.15.htm#15.22" },
+                 { name: "CCP 15.24", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.15.htm#15.24" },
+                { name: "CCP 15.25", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.15.htm#15.25" },
+                { name: "CCP 17.01", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.17.htm#17.01" },
+                { name: "CCP 17.033", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.17.htm#17.033" },
+                { name: "CCP 17.15", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.17.htm#17.15" },
+                { name: "CCP 17.152", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.17.htm#17.152" },
+                { name: "CCP 17.292", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.17.htm#17.292" },
+                { name: "CCP 18.01", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.18.htm#18.01" },
+                { name: "CCP 18.02", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.18.htm#18.02" },
+                { name: "CCP 18.021", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.18.htm#18.021" },
+                { name: "CCP 18.0215", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.18.htm#18.0215" },
+                { name: "CCP 18.06", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.18.htm#18.06" },
+                { name: "CCP 18.08", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.18.htm#18.08" },
+                { name: "CCP 18.11", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.18.htm#18.11" },
+                { name: "CCP 18.16", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.18.htm#18.16" },
+                { name: "CCP 38.22", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.38.htm#38.22" },
+                { name: "CCP 56A.051", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.56A.htm#56A.051" },
+                { name: "CCP 56A.052", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.56A.htm#56A.052" },
+                // Federal Law & Case Law
+                { name: "22 USC 254", url: "https://www.law.cornell.edu/uscode/text/22/254d" },
+                { name: "Brinegar v. U.S.", url: "https://supreme.justia.com/cases/federal/us/338/160/" },
+                { name: "Carroll v. U.S.", url: "https://supreme.justia.com/cases/federal/us/267/132/" },
+                { name: "Florida v. Royer", url: "https://supreme.justia.com/cases/federal/us/460/491/" },
+                { name: "Kentucky v. King", url: "https://supreme.justia.com/cases/federal/us/563/452/" },
+                { name: "Miranda v. Arizona", url: "https://supreme.justia.com/cases/federal/us/384/436/" },
+                { name: "Payton v. New York", url: "https://supreme.justia.com/cases/federal/us/445/573/" },
+                { name: "Steagald v. U.S.", url: "https://supreme.justia.com/cases/federal/us/451/204/" },
+                { name: "Terry v. Ohio", url: "https://supreme.justia.com/cases/federal/us/392/1/" },
+                { name: "U.S. v. Santana", url: "https://supreme.justia.com/cases/federal/us/427/38/" }
+            ];
+            const resourcesList = document.getElementById('resources-list');
+            // Sort resources alphabetically by name
+            resources.sort((a, b) => a.name.localeCompare(b.name));
+            resources.forEach(res => {
+                const link = document.createElement('a');
+                link.href = res.url;
+                link.target = '_blank';
+                link.className = 'text-blue-600 hover:underline';
+                link.textContent = res.name;
+                resourcesList.appendChild(link);
+            });
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Guide: Fitness, Wellness, and Stress Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --header-bg: #1f2937;
+            --bg-color: #f3f4f6;
+            --tab-active-bg: #3b82f6;
+            --tab-active-text: #ffffff;
+            --card-bg: #ffffff;
+            --text-color: #111827;
+            --link-color: #2563eb;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://rsms.me/inter/inter.css');
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab.active {
+            background-color: var(--tab-active-bg);
+            color: var(--tab-active-text);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tab {
+            transition: all 0.3s ease-in-out;
+        }
+        .heat-table td, .heat-table th {
+            border: 1px solid #e5e7eb;
+            padding: 0.5rem;
+            text-align: center;
+        }
+        .heat-level-caution { background-color: #fef08a; } /* Yellow */
+        .heat-level-extreme-caution { background-color: #fed7aa; } /* Orange */
+        .heat-level-danger { background-color: #fca5a5; } /* Red */
+        .heat-level-extreme-danger { background-color: #ef4444; color: white; } /* Darker Red */
+        .hassle-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="bg-gray-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">
+                <i class="fas fa-heartbeat mr-2"></i>Fitness, Wellness, & Stress Management
+            </h1>
+            <p class="text-sm text-gray-300">BPOC Chapter 3 | TCOLE Preparation</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-4 md:p-6">
+        <!-- Tab Navigation -->
+        <div class="mb-6 bg-white rounded-lg shadow-md overflow-x-auto">
+            <nav id="tabs" class="flex flex-row space-x-1 p-2">
+                <button data-tab="fitness" class="tab active flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-dumbbell mr-2"></i> <span class="hidden md:inline">Fitness</span>
+                </button>
+                <button data-tab="nutrition" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-apple-alt mr-2"></i> <span class="hidden md:inline">Nutrition</span>
+                </button>
+                <button data-tab="stress" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-brain mr-2"></i> <span class="hidden md:inline">Stress</span>
+                </button>
+                <button data-tab="critical-incidents" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-exclamation-triangle mr-2"></i> <span class="hidden md:inline">Critical Incidents</span>
+                </button>
+                <button data-tab="substance-abuse" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-wine-bottle mr-2"></i> <span class="hidden md:inline">Substance Abuse</span>
+                </button>
+                 <button data-tab="self-assessments" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-clipboard-check mr-2"></i> <span class="hidden md:inline">Self-Assessments</span>
+                </button>
+                <button data-tab="knowledge-check" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-question-circle mr-2"></i> <span class="hidden md:inline">Knowledge Check</span>
+                </button>
+                <button data-tab="resources" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-link mr-2"></i> <span class="hidden md:inline">Resources</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Tab Content -->
+        <div id="tab-contents">
+            <!-- Fitness Tab -->
+            <div id="fitness" class="tab-content active space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Fitness & Wellness Concepts</h2>
+                    <p class="mb-2"><strong>Physical Fitness:</strong> The condition of the body that enables an individual to use their body in activities without undue fatigue and exhaustion. It equates to performance and readiness.</p>
+                    <p><strong>Wellness:</strong> Consists of a person's health/disease status and risk potential. It's a state of positive well-being, not just the absence of disease. A person can be physically fit but not "well".</p>
+                    <p class="mt-4 text-sm"><strong>Law Enforcement Fitness Status:</strong> Officers are often hired at an average or above-average fitness level, but incumbent field officers are generally below average in fitness compared to the general population.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">The Wellness Continuum</h2>
+                    <div class="flex flex-col md:flex-row gap-6 items-center">
+                        <div class="flex-1">
+                            <h4 class="font-semibold">Improving Your Position on the Wellness Continuum:</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>Stop harmful drugs, smoking, and chewing tobacco.</li>
+                                <li>Limit alcohol.</li>
+                                <li>Exercise regularly.</li>
+                                <li>Eat less animal fat, cholesterol, and sodium.</li>
+                                <li>Eat more complex carbohydrates and drink more water.</li>
+                                <li>Achieve and maintain a healthy body weight.</li>
+                                <li>Get regular medical check-ups and self-exams.</li>
+                            </ul>
+                        </div>
+                        <div class="flex-shrink-0">
+                           <img src="https://i.imgur.com/G5g2mJc.png" alt="Pie chart showing leading causes of death in the US: Heart Disease 39%, Cancer 22%, Stroke 7%, Accidents 5%, Other 27%" class="w-64">
+                           <p class="text-center text-xs mt-2 text-gray-600">Leading Cause of Death in US</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Principles of an Exercise Program</h2>
+                    <div class="space-y-4">
+                        <div><h4 class="font-semibold">Progressive Overload</h4><p class="text-sm text-gray-700">For fitness to improve, the demands placed on the body must be greater than those of daily activities. As the body adapts, the demand must be gradually increased.</p></div>
+                        <div><h4 class="font-semibold">Regularity and Recovery</h4><p class="text-sm text-gray-700">An exercise program should be consistent, but also provide time for the body to recover. Fitness begins to decline after 96 hours of inactivity. Allow 48 hours between heavy exercises targeting the same muscle groups.</p></div>
+                        <div><h4 class="font-semibold">Specificity</h4><p class="text-sm text-gray-700">The body adapts specifically to the type of demand placed on it. For example, running improves endurance, while strength training improves the ability to handle physical encounters.</p></div>
+                        <div><h4 class="font-semibold">Balance</h4><p class="text-sm text-gray-700">The program should work opposing muscles (e.g., biceps and triceps) and include a balance of cardiovascular, strength, and flexibility training.</p></div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">FITT Guidelines for Training</h2>
+                    <div class="space-y-6">
+                        <div class="p-4 border rounded-lg">
+                            <h4 class="font-bold text-lg">Cardiovascular Training</h4>
+                            <p class="text-sm text-gray-600 mb-2">Purpose: Improve efficiency of heart, lungs, and blood vessels. Controls weight, increases energy and endurance.</p>
+                            <ul class="text-sm space-y-1">
+                                <li><strong>Frequency:</strong> Minimum 3 days a week.</li>
+                                <li><strong>Intensity:</strong> Target Heart Rate (THR) zone of 60-80% of Predicted Maximum.</li>
+                                <li><strong>Time:</strong> Minimum of 20 minutes at THR.</li>
+                                <li><strong>Type:</strong> Aerobic exercises (running, swimming, cycling).</li>
+                            </ul>
+                        </div>
+                        <div class="p-4 border rounded-lg">
+                            <h4 class="font-bold text-lg">Strength Training</h4>
+                            <p class="text-sm text-gray-600 mb-2">Purpose: Increase lean muscle mass and strength; enhance performance, decrease injuries, and improve professional presence.</p>
+                             <ul class="text-sm space-y-1">
+                                <li><strong>Frequency:</strong> 2-4 days a week (allow 48 hours rest for same muscle groups).</li>
+                                <li><strong>Intensity:</strong> Muscle endurance (low weight, 12-20 reps) or muscle strength (high weight, 8-12 reps).</li>
+                                <li><strong>Time:</strong> Time to complete 1-3 sets.</li>
+                                <li><strong>Type:</strong> Weight training or calisthenics.</li>
+                            </ul>
+                        </div>
+                         <div class="p-4 border rounded-lg">
+                            <h4 class="font-bold text-lg">Flexibility Training</h4>
+                            <p class="text-sm text-gray-600 mb-2">Purpose: Prevent injuries, improve posture, reduce soreness, and increase range of motion.</p>
+                             <ul class="text-sm space-y-1">
+                                <li><strong>Frequency:</strong> 3-7 days a week.</li>
+                                <li><strong>Intensity:</strong> Hold to an easy point of tension (do not bounce).</li>
+                                <li><strong>Time:</strong> 10-20 seconds per stretch.</li>
+                                <li><strong>Type:</strong> Best done after cardiovascular exercise. Slow, sustained static stretches.</li>
+                            </ul>
+                        </div>
+                         <div class="p-4 border rounded-lg">
+                            <h4 class="font-bold text-lg">Anaerobic Training</h4>
+                            <p class="text-sm text-gray-600 mb-2">Purpose: Increase ability for short, intense bursts of maximum effort (sprinting, pushing, defensive tactics). Essential for officer survival.</p>
+                             <ul class="text-sm space-y-1">
+                                <li><strong>Frequency:</strong> 1-2 days a week.</li>
+                                <li><strong>Intensity:</strong> All-out effort (90% of Max HR).</li>
+                                <li><strong>Time:</strong> Repeat short bursts (20-60 seconds) followed by rest.</li>
+                                <li><strong>Type:</strong> Sprints (running, cycling, stair climbing).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nutrition Tab -->
+            <div id="nutrition" class="tab-content space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Nutrition and Performance</h2>
+                    <p class="mb-4">Proper nutrition is key to performance. The right fuel ensures energy for essential job tasks, such as producing a 100% energy output for a few seconds, fueling an 18-hour search and rescue shift, or staying alert in the early morning hours.</p>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-bold">Fuel Nutrients</h4>
+                            <ul class="list-disc list-inside text-gray-700">
+                                <li><strong>Carbohydrates (55-60%):</strong> Body's preferred energy source. Complex carbs (potatoes, whole grains) provide slow, gradual energy. Simple carbs (sweets) provide quick but short-lived energy.</li>
+                                <li><strong>Protein (10-15%):</strong> "Building blocks" for repairing tissue. Slower energy source than carbs, but lasts longer.</li>
+                                <li><strong>Fats (15-30%):</strong> Concentrated energy source. Choose unsaturated fats (olive oil, avocados) over saturated fats. Unsaturated fats help control cholesterol.</li>
+                            </ul>
+                        </div>
+                        <div>
+                             <h4 class="font-bold">Cholesterol & Non-Fuel Nutrients</h4>
+                            <ul class="list-disc list-inside text-gray-700">
+                                <li><strong>HDL Cholesterol:</strong> "Good" cholesterol that helps clear arteries.</li>
+                                <li><strong>LDL Cholesterol:</strong> "Bad" cholesterol that tends to clog arteries.</li>
+                                <li><strong>Vitamins & Minerals:</strong> Essential for metabolism and growth.</li>
+                                <li><strong>Water:</strong> The most important mineral. Drink 6-8 glasses per day.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Healthy Nutritional Strategies</h2>
+                    <div class="flex flex-col md:flex-row gap-6 items-center">
+                        <div class="flex-1">
+                             <h4 class="font-semibold mb-2">Dietary Guidelines:</h4>
+                            <div class="grid grid-cols-2 gap-4 text-sm">
+                                <div><h5 class="font-bold">Foods to Increase:</h5><ul class="list-disc list-inside"><li>Make half your plate fruits & vegetables.</li><li>Make half your grains whole grains.</li><li>Switch to fat-free or low-fat milk.</li></ul></div>
+                                <div><h5 class="font-bold">Foods to Reduce:</h5><ul class="list-disc list-inside"><li>Foods high in sodium (soups, frozen meals).</li><li>Sugary drinks (drink water instead).</li><li>Saturated fat, cholesterol, and trans fats.</li></ul></div>
+                            </div>
+                            <p class="mt-4 text-sm font-semibold">The 80/20 Rule: Eat healthy 80% of the time, but allow for "treats" 20% of the time to make a healthy plan sustainable.</p>
+                        </div>
+                        <div class="flex-shrink-0">
+                           <a href="https://www.myplate.gov/" target="_blank"><img src="https://www.myplate.gov/sites/default/files/MyPlate-Device-Icon-150px.png" alt="Choose MyPlate icon" class="w-48 h-48"></a>
+                           <p class="text-center text-sm mt-2"><a href="https://www.myplate.gov/" target="_blank" class="text-blue-600 hover:underline">ChooseMyPlate.gov</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stress Tab -->
+            <div id="stress" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Understanding Stress</h2>
+                     <h4 class="font-semibold mt-3">Concept Definition:</h4>
+                    <p class="text-gray-700 text-sm">Stress is the natural reaction of the mind and body to a demand placed on it. It's not inherently bad; unmanaged stress, however, can seriously affect physical and mental well-being.</p>
+                    <h4 class="font-semibold mt-3">Types of Stress (Checklist):</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Eustress:</strong> Positive stress (promotion, marriage, achievement).</li>
+                        <li><strong>Distress:</strong> Negative stress (injury, illness, divorce).</li>
+                        <li><strong>Acute Stress:</strong> Short-term with a quick resolution (a threatening dog). The body handles this best.</li>
+                        <li><strong>Chronic Stress:</strong> Prolonged, unrelieved stress (cumulative stress) that leads to wear and tear.</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">The "Fight or Flight" Response & Symptoms</h2>
+                     <p class="mb-4 text-sm">When the Central Nervous System perceives a threat, it activates the <strong>Sympathetic Nervous System</strong> (accelerator) and reduces the <strong>Parasympathetic Nervous System</strong> (brake).</p>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold">Long-Term Physical Symptoms</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>Digestive disorders</li>
+                                <li>Headaches</li>
+                                <li>Excessive Illnesses</li>
+                                <li>High Blood Pressure</li>
+                                <li>Sleep Disorders</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Cognitive/Emotional Symptoms</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>Cognitive Impairment (impaired decision making, memory)</li>
+                                <li>Alcoholism / Suicide</li>
+                                <li>Abrupt change in behavior</li>
+                                <li>Rapid mood changes</li>
+                                <li>Overly suspicious or irritable</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Stress Management Strategies</h2>
+                    <h4 class="font-semibold">Three Basic Approaches: Avoid, Alter, Adapt/Accept</h4>
+                    <div class="text-sm space-y-3">
+                        <p><strong>Avoid:</strong> Reduce exposure to stressors (e.g., leave early to avoid traffic, set boundaries, say no).</p>
+                        <p><strong>Alter:</strong> Minimize the physiological response by changing something (e.g., problem solving, direct communication).</p>
+                        <div>
+                            <p><strong>Adapt/Accept:</strong> Build resistance or change perspective.</p>
+                            <ul class="list-disc list-inside ml-4 mt-1">
+                                <li><strong>Psychological:</strong> Nurture hobbies, take time away from work.</li>
+                                <li><strong>Physical:</strong> Get rest, exercise to "play out" the fight-or-flight response, eat well.</li>
+                                <li><strong>Social:</strong> Engage with family, friends, and community.</li>
+                                <li><strong>Spiritual/Faith:</strong> Nurture this area to give meaning to life.</li>
+                                <li><strong>Change Perspective:</strong> Use positive self-talk and humor.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Hypervigilance Rollercoaster</h2>
+                    <p class="text-sm"><strong>Hypervigilance</strong> is the elevated alertness required for officer survival. Off-duty, this can lead to a "crash," where the officer becomes fatigued, detached, and emotionally withdrawn as the Parasympathetic system takes over. This imbalance can cause problems in personal relationships and lead to the officer's primary identity revolving around their job.</p>
+                </div>
+            </div>
+
+            <!-- Critical Incidents Tab -->
+            <div id="critical-incidents" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Critical Incidents & PTSD</h2>
+                    <h4 class="font-semibold mt-3">Concept Definitions:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Critical Incident Stress (CIS):</strong> A "normal" response to an abnormal, extreme event. Causes psychological and physical discomfort for 2 days to 1 month.</li>
+                        <li><strong>Post Traumatic Stress Disorder (PTSD):</strong> Occurs when CIS symptoms are prolonged past 1 month. The person is unable to make the event part of their past and may require professional help. The response to a similar stressor is similar in intensity to the original event (e.g., a car backfiring triggers the same fear as the original gunfight, not just a memory).</li>
+                    </ul>
+                </div>
+
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Effects of Stress on Performance</h2>
+                    <p class="text-sm mb-4">The <strong>"Inverted U Principle"</strong> shows that as heart rate increases, performance improves, then drops.</p>
+                     <img src="https://i.imgur.com/uG5kY2y.png" alt="Inverted U graph showing performance level vs heart rate." class="mx-auto w-full max-w-md my-4">
+                    <h4 class="font-semibold">Symptoms of High Heart Rate Engagement:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>~115 BPM:</strong> Fine motor skills deteriorate.</li>
+                        <li><strong>~145 BPM:</strong> Complex motor skills deteriorate.</li>
+                        <li><strong>~175+ BPM:</strong> Auditory changes, tunnel vision, loss of depth perception. Time may appear to slow down. Irrational behavior may occur.</li>
+                        <li><strong>Memory Lapses:</strong> It may be difficult to remember details like number of shots fired. Most memory returns in 24-48 hours. Reports written during this time should be considered preliminary.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Post-Incident Support & Suicide Awareness</h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold">How to Assist a Coworker After a Critical Incident</h4>
+                            <ul class="list-disc list-inside text-sm">
+                                <li>Assist with basic needs first (ensure safety, notify family).</li>
+                                <li>Provide physical presence; listen without offering answers.</li>
+                                <li>Give continued reassurance that what they are experiencing is normal.</li>
+                                <li>Assist in keeping a routine (rest, exercise, eating).</li>
+                                <li>Connect them with resources (CISM, EAP, Peer Support).</li>
+                            </ul>
+                        </div>
+                        <div>
+                             <h4 class="font-semibold">Suicide Statistics</h4>
+                             <ul class="list-disc list-inside text-sm">
+                                <li>90% of people who die by suicide have a diagnosable/treatable disorder.</li>
+                                <li>Men are nearly 4x more likely to die by suicide than women.</li>
+                                <li>Leading causes for officer suicide are marital/relational problems and legal trouble.</li>
+                                <li>Rate increases drastically at retirement.</li>
+                             </ul>
+                        </div>
+                    </div>
+                    <div class="mt-4 border-t pt-4">
+                        <h4 class="font-semibold">AID LIFE - Intervention Strategy</h4>
+                        <p class="text-sm text-gray-700"><strong>A</strong>sk | <strong>I</strong>ntervene | <strong>D</strong>on't keep it a secret | <strong>L</strong>ocate help | <strong>I</strong>nform supervisor | <strong>F</strong>ind someone to stay with them | <strong>E</strong>xpedite</p>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Substance Abuse Tab -->
+            <div id="substance-abuse" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Alcohol & Drug Abuse in Law Enforcement</h2>
+                    <p class="text-sm mb-4">Law enforcement is not immune to substance abuse. High levels of stress, peer pressure, and isolation can be risk factors. Hypervigilance can also drive officers to seek extreme means (like alcohol) to relax.</p>
+                     <h4 class="font-semibold">Signs and Symptoms of Abuse:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>Failed attempts to cut back or quit.</li>
+                        <li>Declining performance at work.</li>
+                        <li>Feeling guilty about use or getting angry when confronted.</li>
+                        <li>Hiding alcohol or drugs.</li>
+                        <li>Blackouts or lapses in memory.</li>
+                        <li>Relationship, financial, or legal problems related to use.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Myths & Realities of Alcoholism</h2>
+                    <div class="text-sm space-y-2">
+                        <p><strong class="text-red-600">Myth:</strong> Once an alcoholic, always an alcoholic.</p>
+                        <p><strong class="text-green-600">Reality:</strong> Alcoholism is a disease for which recovery is possible with a dedicated program.</p>
+                        <p><strong class="text-red-600">Myth:</strong> Alcohol helps to sleep.</p>
+                        <p><strong class="text-green-600">Reality:</strong> It may help with sleep onset, but it interferes with necessary REM sleep, causing impairment.</p>
+                        <p><strong class="text-red-600">Myth:</strong> All people experiencing alcoholism are "skid-row drunks."</p>
+                        <p><strong class="text-green-600">Reality:</strong> Many hold high-level jobs and function well for years before their performance is noticeably affected.</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Assisting a Coworker</h2>
+                     <p class="text-sm mb-2">The responsibility of an officer is twofold: to evaluate their own use and to assist coworkers who may have a problem. Avoiding the problem only contributes to the abuser's denial.</p>
+                    <h4 class="font-semibold">How to Help:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>Be aware and recognize the problem.</li>
+                        <li>Urge the person to seek help.</li>
+                        <li>Encourage them after they seek help.</li>
+                        <li>Focus on performance, safety, and efficiency—not on making a "diagnosis."</li>
+                        <li>If they refuse help, discuss your safety concerns with a supervisor.</li>
+                        <li>Consider resources like EAP, peer support, or professional programs.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Self-Assessments Tab -->
+            <div id="self-assessments" class="tab-content space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">PAR-Q (Physical Activity Readiness Questionnaire)</h2>
+                    <p class="text-sm mb-4">This tool helps determine if you should seek medical screening before becoming much more physically active.</p>
+                    <form id="par-q-form" class="text-sm space-y-2">
+                        <div><label class="flex items-center"><input type="checkbox" class="mr-2"> Has a doctor ever said you have a heart condition and should only do physical activity recommended by a doctor?</label></div>
+                        <div><label class="flex items-center"><input type="checkbox" class="mr-2"> Do you feel pain in your chest when you do physical activity?</label></div>
+                        <div><label class="flex items-center"><input type="checkbox" class="mr-2"> In the past month, have you had chest pain when you were NOT doing physical activity?</label></div>
+                        <div><label class="flex items-center"><input type="checkbox" class="mr-2"> Do you often lose your balance, feel faint, or have spells of severe dizziness?</label></div>
+                        <div><label class="flex items-center"><input type="checkbox" class="mr-2"> Has a doctor ever said your blood pressure was too high (or is it over 144/94)?</label></div>
+                        <div><label class="flex items-center"><input type="checkbox" class="mr-2"> Do you have a bone or joint problem that could be made worse by a change in physical activity?</label></div>
+                        <div><label class="flex items-center"><input type="checkbox" class="mr-2"> Are you over age 65 and not accustomed to vigorous exercise?</label></div>
+                        <div id="par-q-result" class="mt-4 p-3 rounded-lg hidden"></div>
+                    </form>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Holmes and Rahe Stress Scale</h2>
+                    <p class="text-sm mb-4">Add the "Life Change Units" for events that have occurred in the past year to estimate how stress may affect your health.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        <label class="flex items-center"><input type="checkbox" value="100" class="stress-event mr-2"> Death of a Spouse</label>
+                        <label class="flex items-center"><input type="checkbox" value="73" class="stress-event mr-2"> Divorce</label>
+                        <label class="flex items-center"><input type="checkbox" value="65" class="stress-event mr-2"> Marital Separation</label>
+                        <label class="flex items-center"><input type="checkbox" value="63" class="stress-event mr-2"> Imprisonment</label>
+                        <label class="flex items-center"><input type="checkbox" value="63" class="stress-event mr-2"> Death of a Close Family Member</label>
+                        <label class="flex items-center"><input type="checkbox" value="53" class="stress-event mr-2"> Personal Injury or Illness</label>
+                        <label class="flex items-center"><input type="checkbox" value="50" class="stress-event mr-2"> Marriage</label>
+                        <label class="flex items-center"><input type="checkbox" value="47" class="stress-event mr-2"> Dismissal from Work</label>
+                        <label class="flex items-center"><input type="checkbox" value="45" class="stress-event mr-2"> Marital Reconciliation</label>
+                        <label class="flex items-center"><input type="checkbox" value="45" class="stress-event mr-2"> Retirement</label>
+                    </div>
+                    <div class="mt-4 p-3 rounded-lg bg-gray-100">
+                        <strong>Total Score: <span id="stress-score">0</span></strong>
+                        <p id="stress-result" class="text-sm font-semibold"></p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Hassle Test</h2>
+                    <p class="text-sm mb-4">Circle hassles from the past month and rate their severity (1-3). A total score over 30 indicates a risk for stress-related conditions.</p>
+                    <div id="hassle-container" class="text-sm max-h-64 overflow-y-auto pr-2"></div>
+                     <div class="mt-4 p-3 rounded-lg bg-gray-100">
+                        <strong>Total Hassle Score: <span id="hassle-score">0</span></strong>
+                        <p id="hassle-result" class="text-sm font-semibold"></p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Self-Evaluation of Personal Alcohol Usage</h2>
+                    <p class="text-sm mb-4">If you answer "Yes" to one or more, you should think seriously about getting help.</p>
+                     <form id="alcohol-eval-form" class="text-sm space-y-2">
+                        <div><label class="flex items-center"><input type="checkbox" class="alcohol-eval-q mr-2"> Tried to cut down on your alcohol intake?</label></div>
+                        <div><label class="flex items-center"><input type="checkbox" class="alcohol-eval-q mr-2"> Angry at someone for telling you that you drink too much?</label></div>
+                        <div><label class="flex items-center"><input type="checkbox" class="alcohol-eval-q mr-2"> Felt guilty about your drinking?</label></div>
+                        <div><label class="flex items-center"><input type="checkbox" class="alcohol-eval-q mr-2"> Needed a drink to get going in the morning?</label></div>
+                        <div><label class="flex items-center"><input type="checkbox" class="alcohol-eval-q mr-2"> Had blackouts or can't remember part of the evening before?</label></div>
+                         <div id="alcohol-eval-result" class="mt-4 p-3 rounded-lg hidden"></div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Knowledge Check Tab -->
+            <div id="knowledge-check" class="tab-content">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Knowledge Check</h2>
+                    <p class="mb-6 text-gray-600">Test your understanding of the material.</p>
+                    <div id="quiz-container" class="space-y-8">
+                        <!-- Question 1 -->
+                        <div class="quiz-question">
+                            <p class="font-semibold mb-2">1. The natural reaction of the mind and body to a demand placed on it, which can be pleasant or unpleasant, is the definition of:</p>
+                            <div class="space-y-2">
+                                <label class="block"><input type="radio" name="q1" value="a" class="mr-2">a) Wellness</label>
+                                <label class="block"><input type="radio" name="q1" value="b" class="mr-2">b) Stress</label>
+                                <label class="block"><input type="radio" name="q1" value="c" class="mr-2">c) Fitness</label>
+                                <label class="block"><input type="radio" name="q1" value="d" class="mr-2">d) Eustress</label>
+                            </div>
+                            <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                        </div>
+
+                        <!-- Question 2 -->
+                        <div class="quiz-question">
+                            <p class="font-semibold mb-2">2. An officer wishes he could "take back the bullet" after a shooting. This is characteristic of which phase of transition after a traumatic event?</p>
+                            <div class="space-y-2">
+                                <label class="block"><input type="radio" name="q2" value="a" class="mr-2">a) Denial Phase</label>
+                                <label class="block"><input type="radio" name="q2" value="b" class="mr-2">b) Anger Phase</label>
+                                <label class="block"><input type="radio" name="q2" value="c" class="mr-2">c) Bargaining Phase</label>
+                                <label class="block"><input type="radio" name="q2" value="d" class="mr-2">d) Depression Phase</label>
+                            </div>
+                            <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                        </div>
+                        
+                        <!-- Question 3 -->
+                        <div class="quiz-question">
+                            <p class="font-semibold mb-2">3. The body's "brake" pedal, responsible for rest, digestion, and recovery, is the:</p>
+                            <div class="space-y-2">
+                                <label class="block"><input type="radio" name="q3" value="a" class="mr-2">a) Central Nervous System</label>
+                                <label class="block"><input type="radio" name="q3" value="b" class="mr-2">b) Parasympathetic Nervous System</label>
+                                <label class="block"><input type="radio" name="q3" value="c" class="mr-2">c) Adrenal System</label>
+                                <label class="block"><input type="radio" name="q3" value="d" class="mr-2">d) Sympathetic Nervous System</label>
+                            </div>
+                            <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                        </div>
+                        
+                        <!-- Question 4 -->
+                        <div class="quiz-question">
+                            <p class="font-semibold mb-2">4. According to the "Inverted U Principle," what is the first category of motor skills to deteriorate as heart rate increases under stress?</p>
+                            <div class="space-y-2">
+                                <label class="block"><input type="radio" name="q4" value="a" class="mr-2">a) Gross motor skills</label>
+                                <label class="block"><input type="radio" name="q4" value="b" class="mr-2">b) Fine motor skills</label>
+                                <label class="block"><input type="radio" name="q4" value="c" class="mr-2">c) Complex motor skills</label>
+                                <label class="block"><input type="radio" name="q4" value="d" class="mr-2">d) Anaerobic skills</label>
+                            </div>
+                            <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                        </div>
+
+                        <!-- Question 5 -->
+                        <div class="quiz-question">
+                            <p class="font-semibold mb-2">5. Which of these is NOT a recommended way to assist a coworker after a critical incident?</p>
+                            <div class="space-y-2">
+                                <label class="block"><input type="radio" name="q5" value="a" class="mr-2">a) Assist with basic needs like notifying family.</label>
+                                <label class="block"><input type="radio" name="q5" value="b" class="mr-2">b) Offer answers and explanations for why the event happened.</label>
+                                <label class="block"><input type="radio" name="q5" value="c" class="mr-2">c) Provide physical presence and listen.</label>
+                                <label class="block"><input type="radio" name="q5" value="d" class="mr-2">d) Connect them with resources like EAP or Peer Support.</label>
+                            </div>
+                            <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                        </div>
+
+                        <!-- Question 6 -->
+                        <div class="quiz-question">
+                            <p class="font-semibold mb-2">6. Which of the following is considered a component of *Motor Fitness* rather than Health-Related Fitness?</p>
+                            <div class="space-y-2">
+                                <label class="block"><input type="radio" name="q6" value="a" class="mr-2">a) Cardiovascular endurance</label>
+                                <label class="block"><input type="radio" name="q6" value="b" class="mr-2">b) Flexibility</label>
+                                <label class="block"><input type="radio" name="q6" value="c" class="mr-2">c) Agility</label>
+                                <label class="block"><input type="radio" name="q6" value="d" class="mr-2">d) Body Composition</label>
+                            </div>
+                            <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                        </div>
+
+                        <!-- Question 7 -->
+                        <div class="quiz-question">
+                            <p class="font-semibold mb-2">7. What is the recommended percentage of total daily calories that should come from carbohydrates for the average person?</p>
+                            <div class="space-y-2">
+                                <label class="block"><input type="radio" name="q7" value="a" class="mr-2">a) 10-15%</label>
+                                <label class="block"><input type="radio" name="q7" value="b" class="mr-2">b) 15-30%</label>
+                                <label class="block"><input type="radio" name="q7" value="c" class="mr-2">c) 35-45%</label>
+                                <label class="block"><input type="radio" name="q7" value="d" class="mr-2">d) 55-60%</label>
+                            </div>
+                            <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                        </div>
+
+                        <!-- Question 8 -->
+                        <div class="quiz-question">
+                            <p class="font-semibold mb-2">8. The elevated state of alertness required for officer survival, which can lead to a "crash" of fatigue and detachment when off-duty, is known as:</p>
+                            <div class="space-y-2">
+                                <label class="block"><input type="radio" name="q8" value="a" class="mr-2">a) Eustress</label>
+                                <label class="block"><input type="radio" name="q8" value="b" class="mr-2">b) Acute Stress</label>
+                                <label class="block"><input type="radio" name="q8" value="c" class="mr-2">c) Hypervigilance</label>
+                                <label class="block"><input type="radio" name="q8" value="d" class="mr-2">d) The Inverted U Principle</label>
+                            </div>
+                            <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                        </div>
+
+                        <!-- Question 9 -->
+                        <div class="quiz-question">
+                            <p class="font-semibold mb-2">9. An officer experiences severe, disruptive symptoms for three months after a traumatic event, where similar sounds trigger a response as intense as the original incident. This is characteristic of:</p>
+                            <div class="space-y-2">
+                                <label class="block"><input type="radio" name="q9" value="a" class="mr-2">a) Critical Incident Stress (CIS)</label>
+                                <label class="block"><input type="radio" name="q9" value="b" class="mr-2">b) Post Traumatic Stress Disorder (PTSD)</label>
+                                <label class="block"><input type="radio" name="q9" value="c" class="mr-2">c) Acute Stress</label>
+                                <label class="block"><input type="radio" name="q9" value="d" class="mr-2">d) Chronic Stress</label>
+                            </div>
+                            <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                        </div>
+
+                        <!-- Question 10 -->
+                        <div class="quiz-question">
+                            <p class="font-semibold mb-2">10. A coworker exhibits rapid mood swings, increased aggressiveness ("roid rage"), and is showing above-normal gains in muscle mass. These are potential symptoms of:</p>
+                            <div class="space-y-2">
+                                <label class="block"><input type="radio" name="q10" value="a" class="mr-2">a) Alcoholism</label>
+                                <label class="block"><input type="radio" name="q10" value="b" class="mr-2">b) Steroid abuse</label>
+                                <label class="block"><input type="radio" name="q10" value="c" class="mr-2">c) Chronic stress</label>
+                                <label class="block"><input type="radio" name="q10" value="d" class="mr-2">d) PTSD</label>
+                            </div>
+                            <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                        </div>
+
+                        <!-- Question 11 -->
+                        <div class="quiz-question">
+                            <p class="font-semibold mb-2">11. According to the principle of Regularity and Recovery, fitness begins to decline after how many hours of inactivity?</p>
+                            <div class="space-y-2">
+                                <label class="block"><input type="radio" name="q11" value="a" class="mr-2">a) 24 hours</label>
+                                <label class="block"><input type="radio" name="q11" value="b" class="mr-2">b) 48 hours</label>
+                                <label class="block"><input type="radio" name="q11" value="c" class="mr-2">c) 72 hours</label>
+                                <label class="block"><input type="radio" name="q11" value="d" class="mr-2">d) 96 hours</label>
+                            </div>
+                            <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                        </div>
+
+                        <!-- Question 12 -->
+                        <div class="quiz-question">
+                            <p class="font-semibold mb-2">12. Which type of cholesterol is considered "good" because it helps carry cholesterol to the liver and clear arteries?</p>
+                            <div class="space-y-2">
+                                <label class="block"><input type="radio" name="q12" value="a" class="mr-2">a) LDL Cholesterol</label>
+                                <label class="block"><input type="radio" name="q12" value="b" class="mr-2">b) VLDL Cholesterol</label>
+                                <label class="block"><input type="radio" name="q12" value="c" class="mr-2">c) HDL Cholesterol</label>
+                                <label class="block"><input type="radio" name="q12" value="d" class="mr-2">d) Total Cholesterol</label>
+                            </div>
+                            <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                        </div>
+
+                        <!-- Question 13 -->
+                        <div class="quiz-question">
+                            <p class="font-semibold mb-2">13. Experiencing frustration with the judicial system or negative media coverage are examples of which category of stressors?</p>
+                            <div class="space-y-2">
+                                <label class="block"><input type="radio" name="q13" value="a" class="mr-2">a) Internal to agency</label>
+                                <label class="block"><input type="radio" name="q13" value="b" class="mr-2">b) Stressors in the work itself</label>
+                                <label class="block"><input type="radio" name="q13" value="c" class="mr-2">c) Stressors confronting the individual officer</label>
+                                <label class="block"><input type="radio" name="q13" value="d" class="mr-2">d) Stress external to agency</label>
+                            </div>
+                            <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                        </div>
+
+                        <!-- Question 14 -->
+                        <div class="quiz-question">
+                            <p class="font-semibold mb-2">14. At what heart rate do complex motor skills, like complex ground fighting techniques, begin to deteriorate?</p>
+                            <div class="space-y-2">
+                                <label class="block"><input type="radio" name="q14" value="a" class="mr-2">a) Above 115 BPM</label>
+                                <label class="block"><input type="radio" name="q14" value="b" class="mr-2">b) Above 145 BPM</label>
+                                <label class="block"><input type="radio" name="q14" value="c" class="mr-2">c) Above 175 BPM</label>
+                                <label class="block"><input type="radio" name="q14" value="d" class="mr-2">d) Above 200 BPM</label>
+                            </div>
+                            <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                        </div>
+
+                        <!-- Question 15 -->
+                        <div class="quiz-question">
+                            <p class="font-semibold mb-2">15. Which of the following is a reality of alcoholism, countering a common myth?</p>
+                            <div class="space-y-2">
+                                <label class="block"><input type="radio" name="q15" value="a" class="mr-2">a) Alcohol helps people sleep soundly.</label>
+                                <label class="block"><input type="radio" name="q15" value="b" class="mr-2">b) Alcoholism is simply a lack of willpower.</label>
+                                <label class="block"><input type="radio" name="q15" value="c" class="mr-2">c) Abstinence alone means a person is cured.</label>
+                                <label class="block"><input type="radio" name="q15" value="d" class="mr-2">d) Recovery is possible with a dedicated program.</label>
+                            </div>
+                            <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                        </div>
+
+                    </div>
+                    <div class="mt-8 text-center">
+                        <button id="check-answers-btn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors">Check Answers</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resources Tab -->
+            <div id="resources" class="tab-content">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">External Resources</h2>
+                    <p class="mb-6 text-gray-600">Quick links to external websites and resources referenced in this guide.</p>
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="font-semibold text-lg text-gray-800">Nutrition</h3>
+                             <ul class="list-disc list-inside ml-4">
+                                <li><a href="https://www.myplate.gov/" target="_blank" class="text-blue-600 hover:underline">ChooseMyPlate.gov</a> (U.S. Department of Agriculture)</li>
+                                <li><a href="https://health.gov/our-work/nutrition-physical-activity/dietary-guidelines" target="_blank" class="text-blue-600 hover:underline">Dietary Guidelines for Americans</a> (U.S. Dept. of Health and Human Services)</li>
+                            </ul>
+                        </div>
+                         <div>
+                            <h3 class="font-semibold text-lg text-gray-800">Mental Health & Suicide Prevention</h3>
+                             <ul class="list-disc list-inside ml-4">
+                                <li><a href="https://www.nimh.nih.gov/health/publications/suicide-in-the-us-statistics-and-prevention" target="_blank" class="text-blue-600 hover:underline">National Institute of Mental Health (NIMH) - Suicide Prevention</a></li>
+                                <li><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6086130/" target="_blank" class="text-blue-600 hover:underline">Research on Yoga for PTSD (NCBI)</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('#tabs button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                });
+            });
+
+            // Quiz Logic
+            const quizAnswers = {
+                q1: 'b', q2: 'c', q3: 'b', q4: 'b', q5: 'b',
+                q6: 'c', q7: 'd', q8: 'c', q9: 'b', q10: 'b',
+                q11: 'd', q12: 'c', q13: 'd', q14: 'b', q15: 'd'
+            };
+
+            const quizExplanations = {
+                 q1: 'Correct! Stress is the natural reaction of the mind and body to a demand placed on it.',
+                 q2: 'Correct! The Bargaining Phase is characterized by wishing the event could be undone.',
+                 q3: 'Correct! The Parasympathetic Nervous System is the "brake," responsible for rest and digestion, while the Sympathetic system is the "accelerator."',
+                 q4: 'Correct! Fine motor skills are the most delicate and deteriorate first, starting at heart rates around 115 BPM.',
+                 q5: 'Correct! You should provide presence and listen, but not offer answers or explanations, as this can be counterproductive.',
+                 q6: 'Correct! Agility, along with anaerobic power (speed) and explosive leg strength, is a component of Motor Fitness, which relates to specific job tasks.',
+                 q7: 'Correct! A healthy balance for the average person is 55-60% of daily calories from carbohydrates, as they are the body\'s preferred source of energy.',
+                 q8: 'Correct! Hypervigilance is the threat-based perspective necessary for officer survival that can lead to a biological rollercoaster effect when off-duty.',
+                 q9: 'Correct! PTSD is diagnosed when CIS symptoms are prolonged past one month and the person relives the event with similar intensity, rather than just remembering it.',
+                 q10: 'Correct! Increased aggressiveness, mood swings, and rapid muscle gain are hallmark symptoms of steroid abuse.',
+                 q11: 'Correct! According to the principle of Regularity and Recovery, studies show that fitness begins to decline after 96 hours.',
+                 q12: 'Correct! HDL (High-Density Lipoprotein) is considered "good" cholesterol, and higher levels are protective. Exercise and weight loss can increase HDL.',
+                 q13: 'Correct! Factors outside of the officer\'s own department, such as the courts and media, are considered stressors external to the agency.',
+                 q14: 'Correct! While fine motor skills deteriorate around 115 BPM, more complex motor skills begin to degrade at heart rates over 145 BPM.',
+                 q15: 'Correct! Alcoholism is a disease for which recovery is possible with a dedicated program. The other options are common myths.'
+            };
+
+            const checkAnswersBtn = document.getElementById('check-answers-btn');
+            checkAnswersBtn.addEventListener('click', () => {
+                const questions = document.querySelectorAll('.quiz-question');
+                questions.forEach((question, index) => {
+                    const qName = `q${index + 1}`;
+                    const selected = document.querySelector(`input[name="${qName}"]:checked`);
+                    const feedback = question.querySelector('.feedback');
+                    feedback.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800', 'bg-yellow-100', 'text-yellow-800');
+                    if (selected) {
+                        if (selected.value === quizAnswers[qName]) {
+                            feedback.textContent = quizExplanations[qName];
+                            feedback.classList.add('bg-green-100', 'text-green-800');
+                        } else {
+                            feedback.textContent = `Incorrect. The correct answer is (${quizAnswers[qName].toUpperCase()}). ${quizExplanations[qName]}`;
+                            feedback.classList.add('bg-red-100', 'text-red-800');
+                        }
+                    } else {
+                        feedback.textContent = 'Please select an answer.';
+                        feedback.classList.add('bg-yellow-100', 'text-yellow-800');
+                    }
+                    feedback.classList.remove('hidden');
+});
+            });
+
+            // PAR-Q Logic
+            const parqForm = document.getElementById('par-q-form');
+            const parqResult = document.getElementById('par-q-result');
+            parqForm.addEventListener('change', () => {
+                const anyYes = Array.from(parqForm.querySelectorAll('input[type="checkbox"]')).some(cb => cb.checked);
+                parqResult.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+                if (anyYes) {
+                    parqResult.textContent = 'You answered YES to one or more questions. Talk to your doctor before increasing physical activity.';
+                    parqResult.classList.add('bg-red-100', 'text-red-800');
+                } else {
+                    parqResult.textContent = 'You answered NO to all questions. You have reasonable assurance of your suitability for a slowly graduated exercise program.';
+                    parqResult.classList.add('bg-green-100', 'text-green-800');
+                }
+            });
+
+            // Holmes and Rahe Stress Scale Logic
+            const stressEvents = document.querySelectorAll('.stress-event');
+            const stressScoreEl = document.getElementById('stress-score');
+            const stressResultEl = document.getElementById('stress-result');
+            stressEvents.forEach(event => {
+                event.addEventListener('change', () => {
+                    let totalScore = 0;
+                    stressEvents.forEach(e => { if (e.checked) { totalScore += parseInt(e.value); } });
+                    stressScoreEl.textContent = totalScore;
+                    if (totalScore >= 300) {
+                        stressResultEl.textContent = 'At Risk of illness.';
+                        stressResultEl.className = 'text-sm font-semibold text-red-600';
+                    } else if (totalScore >= 150) {
+                        stressResultEl.textContent = 'Moderate risk of illness.';
+                        stressResultEl.className = 'text-sm font-semibold text-yellow-600';
+                    } else {
+                        stressResultEl.textContent = 'Only slight risk of illness.';
+                        stressResultEl.className = 'text-sm font-semibold text-green-600';
+                    }
+                });
+            });
+
+            // Hassle Test Logic
+            const hassles = ["Misplacing or losing things","Troublesome neighbors","Social obligations","Inconsiderate smokers","Troubling thoughts about your future","Thoughts about death","Health of a family member","Not enough money for housing","Concerns about owing money","Financial responsibility for someone who doesn't live with you","Smoking too much","Use of alcohol","Too many responsibilities","Care of a pet","Planning meals","Trouble relaxing","Problems getting along with fellow workers","Home maintenance (inside)","Concerns about job security","Laid off or out of work","Too many interruptions","Having to wait","Concerns about accidents","Being lonely","Fear of confrontation","Silly practical mistakes","Physical Illness","Concerns about getting ahead","Hassles from boss or supervisor"];
+            const hassleContainer = document.getElementById('hassle-container');
+            hassles.forEach(h => {
+                const item = document.createElement('div');
+                item.className = 'hassle-item';
+                item.innerHTML = `
+                    <label class="flex items-center"><input type="checkbox" class="hassle-check mr-2">${h}</label>
+                    <div class="hidden space-x-2">
+                        <label><input type="radio" name="${h.replace(/\s+/g, '-')}" value="1" class="hassle-radio"> 1</label>
+                        <label><input type="radio" name="${h.replace(/\s+/g, '-')}" value="2" class="hassle-radio"> 2</label>
+                        <label><input type="radio" name="${h.replace(/\s+/g, '-')}" value="3" class="hassle-radio"> 3</label>
+                    </div>`;
+                hassleContainer.appendChild(item);
+            });
+
+            const hassleScoreEl = document.getElementById('hassle-score');
+            const hassleResultEl = document.getElementById('hassle-result');
+            hassleContainer.addEventListener('change', (e) => {
+                if (e.target.classList.contains('hassle-check')) {
+                    const ratingDiv = e.target.closest('.hassle-item').querySelector('div');
+                    ratingDiv.classList.toggle('hidden');
+                    if (!e.target.checked) {
+                        ratingDiv.querySelectorAll('.hassle-radio').forEach(r => r.checked = false);
+                    }
+                }
+                let totalScore = 0;
+                hassleContainer.querySelectorAll('.hassle-radio:checked').forEach(r => {
+                    totalScore += parseInt(r.value);
+                });
+                hassleScoreEl.textContent = totalScore;
+                if (totalScore >= 30) {
+                    hassleResultEl.textContent = 'Levels of daily stress increase your risk for a stress-related condition.';
+                    hassleResultEl.className = 'text-sm font-semibold text-red-600';
+                } else {
+                    hassleResultEl.textContent = 'Low risk level.';
+                    hassleResultEl.className = 'text-sm font-semibold text-green-600';
+                }
+            });
+
+             // Alcohol Evaluation Logic
+            const alcoholForm = document.getElementById('alcohol-eval-form');
+            const alcoholResult = document.getElementById('alcohol-eval-result');
+            alcoholForm.addEventListener('change', () => {
+                const anyYes = Array.from(alcoholForm.querySelectorAll('.alcohol-eval-q')).some(cb => cb.checked);
+                alcoholResult.classList.remove('hidden', 'bg-yellow-100', 'text-yellow-800');
+                if (anyYes) {
+                    alcoholResult.textContent = 'You answered "Yes" to one or more items. You should think seriously about getting help.';
+                    alcoholResult.classList.add('bg-yellow-100', 'text-yellow-800');
+                } else {
+                     alcoholResult.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+
