@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Guide: Introductory Spanish</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --header-bg: #1f2937;
+            --bg-color: #f3f4f6;
+            --tab-active-bg: #166534; /* Green for this guide */
+            --tab-active-text: #ffffff;
+            --card-bg: #ffffff;
+            --text-color: #111827;
+            --link-color: #1d4ed8;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://rsms.me/inter/inter.css');
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab.active {
+            background-color: var(--tab-active-bg);
+            color: var(--tab-active-text);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tab {
+            transition: all 0.3s ease-in-out;
+        }
+        .vocab-table th, .vocab-table td {
+            padding: 8px 12px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .vocab-table th {
+            background-color: #f9fafb;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-gray-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">
+                <i class="fas fa-language mr-2"></i>Introductory Spanish
+            </h1>
+            <p class="text-sm text-gray-300">BPOC Chapter 26 | TCOLE Preparation</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-6">
+        <div class="mb-6 bg-white rounded-lg shadow-md overflow-x-auto">
+            <nav id="tabs" class="flex flex-row space-x-1 p-2">
+                <button data-tab="cultural-context" class="tab active flex-1 md-flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-green-100">
+                    <i class="fas fa-users-viewfinder mr-2"></i> <span class="hidden md:inline">Cultural Context</span>
+                </button>
+                 <button data-tab="vocabulary" class="tab flex-1 md-flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-green-100">
+                    <i class="fas fa-book-open mr-2"></i> <span class="hidden md:inline">Key Vocabulary</span>
+                </button>
+                 <button data-tab="field-phrases" class="tab flex-1 md-flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-green-100">
+                    <i class="fas fa-car-on mr-2"></i> <span class="hidden md:inline">Field Phrases</span>
+                </button>
+                <button data-tab="commands" class="tab flex-1 md-flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-green-100">
+                    <i class="fas fa-gavel mr-2"></i> <span class="hidden md:inline">Commands</span>
+                </button>
+                <button data-tab="knowledge-check" class="tab flex-1 md-flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-green-100">
+                    <i class="fas fa-question-circle mr-2"></i> <span class="hidden md:inline">Knowledge Check</span>
+                </button>
+                <button data-tab="resources" class="tab flex-1 md-flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-green-100">
+                    <i class="fas fa-book mr-2"></i> <span class="hidden md:inline">Sources</span>
+                </button>
+            </nav>
+        </div>
+
+        <div id="tab-contents">
+            <div id="cultural-context" class="tab-content active space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Hispanic Culture & Police-Related Issues</h2>
+                    <p class="text-sm text-gray-700 mb-4">Understanding key cultural elements can greatly enhance communication and build trust between law enforcement and the Hispanic American community.</p>
+                     <h4 class="font-semibold mt-4 text-sm">Language and Communication:</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                        <li><strong>Group Identification:</strong> A family member might "eye-check" others before answering and use "we" instead of "I," reflecting family-centric concerns, not evasion.</li>
+                        <li><strong>Language Under Stress:</strong> Individuals with limited English may revert to Spanish under stress. This is often a natural reaction, not an attempt to hide information.</li>
+                    </ul>
+                     <h4 class="font-semibold mt-4 text-sm">Establishing Trust:</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                        <li><strong>Respect vs. Trust:</strong> Hispanic Americans are often taught to show respect for authority, but this should not be mistaken for trust. Trust must be earned through consistent, caring community policing.</li>
+                        <li><strong>Provide Context:</strong> Enhance interviews with a friendly greeting, explain why information is needed, and find common ground. This signifies goodwill.</li>
+                    </ul>
+                     <h4 class="font-semibold mt-4 text-sm">Nonverbal Communication:</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                        <li><strong>Eye Contact:</strong> Averting eyes is often a sign of respect for authority, not dishonesty.</li>
+                        <li><strong>Gestures:</strong> Pointing with the lips or tilting the head is common. Shaking the index finger can mean "no."</li>
+                    </ul>
+                     <h4 class="font-semibold mt-4 text-sm">Other Considerations:</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                        <li><strong>Fear of Police:</strong> Individuals from countries with repressive governments may be genuinely terrified of law enforcement. Reassurance is crucial.</li>
+                        <li><strong>Emotional Expression:</strong> Expressive speech, tone, and gestures are often culturally normal and should not be misinterpreted as aggression.</li>
+                        <li><strong>Underreporting of Crime:</strong> A significant challenge due to fear of retaliation, lack of confidence in police, and past experiences of discrimination.</li>
+                         <li><strong>Caló (Pachuco):</strong> A slang of Mexican Spanish from the Southwestern U.S. associated with zoot-suit culture. Words like *'trucha chota'* (be careful, cops) and *'filero'* (knife) were used to detour police. Understanding local slang can be beneficial.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="vocabulary" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Danger Words & Weapons</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h3 class="font-semibold mb-2">Danger Words</h3>
+                            <table class="w-full text-sm vocab-table">
+                                <thead><tr><th>English</th><th>Spanish</th></tr></thead>
+                                <tbody>
+                                    <tr><td>Disarm Him</td><td>desármalo</td></tr>
+                                    <tr><td>Jump Him</td><td>bríncale</td></tr>
+                                    <tr><td>Shoot Him/Her</td><td>despárale / tírale</td></tr>
+                                    <tr><td>Beat Him Up</td><td>golpéalo / golpéala</td></tr>
+                                    <tr><td>Take His/Her Gun</td><td>quíale la pistola / agárra el armá</td></tr>
+                                    <tr><td>Hit Him/Her</td><td>pégale / chingaso</td></tr>
+                                    <tr><td>Kick Him</td><td>pataléalo / pataléla</td></tr>
+                                    <tr><td>Run</td><td>córrele</td></tr>
+                                    <tr><td>Stab Him</td><td>pícalo / córtalo</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold mb-2">Weapons</h3>
+                            <table class="w-full text-sm vocab-table">
+                                <thead><tr><th>English</th><th>Spanish</th></tr></thead>
+                                <tbody>
+                                    <tr><td>Pistol</td><td>pistola / cohete / arma / quete</td></tr>
+                                    <tr><td>Rifle</td><td>rifle</td></tr>
+                                    <tr><td>Shotgun</td><td>escopeta</td></tr>
+                                    <tr><td>Scissors</td><td>tijeras</td></tr>
+                                    <tr><td>Shoot</td><td>dispára / tira</td></tr>
+                                    <tr><td>Knife</td><td>cuchillo / navaja / filero</td></tr>
+                                    <tr><td>Bottle</td><td>botella</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Question Words & People</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                             <h3 class="font-semibold mb-2">Question Words</h3>
+                            <table class="w-full text-sm vocab-table">
+                                <thead><tr><th>English</th><th>Spanish</th></tr></thead>
+                                <tbody>
+                                    <tr><td>What?</td><td>¿Qué?</td></tr>
+                                    <tr><td>How?</td><td>¿Cómo?</td></tr>
+                                    <tr><td>Why?</td><td>¿Por qué?</td></tr>
+                                    <tr><td>When?</td><td>¿Cuándo?</td></tr>
+                                    <tr><td>Where?</td><td>¿Dónde?</td></tr>
+                                    <tr><td>How many?</td><td>¿Cuántos? / ¿Cuántas?</td></tr>
+                                    <tr><td>Which?</td><td>¿Cuál?</td></tr>
+                                    <tr><td>Who?</td><td>¿Quién?</td></tr>
+                                    <tr><td>Whose?</td><td>¿De quién?</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div>
+                             <h3 class="font-semibold mb-2">Family & People</h3>
+                            <table class="w-full text-sm vocab-table">
+                                <thead><tr><th>English</th><th>Spanish</th></tr></thead>
+                                <tbody>
+                                    <tr><td>Aunt</td><td>Tía</td></tr>
+                                    <tr><td>Boyfriend/Girlfriend</td><td>Novio / Novia</td></tr>
+                                    <tr><td>Brother/Sister</td><td>Hermano / Hermana</td></tr>
+                                    <tr><td>Brother/Sister-in-law</td><td>Cuñado / Cuñada</td></tr>
+                                    <tr><td>Children</td><td>Hijos</td></tr>
+                                    <tr><td>Daughter/Son</td><td>Hija / Hijo</td></tr>
+                                    <tr><td>Father/Mother</td><td>Padre / Madre</td></tr>
+                                    <tr><td>Husband/Wife</td><td>Esposo / Esposa</td></tr>
+                                    <tr><td>Male (Mr.)</td><td>Señor</td></tr>
+                                    <tr><td>Female (Mrs.)</td><td>Señora</td></tr>
+                                    <tr><td>Unmarried Female (Miss)</td><td>Señorita</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Numbers, Colors & Clothes</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div>
+                             <h3 class="font-semibold mb-2">Numbers</h3>
+                            <table class="w-full text-sm vocab-table">
+                                 <thead><tr><th>English</th><th>Spanish</th></tr></thead>
+                                <tbody>
+                                    <tr><td>0, 1, 2, 3</td><td>Cero, Uno, Dos, Tres</td></tr>
+                                    <tr><td>4, 5, 6, 7</td><td>Cuatro, Cinco, Seis, Siete</td></tr>
+                                    <tr><td>8, 9, 10, 11</td><td>Ocho, Nueve, Diez, Once</td></tr>
+                                    <tr><td>12, 13, 14, 15</td><td>Doce, Trece, Catorce, Quince</td></tr>
+                                    <tr><td>16, 17, 18, 19</td><td>Diez y seis, Diez y siete, etc.</td></tr>
+                                    <tr><td>20, 30, 40, 50</td><td>Veinte, Treinta, Cuarenta, Cincuenta</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div>
+                             <h3 class="font-semibold mb-2">Colors</h3>
+                            <table class="w-full text-sm vocab-table">
+                                <thead><tr><th>English</th><th>Spanish</th></tr></thead>
+                                <tbody>
+                                    <tr><td>Black / White</td><td>Negro / Blanco</td></tr>
+                                    <tr><td>Blue / Green</td><td>Azul / Verde</td></tr>
+                                    <tr><td>Brown</td><td>Café / Pardo</td></tr>
+                                    <tr><td>Gray / Pink</td><td>Gris / Rosado</td></tr>
+                                    <tr><td>Orange / Red</td><td>Naranja / Rojo</td></tr>
+                                    <tr><td>Yellow / Gold</td><td>Amarillo / Dorado</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div>
+                             <h3 class="font-semibold mb-2">Clothes</h3>
+                            <table class="w-full text-sm vocab-table">
+                                <thead><tr><th>English</th><th>Spanish</th></tr></thead>
+                                <tbody>
+                                    <tr><td>Blouse / Shirt</td><td>Blusa / Camisa</td></tr>
+                                    <tr><td>Jacket / Coat</td><td>Chaqueta / Saco</td></tr>
+                                    <tr><td>Hat / Cap</td><td>Sombrero / Gorra</td></tr>
+                                    <tr><td>Pants</td><td>Pantalones</td></tr>
+                                    <tr><td>Shoes / Socks</td><td>Zapatos / Calcetines</td></tr>
+                                    <tr><td>Gloves</td><td>Guantes</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="field-phrases" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Field Interview Phrases</h2>
+                    <table class="w-full text-sm vocab-table">
+                        <thead><tr><th>English Phrase</th><th>Spanish Phrase</th></tr></thead>
+                        <tbody>
+                            <tr><td>Who called the police?</td><td>¿Quién llamó a la policía?</td></tr>
+                            <tr><td>Did you call the police?</td><td>¿Usted llamó a la policía?</td></tr>
+                            <tr><td>Who is the victim?</td><td>¿Quién es la víctima?</td></tr>
+                            <tr><td>Calm down</td><td>Cálmese</td></tr>
+                            <tr><td>Who saw what happened?</td><td>¿Quién vió lo que pasó?</td></tr>
+                            <tr><td>I speak only a little Spanish.</td><td>Hablo sólo un poco de español.</td></tr>
+                            <tr><td>Do you speak English?</td><td>¿Habla usted inglés?</td></tr>
+                            <tr><td>I don't understand.</td><td>No entiendo.</td></tr>
+                            <tr><td>Do you understand?</td><td>¿Entiende?</td></tr>
+                            <tr><td>How may I help you?</td><td>¿En qué puedo servirle?</td></tr>
+                            <tr><td>Do you wish to file a complaint?</td><td>¿Quiere hacer una demanda?</td></tr>
+                            <tr><td>Please repeat.</td><td>Repita, por favor.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Traffic Stop & Accident Investigation Phrases</h2>
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                         <div>
+                            <h3 class="font-semibold mb-2">Traffic / Pedestrian Stops</h3>
+                            <table class="w-full text-sm vocab-table">
+                                <thead><tr><th>English</th><th>Spanish</th></tr></thead>
+                                <tbody>
+                                    <tr><td>Name / Address</td><td>Nombre / Dirección</td></tr>
+                                    <tr><td>Driver's License</td><td>Licencia de conducir / manejar</td></tr>
+                                    <tr><td>Insurance</td><td>Aseguranza / Seguro</td></tr>
+                                    <tr><td>Are you the owner of the car?</td><td>¿Es usted el dueño del vehículo?</td></tr>
+                                    <tr><td>Get out of the car</td><td>Salga del vehículo</td></tr>
+                                    <tr><td>Stop the motor</td><td>Apague el motor</td></tr>
+                                    <tr><td>Sign here</td><td>Firme aquí</td></tr>
+                                </tbody>
+                            </table>
+                         </div>
+                         <div>
+                            <h3 class="font-semibold mb-2">Accident Investigation</h3>
+                            <table class="w-full text-sm vocab-table">
+                                <thead><tr><th>English</th><th>Spanish</th></tr></thead>
+                                <tbody>
+                                    <tr><td>Is anyone injured?</td><td>¿Hay alguien herido?</td></tr>
+                                    <tr><td>Where does it hurt?</td><td>¿Dónde le duele?</td></tr>
+                                    <tr><td>Do you need an ambulance?</td><td>¿Necesita una ambulancia?</td></tr>
+                                    <tr><td>Who was driving?</td><td>¿Quién venía manejando?</td></tr>
+                                    <tr><td>How fast were you driving?</td><td>¿A qué velocidad venía manejando?</td></tr>
+                                    <tr><td>Do you want me to call a tow truck?</td><td>¿Quiere que llame una grua?</td></tr>
+                                    <tr><td>Have you been drinking or taking any drugs?</td><td>¿Ha bebido alcohol o tomado drogas?</td></tr>
+                                </tbody>
+                            </table>
+                         </div>
+                     </div>
+                </div>
+            </div>
+
+            <div id="commands" class="tab-content space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Command & Control Phrases</h2>
+                    <table class="w-full text-sm vocab-table">
+                        <thead><tr><th>English Command</th><th>Spanish Command</th></tr></thead>
+                        <tbody>
+                            <tr><td>Police! Don't move!</td><td>¡Policía! No se mueva!</td></tr>
+                            <tr><td>Stop!</td><td>¡Alto!</td></tr>
+                            <tr><td>Drop the weapon!</td><td>¡Suelte el arma!</td></tr>
+                            <tr><td>Hands in the air!</td><td>¡Manos arriba!</td></tr>
+                            <tr><td>Turn around, slowly.</td><td>Voltéese, despacio.</td></tr>
+                            <tr><td>Spread your feet.</td><td>Separe los pies.</td></tr>
+                            <tr><td>Get up.</td><td>Levántese.</td></tr>
+                            <tr><td>Sit down.</td><td>Siéntese.</td></tr>
+                            <tr><td>You are under arrest.</td><td>Está arrestado.</td></tr>
+                        </tbody>
+                    </table>
+                 </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Handcuffing Commands</h2>
+                    <table class="w-full text-sm vocab-table">
+                        <thead><tr><th>English Command</th><th>Spanish Command</th></tr></thead>
+                        <tbody>
+                            <tr><td>Get on the floor (inside).</td><td>Acuéstese en el piso.</td></tr>
+                            <tr><td>Get on the ground (outside).</td><td>Acuéstese en el suelo.</td></tr>
+                            <tr><td>Arms straight out from your body.</td><td>Extienda los brazos al lado.</td></tr>
+                            <tr><td>Cross your feet.</td><td>Cruce los pies.</td></tr>
+                            <tr><td>Don't look at me.</td><td>No me mire.</td></tr>
+                            <tr><td>Put your hands behind your back.</td><td>Póngase las manos detrás de la espalda.</td></tr>
+                            <tr><td>Give me your other hand.</td><td>Déme la otra mano.</td></tr>
+                        </tbody>
+                    </table>
+                 </div>
+            </div>
+
+            <div id="knowledge-check" class="tab-content">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Knowledge Check</h2>
+                    <p class="mb-6 text-gray-600">Test your understanding of the vocabulary and phrases. Type the correct translation.</p>
+                    <div id="quiz-container" class="space-y-6"></div>
+                    <div class="mt-8 text-center">
+                        <button id="check-answers-btn" class="bg-green-700 text-white font-bold py-2 px-6 rounded-lg hover:bg-green-800 transition-colors">Check Answers</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="resources" class="tab-content">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Source Materials</h2>
+                    <p class="mb-6 text-gray-600">This study guide is based on the materials listed in the BPOC curriculum.</p>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>Blanco, Jose (2007). *Tactical Spanish for law enforcement* (1st edition). Matthew Bender & Company, Inc.</li>
+                        <li>Marshal's Office Crash Course in Spanish Pronunciation, Dallas City Marshal's Office (1998).</li>
+                        <li>Survival Spanish for Police Officers, Texas City Law Enforcement Training Academy.</li>
+                        <li>Benmaman, Virginia (1994) *Bilingual Handbook for Public Safety Professionals*. Gould Publications.</li>
+                        <li>Dent, Robert (1996) *The Complete Spanish Field Reference Manual for Public Safety Professionals*. Constable Group, Inc.</li>
+                     </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('#tabs button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                });
+            });
+
+            const quizData = [
+                { type: 'translation', question: "Translate to Spanish: Hands in the air!", answer: ["manos arriba"] },
+                { type: 'translation', question: "Translate to Spanish: Drop the weapon!", answer: ["suelte el arma", "suelta el arma"] },
+                { type: 'translation', question: "Translate to English: ¿Quién llamó a la policía?", answer: ["who called the police?"] },
+                { type: 'translation', question: "Translate to English: Está arrestado.", answer: ["you are under arrest", "you're under arrest"] },
+                { type: 'translation', question: "What is the Spanish word for 'Knife'?", answer: ["cuchillo", "navaja", "filero"] },
+                { type: 'translation', question: "What is the Spanish command for 'Get on the ground'?", answer: ["acuéstese en el suelo"] },
+                { type: 'translation', question: "Translate to Spanish: I don't understand.", answer: ["no entiendo"] },
+                { type: 'translation', question: "Translate to English: ¿Dónde le duele?", answer: ["where does it hurt?"] },
+                { type: 'translation', question: "What is the Spanish word for the color 'Red'?", answer: ["rojo"] },
+                { type: 'translation', question: "What is a Spanish 'danger word' for 'Jump Him'?", answer: ["bríncale"] },
+                { type: 'translation', question: "Translate to Spanish: Who?", answer: ["¿quién?"] },
+                { type: 'translation', question: "What is the Spanish word for 'Brother'?", answer: ["hermano"] },
+                { type: 'mcq', question: "In Hispanic culture, averting eye contact with an authority figure is often a sign of:", options: ["Dishonesty", "Disinterest", "Respect", "Aggression"], answer: "Respect", explanation: "Many Hispanic Americans are taught to avert direct eye contact with figures of authority as a sign of respect." },
+                { type: 'mcq', question: "If a person with limited English reverts to Spanish under stress, an officer should assume:", options: ["They are being evasive.", "It's a natural reaction to stress.", "They are lying about their English skills.", "They are preparing to attack."], answer: "It's a natural reaction to stress.", explanation: "This is not necessarily an attempt to hide information but a common response to stressful situations." }
+            ];
+
+            const quizContainer = document.getElementById('quiz-container');
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'quiz-question';
+                if (q.type === 'translation') {
+                    questionDiv.innerHTML = `
+                        <label for="q${index}" class="block font-semibold mb-2 text-sm">${q.question}</label>
+                        <input type="text" id="q${index}" name="q${index}" class="w-full p-2 border rounded-md">
+                        <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                    `;
+                } else { // mcq
+                     let optionsHtml = q.options.map(option => `
+                        <label class="block"><input type="radio" name="q${index}" value="${option}" class="mr-2">${option}</label>
+                    `).join('');
+                    questionDiv.innerHTML = `<p class="font-semibold mb-2 text-sm">${q.question}</p><div class="space-y-2 text-sm">${optionsHtml}</div><div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>`;
+                }
+                quizContainer.appendChild(questionDiv);
+            });
+
+            document.getElementById('check-answers-btn').addEventListener('click', () => {
+                quizData.forEach((q, index) => {
+                    const feedback = document.querySelectorAll('.feedback')[index];
+                    feedback.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+                    let isCorrect = false;
+
+                    if (q.type === 'translation') {
+                        const userInput = document.getElementById(`q${index}`).value.trim().toLowerCase().replace(/[.?!¡¿]/g, '');
+                        if (q.answer.includes(userInput)) {
+                            isCorrect = true;
+                        }
+                    } else { // mcq
+                        const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                        if (selected && selected.value === q.answer) {
+                            isCorrect = true;
+                        }
+                    }
+                    
+                    if (isCorrect) {
+                        feedback.textContent = `Correct! ${q.explanation || 'Well done.'}`;
+                        feedback.classList.add('bg-green-100', 'text-green-800');
+                    } else {
+                        let correctAnswer = q.type === 'translation' ? q.answer.join(' / ') : q.answer;
+                        feedback.textContent = `Incorrect. The correct answer is "${correctAnswer}". ${q.explanation || ''}`;
+                        feedback.classList.add('bg-red-100', 'text-red-800');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+

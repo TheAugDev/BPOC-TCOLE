@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCOLE Verbal Communication Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+        .answer-option {
+            transition: all 0.2s ease-in-out;
+        }
+        .answer-option:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .correct {
+            background-color: #D1FAE5 !important;
+            border-color: #10B981 !important;
+            color: #065F46 !important;
+        }
+        .incorrect {
+            background-color: #FEE2E2 !important;
+            border-color: #EF4444 !important;
+            color: #991B1B !important;
+        }
+        .progress-bar-fill {
+            transition: width 0.3s ease-in-out;
+        }
+        .review-correct {
+            color: #059669;
+        }
+        .review-incorrect {
+            color: #e11d48;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="quiz-app" class="quiz-container p-4 sm:p-8">
+        
+        <!-- Quiz Start Screen -->
+        <div id="start-screen" class="text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Verbal Communication Quiz</h1>
+            <p class="text-lg text-gray-600 mb-8">A quiz to test your knowledge on effective verbal communication for peace officers, based on the "Basic Peace Officer Course | Chapter 25" handout.</p>
+            <button id="start-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Start Quiz</button>
+        </div>
+
+        <!-- Quiz Interface -->
+        <div id="quiz-screen" class="hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold">Question <span id="question-number"></span> of <span id="total-questions"></span></h2>
+                <div id="timer" class="text-lg font-mono bg-gray-200 px-3 py-1 rounded-md">00:00</div>
+            </div>
+            
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+                <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full progress-bar-fill" style="width: 0%"></div>
+            </div>
+
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+                <p id="question-text" class="text-xl font-medium mb-8 min-h-[6rem]"></p>
+                <div id="answer-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Answer options will be injected here by JS -->
+                </div>
+            </div>
+             <div id="rationale-box" class="hidden mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h3 class="font-bold text-blue-800">Rationale:</h3>
+                <p id="rationale-text" class="text-blue-700"></p>
+                <p class="text-sm text-blue-600 mt-2">Source: <span id="rationale-source"></span></p>
+            </div>
+            <button id="next-btn" class="hidden w-full bg-blue-600 text-white font-bold py-3 px-8 rounded-lg mt-8 hover:bg-blue-700 transition-colors shadow-md">Next Question</button>
+        </div>
+
+        <!-- Quiz Results Screen -->
+        <div id="results-screen" class="hidden text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">Quiz Complete!</h1>
+            <p class="text-lg text-gray-600 mb-6">Here's how you did:</p>
+            <div class="flex flex-col sm:flex-row justify-around items-center my-8 gap-8 sm:gap-0">
+                <div>
+                    <p id="score-percentage" class="text-5xl font-bold text-green-600">0%</p>
+                    <p class="text-gray-500">Score</p>
+                </div>
+                 <div>
+                    <p class="text-5xl font-bold text-blue-600"><span id="correct-answers">0</span>/<span id="total-answered">0</span></p>
+                    <p class="text-gray-500">Correct Answers</p>
+                </div>
+                 <div>
+                    <p id="final-time" class="text-5xl font-bold text-gray-700">00:00</p>
+                    <p class="text-gray-500">Time Taken</p>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="restart-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Try Again</button>
+                <button id="review-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md">Review Answers</button>
+            </div>
+        </div>
+        
+        <!-- Review Screen -->
+        <div id="review-screen" class="hidden bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6">Answer Review</h1>
+            <div id="review-container" class="space-y-6">
+                <!-- Review content will be injected here -->
+            </div>
+            <button id="back-to-results-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md mt-8">Back to Results</button>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            // Section 25.1 & 25.2
+            { question: "What is the foundation of effective communication for de-escalation purposes?", options: ["Emotional intelligence", "Physical strength", "Case law knowledge", "Firearm proficiency"], answer: "Emotional intelligence", rationale: "Emotional intelligence, the capacity to identify and manage one's own and others' emotional states, is the foundation of effective communication for de-escalation.", page: "Page 1" },
+            { question: "Which term describes a communication style that is commanding, self-confident, and likely to be respected and obeyed?", options: ["Authoritative", "Authoritarian", "Empathetic", "Apathetic"], answer: "Authoritative", rationale: "Authoritative is defined as being able to be trusted, reliable, commanding, self-confident, and likely to be respected and obeyed.", page: "Page 2" },
+            { question: "Which term describes a person who enforces very strict obedience to authority, similar to a dictator?", options: ["Authoritarian", "Authoritative", "Assertive", "Compliant"], answer: "Authoritarian", rationale: "Authoritarian is defined as enforcing very strict obedience to authority, much like an autocrat, dictator, or tyrant.", page: "Page 2" },
+            { question: "What is the difference between 'information' and 'communication'?", options: ["Information is giving out; communication is getting through.", "Information is verbal; communication is non-verbal.", "Information is for reports; communication is for the street.", "There is no difference; the terms are interchangeable."], answer: "Information is giving out; communication is getting through.", rationale: "As quoted from Sydney J. Harris, 'Information is giving out; communication is getting through.'", page: "Page 2" },
+            
+            // Section 25.3 & 25.4
+            { question: "According to the handout, what is a common reason an officer might unintentionally escalate a conflict?", options: ["The officer's message is good, but the delivery failed.", "The officer is too empathetic.", "The officer asks too many questions.", "The officer builds too much rapport."], answer: "The officer's message is good, but the delivery failed.", rationale: "Escalation may be due to a good message with failed delivery, an authoritarian thought process, or a lack of communication skills.", page: "Page 3" },
+            { question: "What is the definition of a 'crisis'?", options: ["A temporary state of upset and disorganization, characterized by an inability to cope.", "A permanent state of emotional distress.", "Any situation requiring police intervention.", "A conflict that can only be resolved with physical force."], answer: "A temporary state of upset and disorganization, characterized by an inability to cope.", rationale: "A crisis is defined as 'A temporary state of upset and disorganization, characterized by an inability to cope with a particular situation using customary methods of problem solving.'", page: "Page 3" },
+
+            // Section 25.5
+            { question: "The ability to recognize, understand, and manage our own emotions and influence the emotions of others is known as:", options: ["Emotional Intelligence (EQ)", "Intellectual Quotient (IQ)", "Social Competency", "Authoritarianism"], answer: "Emotional Intelligence (EQ)", rationale: "The Institute of Health and Human Potential defines emotional intelligence as 'the ability to recognize, understand, and manage our emotions; and to recognize, understand, and influence the emotions of others.'", page: "Page 3" },
+            { question: "One of the four limited connections with communication is having an unhealthy, strong ego. What is the recommended solution?", options: ["Tear down the ego wall and build a bridge of warm relationships.", "Assert your authority to show you are in control.", "Ignore your ego and focus only on the facts.", "Use your ego to project a strong command presence."], answer: "Tear down the ego wall and build a bridge of warm relationships.", rationale: "The handout suggests to 'Tear down the ego wall and use those very stones to build a bridge of warm relationships.'", page: "Page 5" },
+            { question: "Which of the following is NOT one of the three essential elements of communication according to John C. Maxwell?", options: ["Intellect", "Thought", "Emotion", "Action"], answer: "Intellect", rationale: "John C. Maxwell stressed three essential elements of communication: Thought (something we know), Emotion (something we feel), and Action (something we do).", page: "Page 5" },
+            { question: "According to John C. Maxwell's Four Components of Connection, what do people remember the most from an interaction?", options: ["What they see (Connecting Visually)", "What they hear (Connecting Verbally)", "What they understand (Connecting Intellectually)", "What they feel (Connecting Emotionally)"], answer: "What they see (Connecting Visually)", rationale: "Humans remember 85-90% of what they see and less than 15% of what they hear. Therefore, connecting visually is a primary component.", page: "Page 6" },
+            { question: "According to John C. Maxwell, what are the three questions people are subconsciously asking about you?", options: ["Can you help me? Do you care for me? Can I trust you?", "Are you in charge? What are the rules? What are the consequences?", "What is your name? What is your rank? Why are you here?", "Are you armed? Are you dangerous? Will you hurt me?"], answer: "Can you help me? Do you care for me? Can I trust you?", rationale: "John C. Maxwell explains that people are asking three questions about you: 1. Can you help me? 2. Do you care for me? 3. Can I trust you?", page: "Page 6" },
+
+            // Section 25.6 & 25.7
+            { question: "What is the most effective way to de-escalate hostilities and gain control of a situation, according to Jim Glennon?", options: ["Asking 3 or 4 good questions coupled with active listening", "Issuing firm, direct commands", "Telling the person about the consequences of their actions", "Ignoring the person until they calm down"], answer: "Asking 3 or 4 good questions coupled with active listening", rationale: "You will find most situations will take only 3 or 4 good questions (coupled with active listening) to gain control of that situation and de-escalate hostilities.", page: "Page 7" },
+            { question: "If an officer is caught up in their 'emotional internal dialog,' what is a likely negative outcome?", options: ["They may overlook pre-attack messages from body language.", "They will appear more empathetic to the citizen.", "Their report will be more detailed and accurate.", "The situation will de-escalate more quickly."], answer: "They may overlook pre-attack messages from body language.", rationale: "If engaged in your emotional internal dialog you may miss important aspects, overlook pre-attack messages from body language, and even neglect lethal warning cues.", page: "Page 8" },
+            { question: "Which of the following is described as the 'most important communication skill of all'?", options: ["Active Listening", "Speaking Clearly", "Body Language", "Paraphrasing"], answer: "Active Listening", rationale: "Active Listening is the most important communication skill of all. Without it no other technique or theory will work.", page: "Page 8" },
+            { question: "Which of the following is a non-verbal cue that you are interested and actively listening?", options: ["Head tilted slightly", "Crossing arms", "Repeatedly rubbing the back of the neck", "Avoiding eye contact"], answer: "Head tilted slightly", rationale: "Positive listening cues include open palms, feet pointed toward the talker, a tilted head, open arms, and a relaxed face.", page: "Page 8" },
+            
+            // Section 25.8 - 25.10
+            { question: "When a citizen uses profanity, what is the recommended approach for an officer?", options: ["Rationally evaluate it as a potential danger cue but do not get distracted by it.", "Immediately arrest them for disorderly conduct.", "Ignore it completely as it is irrelevant.", "Respond with equal profanity to establish dominance."], answer: "Rationally evaluate it as a potential danger cue but do not get distracted by it.", rationale: "It should not be ignored. Rationally evaluate it. Is it a precursor to an attack? Do not be distracted by their profanity or shifted away from your professional goal.", page: "Page 9" },
+            { question: "The psychological identification with or vicarious experiencing of the feelings, thoughts, or attitudes of another is defined as:", options: ["Empathy", "Sympathy", "Apathy", "Contempt"], answer: "Empathy", rationale: "Empathy is the psychological identification with or vicarious experiencing of the feelings, thoughts, or attitudes of another. It's the ability to understand and share the feelings of another.", page: "Page 10" },
+            { question: "What is 'metaphrasing'?", options: ["Putting inaccurate words into other people's mouths.", "Repeating exactly what someone said.", "Summarizing a long conversation.", "Using non-verbal cues to show you understand."], answer: "Putting inaccurate words into other people's mouths.", rationale: "Metaphrasing is a perversion of paraphrasing where you are concerned with what people 'ought' to be saying, so you paraphrase it as you would have said it. This can insult and anger people.", page: "Page 11" },
+            { question: "What technique involves putting another person's meaning into your own words and delivering it back to them?", options: ["Paraphrasing", "Stonewalling", "Metaphrasing", "Criticizing"], answer: "Paraphrasing", rationale: "Paraphrasing is putting another's meaning into your words and delivering it back to them. It's described as one of the most powerful tools of communication.", page: "Page 10" },
+            { question: "According to Dr. Thompson, which of the following is a benefit of paraphrasing?", options: ["It helps to deflect insults and generate voluntary compliance.", "It immediately ends the conversation.", "It proves that your point of view is correct.", "It allows you to insert your own opinions into their statement."], answer: "It helps to deflect insults and generate voluntary compliance.", rationale: "The 14 benefits of paraphrasing include hooking the person, taking control, deflecting insults, creating empathy, and generating voluntary compliance.", page: "Page 10" },
+            
+            // Section 25.11 - 25.13
+            { question: "What is the quickest way to signal to someone that you are not listening and that your views are more important than theirs?", options: ["Interrupting them", "Maintaining eye contact", "Asking questions", "Paraphrasing their statements"], answer: "Interrupting them", rationale: "Interrupting someone is the surest and quickest way to say: You're not listening, not attempting to understand, and 'I am more important than you.'", page: "Page 12" },
+            { question: "Why is it said that you 'cannot win an argument' in law enforcement encounters?", options: ["Because even if you win logically, you lose the opportunity for a conciliatory relationship.", "Because citizens will never admit they are wrong.", "Because it is against policy to argue with citizens.", "Because arguments always escalate to physical violence."], answer: "Because even if you win logically, you lose the opportunity for a conciliatory relationship.", rationale: "Technically, you may win an argument, but you have probably lost the opportunity for a conciliatory relationship with the other person, as they become defensive.", page: "Page 11" },
+            { question: "According to Dale Carnegie, what is 'the sweetest and most important sound in any language' to a person?", options: ["Their name", "The word 'please'", "An apology", "A compliment"], answer: "Their name", rationale: "Dale Carnegie is quoted: 'Remember that a person's name is to that person the sweetest and most important sound in any language.'", page: "Page 13" },
+            { question: "In law enforcement, is apologizing a sign of weakness?", options: ["No, it's a sign of self-confidence, maturity, and good character.", "Yes, it undermines an officer's authority.", "Yes, it can be used as an admission of guilt in court.", "No, but it should only be done in non-criminal situations."], answer: "No, it's a sign of self-confidence, maturity, and good character.", rationale: "Apologizing is a sign of self-confidence, maturity, and good character. People with high self-esteem admit mistakes.", page: "Page 13" },
+
+            // Section 25.14
+            { question: "According to Dr. Mehrabian's 7%-38%-55% Rule, what percentage of communication is conveyed by our words?", options: ["7%", "38%", "55%", "93%"], answer: "7%", rationale: "Dr. Mehrabian's theory states that communication is 7% verbal (words), 38% paralinguistic (tone of voice), and 55% nonverbal (body language).", page: "Page 14" },
+            { question: "In what descending order do we generally notice and form opinions about people?", options: ["Face, body language, how they speak, word choices", "Word choices, how they speak, body language, face", "How they speak, face, word choices, body language", "Body language, word choices, face, how they speak"], answer: "Face, body language, how they speak, word choices", rationale: "We generally notice people in this descending order and formulate an opinion based on their: Face, Body language, How they speak to us (paralinguistic), Word choices.", page: "Page 16" },
+            { question: "The tone, inflection, rate, and pitch of your voice are all part of which component of communication?", options: ["Paralinguistic", "Verbal", "Nonverbal", "Kinesics"], answer: "Paralinguistic", rationale: "Paralinguistic aspects of speech include voice, tone, inflection, rate, pitch, timing, and hesitation.", page: "Page 14" },
+            { question: "Nonverbal communication, such as gestures, facial expressions, and body language, is also known as:", options: ["Kinesics", "Linguistics", "Phonetics", "Proxemics"], answer: "Kinesics", rationale: "Kinesics is defined as nonverbal communication primarily conducted using gestures, facial expressions, and body language.", page: "Page 15" },
+            { question: "When there is a conflict between a person's words and their body language, which should you believe?", options: ["The nonverbal (body language)", "The verbal (words)", "Whichever is more aggressive", "Neither; you should ask for clarification"], answer: "The nonverbal (body language)", rationale: "When there is conflict between one's words and the body language, believe the nonverbal.", page: "Page 15" },
+            
+            // Section 25.15 & 25.16
+            { question: "The social rule that says people should repay, in kind, what another person has provided for them is which principle of persuasion?", options: ["Reciprocity", "Scarcity", "Authority", "Liking"], answer: "Reciprocity", rationale: "Reciprocity is a social rule that says people should repay, in kind, what another person has provided for them.", page: "Page 16" },
+            { question: "The principle of persuasion where people look to the actions of others to determine their own actions is known as:", options: ["Consensus", "Authority", "Scarcity", "Liking"], answer: "Consensus", rationale: "Consensus is when people will look to the actions of others to determine their own actions.", page: "Page 17" },
+            { question: "When people want more of something because there is less of it available, which principle of persuasion is at work?", options: ["Scarcity", "Consensus", "Authority", "Consistency"], answer: "Scarcity", rationale: "Scarcity is based on the human nature that people want more of those things that there are less of.", page: "Page 16" },
+            { question: "People prefer to say 'yes' to those who are similar to them, pay them genuine compliments, and cooperate with them. This is known as which principle of persuasion?", options: ["Liking", "Authority", "Reciprocity", "Consensus"], answer: "Liking", rationale: "The 'Liking' principle states that people prefer to say 'yes' to those they like, based on similarity, compliments, and cooperation.", page: "Page 17" },
+            { question: "What is the 'Greed Principle' according to Dr. George Thompson?", options: ["If someone has something to gain or lose, you have something to work with.", "People will always choose the option that benefits them the most financially.", "Threats are more effective than offering positive options.", "People are inherently selfish and cannot be trusted."], answer: "If someone has something to gain or lose, you have something to work with.", rationale: "The Greed Principle states: If someone has something to gain or lose in a situation, you have something to work with. This is used when giving options.", page: "Page 18" },
+            { question: "Which of the following is one of Dr. George Thompson's '5 Universal Truths'?", options: ["All people want to be asked rather than told to do something.", "All people want to be treated with suspicion.", "All people want to be given threats rather than options.", "All people want to be commanded without explanation."], answer: "All people want to be asked rather than told to do something.", rationale: "The 5 Universal Truths include that all people want to be treated with dignity, asked rather than told, told why, given options, and given a second chance.", page: "Page 17-18" },
+            
+            // Section 25.17 & 25.18
+            { question: "When your thoughts get in the way of paying attention to someone else, this communication blunder is called:", options: ["Mind drift", "Stonewalling", "Daydreaming", "Internal dialog"], answer: "Mind drift", rationale: "This is called 'mind drift.' Sometimes what is going on in our head is more important for us rather than paying attention to you.", page: "Page 19" },
+            { question: "What percentage of the time should you make eye contact to signal interest and honesty?", options: ["60-70 percent", "100 percent", "Less than 40 percent", "Exactly 50 percent"], answer: "60-70 percent", rationale: "As a rule, make eye contact 60-70 percent of the time. Less than 40 percent signals disinterest, boredom, or dishonesty.", page: "Page 18" },
+            { question: "Tuning out or disengaging from a conversation is a form of which of the 'Four Horsemen'?", options: ["Stonewalling", "Contempt", "Criticism", "Defensiveness"], answer: "Stonewalling", rationale: "Stonewalling is tuning out or disengaging from the conversation, which is one of the destructive Four Horsemen.", page: "Page 20" },
+            { question: "Name-calling, eye-rolling, sneering, and mockery are all forms of which of the 'Four Horsemen' of communication breakdown?", options: ["Contempt", "Criticism", "Defensiveness", "Stonewalling"], answer: "Contempt", rationale: "Contempt includes name-calling, eye-rolling, sneering, and mockery and is considered the worst of the Four Horsemen.", page: "Page 20" },
+            { question: "What does the 'P' in the L-E-A-P-S method stand for?", options: ["Paraphrase", "Persuade", "Proceed", "Pause"], answer: "Paraphrase", rationale: "The L-E-A-P-S method stands for Listen Actively, Empathize, Ask questions, Paraphrase, and Summarize.", page: "Page 20" },
+            { question: "According to the HALT acronym, when are you never at your best for decision-making and communication?", options: ["When you are Hungry, Angry, Lonely, or Tired", "When you are Happy, Alert, Listening, or Truthful", "When you are Hurrying, Agitated, Loud, or Tense", "When you are Honest, Attentive, Logical, or Thoughtful"], answer: "When you are Hungry, Angry, Lonely, or Tired", rationale: "You are never at your best for decision-making and communication when you are: Hungry, Angry, Lonely, or Tired (HALT).", page: "Page 20" },
+            { question: "Under Penal Code 38.02, a person commits an offense for Failure to Identify if they refuse to give their name, address, or DOB after being:", options: ["Lawfully arrested", "Lawfully detained for any reason", "A witness to any crime", "Stopped for a traffic violation"], answer: "Lawfully arrested", rationale: "PC 38.02(a) states a person commits an offense if they intentionally refuse to give their information to a peace officer who has lawfully arrested the person and requested the information.", page: "Page 24" }
+        ];
+
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const reviewScreen = document.getElementById('review-screen');
+
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const reviewBtn = document.getElementById('review-btn');
+        const backToResultsBtn = document.getElementById('back-to-results-btn');
+        
+        const questionNumberEl = document.getElementById('question-number');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const progressBar = document.getElementById('progress-bar');
+        const questionTextEl = document.getElementById('question-text');
+        const answerOptionsEl = document.getElementById('answer-options');
+        const rationaleBox = document.getElementById('rationale-box');
+        const rationaleText = document.getElementById('rationale-text');
+        const rationaleSource = document.getElementById('rationale-source');
+        
+        const scorePercentageEl = document.getElementById('score-percentage');
+        const correctAnswersEl = document.getElementById('correct-answers');
+        const totalAnsweredEl = document.getElementById('total-answered');
+        const finalTimeEl = document.getElementById('final-time');
+        const timerEl = document.getElementById('timer');
+        const reviewContainer = document.getElementById('review-container');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timerInterval;
+        let secondsElapsed = 0;
+        let userAnswers = [];
+        let questionsToAsk = [];
+        
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        startBtn.addEventListener('click', startQuiz);
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', startQuiz);
+        reviewBtn.addEventListener('click', showReview);
+        backToResultsBtn.addEventListener('click', () => {
+            reviewScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+        });
+
+        function startTimer() {
+            secondsElapsed = 0;
+            timerEl.textContent = '00:00';
+            timerInterval = setInterval(() => {
+                secondsElapsed++;
+                const minutes = Math.floor(secondsElapsed / 60).toString().padStart(2, '0');
+                const seconds = (secondsElapsed % 60).toString().padStart(2, '0');
+                timerEl.textContent = `${minutes}:${seconds}`;
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function startQuiz() {
+            questionsToAsk = shuffleArray([...quizData]);
+            questionsToAsk.forEach(q => shuffleArray(q.options));
+
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            startScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            nextBtn.classList.add('hidden');
+            startTimer();
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            rationaleBox.classList.add('hidden');
+            answerOptionsEl.innerHTML = '';
+            const currentQuestion = questionsToAsk[currentQuestionIndex];
+            
+            questionNumberEl.textContent = currentQuestionIndex + 1;
+            totalQuestionsEl.textContent = questionsToAsk.length;
+            questionTextEl.textContent = currentQuestion.question;
+
+            const progress = ((currentQuestionIndex) / questionsToAsk.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('answer-option', 'w-full', 'p-4', 'text-left', 'bg-white', 'border-2', 'border-gray-300', 'rounded-lg', 'hover:bg-gray-50', 'hover:border-blue-500');
+                button.addEventListener('click', () => selectAnswer(button, option, currentQuestion));
+                answerOptionsEl.appendChild(button);
+            });
+        }
+
+        function selectAnswer(button, selectedOption, currentQuestion) {
+            const { answer, rationale, page } = currentQuestion;
+            userAnswers[currentQuestionIndex] = selectedOption;
+
+            const buttons = answerOptionsEl.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === answer) {
+                    btn.classList.add('correct');
+                }
+            });
+
+            if (selectedOption === answer) {
+                score++;
+                button.classList.add('correct');
+            } else {
+                button.classList.add('incorrect');
+            }
+
+            rationaleText.textContent = rationale;
+            rationaleSource.textContent = page;
+            rationaleBox.classList.remove('hidden');
+            nextBtn.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questionsToAsk.length) {
+                nextBtn.classList.add('hidden');
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            stopTimer();
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+
+            const percentage = Math.round((score / questionsToAsk.length) * 100);
+            scorePercentageEl.textContent = `${percentage}%`;
+            correctAnswersEl.textContent = score;
+            totalAnsweredEl.textContent = questionsToAsk.length;
+            finalTimeEl.textContent = timerEl.textContent;
+            
+            progressBar.style.width = `100%`;
+        }
+
+        function showReview() {
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.remove('hidden');
+            reviewContainer.innerHTML = '';
+
+            questionsToAsk.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === question.answer;
+
+                const reviewItem = document.createElement('div');
+                reviewItem.classList.add('border', 'p-4', 'rounded-lg');
+                reviewItem.classList.add(isCorrect ? 'bg-green-50/50' : 'bg-red-50/50', isCorrect ? 'border-green-200' : 'border-red-200');
+
+                let userAnswerHTML = '';
+                if (isCorrect) {
+                    userAnswerHTML = `<p>Your answer: <span class="font-semibold review-correct">${userAnswer} (Correct)</span></p>`;
+                } else {
+                    userAnswerHTML = `
+                        <p>Your answer: <span class="font-semibold review-incorrect">${userAnswer ? userAnswer : 'Not answered'} (Incorrect)</span></p>
+                        <p>Correct answer: <span class="font-semibold review-correct">${question.answer}</span></p>
+                    `;
+                }
+
+                reviewItem.innerHTML = `
+                    <p class="font-bold mb-2">${index + 1}. ${question.question}</p>
+                    ${userAnswerHTML}
+                    <p class="text-sm text-gray-600 mt-2"><em><strong>Rationale:</strong> ${question.rationale} (Source: ${question.page})</em></p>
+                `;
+                reviewContainer.appendChild(reviewItem);
+            });
+        }
+
+    </script>
+</body>
+</html>
+

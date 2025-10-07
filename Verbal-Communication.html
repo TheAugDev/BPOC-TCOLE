@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Guide: Verbal Communication</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --header-bg: #1f2937;
+            --bg-color: #f3f4f6;
+            --tab-active-bg: #2563eb; /* Blue for this guide */
+            --tab-active-text: #ffffff;
+            --card-bg: #ffffff;
+            --text-color: #111827;
+            --link-color: #1d4ed8;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://rsms.me/inter/inter.css');
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab.active {
+            background-color: var(--tab-active-bg);
+            color: var(--tab-active-text);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tab {
+            transition: all 0.3s ease-in-out;
+        }
+        details > summary {
+            list-style: none;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+        details summary .icon {
+            transition: transform 0.2s;
+        }
+        details[open] summary .icon {
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-gray-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">
+                <i class="fas fa-comments mr-2"></i>Verbal Communication
+            </h1>
+            <p class="text-sm text-gray-300">BPOC Chapter 25 | TCOLE Preparation</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-6">
+        <div class="mb-6 bg-white rounded-lg shadow-md overflow-x-auto">
+            <nav id="tabs" class="flex flex-row space-x-1 p-2">
+                <button data-tab="foundations" class="tab active flex-1 md-flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-brain mr-2"></i> <span class="hidden md-inline">Foundations</span>
+                </button>
+                 <button data-tab="core-techniques" class="tab flex-1 md-flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-cogs mr-2"></i> <span class="hidden md-inline">Core Techniques</span>
+                </button>
+                <button data-tab="non-verbal" class="tab flex-1 md-flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-users mr-2"></i> <span class="hidden md-inline">Non-Verbal</span>
+                </button>
+                <button data-tab="persuasion" class="tab flex-1 md-flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-handshake mr-2"></i> <span class="hidden md-inline">Persuasion & De-Escalation</span>
+                </button>
+                <button data-tab="knowledge-check" class="tab flex-1 md-flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-question-circle mr-2"></i> <span class="hidden md-inline">Knowledge Check</span>
+                </button>
+                <button data-tab="resources" class="tab flex-1 md-flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-link mr-2"></i> <span class="hidden md-inline">Resources</span>
+                </button>
+            </nav>
+        </div>
+
+        <div id="tab-contents">
+            <div id="foundations" class="tab-content active space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Emotional Intelligence (EQ)</h2>
+                    <p class="text-sm text-gray-700"><strong>Definition:</strong> The capacity to identify and manage one's emotional state, as well as that of others; sensitive to emotional signals from within and from the social environment. High EQ is the foundation of effective communication for de-escalation.</p>
+                    <h4 class="font-semibold mt-4 text-sm">Key Characteristics of EQ:</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                        <li><strong>Self-awareness:</strong> Understanding one's own attitude, thoughts, and behaviors.</li>
+                        <li><strong>Self-control:</strong> Managing one's emotions and impulses.</li>
+                        <li><strong>Motivation and determination:</strong> Driving oneself to achieve goals.</li>
+                        <li><strong>Social competency & empathy:</strong> Understanding and influencing others' emotions.</li>
+                    </ul>
+                    <blockquote class="mt-4 p-3 bg-blue-50 border-l-4 border-blue-200 text-sm text-gray-600 italic">"Information is giving out; communication is getting through." - Sydney J. Harris</blockquote>
+                </div>
+                
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Crisis & Officer-Led Escalation</h2>
+                    <p class="text-sm text-gray-700 mb-2"><strong>Definition of Crisis:</strong> A temporary state of upset and disorganization, characterized by an inability to cope with a particular situation using customary methods of problem solving.</p>
+                    <h4 class="font-semibold mt-4 text-sm">Reasons for Officer-Led Escalation:</h4>
+                     <p class="text-sm text-gray-700 mb-2">An officer's inability to communicate properly can unintentionally escalate hostilities. This may be due to:</p>
+                     <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                         <li>The officer's message is good, but the <strong>delivery failed</strong> (poor paralinguistics or non-verbals).</li>
+                         <li>An <strong>authoritarian</strong> thought process.</li>
+                         <li>A lack of a developed communication <strong>skill set</strong>.</li>
+                         <li>Challenges in <strong>emotional intelligence</strong> (e.g., acting out of anger, fatigue, or worry).</li>
+                         <li>"Contempt of Cop" mindset, where the officer is triggered by a citizen's perceived disrespect.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Authoritative vs. Authoritarian</h2>
+                    <p class="text-sm text-gray-700 mb-4">How an officer is perceived dramatically impacts public interaction.</p>
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        <div class="p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+                            <h4 class="font-bold text-blue-800">Authoritative</h4>
+                            <p>Able to be trusted as accurate; reliable. Commanding, self-confident; likely to be respected and obeyed. An officer's goal is to be authoritative.</p>
+                        </div>
+                         <div class="p-4 bg-red-50 rounded-lg border-l-4 border-red-500">
+                            <h4 class="font-bold text-red-800">Authoritarian</h4>
+                            <p>Enforcing very strict obedience to authority; an autocrat or dictator; oppressive. This approach often escalates conflict.</p>
+                        </div>
+                     </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Connection: Elements, Components & Barriers</h2>
+                     <h4 class="font-semibold mt-4 text-sm">Three Essential Elements of Communication:</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                        <li><strong>Thought:</strong> Something we know. (The logical part of the message)</li>
+                        <li><strong>Emotion:</strong> Something we feel. (The emotional part that connects)</li>
+                        <li><strong>Action:</strong> Something we do. (The non-verbal follow-through)</li>
+                    </ul>
+
+                    <h4 class="font-semibold mt-6 text-sm">Four Components of Connection (John C. Maxwell):</h4>
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm mt-2">
+                        <div class="p-3 bg-gray-50 rounded-lg"><strong>1. Connecting Visually:</strong> Humans remember 85-90% of what they see. Professional appearance and body language are critical.</div>
+                        <div class="p-3 bg-gray-50 rounded-lg"><strong>2. Connecting Intellectually:</strong> Know your subject matter. The message must be logical and sensible to be credible.</div>
+                        <div class="p-3 bg-gray-50 rounded-lg"><strong>3. Connecting Emotionally:</strong> People may hear words, but they feel attitude. Energy, intensity, and conviction are key.</div>
+                        <div class="p-3 bg-gray-50 rounded-lg"><strong>4. Connecting Verbally:</strong> Tone, inflection, timing, volume, and pacing (paralinguistics) communicate meaning.</div>
+                     </div>
+
+                     <h4 class="font-semibold mt-6 text-sm">Four Barriers to Connection:</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                        <li><strong>Immaturity:</strong> The inability to see and act on behalf of others.</li>
+                        <li><strong>Ego:</strong> Developing an unhealthy, strong ego that prevents building bridges with people.</li>
+                        <li><strong>Failure to Value Everyone:</strong> Every person needs to feel valued, important, and significant.</li>
+                        <li><strong>Insecurity:</strong> Placing too much focus on oneself instead of others.</li>
+                     </ul>
+                </div>
+            </div>
+            
+            <div id="core-techniques" class="tab-content space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Active Listening</h2>
+                     <p class="text-sm text-gray-700 mb-2"><strong>Definition:</strong> The most important communication skill. It requires the listener to fully concentrate, understand, respond, and then remember what is being said. It involves observing verbal and nonverbal cues without judgment.</p>
+                     <h4 class="font-semibold mt-4 text-sm">Elements Checklist:</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                        <li>Listen to what is being said (word choices).</li>
+                        <li>Listen to how it's being said (tone, inflection, rate).</li>
+                        <li>Observe gestures, body language, and eye contact.</li>
+                        <li>Note what is *not* being said or questions that are avoided.</li>
+                        <li>Suppress your own emotional internal dialog to truly hear the other person.</li>
+                    </ul>
+                    <h4 class="font-semibold mt-4 text-sm">Practical Example: Positive Body Language for Listening</h4>
+                    <p class="text-sm text-gray-700">To show you are engaged, use open body language: hands with open palms, feet pointed toward the speaker, head tilted slightly, arms uncrossed, and a relaxed, involved facial expression.</p>
+                 </div>
+
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Paraphrasing & Empathy</h2>
+                     <h4 class="font-semibold text-lg">Paraphrasing</h4>
+                     <p class="text-sm text-gray-700 mb-2"><strong>Definition:</strong> Putting another's meaning into your own words and delivering it back to them. It is one of the most powerful tools of communication and the only way to interrupt someone without generating further resistance.</p>
+                     
+                    <details class="bg-blue-50 p-3 rounded-lg mt-4 text-sm">
+                        <summary class="font-semibold cursor-pointer flex justify-between items-center">View the 14 Benefits of Paraphrasing <i class="fas fa-chevron-right icon"></i></summary>
+                        <ol class="list-decimal list-inside text-gray-700 mt-2 pl-4 space-y-1">
+                            <li>You have hooked the person—they are listening.</li>
+                            <li>You take control because you are talking and they are listening.</li>
+                            <li>You are making sure you heard right on the spot.</li>
+                            <li>If you have not heard accurately, they can correct you.</li>
+                            <li>You are helping to make the other person a better listener.</li>
+                            <li>You have created some degree of empathy.</li>
+                            <li>It overcomes "sonic intention" (when people think they said something because they heard it in their mind).</li>
+                            <li>It has a clarifying effect for people standing around.</li>
+                            <li>It prevents "metaphrasing" (putting inaccurate words into other people's mouths).</li>
+                            <li>It can be used in reverse ("To be sure I said what I intended... could you tell me what you understood?").</li>
+                            <li>It is a safeguard for yourself to ensure you understood a supervisor's orders.</li>
+                            <li>It generates a "fair-play response" (they psychologically reciprocate).</li>
+                            <li>It etches facts into your mind.</li>
+                            <li>It helps deflect insults and keeps the conversation focused.</li>
+                        </ol>
+                    </details>
+                     <p class="text-sm mt-4 p-3 bg-blue-50 rounded-md"><strong>Practical Example:</strong> "Let me be sure I heard what you said. You're feeling angry because you believe your neighbor intentionally blocked your driveway."</p>
+
+                     <h4 class="font-semibold text-lg mt-6">Empathy</h4>
+                     <p class="text-sm text-gray-700 mb-2"><strong>Definition:</strong> The psychological identification with or vicarious experiencing of the feelings, thoughts, or attitudes of another. It's the ability to see the world from their perspective and tell them what you see.</p>
+                     <p class="text-sm text-gray-700">Empathy is a key tension-buster and is crucial for getting people to listen and accept help.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Power of Questions, Respect & Apologies</h2>
+                     <h4 class="font-semibold mt-4 text-sm">Using Questions Effectively:</h4>
+                    <p class="text-sm text-gray-700">Asking questions is more effective than giving orders. When a question is asked, the brain instinctively scans for an answer. This builds rapport, shows interest, and can direct an encounter. Just 3-4 good questions with active listening can often de-escalate hostilities.</p>
+                     <h4 class="font-semibold mt-4 text-sm">Personalized Respect & Courtesy:</h4>
+                    <p class="text-sm text-gray-700">All humans have an innate need for respect. Using a person's name signifies recognition and personalizes the encounter. Simple courtesy, often overlooked, is a sign of professionalism and strength, not weakness.</p>
+                     <h4 class="font-semibold mt-4 text-sm">The Strength in Apologizing:</h4>
+                     <p class="text-sm text-gray-700">Apologizing when appropriate is not a sign of weakness, but of self-confidence, maturity, and good character. It can de-escalate situations by catching people off guard and showing humanity.</p>
+                </div>
+            </div>
+
+            <div id="non-verbal" class="tab-content space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">The 7%-38%-55% Rule of Communication</h2>
+                    <p class="text-sm text-gray-700 mb-4">Dr. Albert Mehrabian's research shows that in face-to-face communication, the impact of a message is determined by more than just words.</p>
+                    <div class="flex flex-col md:flex-row items-center gap-6">
+                        <div class="flex-1">
+                            <h4 class="font-semibold text-sm">Key Concepts Checklist:</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                                <li><strong>7% Verbal:</strong> The actual words spoken.</li>
+                                <li><strong>38% Paralinguistic:</strong> How the words are said. This includes tone of voice, inflection, rate, pitch, timing, and hesitation.</li>
+                                <li><strong>55% Non-Verbal (Kinesics):</strong> Communication without words. This includes facial expressions, eye movement, gestures, and body language.</li>
+                            </ul>
+                            <p class="text-sm mt-4 p-3 bg-blue-50 rounded-md"><strong>Practical Application:</strong> When there is a conflict between a person's words and their body language, believe the non-verbal cues. Your own body language can support or negate your verbal message.</p>
+                        </div>
+                        <div class="flex-shrink-0">
+                           <img src="https://i.imgur.com/rN5w55P.jpeg" alt="A pie chart showing the 7-38-55 percent communication model" class="rounded-lg shadow-md w-64">
+                        </div>
+                    </div>
+                 </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Kinesics: Reading Body Language</h2>
+                    <p class="text-sm text-gray-700">Non-verbal communication reveals a person's mood, attitude, and intent, often subconsciously. Be aware of their body language and your own.</p>
+                     <h4 class="font-semibold mt-4 text-sm">"I'm Not Listening" Cues Checklist:</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700 mt-2 grid grid-cols-1 md:grid-cols-2 gap-x-4">
+                        <li>Repeatedly rubbing neck, ears, or eyes</li>
+                        <li>Avoiding eye contact or rolling eyes</li>
+                        <li>Crossing arms</li>
+                        <li>Tapping fingers or feet</li>
+                        <li>Grooming or checking equipment</li>
+                        <li>Looking at a phone or watch</li>
+                     </ul>
+                     <p class="text-sm mt-4 p-3 bg-red-50 rounded-md"><strong>Practical Example:</strong> An officer says, "I understand your frustration," while tapping their foot, checking their watch, and avoiding eye contact. The citizen's subconscious mind will reject the officer's words because the body language (55%) signals disinterest and impatience, escalating the situation.</p>
+                </div>
+            </div>
+
+            <div id="persuasion" class="tab-content space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Six Principles of Persuasion</h2>
+                    <p class="text-sm text-gray-700 mb-4">These principles can be used ethically to influence behavior and gain compliance.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+                        <div class="p-3 bg-gray-50 rounded-lg"><strong>1. Reciprocity:</strong> The obligation to give when you receive. People feel compelled to repay what another person has provided.</div>
+                        <div class="p-3 bg-gray-50 rounded-lg"><strong>2. Scarcity:</strong> People want more of things there are less of. We are programmed to see value in rarity.</div>
+                        <div class="p-3 bg-gray-50 rounded-lg"><strong>3. Authority:</strong> People follow credible, knowledgeable experts. Projecting command presence and expertise is key.</div>
+                        <div class="p-3 bg-gray-50 rounded-lg"><strong>4. Consistency:</strong> People like to be consistent with things they have previously said or done. Ask for small, voluntary commitments.</div>
+                        <div class="p-3 bg-gray-50 rounded-lg"><strong>5. Liking:</strong> People prefer to say "yes" to those they like. We like people who are similar to us, pay us compliments, and cooperate with us.</div>
+                        <div class="p-3 bg-gray-50 rounded-lg"><strong>6. Consensus:</strong> People look to the actions of others to determine their own, especially when uncertain.</div>
+                    </div>
+                 </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Five Universal Truths of Human Interaction</h2>
+                    <p class="text-sm text-gray-700 mb-2">From Dr. George J. Thompson's *Verbal Judo*, these truths are fundamental to de-escalation.</p>
+                    <ol class="list-decimal list-inside space-y-2 text-sm text-gray-700 mt-2">
+                        <li>All people want to be treated with <strong>dignity and respect.</strong></li>
+                        <li>All people want to be <strong>asked rather than told</strong> to do something.</li>
+                        <li>All people want to be <strong>told why</strong> they are being asked to do something.</li>
+                        <li>All people want to be given <strong>options rather than threats.</strong></li>
+                        <li>All people want a <strong>second chance.</strong></li>
+                    </ol>
+                    <p class="text-sm mt-4 p-3 bg-blue-50 rounded-md"><strong>Practical Example:</strong> Instead of shouting "Move your car now or I'll tow it!" (a threat), an officer could use the Universal Truths: "Sir, I need to ask you to move your car for safety reasons so an ambulance can get through. You can either move it to that spot over there, or I will have to have it towed. What would you prefer?" This gives a reason, provides an option, and asks instead of tells.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">You Can't Win an Argument</h2>
+                    <p class="text-sm text-gray-700 mb-2">Arguments create defensiveness, and defensive minds are neither creative nor cooperative. When you prove someone wrong, you jeopardize their sense of worth, and they will entrench more firmly in their position. The goal is connection, not correction.</p>
+                    <blockquote class="mt-4 p-3 bg-blue-50 border-l-4 border-blue-200 text-sm text-gray-600 italic">"I don't blame you one iota for feeling as you do. If I were you, I would undoubtedly feel just as you do." - Dale Carnegie's "magic phrase" to stop arguments.</blockquote>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Communication Blunders & Frameworks</h2>
+                    <h4 class="font-semibold mt-4 text-sm">The Four Horsemen (Behaviors that destroy connection):</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                        <li><strong>Criticism:</strong> Attacking the person, not their behavior. ("You always...")</li>
+                        <li><strong>Contempt:</strong> Name-calling, mockery, eye-rolling. Conveys disgust.</li>
+                        <li><strong>Defensiveness:</strong> Blaming others ("The problem isn't me, it's you.").</li>
+                        <li><strong>Stonewalling:</strong> Tuning out, disengaging from the conversation.</li>
+                    </ul>
+                    <h4 class="font-semibold mt-4 text-sm">LEAPS Method (For disengaging politely):</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                        <li><strong>L</strong>isten Actively</li>
+                        <li><strong>E</strong>mpathize</li>
+                        <li><strong>A</strong>sk questions</li>
+                        <li><strong>P</strong>araphrase</li>
+                        <li><strong>S</strong>ummarize</li>
+                    </ul>
+                    <h4 class="font-semibold mt-4 text-sm">HALT (When not to communicate):</h4>
+                     <p class="text-sm text-gray-700">Avoid making important decisions or having difficult conversations when you are:</p>
+                     <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                        <li><strong>H</strong>ungry</li>
+                        <li><strong>A</strong>ngry</li>
+                        <li><strong>L</strong>onely</li>
+                        <li><strong>T</strong>ired</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="knowledge-check" class="tab-content">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Knowledge Check</h2>
+                    <p class="mb-6 text-gray-600">Test your understanding of the material.</p>
+                    <div id="quiz-container" class="space-y-8"></div>
+                    <div class="mt-8 text-center">
+                        <button id="check-answers-btn" class="bg-blue-700 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-800 transition-colors">Check Answers</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="resources" class="tab-content">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Legal & Reference Resources</h2>
+                    <p class="mb-6 text-gray-600">Quick links to relevant statutes and source materials.</p>
+                    <h4 class="font-semibold text-sm mb-2">Legal Precedent & Statutes:</h4>
+                    <ul class="list-disc list-inside text-sm">
+                        <li><a href="https://supreme.justia.com/cases/federal/us/517/806/" target="_blank" class="text-blue-800 hover:underline">Whren v. United States, 517 U.S. 806 (1996)</a> - Regarding pretext traffic stops.</li>
+                        <li><a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.14.htm#14.03" target="_blank" class="text-blue-800 hover:underline">CCP 14.03 - Authority Of Peace Officers</a></li>
+                        <li><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.38.htm#38.02" target="_blank" class="text-blue-800 hover:underline">PC 38.02 - Failure to Identify</a></li>
+                    </ul>
+                     <h4 class="font-semibold text-sm mb-2 mt-4">Source Books:</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>*Arresting Communication* by Jim Glennon</li>
+                        <li>*Everyone Communicates Few Connect* by John C. Maxwell</li>
+                        <li>*Verbal Judo* by George J. Thompson and Jerry B. Jenkins</li>
+                     </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('#tabs button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                });
+            });
+
+            const quizData = [
+                { question: "1. According to the 7%-38%-55% Rule, which component has the most impact on the meaning of a message?", options: ["The words spoken", "The tone of voice", "Body language", "Paralinguistics"], answer: "Body language", explanation: "Body language (kinesics) accounts for 55% of the message's impact, making it the most significant component in face-to-face communication." },
+                { question: "2. An officer who is commanding, self-confident, and likely to be respected is displaying which trait?", options: ["Authoritarian", "Authoritative", "Empathetic", "Apathetic"], answer: "Authoritative", explanation: "Authoritative presence is the goal; it conveys confidence and earns respect. Authoritarian behavior is oppressive and often escalates situations." },
+                { question: "3. An officer says, 'Let me make sure I understand. You're upset because the tow truck arrived late.' This is an example of:", options: ["Stonewalling", "Criticism", "Paraphrasing", "Scarcity"], answer: "Paraphrasing", explanation: "Paraphrasing is restating the other person's message in your own words to confirm understanding. It is a powerful de-escalation tool." },
+                { question: "4. All people want to be treated with dignity and respect is one of the:", options: ["Four Horsemen", "Six Principles of Persuasion", "Four Components of Connection", "Five Universal Truths"], answer: "Five Universal Truths", explanation: "This is the first of the Five Universal Truths of human interaction from Dr. George Thompson's *Verbal Judo*." },
+                { question: "5. Rolling your eyes, sneering, and using hostile humor are all forms of which of the 'Four Horsemen'?", options: ["Criticism", "Contempt", "Defensiveness", "Stonewalling"], answer: "Contempt", explanation: "Contempt is the most poisonous of the Four Horsemen because it conveys disgust and attacks a person's sense of self." },
+                { question: "6. Which acronym is used to remember when you are NOT in a good state to communicate or make decisions?", options: ["LEAPS", "HALT", "EQ", "CYMBAL"], answer: "HALT", explanation: "HALT stands for Hungry, Angry, Lonely, and Tired. When you are in any of these states, your emotional intelligence is compromised." },
+                { question: "7. The principle of persuasion that relies on the human desire for things that are in limited supply is called:", options: ["Reciprocity", "Authority", "Liking", "Scarcity"], answer: "Scarcity", explanation: "Scarcity is the principle that people want more of those things they can have less of." },
+                { question: "8. 'The ability to recognize, understand, and manage our own emotions, and to recognize, understand, and influence the emotions of others' is the definition of:", options: ["Empathy", "Emotional Intelligence (EQ)", "Kinesics", "Paralinguistics"], answer: "Emotional Intelligence (EQ)", explanation: "Emotional Intelligence (EQ) is the foundation of effective communication and de-escalation." },
+                { question: "9. Which of the following is NOT a reason for officer-led escalation?", options: ["Having a well-delivered message", "An authoritarian thought process", "A 'Contempt of Cop' mindset", "Lack of a communication skill set"], answer: "Having a well-delivered message", explanation: "A well-delivered message is a component of effective communication and de-escalation. The other options are all common reasons for unintentional escalation by an officer." },
+                { question: "10. What is 'sonic intention'?", options: ["Using a loud, commanding voice to get a point across.", "The non-verbal cues that reveal a person's true intent.", "When a person thinks they said something because they heard themselves say it in their mind.", "The act of interrupting someone with a higher-pitched voice."], answer: "When a person thinks they said something because they heard themselves say it in their mind.", explanation: "Sonic intention is an internal monologue that a person mistakes for an external statement. Paraphrasing helps overcome this by clarifying what was actually said out loud." },
+                { question: "11. Interrupting someone is a sure and quick way to communicate:", options: ["'I am more important than you.'", "'I am empathetic to your situation.'", "'I am actively listening.'", "'I respect your opinion.'"], answer: "'I am more important than you.'", explanation: "Interrupting signals that your message is more important and that you are not truly listening, which damages rapport." },
+                { question: "12. In the LEAPS model for disengagement, what does the 'P' stand for?", options: ["Persuade", "Paraphrase", "Proceed", "Pause"], answer: "Paraphrase", explanation: "LEAPS stands for Listen, Empathize, Ask, Paraphrase, and Summarize." },
+                { question: "13. When an officer's verbal message ('I am here to help') conflicts with their non-verbal message (crossed arms, stern face), what will a person most likely believe?", options: ["The verbal message", "The non-verbal message", "Neither message", "They will ask for clarification"], answer: "The non-verbal message", explanation: "Because non-verbal communication makes up 55% of the message's impact, people will instinctively trust the body language over the words when the two are in conflict." },
+                { question: "14. A citizen is angry about a parking ticket. Which response best demonstrates the 'Five Universal Truths'?", options: ["'The law is the law. Pay the ticket.'", "'If you don't calm down, I'll arrest you for disorderly conduct.'", "'I understand you're frustrated, sir. The reason for the ticket is that the vehicle was in a fire lane, which we have to keep clear for emergencies.'", "'This is your last chance to accept the ticket.'"], answer: "'I understand you're frustrated, sir. The reason for the ticket is that the vehicle was in a fire lane, which we have to keep clear for emergencies.'", explanation: "This response treats the person with respect (sir), acknowledges their feeling (frustrated), and tells them WHY (fire lane for emergencies)." },
+                { question: "15. An officer stops a driver for a defective brake light. The driver immediately becomes irate, believing the stop is racially motivated. What is the officer's best initial approach?", options: ["Immediately issue the citation to end the contact quickly.", "Order the driver out of the car and detain them for 'Contempt of Cop'.", "Allow the person to vent while actively listening and looking for an opportunity to empathize.", "Tell the driver they are wrong and that it was a legal pretext stop."], answer: "Allow the person to vent while actively listening and looking for an opportunity to empathize.", explanation: "The first step in de-escalating an emotionally charged person is to let them vent. This allows the officer to practice active listening, show respect, and find common ground or an opportunity to paraphrase and empathize, all of which lower tensions." },
+                { question: "16. A parent is playing baseball with their children on a tennis court, which is not against any law. A reporter is demanding you remove them. The parent refuses to leave. What is the most important consideration for de-escalation?", options: ["Arresting the parent for Failure to Identify to show authority.", "Siding with the reporter because they called first.", "Recognizing the fear in the children and using that as a point of empathy with the parent.", "Telling the parent they are being childish and setting a bad example."], answer: "Recognizing the fear in the children and using that as a point of empathy with the parent.", explanation: "The children are the most vulnerable and cooperative parties. Addressing their fear shows empathy and can create a connection with the parent ('I'm sorry they are so frightened over such a little thing'), shifting the focus from a rights-based argument to a care-based one." }
+            ];
+
+            const quizContainer = document.getElementById('quiz-container');
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'quiz-question';
+                let optionsHtml = q.options.map(option => `
+                    <label class="block"><input type="radio" name="q${index}" value="${option}" class="mr-2">${option}</label>
+                `).join('');
+                questionDiv.innerHTML = `<p class="font-semibold mb-2">${q.question}</p><div class="space-y-2">${optionsHtml}</div><div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>`;
+                quizContainer.appendChild(questionDiv);
+            });
+
+            document.getElementById('check-answers-btn').addEventListener('click', () => {
+                quizData.forEach((q, index) => {
+                    const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                    const feedback = document.querySelectorAll('.feedback')[index];
+                    feedback.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+                    if (selected && selected.value === q.answer) {
+                        feedback.textContent = `Correct! ${q.explanation}`;
+                        feedback.classList.add('bg-green-100', 'text-green-800');
+                    } else {
+                        feedback.textContent = `Incorrect. The correct answer is "${q.answer}". ${q.explanation}`;
+                        feedback.classList.add('bg-red-100', 'text-red-800');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCOLE Introductory Spanish Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+        .answer-option {
+            transition: all 0.2s ease-in-out;
+        }
+        .answer-option:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .correct {
+            background-color: #D1FAE5 !important;
+            border-color: #10B981 !important;
+            color: #065F46 !important;
+        }
+        .incorrect {
+            background-color: #FEE2E2 !important;
+            border-color: #EF4444 !important;
+            color: #991B1B !important;
+        }
+        .progress-bar-fill {
+            transition: width 0.3s ease-in-out;
+        }
+        .review-correct {
+            color: #059669;
+        }
+        .review-incorrect {
+            color: #e11d48;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="quiz-app" class="quiz-container p-4 sm:p-8">
+        
+        <!-- Quiz Start Screen -->
+        <div id="start-screen" class="text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Introductory Spanish Quiz</h1>
+            <p class="text-lg text-gray-600 mb-8">A quiz to test your knowledge on introductory Spanish and Hispanic cultural context for peace officers, based on the "Basic Peace Officer Course | Chapter 26" handout.</p>
+            <button id="start-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Start Quiz</button>
+        </div>
+
+        <!-- Quiz Interface -->
+        <div id="quiz-screen" class="hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold">Question <span id="question-number"></span> of <span id="total-questions"></span></h2>
+                <div id="timer" class="text-lg font-mono bg-gray-200 px-3 py-1 rounded-md">00:00</div>
+            </div>
+            
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+                <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full progress-bar-fill" style="width: 0%"></div>
+            </div>
+
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+                <p id="question-text" class="text-xl font-medium mb-8 min-h-[6rem]"></p>
+                <div id="answer-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Answer options will be injected here by JS -->
+                </div>
+            </div>
+             <div id="rationale-box" class="hidden mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h3 class="font-bold text-blue-800">Rationale:</h3>
+                <p id="rationale-text" class="text-blue-700"></p>
+                <p class="text-sm text-blue-600 mt-2">Source: <span id="rationale-source"></span></p>
+            </div>
+            <button id="next-btn" class="hidden w-full bg-blue-600 text-white font-bold py-3 px-8 rounded-lg mt-8 hover:bg-blue-700 transition-colors shadow-md">Next Question</button>
+        </div>
+
+        <!-- Quiz Results Screen -->
+        <div id="results-screen" class="hidden text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">Quiz Complete!</h1>
+            <p class="text-lg text-gray-600 mb-6">Here's how you did:</p>
+            <div class="flex flex-col sm:flex-row justify-around items-center my-8 gap-8 sm:gap-0">
+                <div>
+                    <p id="score-percentage" class="text-5xl font-bold text-green-600">0%</p>
+                    <p class="text-gray-500">Score</p>
+                </div>
+                 <div>
+                    <p class="text-5xl font-bold text-blue-600"><span id="correct-answers">0</span>/<span id="total-answered">0</span></p>
+                    <p class="text-gray-500">Correct Answers</p>
+                </div>
+                 <div>
+                    <p id="final-time" class="text-5xl font-bold text-gray-700">00:00</p>
+                    <p class="text-gray-500">Time Taken</p>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="restart-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Try Again</button>
+                <button id="review-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md">Review Answers</button>
+            </div>
+        </div>
+        
+        <!-- Review Screen -->
+        <div id="review-screen" class="hidden bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6">Answer Review</h1>
+            <div id="review-container" class="space-y-6">
+                <!-- Review content will be injected here -->
+            </div>
+            <button id="back-to-results-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md mt-8">Back to Results</button>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            // Section 26.2 Hispanic Culture
+            { question: "If a Hispanic American family member 'eye-checks' others before answering a question, what does this often reflect?", options: ["A cultural emphasis on family and group concerns", "An attempt to deceive the officer", "A sign of disrespect for authority", "A personal habit with no cultural meaning"], answer: "A cultural emphasis on family and group concerns", rationale: "This behavior often reflects the fact that no individual in the family can separate his or her affairs from the family's larger concerns, not necessarily evasion.", page: "Page 1" },
+            { question: "If a Hispanic American with limited English skills begins speaking Spanish under stress, what should an officer keep in mind?", options: ["It is not necessarily an attempt to hide information.", "It is a definite sign of non-cooperation.", "It means they do not understand any English.", "It is a tactic to confuse the officer."], answer: "It is not necessarily an attempt to hide information.", rationale: "When under stress, Hispanic Americans with limited English skills often begin to speak Spanish... this is not necessarily an attempt to hide information and may even be part of gathering information from family.", page: "Page 1" },
+            { question: "How can an officer greatly enhance their policing skills when interacting with Hispanic Americans?", options: ["By taking care to establish the context of their inquiries", "By immediately asking for identification", "By maintaining a strict, authoritative tone", "By avoiding personal conversation"], answer: "By taking care to establish the context of their inquiries", rationale: "Because of a strong emphasis placed on the personal quality of communication, officers can greatly enhance their skills by establishing context, such as a friendly greeting and explaining why information is needed.", page: "Page 2" },
+            { question: "In many Latin American cultures, how might extreme emotional restraint be perceived?", options: ["As alarming", "As respectful", "As normal behavior", "As a sign of intelligence"], answer: "As alarming", rationale: "In many Latin American countries, emotional expression tends to be viewed as permissible, and extreme emotional restraint may even strike them as alarming.", page: "Page 3" },
+            { question: "How might many Hispanic Americans interpret averting direct eye contact with an authority figure?", options: ["As a sign of respect", "As a sign of dishonesty", "As a challenge to authority", "As a sign of boredom"], answer: "As a sign of respect", rationale: "When interviewees avert their eyes, officers may interpret the action as dishonesty, but many Hispanic Americans are taught to avert direct eye contact with figures of authority as a sign of respect.", page: "Page 2" },
+            { question: "What is a common nonverbal way for many native Spanish speakers to point?", options: ["With their lips", "With their thumb", "With their elbow", "With their entire hand"], answer: "With their lips", rationale: "For example, many native Spanish speakers point with their lips (especially in Puerto Rico, Dominican Republic, Cuba, and Mexico).", page: "Page 2" },
+            { question: "Why might a Hispanic American from a politically repressive country be hesitant to report a crime?", options: ["They may fear police officers more than they fear criminals.", "They believe police will not be effective.", "They do not want to get involved in legal proceedings.", "They are part of a close-knit community that solves its own problems."], answer: "They may fear police officers more than they fear criminals.", rationale: "Hispanic Americans from countries with politically repressive governments... will often be hesitant to report crime, because they may fear police officers more than they fear criminals.", page: "Page 3" },
+            { question: "According to a Bureau of Justice Statistics report, which group experienced more victimization from violent crime between 1979-1986?", options: ["Hispanic Americans", "White Americans", "Black Americans", "All groups experienced equal rates"], answer: "Hispanic Americans", rationale: "For the period 1979 to 1986, Hispanic Americans experienced more victimization from violent crime than other American populations.", page: "Page 4" },
+            
+            // Section 26.3 Danger Words & Weapons
+            { question: "If you hear the word 'despárale' or 'tírale', what is being said?", options: ["Shoot Him/Her", "Stab Him", "Hit Him/Her", "Jump Him"], answer: "Shoot Him/Her", rationale: "'Despárale' and 'tírale' are listed as Spanish phrases for 'Shoot Him/Her'.", page: "Page 5" },
+            { question: "If you hear a suspect's associate shout '¡bríncale!', what might they be instructing the suspect to do?", options: ["Jump Him", "Shoot Him", "Run", "Disarm Him"], answer: "Jump Him", rationale: "'Bríncale' is listed as the Spanish phrase for 'Jump Him', signaling a potential physical attack.", page: "Page 5" },
+            { question: "What does the Spanish phrase 'quíale la pistola' mean?", options: ["Take His Gun", "Shoot Him", "Hit Him", "Stab Him"], answer: "Take His Gun", rationale: "This phrase is listed as a danger phrase meaning 'Take His/Her Gun,' indicating an immediate threat to the officer's weapon.", page: "Page 5" },
+            { question: "Which of the following is NOT a Spanish word for 'knife'?", options: ["Pistola", "Cuchillo", "Navaja", "Filero"], answer: "Pistola", rationale: "'Cuchillo', 'navaja', and the slang 'filero' all mean knife. 'Pistola' means pistol.", page: "Page 5" },
+            { question: "An officer hears the word 'córrele' shouted during an incident. What does this mean?", options: ["Run", "Stop", "Fight", "Shoot"], answer: "Run", rationale: "'Córrele' is the Spanish command for 'Run', which could indicate a suspect is about to flee.", page: "Page 5" },
+            { question: "What is the proper Spanish word for 'Shotgun'?", options: ["Escopeta", "Rifle", "Cohete", "Cuchillo"], answer: "Escopeta", rationale: "The Castillian (Proper) Spanish word for 'Shotgun' is 'escopeta'.", page: "Page 5" },
+
+            // Section 26.4 Vocabulary
+            { question: "What is the Spanish word for 'Where?'", options: ["¿Dónde?", "¿Qué?", "¿Quién?", "¿Cuándo?"], answer: "¿Dónde?", rationale: "The Spanish word for 'Where?' is '¿Dónde?'.", page: "Page 6" },
+            { question: "What is the Spanish word for 'Who?'", options: ["¿Quién?", "¿Qué?", "¿Dónde?", "¿Cuándo?"], answer: "¿Quién?", rationale: "The Spanish word for 'Who?' is '¿Quién?'.", page: "Page 6" },
+            { question: "What does the Spanish word 'hermano' mean in English?", options: ["Brother", "Father", "Son", "Husband"], answer: "Brother", rationale: "'Hermano' is the Spanish word for 'Brother'.", page: "Page 6" },
+            { question: "What does the Spanish word 'cuñado' mean in English?", options: ["Brother-in-law", "Son-in-law", "Father-in-law", "Nephew"], answer: "Brother-in-law", rationale: "'Cuñado' is the Spanish word for 'Brother-in-law'.", page: "Page 6" },
+            { question: "How would you address an unmarried female in Spanish?", options: ["Señorita", "Señora", "Señor", "Hija"], answer: "Señorita", rationale: "'Señorita' is the proper term for an unmarried female.", page: "Page 7" },
+            { question: "What is the Spanish word for the number '8'?", options: ["Ocho", "Siete", "Nueve", "Diez"], answer: "Ocho", rationale: "'Ocho' is the Spanish word for '8'.", page: "Page 7" },
+            { question: "What color is 'amarillo' in English?", options: ["Yellow", "Orange", "Brown", "Green"], answer: "Yellow", rationale: "'Amarillo' is the Spanish word for 'Yellow'.", page: "Page 8" },
+            { question: "What color is 'rojo' in English?", options: ["Red", "Blue", "Green", "Yellow"], answer: "Red", rationale: "'Rojo' is the Spanish word for 'Red'.", page: "Page 8" },
+            { question: "Which clothing item is a 'camisa'?", options: ["Shirt", "Pants", "Hat", "Jacket"], answer: "Shirt", rationale: "'Camisa' is the Spanish word for 'Shirt'.", page: "Page 8" },
+            { question: "What does the Caló slang term 'chota' refer to?", options: ["Cops", "Guns", "Money", "Cars"], answer: "Cops", rationale: "'Chota' is listed as a Caló/Spanish slang term for 'cops'.", page: "Page 9" },
+            { question: "What does the Caló slang term 'carnal' mean?", options: ["Brother, close friend", "Enemy", "Police officer", "Car or truck"], answer: "Brother, close friend", rationale: "The Caló slang term 'carnal' means brother, close friend, or homeboy.", page: "Page 9" },
+            { question: "In Caló slang, what is a 'filero'?", options: ["Knife, blade", "Gun", "Car", "Friend"], answer: "Knife, blade", rationale: "'Filero' is a Caló slang term for a knife or blade.", page: "Page 9" },
+
+            // Section 26.5 Field Interviews & Traffic Stops
+            { question: "How would you ask 'Who called the police?' in Spanish?", options: ["¿Quién llamó á la policía?", "¿Usted llamó á la policía?", "¿Quién es la víctima?", "Hablo sólo un poco de español"], answer: "¿Quién llamó á la policía?", rationale: "The direct translation for 'Who called the police?' is '¿Quién llamó á la policía?'.", page: "Page 9" },
+            { question: "What does the phrase 'No entiendo' mean?", options: ["I don't understand", "I don't speak Spanish", "Do you understand?", "Please repeat"], answer: "I don't understand", rationale: "'No entiendo' is the Spanish phrase for 'I don't understand'.", page: "Page 10" },
+            { question: "What does '¿En qué puedo servirle?' mean?", options: ["How may I help you?", "What can I do?", "Who can I serve?", "Where can I serve?"], answer: "How may I help you?", rationale: "'¿En qué puedo servirle?' translates to 'How may I help you?'.", page: "Page 10" },
+            { question: "What are you asking for when you say 'licencia de conducir'?", options: ["Driver's License", "Insurance", "Vehicle Registration", "Your Name"], answer: "Driver's License", rationale: "'Licencia de conducir' is the Spanish phrase for 'Driver's License'.", page: "Page 11" },
+            { question: "How would you tell someone to 'Get out of the car' in Spanish?", options: ["Salga del vehículo", "Apague el motor", "Firme aquí", "Manos arriba"], answer: "Salga del vehículo", rationale: "The command for 'Get out of the Car' is 'Salga del vehículo'.", page: "Page 11" },
+            { question: "What does 'Firme aquí' mean?", options: ["Sign here", "Stop here", "Look here", "Wait here"], answer: "Sign here", rationale: "'Firme aquí' is the Spanish instruction for 'Sign here'.", page: "Page 10" },
+
+            // Section 26.6 Accident Investigations
+            { question: "How do you ask 'Is anyone injured?' in Spanish?", options: ["¿Hay alguien herido?", "¿Está bien?", "¿Dónde le duele?", "¿Necesita una ambulancia?"], answer: "¿Hay alguien herido?", rationale: "The question 'Is anyone injured?' translates to '¿Hay alguien herido?'.", page: "Page 11" },
+            { question: "What does the question '¿Dónde le duele?' mean?", options: ["Where does it hurt?", "Are you alright?", "Do you need an ambulance?", "Were you wearing seat belts?"], answer: "Where does it hurt?", rationale: "'¿Dónde le duele?' is the Spanish question for 'Where does it hurt?'.", page: "Page 11" },
+            { question: "How would you ask 'Have you been drinking or taking any drugs?'", options: ["¿Ha bebido alcohol o tomado drogas?", "¿Necesita una ambulancia?", "¿Quién venía manejando?", "¿Quiere que llame á alquien?"], answer: "¿Ha bebido alcohol o tomado drogas?", rationale: "This question translates directly to '¿Ha bebido alcohol o tomado drogas?'.", page: "Page 12" },
+            { question: "How would you ask a driver 'How fast were you driving?' in Spanish?", options: ["¿Á qué velocidad venía manejando?", "¿En qué dirección iba usted?", "¿Quién venía manejando?", "¿Llevaba puesto el cinturón de seguridad?"], answer: "¿Á qué velocidad venía manejando?", rationale: "The question 'How fast were you driving?' is '¿Á qué velocidad venía manejando?'.", page: "Page 11" },
+            { question: "What are you asking when you say '¿Quiere que llame una grua?'?", options: ["Do you want me to call a tow truck?", "Do you want me to call someone?", "Do you want me to call an ambulance?", "Do you want me to file a complaint?"], answer: "Do you want me to call a tow truck?", rationale: "'Grua' means tow truck, so the question is asking if the person wants one called.", page: "Page 12" },
+
+            // Section 26.7 & 26.8 Commands
+            { question: "What is the Spanish command for 'Police! Don't move'?", options: ["¡Policía! No se mueva", "¡Alto!", "Manos arriba", "Suelta el arma"], answer: "¡Policía! No se mueva", rationale: "The command 'Police! Don't move' is '¡Policía! No se mueva'.", page: "Page 12" },
+            { question: "What does the command 'suelta el arma' mean?", options: ["Drop the Weapon", "Raise the Weapon", "Hide the Weapon", "Show the Weapon"], answer: "Drop the Weapon", rationale: "'Suelta el arma' is the direct Spanish command for 'Drop the Weapon'.", page: "Page 12" },
+            { question: "How do you say 'Hands in the Air' in Spanish?", options: ["Manos arriba", "Voltéese", "Sepáre las pies", "Levántese"], answer: "Manos arriba", rationale: "'Manos arriba' is the direct Spanish command for 'Hands in the Air'.", page: "Page 12" },
+            { question: "What does the command 'acuéstese en el suelo' mean?", options: ["Get on the Ground (Outside)", "Get on the Floor (Inside)", "Cross Your Feet", "Don't Look At Me"], answer: "Get on the Ground (Outside)", rationale: "'Suelo' means ground, so the command 'acuéstese en el suelo' is used for an outside scenario.", page: "Page 12" },
+            { question: "How would you tell a suspect 'Put Your Hands Behind Your Back'?", options: ["Póngase las manos detrás de la espalda", "Déme la otra mano", "Extienda los brazos al lado", "Cruza los pies"], answer: "Póngase las manos detrás de la espalda", rationale: "The command for 'Put Your Hands Behind Your Back' is 'Póngase las manos detrás de la espalda'.", page: "Page 13" }
+        ];
+
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const reviewScreen = document.getElementById('review-screen');
+
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const reviewBtn = document.getElementById('review-btn');
+        const backToResultsBtn = document.getElementById('back-to-results-btn');
+        
+        const questionNumberEl = document.getElementById('question-number');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const progressBar = document.getElementById('progress-bar');
+        const questionTextEl = document.getElementById('question-text');
+        const answerOptionsEl = document.getElementById('answer-options');
+        const rationaleBox = document.getElementById('rationale-box');
+        const rationaleText = document.getElementById('rationale-text');
+        const rationaleSource = document.getElementById('rationale-source');
+        
+        const scorePercentageEl = document.getElementById('score-percentage');
+        const correctAnswersEl = document.getElementById('correct-answers');
+        const totalAnsweredEl = document.getElementById('total-answered');
+        const finalTimeEl = document.getElementById('final-time');
+        const timerEl = document.getElementById('timer');
+        const reviewContainer = document.getElementById('review-container');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timerInterval;
+        let secondsElapsed = 0;
+        let userAnswers = [];
+        let questionsToAsk = [];
+        
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        startBtn.addEventListener('click', startQuiz);
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', startQuiz);
+        reviewBtn.addEventListener('click', showReview);
+        backToResultsBtn.addEventListener('click', () => {
+            reviewScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+        });
+
+        function startTimer() {
+            secondsElapsed = 0;
+            timerEl.textContent = '00:00';
+            timerInterval = setInterval(() => {
+                secondsElapsed++;
+                const minutes = Math.floor(secondsElapsed / 60).toString().padStart(2, '0');
+                const seconds = (secondsElapsed % 60).toString().padStart(2, '0');
+                timerEl.textContent = `${minutes}:${seconds}`;
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function startQuiz() {
+            questionsToAsk = shuffleArray([...quizData]);
+            questionsToAsk.forEach(q => shuffleArray(q.options));
+
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            startScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            nextBtn.classList.add('hidden');
+            startTimer();
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            rationaleBox.classList.add('hidden');
+            answerOptionsEl.innerHTML = '';
+            const currentQuestion = questionsToAsk[currentQuestionIndex];
+            
+            questionNumberEl.textContent = currentQuestionIndex + 1;
+            totalQuestionsEl.textContent = questionsToAsk.length;
+            questionTextEl.textContent = currentQuestion.question;
+
+            const progress = ((currentQuestionIndex) / questionsToAsk.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('answer-option', 'w-full', 'p-4', 'text-left', 'bg-white', 'border-2', 'border-gray-300', 'rounded-lg', 'hover:bg-gray-50', 'hover:border-blue-500');
+                button.addEventListener('click', () => selectAnswer(button, option, currentQuestion));
+                answerOptionsEl.appendChild(button);
+            });
+        }
+
+        function selectAnswer(button, selectedOption, currentQuestion) {
+            const { answer, rationale, page } = currentQuestion;
+            userAnswers[currentQuestionIndex] = selectedOption;
+
+            const buttons = answerOptionsEl.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === answer) {
+                    btn.classList.add('correct');
+                }
+            });
+
+            if (selectedOption === answer) {
+                score++;
+                button.classList.add('correct');
+            } else {
+                button.classList.add('incorrect');
+            }
+
+            rationaleText.textContent = rationale;
+            rationaleSource.textContent = page;
+            rationaleBox.classList.remove('hidden');
+            nextBtn.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questionsToAsk.length) {
+                nextBtn.classList.add('hidden');
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            stopTimer();
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+
+            const percentage = Math.round((score / questionsToAsk.length) * 100);
+            scorePercentageEl.textContent = `${percentage}%`;
+            correctAnswersEl.textContent = score;
+            totalAnsweredEl.textContent = questionsToAsk.length;
+            finalTimeEl.textContent = timerEl.textContent;
+            
+            progressBar.style.width = `100%`;
+        }
+
+        function showReview() {
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.remove('hidden');
+            reviewContainer.innerHTML = '';
+
+            questionsToAsk.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === question.answer;
+
+                const reviewItem = document.createElement('div');
+                reviewItem.classList.add('border', 'p-4', 'rounded-lg');
+                reviewItem.classList.add(isCorrect ? 'bg-green-50/50' : 'bg-red-50/50', isCorrect ? 'border-green-200' : 'border-red-200');
+
+                let userAnswerHTML = '';
+                if (isCorrect) {
+                    userAnswerHTML = `<p>Your answer: <span class="font-semibold review-correct">${userAnswer} (Correct)</span></p>`;
+                } else {
+                    userAnswerHTML = `
+                        <p>Your answer: <span class="font-semibold review-incorrect">${userAnswer ? userAnswer : 'Not answered'} (Incorrect)</span></p>
+                        <p>Correct answer: <span class="font-semibold review-correct">${question.answer}</span></p>
+                    `;
+                }
+
+                reviewItem.innerHTML = `
+                    <p class="font-bold mb-2">${index + 1}. ${question.question}</p>
+                    ${userAnswerHTML}
+                    <p class="text-sm text-gray-600 mt-2"><em><strong>Rationale:</strong> ${question.rationale} (Source: ${question.page})</em></p>
+                `;
+                reviewContainer.appendChild(reviewItem);
+            });
+        }
+
+    </script>
+</body>
+</html>
+

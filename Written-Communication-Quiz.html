@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCOLE Written Communication Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+        .answer-option {
+            transition: all 0.2s ease-in-out;
+        }
+        .answer-option:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .correct {
+            background-color: #D1FAE5 !important;
+            border-color: #10B981 !important;
+            color: #065F46 !important;
+        }
+        .incorrect {
+            background-color: #FEE2E2 !important;
+            border-color: #EF4444 !important;
+            color: #991B1B !important;
+        }
+        .progress-bar-fill {
+            transition: width 0.3s ease-in-out;
+        }
+        .review-correct {
+            color: #059669;
+        }
+        .review-incorrect {
+            color: #e11d48;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="quiz-app" class="quiz-container p-4 sm:p-8">
+        
+        <!-- Quiz Start Screen -->
+        <div id="start-screen" class="text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Written Communication Quiz</h1>
+            <p class="text-lg text-gray-600 mb-8">A quiz to test your knowledge on effective written communication for peace officers, based on the "Basic Peace Officer Course | Chapter 24" handout.</p>
+            <button id="start-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Start Quiz</button>
+        </div>
+
+        <!-- Quiz Interface -->
+        <div id="quiz-screen" class="hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold">Question <span id="question-number"></span> of <span id="total-questions"></span></h2>
+                <div id="timer" class="text-lg font-mono bg-gray-200 px-3 py-1 rounded-md">00:00</div>
+            </div>
+            
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+                <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full progress-bar-fill" style="width: 0%"></div>
+            </div>
+
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+                <p id="question-text" class="text-xl font-medium mb-8 min-h-[6rem]"></p>
+                <div id="answer-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Answer options will be injected here by JS -->
+                </div>
+            </div>
+             <div id="rationale-box" class="hidden mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h3 class="font-bold text-blue-800">Rationale:</h3>
+                <p id="rationale-text" class="text-blue-700"></p>
+                <p class="text-sm text-blue-600 mt-2">Source: <span id="rationale-source"></span></p>
+            </div>
+            <button id="next-btn" class="hidden w-full bg-blue-600 text-white font-bold py-3 px-8 rounded-lg mt-8 hover:bg-blue-700 transition-colors shadow-md">Next Question</button>
+        </div>
+
+        <!-- Quiz Results Screen -->
+        <div id="results-screen" class="hidden text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">Quiz Complete!</h1>
+            <p class="text-lg text-gray-600 mb-6">Here's how you did:</p>
+            <div class="flex flex-col sm:flex-row justify-around items-center my-8 gap-8 sm:gap-0">
+                <div>
+                    <p id="score-percentage" class="text-5xl font-bold text-green-600">0%</p>
+                    <p class="text-gray-500">Score</p>
+                </div>
+                 <div>
+                    <p class="text-5xl font-bold text-blue-600"><span id="correct-answers">0</span>/<span id="total-answered">0</span></p>
+                    <p class="text-gray-500">Correct Answers</p>
+                </div>
+                 <div>
+                    <p id="final-time" class="text-5xl font-bold text-gray-700">00:00</p>
+                    <p class="text-gray-500">Time Taken</p>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="restart-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Try Again</button>
+                <button id="review-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md">Review Answers</button>
+            </div>
+        </div>
+        
+        <!-- Review Screen -->
+        <div id="review-screen" class="hidden bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6">Answer Review</h1>
+            <div id="review-container" class="space-y-6">
+                <!-- Review content will be injected here -->
+            </div>
+            <button id="back-to-results-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md mt-8">Back to Results</button>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            // Section 24.1
+            { question: "In the sentence, 'a brave officer', what part of speech is 'brave'?", options: ["Adjective", "Noun", "Verb", "Adverb"], answer: "Adjective", rationale: "An adjective is a word that typically describes or modifies the meaning of a noun. Here, 'brave' describes the noun 'officer'.", page: "Page 1" },
+            { question: "Which part of speech answers questions like 'When?', 'Where?', and 'How?'", options: ["Adverb", "Preposition", "Pronoun", "Adjective"], answer: "Adverb", rationale: "An adverb serves as a modifier and expresses relations of manner, place, time, degree, etc., answering questions such as 'When?' or 'How?'.", page: "Page 1" },
+            { question: "In 'He sat down beside her,' what part of speech is 'beside'?", options: ["Preposition", "Adverb", "Verb", "Pronoun"], answer: "Preposition", rationale: "A preposition is a word that combines with a noun or pronoun to form a phrase, such as 'beside her'.", page: "Page 1" },
+            { question: "A word that is the name of a person, place, object, quality, concept, or action is a(n):", options: ["Noun", "Verb", "Pronoun", "Adjective"], answer: "Noun", rationale: "A noun is defined as a word that is the name of something, such as a person, animal, place, or object.", page: "Page 1" },
+            { question: "In the sentence, 'The suspect ran from the officer,' what is the word 'ran'?", options: ["Verb", "Noun", "Adjective", "Preposition"], answer: "Verb", rationale: "Verbs express an act, occurrence, or mode of being. 'Ran' expresses the act of the suspect.", page: "Page 1" },
+            { question: "A word used as a substitute for a noun, such as 'she' or 'they', is a(n):", options: ["Pronoun", "Adverb", "Preposition", "Verb"], answer: "Pronoun", rationale: "A pronoun is a word that is used as a substitute for a noun or noun equivalent.", page: "Page 1" },
+
+            // Section 24.2
+            { question: "Which statement best reflects the importance of written communication for a peace officer?", options: ["It is a factor used to evaluate competence and may serve as a source document in court.", "It is only important for internal agency communication.", "It is less important than verbal communication skills.", "It is mainly for keeping personal records of events."], answer: "It is a factor used to evaluate competence and may serve as a source document in court.", rationale: "Written communication is crucial as it's used to evaluate an officer's competence, can be seen by a diverse audience, and may serve as a source document for judicial proceedings.", page: "Page 1" },
+            { question: "What is a primary characteristic of a sentence?", options: ["It expresses a complete thought.", "It is always longer than five words.", "It must contain an adjective.", "It always contains a question."], answer: "It expresses a complete thought.", rationale: "A sentence is defined as a group of words that expresses a complete thought and typically contains a subject and a predicate.", page: "Page 1" },
+            { question: "A group of words that is only a piece of a complete sentence and may be difficult for the reader to understand is called a:", options: ["Sentence fragment", "Run-on sentence", "Declarative statement", "Clause"], answer: "Sentence fragment", rationale: "A sentence fragment is a group of words that is only a piece, or 'fragment,' of a complete sentence, making it potentially difficult to understand.", page: "Page 2" },
+            { question: "What error occurs when two or more sentences are written as one?", options: ["Run-on sentence", "Sentence fragment", "Misplaced modifier", "Double negative"], answer: "Run-on sentence", rationale: "Two or more sentences written as one result in a run-on sentence, which can cause confusion for the reader.", page: "Page 2" },
+            
+            // Section 24.3
+            { question: "To avoid confusion, where should a modifier be placed in a sentence?", options: ["As close as possible to the word it modifies", "At the very beginning of the sentence", "At the very end of the sentence", "Separated by a comma from the word it modifies"], answer: "As close as possible to the word it modifies", rationale: "To prevent misinterpretation, you should place every modifier as close as possible to the word it modifies.", page: "Page 2" },
+            { question: "Which of the following sentences contains a double negative?", options: ["Nobody saw nothing.", "Nobody saw anything.", "I can hardly see the road.", "There is no time left."], answer: "Nobody saw nothing.", rationale: "A double negative occurs when two negative words are used in the same clause. 'Nobody' and 'nothing' are both negative.", page: "Page 2" },
+            { question: "Which sentence is written correctly according to the rules on double negatives?", options: ["I can hardly see the road in this fog.", "I can't hardly see the road in this fog.", "I can't barely see the road.", "I not scarcely see the road."], answer: "I can hardly see the road in this fog.", rationale: "Words like 'hardly,' 'scarcely,' and 'barely' are negative in meaning and should not be used in the same clause with another negative word like 'not' (can't).", page: "Page 2" },
+            { question: "Which sentence is written in the active voice?", options: ["A stray bullet hit a bystander.", "The bystander was hit by a stray bullet.", "The report was written by the officer.", "The suspect was arrested by Officer Smith."], answer: "A stray bullet hit a bystander.", rationale: "In the active voice, the subject performs the action. 'A stray bullet' (the subject) 'hit' (the action) the bystander.", page: "Page 3" },
+            { question: "When using a nonstandard abbreviation like 'TCOLE', what must be done first?", options: ["The full word or name must precede it.", "It must be approved by a supervisor.", "It must be defined in a footnote.", "It should be put in quotation marks."], answer: "The full word or name must precede it.", rationale: "If nonstandard abbreviations are used, they must first be preceded by the full word. For instance, 'The Texas Commission on Law Enforcement (TCOLE).'", page: "Page 3" },
+            { question: "When should quotation marks be used?", options: ["When quoting someone's exact words", "When summarizing a statement", "For indirect quotations", "To emphasize an important fact"], answer: "When quoting someone's exact words", rationale: "You must use quotation marks to enclose direct quotations, but not indirect quotations. Example: Riley yawned and said, 'Let's go.'", page: "Page 3" },
+            { question: "When is it appropriate to use slang or jargon in a police report?", options: ["Only when quoting a statement made by a suspect or witness", "Whenever it makes the report sound more authentic", "To shorten the length of the report", "It is never appropriate to use slang or jargon"], answer: "Only when quoting a statement made by a suspect or witness", rationale: "Unless it is being quoted for a purpose (e.g., a statement made by a suspect), do not use slang and jargon.", page: "Page 3" },
+
+            // Misused Words (Pages 3-8)
+            { question: "Choose the correct word for the sentence: 'Please take all the weapons off the shelf ____ for those already numbered.'", options: ["except", "accept", "axcept", "acsept"], answer: "except", rationale: "'Except' means to take or leave out. 'Accept' means to receive.", page: "Page 3" },
+            { question: "Choose the correct word for the sentence: 'Lack of exercise ____ your ability to perform your duties.'", options: ["affects", "effects", "afects", "efects"], answer: "affects", rationale: "'Affect' is a verb meaning to influence. 'Effect' is a noun meaning result.", page: "Page 3" },
+            { question: "Choose the correct word: 'The members of the city ____ voted in favor of the new budget.'", options: ["council", "counsel", "consul", "console"], answer: "council", rationale: "'Council' is a group that consults or advises. 'Counsel' means to advise.", page: "Page 5" },
+            { question: "Which is the correct way to write 'a lot'?", options: ["a lot", "alot", "allot", "alott"], answer: "a lot", rationale: "'A lot' meaning 'many' is always two words. 'Alot' is an incorrect form.", page: "Page 4" },
+            { question: "Choose the correct word for the sentence: 'The suspect was ____ gone when the officers arrived.'", options: ["already", "all ready", "allready", "al ready"], answer: "already", rationale: "'Already' means by this time. 'All ready' means prepared.", page: "Page 4" },
+            { question: "Choose the correct word for the sentence: 'The ____ of Texas is Austin.'", options: ["capital", "capitol", "capitel", "capitil"], answer: "capital", rationale: "'Capital' refers to a seat of government. 'Capitol' refers to the actual building.", page: "Page 4" },
+            { question: "Choose the correct word for the sentence: 'The officer's report ____ ten witnesses who observed the offense.'", options: ["cited", "sighted", "sited", "scited"], answer: "cited", rationale: "'Cite' means to quote or document. 'Sight' refers to vision, and 'site' refers to a place.", page: "Page 4" },
+            { question: "Choose the correct word for the sentence: 'The officer's ____ kept them from falsifying the report.'", options: ["conscience", "conscious", "concious", "conscence"], answer: "conscience", rationale: "'Conscience' is a sense of right and wrong. 'Conscious' means awake.", page: "Page 5" },
+            { question: "Choose the correct word for the sentence: 'The officer ____ the name of the drug dealers from the neighbors.'", options: ["elicited", "illicited", "illisited", "elisited"], answer: "elicited", rationale: "'Elicit' means to draw or bring out. 'Illicit' means illegal.", page: "Page 5" },
+            { question: "Choose the correct word for the sentence: '____ another long day working the street for Officer Jones.'", options: ["It's", "Its", "It is", "Its'"], answer: "It's", rationale: "'It's' is the contraction for 'it is'. 'Its' is possessive.", page: "Page 5" },
+            { question: "Choose the correct word for the sentence: '\"____ down that gun, Bubba,\" the sheriff demanded.'", options: ["Lay", "Lie", "Laid", "Lain"], answer: "Lay", rationale: "'Lay' means to set an object down. 'Lie' means to recline.", page: "Page 5" },
+            { question: "Choose the correct word for the sentence: 'The train ____ through town like a speeding bullet.'", options: ["passed", "past", "passted", "pastt"], answer: "passed", rationale: "'Passed' is the past tense of the verb 'to pass'. 'Past' refers to a former time or place.", page: "Page 5" },
+            { question: "Choose the correct word for the sentence: 'Ronald Reagan ____ Bill Clinton as U.S. President.'", options: ["preceded", "proceeded", "proceded", "preceeded"], answer: "preceded", rationale: "'Precede' means to come before. 'Proceed' means to go forward.", page: "Page 6" },
+            { question: "Choose the correct word for the sentence: 'The ____ of 'innocent until proven guilty' is a fundamental tenet.'", options: ["principle", "principal", "principel", "principil"], answer: "principle", rationale: "'Principle' is a general or fundamental truth. 'Principal' means most important or a person in authority.", page: "Page 6" },
+            { question: "Choose the correct word for the sentence: 'I would rather work with Officer Williams ____ Officer Jones.'", options: ["than", "then", "than'n", "then'n"], answer: "than", rationale: "'Than' is used for comparisons. 'Then' refers to time.", page: "Page 6" },
+            { question: "Choose the correct word for the sentence: '____ car was stolen last night.'", options: ["Their", "There", "They're", "Thier"], answer: "Their", rationale: "'Their' is the possessive form of they. 'There' indicates location, and 'They're' is a contraction of 'they are'.", page: "Page 6" },
+            { question: "Choose the correct word for the sentence: 'The judge ____ out the testimony as hearsay.'", options: ["threw", "through", "thru", "threwed"], answer: "threw", rationale: "'Threw' is the past tense of throw. 'Through' means by means of. 'Thru' is inappropriate slang.", page: "Page 6" },
+            { question: "Choose the correct word for the sentence: 'They drank ____ much before driving home.'", options: ["too", "to", "two", "tew"], answer: "too", rationale: "'Too' means also or excessively. 'To' is a preposition, and 'two' is a number.", page: "Page 7" },
+            { question: "Which pronoun typically refers to things and animals?", options: ["Which", "Who", "Whom", "Whose"], answer: "Which", rationale: "'Which' is a pronoun that typically refers to things and animals. 'Who' and 'whom' refer to people.", page: "Page 7" },
+            { question: "____ are you referring to?'", options: ["Whom", "Who", "Whose", "Which"], answer: "Whom", rationale: "'Whom' is used as an object. A trick is to see if 'him' or 'her' would fit: 'Are you referring to him?' Since it fits, 'whom' is correct.", page: "Page 7" },
+            { question: "Choose the correct word: '____ car is parked illegally?'", options: ["Whose", "Who's", "Whos", "Who is"], answer: "Whose", rationale: "'Whose' is the possessive pronoun. 'Who's' is a contraction for 'who is'.", page: "Page 7" },
+            { question: "Choose the correct word: 'We need to drive ____ to reach the next town.'", options: ["farther", "further", "futher", "fartherer"], answer: "farther", rationale: "'Farther' refers to physical distance, while 'further' refers to a metaphorical or figurative distance or degree.", page: "Page 8" },
+
+            // Verbosity & Punctuation
+            { question: "What is the term for unnecessary, flowery, and fancy words in police reports that should be avoided?", options: ["Deadwood", "Jargon", "Slang", "Legalese"], answer: "Deadwood", rationale: "Flowery and fancy words and phrases are considered 'deadwood' and should be kept out of your documents.", page: "Page 8" },
+            { question: "Instead of writing 'at the present time,' what is the more concise alternative?", options: ["now", "currently", "at this moment", "presently"], answer: "now", rationale: "The document lists 'At the present time' as a 'deadwood' phrase and recommends the simpler term 'now'.", page: "Page 8" },
+            { question: "The phrase 'consensus of opinion' is considered deadwood. What is the more concise alternative?", options: ["consensus", "opinion", "agreement", "thought"], answer: "consensus", rationale: "This is a form of 'deadwood' through needless repetition. A consensus is by definition an opinion, so 'consensus' alone is sufficient.", page: "Page 9" },
+            { question: "Which punctuation mark is used to indicate the possessive case of nouns, as in 'the boy's mother'?", options: ["Apostrophe (')", "Comma (,)", "Semicolon (;)", "Quotation Mark (\")"], answer: "Apostrophe (')", rationale: "An apostrophe is used to indicate the possessive case of nouns and indefinite pronouns.", page: "Page 26" },
+            { question: "What punctuation is used to indicate the omission of one or more words within a quoted passage?", options: ["Ellipsis (...)", "Dash (-)", "Parentheses (())", "Brackets ([])"], answer: "Ellipsis (...)", rationale: "An ellipsis indicates the omission of one or more words within a quoted passage.", page: "Page 28" },
+            { question: "What does the punctuation mark Semicolon (;) do?", options: ["Links main clauses not joined by coordinating conjunctions", "Indicates the possessive case of nouns", "Terminates a direct question", "Encloses direct quotations"], answer: "Links main clauses not joined by coordinating conjunctions", rationale: "A semicolon links main clauses that are not joined by conjunctions like 'and' or 'but'. Example: 'Some people have the ability to write well; others do not.'", page: "Page 30" },
+
+            // Field Notes, Observation & Description
+            { question: "What is the primary purpose of field notes?", options: ["To provide a basis for report writing", "To serve as the final official record", "To be shared with the media", "To record personal opinions about a case"], answer: "To provide a basis for report writing", rationale: "Field notes are brief notations used to prepare a report. They provide the basis for the formal report and ensure greater accuracy.", page: "Page 10" },
+            { question: "What is a critical consideration for an officer regarding their field notes if a case goes to court?", options: ["They are subject to scrutiny and may be entered as evidence.", "They are considered confidential and cannot be used in court.", "They must be rewritten in a formal format before court.", "Only the officer's final report is admissible in court."], answer: ["They are subject to scrutiny and may be entered as evidence."], rationale: "If brought to court, an officer's notes are subject to scrutiny. If placed into evidence, they may not be available until released by the court.", page: "Page 10" },
+            { question: "What should an officer do with field notes after the information has been transcribed to a report?", options: ["Destroy them, per agency policy", "File them with the final report", "Give them to the victim", "Keep them as a personal record indefinitely"], answer: "Destroy them, per agency policy", rationale: "It is recommended that once information from field notes has been transcribed to a report, the notes be destroyed to avoid impeachable discrepancies, but officers should always check agency policy.", page: "Page 10" },
+            { question: "When describing people, what is the recommended systematic manner?", options: ["Begin with race, sex, age, then head-to-toe", "Begin with their shoes and go up to their head", "Describe only their most unique features", "Focus only on the person's face and hands"], answer: "Begin with race, sex, age, then head-to-toe", rationale: "Describe people in a systematic manner, beginning with race, sex, and age, and continuing with a head-to-toe description.", page: "Page 11" },
+            { question: "When describing places, what is the recommended method?", options: ["Begin at one point and proceed in one direction (e.g., left-to-right)", "Describe the most important items first, regardless of location", "Start from the center and work outwards", "Describe the general impression of the scene first"], answer: "Begin at one point and proceed in one direction (e.g., left-to-right)", rationale: "Places should be described beginning at one point, then proceeding in one direction, such as left-to-right or top-to-bottom, to ensure a thorough and systematic description.", page: "Page 11" },
+            { question: "When describing property like a cell phone, which detail is most crucial for identification?", options: ["Serial number", "Cost/value", "Style", "Use"], answer: "Serial number", rationale: "When describing property, unique identifiers are critical. The description should include Manufacturer, Model name/number, and Serial number.", page: "Page 13" },
+            { question: "What does the 'M' in the vehicle description acronym 'CYMBAL' stand for?", options: ["Make/Model", "Mileage", "Mirrors", "Modification"], answer: "Make/Model", rationale: "The acronym 'CYMBAL' stands for Color, Year, Make/Model, Body style, and License plate.", page: "Page 13" },
+            { question: "If a victim of an overnight vehicle burglary cannot give an exact time, what should the officer do?", options: ["Determine a time frame between when they last saw the property and when they discovered it missing.", "Record the time as 'unknown'.", "Use the time the report was made as the time of the offense.", "Estimate the time to be midnight."], answer: "Determine a time frame between when they last saw the property and when they discovered it missing.", rationale: "If an individual is not able to give an exact date and time, the officer should figure out between what times the offense occurred.", page: "Page 14" },
+            
+            // Reports
+            { question: "Which of the '5 Ws and H' questions in a report aims to identify a possible cause or motive?", options: ["Why?", "What?", "When?", "Who?"], answer: "Why?", rationale: "The 'Why?' question in a report should include any statement or evidence supporting a possible cause or motive for the offense.", page: "Page 15" },
+            { question: "Which of the following is NOT listed as an official use of a police report?", options: ["Material for a news story", "Permanent record of facts", "Basis for prosecution and defense", "Statistical data"], answer: "Material for a news story", rationale: "Official uses include being a permanent record, coordinating follow-up, basis for prosecution, officer performance evaluations, statistical data, and reference material.", page: "Page 15" },
+            { question: "Which of the following is NOT one of the eight essential criteria of a good police report?", options: ["Subjective", "Accurate", "Concise", "Legible"], answer: "Subjective", rationale: "The eight essential criteria are: Accurate, Concise, Complete, Clear, Legible, Objective, Grammatically correct, and Correct spelling. A report should be objective, not subjective.", page: "Page 16" },
+            { question: "Arrangement of information in order of occurrence is known as:", options: ["Chronological", "Categorical", "Alphabetical", "Narrative"], answer: "Chronological", rationale: "Chronological order is the arrangement of information in order of occurrence.", page: "Page 17" },
+            { question: "Arrangement of information by category, such as witnesses or suspects, is known as:", options: ["Categorical", "Chronological", "Topical", "Systematic"], answer: "Categorical", rationale: "Categorical order is the arrangement of information by category.", page: "Page 17" },
+            { question: "Which of these is NOT one of the three basic kinds of information necessary in police reports?", options: ["The officer's personal opinion of the suspect", "Identification of the involved persons, vehicles, etc.", "Narrative description of the offense or incident", "Elements of the offense or probable cause"], answer: "The officer's personal opinion of the suspect", rationale: "The three basic kinds of information are: Identification of involved parties, Narrative description, and Elements of the offense/probable cause. Officer opinions should generally be excluded.", page: "Page 17" },
+            { question: "What should an officer do with their opinions when writing a police report?", options: ["Label them as opinions to avoid confusion with facts", "Include them as if they are facts", "Never include opinions under any circumstances", "Only include opinions that favor the prosecution"], answer: "Label them as opinions to avoid confusion with facts", rationale: "Unless required, officers' opinions should not be included. If they are, anything other than facts must be labeled as such to avoid any possible confusion.", page: "Page 17" },
+            { question: "Under CCP Chapter 58, what may a victim of a sex offense choose to use in all public files and records concerning the offense?", options: ["A pseudonym", "Their initials only", "A code number", "The name of a relative"], answer: "A pseudonym", rationale: "A victim may choose a pseudonym to designate his or her identity in all public files and records concerning the offense.", page: "Page 17" },
+            { question: "According to the guide, which two punctuation marks should always fall *within* quotation marks?", options: ["Period and comma", "Semicolon and colon", "Question mark and exclamation point", "Dash and hyphen"], answer: "Period and comma", rationale: "The guide states: 'the period and the comma fall within the quotation marks.'", page: "Page 30" },
+            { question: "What is an officer's ability to be descriptive in field notes and reports based on?", options: ["Their observation skills", "Their writing speed", "Their vocabulary size", "Their memory alone"], answer: "Their observation skills", rationale: "An officer's ability to be descriptive in field notes and reports is based on their observation skills, which use all five senses.", page: "Page 10" },
+            { question: "What does the 'B' in 'CYMBAL' stand for?", options: ["Body style", "Bumper", "Brand", "Brakes"], answer: "Body style", rationale: "The acronym 'CYMBAL' for vehicle descriptions stands for Color, Year, Make/Model, Body style, and License plate.", page: "Page 13" },
+            { question: "Which question in a report details how an offense occurred or how a suspect gained entry?", options: ["How?", "Why?", "Where?", "What?"], answer: "How?", rationale: "The 'How?' question covers details such as how the offense occurred and how the suspect approached or gained access/entry.", page: "Page 15" },
+            { question: "Which common police report type is used to document arrests?", options: ["Arrest report", "Incident report", "Supplemental report", "Crash report"], answer: "Arrest report", rationale: "The handout lists 'Arrest reports' as one of the common types of police reports.", page: "Page 16" },
+            { question: "Which common report is used to add information to an existing case?", options: ["Supplemental report", "Incident report", "Offense report", "Arrest report"], answer: "Supplemental report", rationale: "Supplemental reports are used to add information to a previously filed report.", page: "Page 17" },
+            { question: "Which is the correct form: 'When am I ____ appear in court?'", options: ["supposed to", "suppose to", "supposing to", "supposedly"], answer: "supposed to", rationale: "'Supposed to' is the correct form for 'to be obligated to' or 'presumed to'.", page: "Page 6" },
+            { question: "Choose the correct word: '____ always late for work.'", options: ["They're", "Their", "There", "They are"], answer: "They're", rationale: "'They're' is the contraction for 'they are'.", page: "Page 6" },
+            { question: "Choose the correct sentence: 'To ____ are you referring?'", options: ["whom", "who", "which", "that"], answer: "whom", rationale: "'Whom' is used as an object. You would say 'you are referring to him', so 'whom' is correct.", page: "Page 7" },
+            { question: "Instead of writing 'in view of the fact that', what is the more concise alternative?", options: ["because, since", "considering", "due to", "as"], answer: "because, since", rationale: "The document lists 'in view of the fact that' as 'deadwood' and recommends using 'because' or 'since' instead.", page: "Page 9" },
+            { question: "Instead of writing 'subsequent to', what is the more concise alternative?", options: ["after", "following", "later", "next"], answer: "after", rationale: "The document lists 'subsequent to' as 'deadwood' and recommends using 'after' instead.", page: "Page 9" },
+            { question: "What is wrong with the phrase 'true facts'?", options: ["It is repetitive (deadwood)", "It is grammatically incorrect", "It is slang", "It is jargon"], answer: "It is repetitive (deadwood)", rationale: "This is an example of 'deadwood' through needless repetition. A fact is by definition true.", page: "Page 9" },
+            { question: "The five senses used in observation are sight, hearing, touch, taste, and ____.", options: ["smell", "instinct", "intuition", "logic"], answer: "smell", rationale: "The document states that all five senses (sight, hearing, touch, taste, and smell) are used in observation.", page: "Page 10" },
+            { question: "Which of the following is NOT a component of a sentence listed in the handout?", options: ["Conjunction", "Adjective", "Noun", "Verb"], answer: "Conjunction", rationale: "The listed components of a sentence are Adjective, Adverb, Noun, Preposition, Verb, and Pronoun. Conjunction is not listed in this section.", page: "Page 1" }
+        ];
+
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const reviewScreen = document.getElementById('review-screen');
+
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const reviewBtn = document.getElementById('review-btn');
+        const backToResultsBtn = document.getElementById('back-to-results-btn');
+        
+        const questionNumberEl = document.getElementById('question-number');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const progressBar = document.getElementById('progress-bar');
+        const questionTextEl = document.getElementById('question-text');
+        const answerOptionsEl = document.getElementById('answer-options');
+        const rationaleBox = document.getElementById('rationale-box');
+        const rationaleText = document.getElementById('rationale-text');
+        const rationaleSource = document.getElementById('rationale-source');
+        
+        const scorePercentageEl = document.getElementById('score-percentage');
+        const correctAnswersEl = document.getElementById('correct-answers');
+        const totalAnsweredEl = document.getElementById('total-answered');
+        const finalTimeEl = document.getElementById('final-time');
+        const timerEl = document.getElementById('timer');
+        const reviewContainer = document.getElementById('review-container');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timerInterval;
+        let secondsElapsed = 0;
+        let userAnswers = [];
+        let questionsToAsk = [];
+        
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        startBtn.addEventListener('click', startQuiz);
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', startQuiz);
+        reviewBtn.addEventListener('click', showReview);
+        backToResultsBtn.addEventListener('click', () => {
+            reviewScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+        });
+
+        function startTimer() {
+            secondsElapsed = 0;
+            timerEl.textContent = '00:00';
+            timerInterval = setInterval(() => {
+                secondsElapsed++;
+                const minutes = Math.floor(secondsElapsed / 60).toString().padStart(2, '0');
+                const seconds = (secondsElapsed % 60).toString().padStart(2, '0');
+                timerEl.textContent = `${minutes}:${seconds}`;
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function startQuiz() {
+            questionsToAsk = shuffleArray([...quizData]);
+            questionsToAsk.forEach(q => shuffleArray(q.options));
+
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            startScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            nextBtn.classList.add('hidden');
+            startTimer();
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            rationaleBox.classList.add('hidden');
+            answerOptionsEl.innerHTML = '';
+            const currentQuestion = questionsToAsk[currentQuestionIndex];
+            
+            questionNumberEl.textContent = currentQuestionIndex + 1;
+            totalQuestionsEl.textContent = questionsToAsk.length;
+            questionTextEl.textContent = currentQuestion.question;
+
+            const progress = ((currentQuestionIndex) / questionsToAsk.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('answer-option', 'w-full', 'p-4', 'text-left', 'bg-white', 'border-2', 'border-gray-300', 'rounded-lg', 'hover:bg-gray-50', 'hover:border-blue-500');
+                button.addEventListener('click', () => selectAnswer(button, option, currentQuestion));
+                answerOptionsEl.appendChild(button);
+            });
+        }
+
+        function selectAnswer(button, selectedOption, currentQuestion) {
+            const { answer, rationale, page } = currentQuestion;
+            userAnswers[currentQuestionIndex] = selectedOption;
+
+            const buttons = answerOptionsEl.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === answer) {
+                    btn.classList.add('correct');
+                }
+            });
+
+            if (selectedOption === answer) {
+                score++;
+                button.classList.add('correct');
+            } else {
+                button.classList.add('incorrect');
+            }
+
+            rationaleText.textContent = rationale;
+            rationaleSource.textContent = page;
+            rationaleBox.classList.remove('hidden');
+            nextBtn.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questionsToAsk.length) {
+                nextBtn.classList.add('hidden');
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            stopTimer();
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+
+            const percentage = Math.round((score / questionsToAsk.length) * 100);
+            scorePercentageEl.textContent = `${percentage}%`;
+            correctAnswersEl.textContent = score;
+            totalAnsweredEl.textContent = questionsToAsk.length;
+            finalTimeEl.textContent = timerEl.textContent;
+            
+            progressBar.style.width = `100%`;
+        }
+
+        function showReview() {
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.remove('hidden');
+            reviewContainer.innerHTML = '';
+
+            questionsToAsk.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === question.answer;
+
+                const reviewItem = document.createElement('div');
+                reviewItem.classList.add('border', 'p-4', 'rounded-lg');
+                reviewItem.classList.add(isCorrect ? 'bg-green-50/50' : 'bg-red-50/50', isCorrect ? 'border-green-200' : 'border-red-200');
+
+                let userAnswerHTML = '';
+                if (isCorrect) {
+                    userAnswerHTML = `<p>Your answer: <span class="font-semibold review-correct">${userAnswer} (Correct)</span></p>`;
+                } else {
+                    userAnswerHTML = `
+                        <p>Your answer: <span class="font-semibold review-incorrect">${userAnswer ? userAnswer : 'Not answered'} (Incorrect)</span></p>
+                        <p>Correct answer: <span class="font-semibold review-correct">${question.answer}</span></p>
+                    `;
+                }
+
+                reviewItem.innerHTML = `
+                    <p class="font-bold mb-2">${index + 1}. ${question.question}</p>
+                    ${userAnswerHTML}
+                    <p class="text-sm text-gray-600 mt-2"><em><strong>Rationale:</strong> ${question.rationale} (Source: ${question.page})</em></p>
+                `;
+                reviewContainer.appendChild(reviewItem);
+            });
+        }
+
+    </script>
+</body>
+</html>
+

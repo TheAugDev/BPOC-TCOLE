@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Guide: Written Communication</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --header-bg: #1f2937;
+            --bg-color: #f3f4f6;
+            --tab-active-bg: #047857; /* Emerald Green for this guide */
+            --tab-active-text: #ffffff;
+            --card-bg: #ffffff;
+            --text-color: #111827;
+            --link-color: #047857;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://rsms.me/inter/inter.css');
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab.active {
+            background-color: var(--tab-active-bg);
+            color: var(--tab-active-text);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tab {
+            transition: all 0.3s ease-in-out;
+        }
+        details > summary {
+            list-style: none;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+        details summary .icon {
+            transition: transform 0.2s;
+        }
+        details[open] summary .icon {
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-gray-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">
+                <i class="fas fa-pencil-alt mr-2"></i>Written Communication
+            </h1>
+            <p class="text-sm text-gray-300">BPOC Chapter 24 | TCOLE Preparation</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-6">
+        <div class="mb-6 bg-white rounded-lg shadow-md overflow-x-auto">
+            <nav id="tabs" class="flex flex-row space-x-1 p-2">
+                <button data-tab="grammar-punctuation" class="tab active flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-emerald-100">
+                    <i class="fas fa-spell-check mr-2"></i> <span class="hidden md:inline">Grammar & Punctuation</span>
+                </button>
+                 <button data-tab="clarity-style" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-emerald-100">
+                    <i class="fas fa-lightbulb mr-2"></i> <span class="hidden md:inline">Clarity & Style</span>
+                </button>
+                <button data-tab="field-notes" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-emerald-100">
+                    <i class="fas fa-book mr-2"></i> <span class="hidden md:inline">Field Notes</span>
+                </button>
+                <button data-tab="report-writing" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-emerald-100">
+                    <i class="fas fa-file-alt mr-2"></i> <span class="hidden md:inline">Report Writing</span>
+                </button>
+                <button data-tab="knowledge-check" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-emerald-100">
+                    <i class="fas fa-question-circle mr-2"></i> <span class="hidden md:inline">Knowledge Check</span>
+                </button>
+                <button data-tab="resources" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-emerald-100">
+                    <i class="fas fa-link mr-2"></i> <span class="hidden md:inline">Resources</span>
+                </button>
+            </nav>
+        </div>
+
+        <div id="tab-contents">
+            <div id="grammar-punctuation" class="tab-content active space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Components of a Sentence</h2>
+                    <p class="text-sm mb-4">Understanding the basic building blocks of language is the first step to clear writing.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        <div><strong>Adjective:</strong> A word that describes or modifies a noun. (e.g., "a <span class="font-bold text-emerald-700">brave</span> officer," "a <span class="font-bold text-emerald-700">new</span> car").</div>
+                        <div><strong>Adverb:</strong> A word that modifies a verb, adjective, or another adverb. It answers questions like When?, Where?, How?, and To what degree? (e.g., "moved <span class="font-bold text-emerald-700">expeditiously</span>").</div>
+                        <div><strong>Noun:</strong> The name of a person, place, thing, quality, concept, or action. (e.g., "The <span class="font-bold text-emerald-700">officer</span> received an <span class="font-bold text-emerald-700">assignment</span>.").</div>
+                        <div><strong>Preposition:</strong> A word that combines with a noun or pronoun to form a phrase. (e.g., "They expected resistance <span class="font-bold text-emerald-700">on</span> their part.").</div>
+                        <div><strong>Verb:</strong> Expresses an act, occurrence, or mode of being. (e.g., "The suspect <span class="font-bold text-emerald-700">ran</span> from the officer.").</div>
+                        <div><strong>Pronoun:</strong> A word used as a substitute for a noun. (e.g., "<span class="font-bold text-emerald-700">Who</span> is <span class="font-bold text-emerald-700">she</span>?").</div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Sentence Construction & Common Errors</h2>
+                    <h4 class="font-semibold mt-4 text-sm">Characteristics of a Good Sentence:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>Expresses a complete thought.</li>
+                        <li>Contains a subject and a predicate.</li>
+                        <li>Is short, simple, and concise.</li>
+                        <li>Is unmistakably clear to the reader.</li>
+                    </ul>
+
+                    <h4 class="font-semibold mt-4 text-sm">Sentence Fragments:</h4>
+                    <p class="text-sm text-gray-700 mb-2">A sentence fragment is an incomplete sentence because it lacks a subject, a verb, or both. It does not express a complete thought.</p>
+                    <p class="text-sm mt-2 p-3 bg-red-50 rounded-md"><strong>Incorrect (Fragment):</strong> The mirror in the hall closet.<br><strong>Correct:</strong> The mirror in the hall closet <span class="font-bold text-red-700">fell and shattered</span>.</p>
+
+                    <h4 class="font-semibold mt-4 text-sm">Run-On Sentences:</h4>
+                    <p class="text-sm text-gray-700 mb-2">A run-on sentence occurs when two or more complete sentences are joined without proper punctuation or a conjunction.</p>
+                     <p class="text-sm mt-2 p-3 bg-red-50 rounded-md"><strong>Incorrect (Run-on):</strong> The officer chased the suspect, and the suspect had a gun.<br><strong>Correct:</strong> The officer chased the suspect<span class="font-bold text-red-700">.</span> The suspect had a gun.<br><strong>Correct:</strong> The officer chased the suspect<span class="font-bold text-red-700">, who</span> had a gun.</p>
+                </div>
+                
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Comprehensive Punctuation Guide</h2>
+                    <p class="text-sm mb-4">Proper punctuation guides the reader and makes your meaning clear. Here are common marks and their uses.</p>
+                    <div class="space-y-2 text-sm">
+                        <details class="bg-gray-50 p-3 rounded-lg">
+                            <summary class="font-semibold cursor-pointer flex justify-between items-center">Apostrophe ( ' ) <i class="fas fa-chevron-right icon"></i></summary>
+                            <ul class="list-disc list-inside text-gray-700 mt-2 pl-4">
+                                <li>Indicates the possessive case of nouns and indefinite pronouns: "the boy's mother," "the boys' mothers," "it is anyone's guess."</li>
+                                <li>Marks omissions in contracted words: "didn't," "o'clock."</li>
+                                <li>Often forms plurals of letters, figures, and words referred to as words: "dot your i's," "several 8's."</li>
+                            </ul>
+                        </details>
+                        <details class="bg-gray-50 p-3 rounded-lg">
+                            <summary class="font-semibold cursor-pointer flex justify-between items-center">Colon ( : ) <i class="fas fa-chevron-right icon"></i></summary>
+                            <ul class="list-disc list-inside text-gray-700 mt-2 pl-4">
+                                <li>Introduces a word, clause, or phrase that explains, illustrates, amplifies, or restates what has gone before: "The sentence was poorly constructed: it lacked both unity and coherence."</li>
+                                <li>Introduces a series: "Three countries were represented: England, France, and Belgium."</li>
+                                <li>Separates data in time-telling and bibliographic references: "8:30 a.m.," "John 4:10."</li>
+                                <li>Separates titles and subtitles: "The Tragic Dynasty: A History of the Romanovs."</li>
+                                <li>Follows the salutation in formal correspondence: "Dear Sir:"</li>
+                            </ul>
+                        </details>
+                         <details class="bg-gray-50 p-3 rounded-lg">
+                            <summary class="font-semibold cursor-pointer flex justify-between items-center">Comma ( , ) <i class="fas fa-chevron-right icon"></i></summary>
+                            <ul class="list-disc list-inside text-gray-700 mt-2 pl-4">
+                                <li>Separates main clauses joined by a conjunction (and, but, or, etc.): "She knew very little about him, and he volunteered nothing."</li>
+                                <li>Sets off a long adverbial clause or phrase that precedes the main clause: "When she found that her friends had deserted her, she sat down and cried."</li>
+                                <li>Sets off transitional words and expressions: "Your second question, on the other hand, remains open."</li>
+                                <li>Separates words, phrases, or clauses in a series: "Men, women, and children crowded into the square."</li>
+                                <li>Sets off parenthetic elements (like nonrestrictive modifiers): "Our guide, who wore a blue beret, was an experienced traveler."</li>
+                                <li>Introduces and terminates direct quotations: "John said, 'I am leaving.'"</li>
+                                <li>Sets off words in direct address: "You may go, Mary, if you wish."</li>
+                                <li>Separates geographical names, dates, and addresses: "Shreveport, Louisiana, is the site..."</li>
+                            </ul>
+                        </details>
+                         <details class="bg-gray-50 p-3 rounded-lg">
+                            <summary class="font-semibold cursor-pointer flex justify-between items-center">Quotation Marks ( " " ) <i class="fas fa-chevron-right icon"></i></summary>
+                             <ul class="list-disc list-inside text-gray-700 mt-2 pl-4">
+                                <li>Enclose direct quotations: "He said, 'I am leaving.'"</li>
+                                <li>Enclose words used in a special way or slang introduced into formal writing.</li>
+                                <li>Enclose titles of short works like articles, short stories, or songs.</li>
+                                <li>**Placement Rule:** The period and comma ALWAYS fall within the quotation marks.</li>
+                                <li>**Placement Rule:** The semicolon and colon ALWAYS fall outside the quotation marks.</li>
+                                <li>**Placement Rule:** The dash, question mark, and exclamation point fall inside when they refer to the quoted matter only; they fall outside when they refer to the whole sentence.</li>
+                            </ul>
+                        </details>
+                        <details class="bg-gray-50 p-3 rounded-lg">
+                            <summary class="font-semibold cursor-pointer flex justify-between items-center">Semicolon ( ; ) <i class="fas fa-chevron-right icon"></i></summary>
+                            <ul class="list-disc list-inside text-gray-700 mt-2 pl-4">
+                                <li>Links main clauses not joined by a coordinating conjunction: "Some people have the ability to write well; others do not."</li>
+                                <li>Links main clauses joined by conjunctive adverbs (e.g., consequently, furthermore, however): "Speeding is illegal; furthermore, it is very dangerous."</li>
+                                <li>Links clauses which themselves contain commas, even when joined by a conjunction, to avoid confusion.</li>
+                            </ul>
+                        </details>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div id="clarity-style" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Writing with Clarity</h2>
+                    <h4 class="font-semibold mt-4 text-sm">Misplaced Modifiers:</h4>
+                    <p class="text-sm text-gray-700 mb-2">A modifier is a word or phrase that qualifies another word. It should be placed as close as possible to the word it modifies. Misplacing it can create confusing or unintentionally humorous sentences.</p>
+                    <p class="text-sm mt-2 p-3 bg-red-50 rounded-md"><strong>Incorrect:</strong> We saw many swimming pools flying over California.<br><strong>Correct:</strong> <span class="font-bold text-emerald-700">While flying over California,</span> we saw many swimming pools.</p>
+
+                    <h4 class="font-semibold mt-4 text-sm">Double Negatives:</h4>
+                    <p class="text-sm text-gray-700 mb-2">Avoid using two negative words in the same clause (e.g., not, no, never, none, nobody, nothing, barely, hardly, scarcely).</p>
+                    <p class="text-sm mt-2 p-3 bg-red-50 rounded-md"><strong>Incorrect:</strong> Nobody saw nothing.<br><strong>Correct:</strong> Nobody saw <span class="font-bold text-emerald-700">anything</span>. / <span class="font-bold text-emerald-700">We</span> saw nothing.</p>
+
+                    <h4 class="font-semibold mt-4 text-sm">Active vs. Passive Voice:</h4>
+                    <p class="text-sm text-gray-700 mb-2">Active voice is stronger, clearer, and more direct. The subject performs the action. In passive voice, the subject receives the action. Use active voice unless the actor is unknown.</p>
+                    <p class="text-sm mt-2 p-3 bg-emerald-50 rounded-md"><strong>Passive:</strong> The bystander was hit by a stray bullet.<br><strong>Active:</strong> A stray bullet hit a bystander.</p>
+
+                    <h4 class="font-semibold mt-4 text-sm">Slang, Jargon, and Nonstandard Abbreviations:</h4>
+                    <p class="text-sm text-gray-700 mb-2">Write professionally. Avoid informal language unless you are directly quoting someone. If you must use an abbreviation, write it out completely the first time followed by the abbreviation in parentheses.</p>
+                     <p class="text-sm mt-2 p-3 bg-red-50 rounded-md"><strong>Incorrect:</strong> We ID'd the S from the APВ.<br><strong>Correct:</strong> We identified the suspect from the all-points-bulletin (APB).</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Commonly Misused Words</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-4 text-sm">
+                        <div><strong>Accept vs. Except:</strong> <span class="text-gray-600 block">To receive vs. to exclude.</span></div>
+                        <div><strong>Affect vs. Effect:</strong> <span class="text-gray-600 block">Affect is a verb (to influence). Effect is a noun (the result).</span></div>
+                        <div><strong>All ready vs. Already:</strong> <span class="text-gray-600 block">Prepared vs. by this time.</span></div>
+                        <div><strong>Capital vs. Capitol:</strong> <span class="text-gray-600 block">Seat of government vs. the actual building.</span></div>
+                        <div><strong>Cite vs. Site vs. Sight:</strong> <span class="text-gray-600 block">To quote, a place, and vision.</span></div>
+                        <div><strong>Conscience vs. Conscious:</strong> <span class="text-gray-600 block">Sense of right/wrong vs. awake.</span></div>
+                        <div><strong>Council vs. Counsel:</strong> <span class="text-gray-600 block">A group vs. advice/to advise.</span></div>
+                        <div><strong>Elicit vs. Illicit:</strong> <span class="text-gray-600 block">To draw out vs. illegal.</span></div>
+                        <div><strong>Its vs. It's:</strong> <span class="text-gray-600 block">Possessive vs. "it is."</span></div>
+                        <div><strong>Lay vs. Lie:</strong> <span class="text-gray-600 block">To set an object down vs. to recline. <br><i>Hint: People can tell lies.</i></span></div>
+                        <div><strong>Passed vs. Past:</strong> <span class="text-gray-600 block">Verb (moved by) vs. belonging to a former time.</span></div>
+                        <div><strong>Precede vs. Proceed:</strong> <span class="text-gray-600 block">To come before vs. to go forward.</span></div>
+                        <div><strong>Principal vs. Principle:</strong> <span class="text-gray-600 block">Most important/head of a school vs. a fundamental truth.</span></div>
+                        <div><strong>Than vs. Then:</strong> <span class="text-gray-600 block">Used for comparisons vs. at that time/next.</span></div>
+                        <div><strong>Their vs. There vs. They're:</strong> <span class="text-gray-600 block">Possessive, a location, and "they are."</span></div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Eliminating "Deadwood" (Wordiness)</h2>
+                    <p class="text-sm text-gray-700 mb-2">Police reports are not prose. Be direct and concise. Avoid unnecessary words and phrases that add length but not substance.</p>
+                    <h4 class="font-semibold mt-4 text-sm">Simplify Phrases:</h4>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+                        <div><span class="text-red-600">At this point in time</span> &rarr; <span class="text-emerald-600">Now</span></div>
+                        <div><span class="text-red-600">In the event that</span> &rarr; <span class="text-emerald-600">If</span></div>
+                        <div><span class="text-red-600">In view of the fact that</span> &rarr; <span class="text-emerald-600">Because / Since</span></div>
+                        <div><span class="text-red-600">Make inquiry regarding</span> &rarr; <span class="text-emerald-600">Ask about</span></div>
+                        <div><span class="text-red-600">Subsequent to</span> &rarr; <span class="text-emerald-600">After</span></div>
+                        <div><span class="text-red-600">Utilize</span> &rarr; <span class="text-emerald-600">Use</span></div>
+                    </div>
+                     <h4 class="font-semibold mt-4 text-sm">Avoid Redundancy (Needless Repetition):</h4>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+                        <div><span class="text-red-600">Adequate enough</span> &rarr; <span class="text-emerald-600">Adequate or Enough</span></div>
+                        <div><span class="text-red-600">Close proximity</span> &rarr; <span class="text-emerald-600">Proximity</span></div>
+                        <div><span class="text-red-600">True facts</span> &rarr; <span class="text-emerald-600">Facts</span></div>
+                        <div><span class="text-red-600">Consensus of opinion</span> &rarr; <span class="text-emerald-600">Consensus</span></div>
+                         <div><span class="text-red-600">Cooperated together</span> &rarr; <span class="text-emerald-600">Cooperated</span></div>
+                        <div><span class="text-red-600">Rate of speed</span> &rarr; <span class="text-emerald-600">Speed</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="field-notes" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">The Importance of Field Notes</h2>
+                    <p class="text-sm"><strong>Definition:</strong> Brief notations concerning specific events and circumstances that are recorded while fresh in the officer's mind and used to prepare a report.</p>
+                    <h4 class="font-semibold mt-4 text-sm">Primary Uses:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>Provides the basis for your official report.</li>
+                        <li>Reduces the need to re-contact parties involved.</li>
+                        <li>Provides greater accuracy relative to time, statements, and events than memory alone.</li>
+                    </ul>
+                     <h4 class="font-semibold mt-4 text-sm">Best Practices:</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>Do not include personal comments or non-police information.</li>
+                        <li>Notes are subject to scrutiny in court. Ensure they are professional.</li>
+                        <li>Be careful when transferring information to your report; ensure there are no discrepancies.</li>
+                        <li>Check agency policy regarding the retention or destruction of field notes after a report is completed.</li>
+                    </ul>
+                </div>
+
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Information to Record in Field Notes</h2>
+                    <p class="text-sm mb-4">A systematic approach ensures you don't miss critical information. Answer the key questions:</p>
+                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+                        <div class="p-4 bg-emerald-50 rounded-lg">
+                            <h4 class="font-bold text-emerald-800">Who?</h4>
+                            <p>Correct spelling of names, DOB, address, phone, DL/ID number, aliases, role (victim, suspect, witness).</p>
+                        </div>
+                         <div class="p-4 bg-emerald-50 rounded-lg">
+                            <h4 class="font-bold text-emerald-800">What?</h4>
+                            <p>Type of offense, property involved, means of transport, statements made, unusual actions.</p>
+                        </div>
+                         <div class="p-4 bg-emerald-50 rounded-lg">
+                            <h4 class="font-bold text-emerald-800">When?</h4>
+                            <p>Date and time the offense occurred, was discovered, and was reported. Time of arrests.</p>
+                        </div>
+                         <div class="p-4 bg-emerald-50 rounded-lg">
+                            <h4 class="font-bold text-emerald-800">Where?</h4>
+                            <p>Exact location of offense, evidence, victims, and witnesses. Use reference points.</p>
+                        </div>
+                         <div class="p-4 bg-emerald-50 rounded-lg">
+                            <h4 class="font-bold text-emerald-800">Why?</h4>
+                            <p>Any statements or evidence supporting a possible motive (e.g., revenge, monetary gain).</p>
+                        </div>
+                         <div class="p-4 bg-emerald-50 rounded-lg">
+                            <h4 class="font-bold text-emerald-800">How?</h4>
+                            <p>How the offense occurred, how the suspect approached/exited, how law enforcement was notified.</p>
+                        </div>
+                     </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Describing People, Places, & Things</h2>
+                    <h4 class="font-semibold mt-4 text-sm">Describing People:</h4>
+                    <p class="text-sm text-gray-700">Use a systematic, head-to-toe method. Note unique identifiers first.</p>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Order:</strong> Race, Sex, Age, Height, Weight.</li>
+                        <li><strong>Head-to-Toe:</strong> Hair (color/style), Face (complexion), Eyes, Shirt, Pants, Shoes.</li>
+                        <li><strong>Distinguishing Marks:</strong> Tattoos, scars, limp, missing teeth, accent, manner of walking.</li>
+                    </ul>
+                    <h4 class="font-semibold mt-4 text-sm">Describing Vehicles ("CYMBAL"):</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>C</strong> - Color (top to bottom)</li>
+                        <li><strong>Y</strong> - Year</li>
+                        <li><strong>M</strong> - Make / Model</li>
+                        <li><strong>B</strong> - Body Style</li>
+                        <li><strong>A</strong> - And... (distinguishing marks like damage, stickers, aftermarket parts)</li>
+                        <li><strong>L</strong> - License Plate (state and number)</li>
+                    </ul>
+                    <h4 class="font-semibold mt-4 text-sm">Using All Senses for Detailed Descriptions:</h4>
+                    <p class="text-sm text-gray-700">Go beyond the basics by using all five senses to capture a scene.</p>
+                     <div class="space-y-2 mt-2 text-sm">
+                        <details class="bg-gray-50 p-3 rounded-lg">
+                            <summary class="font-semibold cursor-pointer flex justify-between items-center">Sight <i class="fas fa-chevron-right icon"></i></summary>
+                            <p class="text-gray-700 mt-2 pl-4">Note colors, speed, facial expressions, size, direction, movement (furtive, steady), neatness, location, proportions, and relation to surroundings.</p>
+                        </details>
+                        <details class="bg-gray-50 p-3 rounded-lg">
+                            <summary class="font-semibold cursor-pointer flex justify-between items-center">Hearing <i class="fas fa-chevron-right icon"></i></summary>
+                            <p class="text-gray-700 mt-2 pl-4">Note volume, pace, distance, and direction of sounds. Identify speech (slurred, raspy, gendered), walking noises (limping, shuffling), car noises (backfire, brake squeal), and other noises (scratching, clicking, slamming, cocking of a weapon).</p>
+                        </details>
+                        <details class="bg-gray-50 p-3 rounded-lg">
+                            <summary class="font-semibold cursor-pointer flex justify-between items-center">Touch <i class="fas fa-chevron-right icon"></i></summary>
+                            <p class="text-gray-700 mt-2 pl-4">Note temperature, texture (powdery, sticky, smooth), wetness, shape, size, firmness, and vibrations. Can be used to identify weapons or other objects in low light.</p>
+                        </details>
+                         <details class="bg-gray-50 p-3 rounded-lg">
+                            <summary class="font-semibold cursor-pointer flex justify-between items-center">Smell & Taste <i class="fas fa-chevron-right icon"></i></summary>
+                            <p class="text-gray-700 mt-2 pl-4">Note distinct odors like perfumes, smoke, gunpowder, fuel, alcohol, drugs, or cooking smells. Taste is often a secondary function of smell (e.g., salty air near the coast).</p>
+                        </details>
+                    </div>
+                </div>
+            </div>
+
+            <div id="report-writing" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Eight Essential Criteria of a Good Police Report</h2>
+                    <p class="text-sm text-gray-700 mb-4">A well-written report is a cornerstone of good police work. It serves as a permanent record, a basis for prosecution, and a reflection of your competence.</p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                        <div class="text-center p-3 bg-emerald-50 rounded-lg"><i class="fas fa-check-circle text-emerald-600 mr-2"></i><strong>Accurate</strong></div>
+                        <div class="text-center p-3 bg-emerald-50 rounded-lg"><i class="fas fa-check-circle text-emerald-600 mr-2"></i><strong>Concise</strong></div>
+                        <div class="text-center p-3 bg-emerald-50 rounded-lg"><i class="fas fa-check-circle text-emerald-600 mr-2"></i><strong>Complete</strong></div>
+                        <div class="text-center p-3 bg-emerald-50 rounded-lg"><i class="fas fa-check-circle text-emerald-600 mr-2"></i><strong>Clear</strong></div>
+                        <div class="text-center p-3 bg-emerald-50 rounded-lg"><i class="fas fa-check-circle text-emerald-600 mr-2"></i><strong>Legible</strong></div>
+                        <div class="text-center p-3 bg-emerald-50 rounded-lg"><i class="fas fa-check-circle text-emerald-600 mr-2"></i><strong>Objective</strong></div>
+                        <div class="text-center p-3 bg-emerald-50 rounded-lg"><i class="fas fa-check-circle text-emerald-600 mr-2"></i><strong>Grammatically Correct</strong></div>
+                        <div class="text-center p-3 bg-emerald-50 rounded-lg"><i class="fas fa-check-circle text-emerald-600 mr-2"></i><strong>Correct Spelling</strong></div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Structuring a Report Narrative</h2>
+                     <h4 class="font-semibold mt-4 text-sm">Chronological vs. Categorical Ordering:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Chronological:</strong> Arrangement of information in order of occurrence. This is the most common and usually the clearest method for report narratives.</li>
+                        <li><strong>Categorical:</strong> Arrangement of information by category (e.g., witnesses, suspects, evidence, crime elements). This can be useful for complex cases with multiple people or large amounts of evidence.</li>
+                    </ul>
+                     <h4 class="font-semibold mt-4 text-sm">Three Basic Kinds of Information:</h4>
+                     <ol class="list-decimal list-inside text-sm text-gray-700">
+                        <li>Identification of involved persons, vehicles, etc.</li>
+                        <li>Narrative description of the offense or incident.</li>
+                        <li>Elements of the offense or probable cause for the arrest.</li>
+                    </ol>
+                </div>
+                
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Report Types & Uses</h2>
+                    <h4 class="font-semibold mt-4 text-sm">Common Types of Police Reports:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>Arrest Reports</li>
+                        <li>Incident Reports</li>
+                        <li>Offense Reports</li>
+                        <li>Crash Reports</li>
+                        <li>Supplemental Reports</li>
+                    </ul>
+                     <h4 class="font-semibold mt-4 text-sm">Official Uses of a Police Report:</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>Permanent record of facts</li>
+                        <li>Coordination of follow-up investigation</li>
+                        <li>Basis for prosecution and defense</li>
+                        <li>Performance evaluations of officer</li>
+                        <li>Statistical data and reference material</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Fact vs. Opinion & Confidentiality</h2>
+                     <h4 class="font-semibold mt-4 text-sm">Separating Fact from Opinion:</h4>
+                    <p class="text-sm text-gray-700 mb-2">Your report must be objective. It should detail the facts of the incident. Opinions, conclusions, and suppositions should be avoided unless they are part of a direct quote or are specifically required by policy (and even then, they must be clearly labeled as such).</p>
+                    <p class="text-sm mt-2 p-3 bg-emerald-50 rounded-md"><strong>Fact:</strong> "The suspect had red, glassy eyes and slurred his words."<br><strong>Opinion:</strong> "The suspect was drunk." (This is a conclusion; stick to the observable facts that lead to it).</p>
+                    
+                    <h4 class="font-semibold mt-4 text-sm">Confidentiality of Sex Offense Victims - <a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.58.htm" target="_blank" class="text-emerald-800 hover:underline">CCP Chapter 58</a></h4>
+                    <p class="text-sm text-gray-700">A victim of a sex offense may choose to use a pseudonym to protect their identity in all public files and records concerning the offense. Your agency policy will dictate the specific procedure for documenting this.</p>
+                </div>
+            </div>
+
+            <div id="knowledge-check" class="tab-content">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Knowledge Check</h2>
+                    <p class="mb-6 text-gray-600">Test your understanding of the material.</p>
+                    <div id="quiz-container" class="space-y-8"></div>
+                    <div class="mt-8 text-center">
+                        <button id="check-answers-btn" class="bg-emerald-700 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-800 transition-colors">Check Answers</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="resources" class="tab-content">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Statutory & Reference Resources</h2>
+                    <p class="mb-6 text-gray-600">Quick links to relevant statutes and writing guides.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        <a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.58.htm" target="_blank" class="text-emerald-800 hover:underline">CCP Chapter 58 - Confidentiality of Identifying Information of Sex Offense Victims</a>
+                        <a href="https://owl.purdue.edu/owl/purdue_owl.html" target="_blank" class="text-emerald-800 hover:underline">Purdue Online Writing Lab (OWL) - A comprehensive grammar and style resource.</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('#tabs button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                });
+            });
+
+            const quizData = [
+                { question: "1. In the sentence 'The officer moved quickly,' what part of speech is 'quickly'?", options: ["Adjective", "Noun", "Verb", "Adverb"], answer: "Adverb", explanation: "'Quickly' is an adverb because it modifies the verb 'moved,' answering the question 'How?'" },
+                { question: "2. Which of the following is a run-on sentence?", options: ["The suspect ran. He was caught later.", "The suspect ran, he was caught later.", "The suspect who ran was caught later.", "After the suspect ran, he was caught later."], answer: "The suspect ran, he was caught later.", explanation: "This is a comma splice, a type of run-on sentence. Two complete sentences are joined only by a comma. They need to be separated by a period or joined with a semicolon or conjunction." },
+                { question: "3. 'The attorney gave her client sound ________.' Which word correctly completes the sentence?", options: ["council", "counsel", "consul", "cancel"], answer: "counsel", explanation: "'Counsel' means advice. 'Council' is a group that consults or advises." },
+                { question: "4. An officer's report states: 'The bystander was hit by a stray bullet.' This is an example of:", options: ["Active Voice", "Passive Voice", "A Sentence Fragment", "A Run-on Sentence"], answer: "Passive Voice", explanation: "The subject ('The bystander') is receiving the action. The active voice version would be 'A stray bullet hit the bystander,' which is clearer and more direct." },
+                { question: "5. What is the best way to write 'at this point in time' in a police report?", options: ["Currently", "At the present time", "Now", "Then"], answer: "Now", explanation: "Police reports should be concise. 'Now' communicates the same meaning as 'at this point in time' with fewer words, eliminating 'deadwood.'" },
+                { question: "6. Which of the following should NOT be included in an officer's field notes?", options: ["The suspect's date of birth", "A direct quote from a witness", "The officer's personal opinion about the suspect's guilt", "The time the offense was reported"], answer: "The officer's personal opinion about the suspect's guilt", explanation: "Field notes, like reports, should be objective and factual. Personal opinions and non-police information should be excluded." },
+                { question: "7. The acronym 'CYMBAL' is used to help officers remember how to describe what?", options: ["People", "Property", "Locations", "Vehicles"], answer: "Vehicles", explanation: "CYMBAL stands for Color, Year, Make/Model, Body Style, And... (distinguishing features), and License Plate." },
+                { question: "8. Which is NOT one of the eight essential criteria of a good police report?", options: ["Objective", "Concise", "Subjective", "Complete"], answer: "Subjective", explanation: "A good police report must be objective, not subjective. The eight criteria are: Accurate, Concise, Complete, Clear, Legible, Objective, Grammatically Correct, and Correct Spelling." },
+                { question: "9. Arranging information by category, such as by witness, suspect, and evidence, is known as what type of ordering?", options: ["Categorical", "Alphabetical", "Chronological", "Numerical"], answer: "Categorical", explanation: "Categorical ordering groups information by type, which can be useful in complex cases, whereas chronological ordering arranges it by time." },
+                { question: "10. 'Please ______ the gun on the table.' Which word correctly completes the sentence?", options: ["lie", "lay", "laid", "lain"], answer: "lay", explanation: "'Lay' means to place an object. 'Lie' means to recline. You are asking someone to place the gun." },
+                { question: "11. 'Wrapped in a blanket, the paramedic attended to the victim.' What is the error in this sentence?", options: ["Run-on sentence", "Double negative", "Misplaced modifier", "Sentence fragment"], answer: "Misplaced modifier", explanation: "The modifier 'Wrapped in a blanket' incorrectly describes the paramedic. The sentence should be rewritten: 'The paramedic attended to the victim, who was wrapped in a blanket.'" },
+                { question: "12. Under CCP Chapter 58, a victim of a sex offense has the right to:", options: ["Refuse to testify in court.", "Have their own investigator assigned.", "Use a pseudonym in all public records.", "Receive financial compensation immediately."], answer: "Use a pseudonym in all public records.", explanation: "This statute allows victims of certain offenses to choose a pseudonym to protect their identity in public files and records." },
+                { question: "13. Which of the following is an official use of a police report?", options: ["A basis for prosecution", "A script for a news report", "An officer's personal blog post", "A request for overtime"], answer: "A basis for prosecution", explanation: "Official uses include serving as a permanent record, coordinating follow-up, and forming the basis for prosecution and defense." },
+                { question: "14. Select the correct sentence:", options: ["Its a shame that the dog lost it's collar.", "It's a shame that the dog lost its collar.", "Its a shame that the dog lost its collar.", "It's a shame that the dog lost it's collar."], answer: "It's a shame that the dog lost its collar.", explanation: "'It's' is a contraction for 'it is.' 'Its' is the possessive form. The dog possessed the collar." },
+                { question: "15. The phrase 'true facts' is an example of what kind of writing error?", options: ["Misplaced Modifier", "Redundancy / Needless Repetition", "Sentence Fragment", "Double Negative"], answer: "Redundancy / Needless Repetition", explanation: "This is a form of 'deadwood.' All facts are true by definition, so the word 'true' is redundant and should be removed." },
+                { question: "16. Which punctuation mark is used to link two closely related complete sentences without a conjunction?", options: ["Comma", "Colon", "Semicolon", "Apostrophe"], answer: "Semicolon", explanation: "A semicolon (;) can join two independent clauses. For example: 'Some people write well; others do not.'" },
+                { question: "17. An officer wants to ________ a confession from the suspect. The suspect was arrested for selling ________ drugs.", options: ["illicit, elicit", "elicit, illicit", "elicit, elicit", "illicit, illicit"], answer: "elicit, illicit", explanation: "'Elicit' means to draw out or bring forth. 'Illicit' means illegal or forbidden." },
+                { question: "18. A report that is written to add information to an original report is called a:", options: ["Crash Report", "Supplemental Report", "Incident Report", "Arrest Report"], answer: "Supplemental Report", explanation: "Supplemental reports are used to document follow-up actions or add information to an initial case report." },
+                { question: "19. Which sentence contains a double negative?", options: ["The witness could not hardly see the suspect.", "The witness could see the suspect.", "The witness could hardly see the suspect.", "The witness saw nothing."], answer: "The witness could not hardly see the suspect.", explanation: "'Could not' and 'hardly' are both negative in meaning. The correct sentence would be 'The witness could hardly see the suspect.'" },
+                { question: "20. Which sentence correctly uses quotation marks with other punctuation?", options: ["The witness shouted, 'He has a gun'!", "The witness stated, 'I saw the car'; then he left.", "The witness asked, 'Did you see that?'", "The witness said, 'It was blue.'."], answer: "The witness asked, 'Did you see that?'", explanation: "The question mark applies to the quoted material, so it goes inside the quotation marks. Semicolons go outside. Periods always go inside. Exclamation points only go inside if they are part of the original quote." }
+            ];
+
+            const quizContainer = document.getElementById('quiz-container');
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'quiz-question';
+                let optionsHtml = q.options.map(option => `
+                    <label class="block"><input type="radio" name="q${index}" value="${option}" class="mr-2">${option}</label>
+                `).join('');
+                questionDiv.innerHTML = `<p class="font-semibold mb-2">${q.question}</p><div class="space-y-2">${optionsHtml}</div><div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>`;
+                quizContainer.appendChild(questionDiv);
+            });
+
+            document.getElementById('check-answers-btn').addEventListener('click', () => {
+                quizData.forEach((q, index) => {
+                    const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                    const feedback = document.querySelectorAll('.feedback')[index];
+                    feedback.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+                    if (selected && selected.value === q.answer) {
+                        feedback.textContent = `Correct! ${q.explanation}`;
+                        feedback.classList.add('bg-green-100', 'text-green-800');
+                    } else {
+                        feedback.textContent = `Incorrect. The correct answer is "${q.answer}". ${q.explanation}`;
+                        feedback.classList.add('bg-red-100', 'text-red-800');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
