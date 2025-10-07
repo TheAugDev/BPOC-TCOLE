@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCOLE Fitness, Wellness, and Stress Management Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+        .answer-option {
+            transition: all 0.2s ease-in-out;
+        }
+        .answer-option:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .correct {
+            background-color: #D1FAE5 !important;
+            border-color: #10B981 !important;
+        }
+        .incorrect {
+            background-color: #FEE2E2 !important;
+            border-color: #EF4444 !important;
+        }
+        .progress-bar-fill {
+            transition: width 0.3s ease-in-out;
+        }
+        .review-correct {
+            color: #059669;
+        }
+        .review-incorrect {
+            color: #e11d48;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="quiz-app" class="quiz-container p-4 sm:p-8">
+        
+        <!-- Quiz Start Screen -->
+        <div id="start-screen" class="text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">TCOLE Fitness, Wellness, & Stress Management</h1>
+            <p class="text-lg text-gray-600 mb-8">An exhaustive quiz based on the "Basic Peace Officer Course | Chapter 3" handout to test your knowledge on fitness, nutrition, and stress management.</p>
+            <button id="start-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Start Quiz</button>
+        </div>
+
+        <!-- Quiz Interface -->
+        <div id="quiz-screen" class="hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold">Question <span id="question-number"></span> of <span id="total-questions"></span></h2>
+                <div id="timer" class="text-lg font-mono bg-gray-200 px-3 py-1 rounded-md">00:00</div>
+            </div>
+            
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+                <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full progress-bar-fill" style="width: 0%"></div>
+            </div>
+
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+                <p id="question-text" class="text-xl font-medium mb-8 min-h-[6rem]"></p>
+                <div id="answer-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Answer options will be injected here by JS -->
+                </div>
+            </div>
+             <div id="rationale-box" class="hidden mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h3 class="font-bold text-blue-800">Rationale:</h3>
+                <p id="rationale-text" class="text-blue-700"></p>
+                <p class="text-sm text-blue-600 mt-2">Source: <span id="rationale-source"></span></p>
+            </div>
+            <button id="next-btn" class="hidden w-full bg-blue-600 text-white font-bold py-3 px-8 rounded-lg mt-8 hover:bg-blue-700 transition-colors shadow-md">Next Question</button>
+        </div>
+
+        <!-- Quiz Results Screen -->
+        <div id="results-screen" class="hidden text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">Quiz Complete!</h1>
+            <p class="text-lg text-gray-600 mb-6">Here's how you did:</p>
+            <div class="flex flex-col sm:flex-row justify-around items-center my-8 gap-8 sm:gap-0">
+                <div>
+                    <p class="text-5xl font-bold text-green-600"><span id="score-percentage"></span>%</p>
+                    <p class="text-gray-500">Score</p>
+                </div>
+                 <div>
+                    <p class="text-5xl font-bold text-blue-600"><span id="correct-answers"></span>/<span id="total-answered"></span></p>
+                    <p class="text-gray-500">Correct Answers</p>
+                </div>
+                 <div>
+                    <p class="text-5xl font-bold text-gray-700"><span id="final-time"></span></p>
+                    <p class="text-gray-500">Time Taken</p>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="restart-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Try Again</button>
+                <button id="review-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md">Review Answers</button>
+            </div>
+        </div>
+        
+        <!-- Review Screen -->
+        <div id="review-screen" class="hidden bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6">Answer Review</h1>
+            <div id="review-container" class="space-y-6">
+                <!-- Review content will be injected here -->
+            </div>
+            <button id="back-to-results-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md mt-8">Back to Results</button>
+        </div>
+
+    </div>
+
+    <script>
+        const quizData = [
+            { question: "What is the definition of Physical Fitness?", options: ["The absence of disease.", "The ability to perform daily activities without getting tired.", "The condition of the body enabling activities without undue fatigue and exhaustion.", "Having large muscles and low body fat."], answer: "The condition of the body enabling activities without undue fatigue and exhaustion.", rationale: "Physical Fitness is defined as 'The condition of the body that enables an individual to use his/her body in activities without undue experience of fatigue and exhaustion.'", page: "Page 1" },
+            { question: "Wellness is defined as a person's health/disease status and what other factor?", options: ["Job performance", "Risk potential", "Motor fitness", "Maximum strength"], answer: "Risk potential", rationale: "Wellness consists of a person's health/disease status and risk potential, ranging on a continuum from death to optimal well-being.", page: "Page 1" },
+            { question: "Which of the following is NOT a component of 'Functional and Health-Related Fitness'?", options: ["Cardiovascular fitness", "Flexibility", "Agility", "Body Composition"], answer: "Agility", rationale: "The text lists Cardiovascular fitness, Flexibility, Muscular endurance, Muscular strength, and Body Composition under Functional and Health-Related Fitness. Agility is listed under Motor Fitness.", page: "Page 1" },
+            { question: "According to the chart, what is the leading cause of death in the US?", options: ["Cancer", "Stroke", "Accidents", "Heart Disease"], answer: "Heart Disease", rationale: "The pie chart shows Heart Disease as the largest portion, accounting for 39% of deaths.", page: "Page 2" },
+            { question: "The Wellness Continuum ranges from death to what?", options: ["Absence of disease", "Peak physical performance", "Optimal well-being", "Average health"], answer: "Optimal well-being", rationale: "The Wellness Continuum ranges from death to optimal well-being, emphasizing it's more than just the absence of disease.", page: "Page 2" },
+            { question: "What is a key benefit of fitness for law enforcement job performance?", options: ["Reduced need for communication skills", "Guaranteed promotions", "Reduced risk of injuries when doing physical tasks", "Shorter work shifts"], answer: "Reduced risk of injuries when doing physical tasks", rationale: "The text lists several benefits of fitness, including 'Reduced risk of injuries when doing physical tasks.'", page: "Page 2" },
+            { question: "What is the principle of 'Progressive Overload' in an exercise program?", options: ["Exercising only on weekends with maximum effort.", "Keeping the exercise demand constant to avoid injury.", "Demands on the body must be greater than daily activities for improvement.", "Exercising each muscle group only once per week."], answer: "Demands on the body must be greater than daily activities for improvement.", rationale: "Progressive Overload means that 'For improvements in fitness, the demands placed on the body must be greater than those of daily activities.'", page: "Page 3" },
+            { question: "According to the principle of 'Regularity and Recovery', fitness begins to decline after how many hours?", options: ["24 hours", "48 hours", "72 hours", "96 hours"], answer: "96 hours", rationale: "Studies show that fitness, 'which equates to performance, begins to decline after 96 hours.'", page: "Page 3" },
+            { question: "The 'Specificity' principle means that:", options: ["All types of exercise provide the same benefits.", "The body adapts specifically to the type of demand placed on it.", "You should only focus on one type of fitness, like strength.", "Running is the only exercise needed for law enforcement."], answer: "The body adapts specifically to the type of demand placed on it.", rationale: "Specificity means 'The body adapts specifically to the type of demand placed on it.' For example, running helps endurance but not necessarily strength for a use of force incident.", page: "Page 3" },
+            { question: "What does FITT stand for in the context of exercise guidelines?", options: ["Focus, Intensity, Time, Type", "Frequency, Intensity, Time, Type", "Fitness, Intensity, Tone, Type", "Frequency, Intervals, Time, Target"], answer: "Frequency, Intensity, Time, Type", rationale: "FITT is an acronym for Frequency, Intensity, Time, and Type, which are guidelines for creating a personal fitness program.", page: "Page 4" },
+            { question: "What is the purpose of cardiovascular training?", options: ["To increase muscle mass and absolute strength.", "To improve the efficiency of the heart, lungs, and blood vessels.", "To increase flexibility and prevent injuries.", "To enable short, intense bursts of maximum effort."], answer: "To improve the efficiency of the heart, lungs, and blood vessels.", rationale: "The purpose of cardiovascular training is to 'Improve efficiency of heart, lungs, and blood vessels,' which helps control weight, increase energy, and lower cholesterol.", page: "Page 4" },
+            { question: "For cardiovascular training intensity, what is the recommended Target Heart Rate (THR) zone?", options: ["40-50% of Maximum Heart Rate", "50-60% of Maximum Heart Rate", "60-80% of Maximum Heart Rate", "80-90% of Maximum Heart Rate"], answer: "60-80% of Maximum Heart Rate", rationale: "The FITT guidelines for cardiovascular intensity recommend a Target Heart Rate zone of '60-80% Predicted Maximum Heart Rate.'", page: "Page 4" },
+            { question: "For strength training, how much recovery time should be allowed between sessions using the same muscle groups?", options: ["12 hours", "24 hours", "At least 48 hours", "72 hours"], answer: "At least 48 hours", rationale: "The FITT guidelines for strength training frequency state to 'Allow at least 48 hours between sessions if using same muscle groups.'", page: "Page 5" },
+            { question: "When is the best time to perform flexibility training for maximum gains?", options: ["First thing in the morning", "Before a cardiovascular workout", "After cardiovascular exercise when muscles are warm", "Right before bed"], answer: "After cardiovascular exercise when muscles are warm", rationale: "The text states, 'Best flexibility gains are made if done after cardiovascular exercise when muscles and connective tissue is warm.'", page: "Page 5" },
+            { question: "Anaerobic training is essential for an officer's ability to perform which kind of tasks?", options: ["Report writing and administrative duties", "Long-duration surveillance", "Sprinting, pushing, pulling, and defensive tactics", "Driving and vehicle operation"], answer: "Sprinting, pushing, pulling, and defensive tactics", rationale: "Anaerobic training is for 'short, intense bursts of maximum effort' used in essential tasks like 'sprinting, pushing, pulling, jumping, pushing a car, defensive tactics.'", page: "Page 5" },
+            { question: "What are the three essential components of an exercise program session?", options: ["Cardio, Weights, Stretching", "Warm Up, Work out, Cool Down", "Mindset, Effort, Recovery", "Frequency, Intensity, Time"], answer: "Warm Up, Work out, Cool Down", rationale: "A personal exercise program should incorporate the components of a 'Warm Up (5-10 minutes)', 'Work out (20-30 minutes)', and 'Cool Down (5-10 minutes)'.", page: "Page 6" },
+            { question: "According to the heat index chart, a heat stress condition is 'likely' when the index is above:", options: ["80", "90", "105", "130"], answer: "105", rationale: "The text accompanying the heat index chart states that heat indexes 'above 105... indicate that heat stress is likely.'", page: "Page 6" },
+            { question: "How much water is recommended per day for someone NOT exercising in the heat?", options: ["2-4 glasses", "4-6 glasses", "6-8 glasses", "8-10 glasses"], answer: "8-10 glasses", rationale: "The safety measures section recommends drinking '8-10 glasses of water per day (1 gallon) if not exercising in the heat.'", page: "Page 7" },
+            { question: "Which fuel nutrient is the body's preferred source of energy?", options: ["Proteins", "Fats", "Vitamins", "Carbohydrates"], answer: "Carbohydrates", rationale: "Carbohydrates are described as 'the body's preferred source of energy,' as well as the main energy source for the brain.", page: "Page 8" },
+            { question: "Simple carbohydrates like sweets and soft drinks are considered 'empty calories' because they are:", options: ["Low on nutrients", "Difficult to digest", "High in fiber", "A long-lasting energy source"], answer: "Low on nutrients", rationale: "Simple carbohydrates are 'Considered \"empty calories\" because they are low on nutrients.'", page: "Page 8" },
+            { question: "What is the primary function of protein in the body?", options: ["To serve as the main source of quick energy", "To insulate and protect body organs", "Building, maintaining, and repairing tissue", "To aid in the digestion of fiber"], answer: "Building, maintaining, and repairing tissue", rationale: "Protein is made of amino acids, the '\"building blocks\" of the body because it is used for building, maintaining, and repairing tissue.'", page: "Page 8" },
+            { question: "What is the recommended daily percentage of total calories from fat for an average person?", options: ["No more than 10%", "No more than 20%", "No more than 30%", "No more than 40%"], answer: "No more than 30%", rationale: "Fat needs are 'No more than 30% of total calories, 7-10% for those with heart or cholesterol problems.'", page: "Page 9" },
+            { question: "Which type of cholesterol is considered 'good cholesterol' because it helps carry cholesterol to the liver?", options: ["LDL cholesterol", "HDL cholesterol", "VLDL cholesterol", "Triglycerides"], answer: "HDL cholesterol", rationale: "HDL cholesterol is 'considered \"good cholesterol\" and helps to carry cholesterol to the liver. It is \"protective\" so the higher the HDL the better.'", page: "Page 9" },
+            { question: "According to the recommended balance, what percentage of daily calories should come from carbohydrates?", options: ["10-15%", "15-30%", "30-40%", "55-60%"], answer: "55-60%", rationale: "The chart and text indicate a healthy balance is 'Carbo 55-60%' of total daily calories.", page: "Page 10" },
+            { question: "Which of the following is considered a 'Non-Fuel Nutrient'?", options: ["Carbohydrates", "Fats", "Proteins", "Water"], answer: "Water", rationale: "The text lists Vitamins, Minerals, and Water as the three non-fuel nutrients.", page: "Page 8" },
+            { question: "According to the MyPlate guidelines, how much of your plate should be fruits and vegetables?", options: ["One quarter", "One third", "One half", "Two thirds"], answer: "One half", rationale: "A key guideline under 'Foods to Increase' is to 'Make half your plate fruits and vegetables.'", page: "Page 11" },
+            { question: "The 80/20 rule in nutrition suggests:", options: ["Eating 80% of your calories in the morning.", "Eating healthy 80% of the time and allowing treats 20% of the time.", "Eating 80% carbohydrates and 20% protein.", "Only eating 80% of what is on your plate."], answer: "Eating healthy 80% of the time and allowing treats 20% of the time.", rationale: "The 80/20 Rule is to 'Eat healthy 80% of the time but allow some \"treats\" 20% of the time' to make a plan more sustainable.", page: "Page 12" },
+            { question: "What is the definition of stress?", options: ["A purely negative reaction to a bad event.", "A disease that requires professional help.", "A natural reaction of the mind and body to a demand placed on it.", "A sign of weakness and inability to cope."], answer: "A natural reaction of the mind and body to a demand placed on it.", rationale: "Stress is defined as a 'Natural reaction of the mind and body to a demand placed on it—pleasant or unpleasant.'", page: "Page 13" },
+            { question: "A stressor that is perceived as positive, such as a promotion or getting married, is known as:", options: ["Distress", "Eustress", "Acute Stress", "Chronic Stress"], answer: "Eustress", rationale: "Eustress 'is a stressor that is perceived as positive, such as a promotion, getting married or achieving an accomplishment.'", page: "Page 13" },
+            { question: "Prolonged, unrelieved stress, also called cumulative stress, is known as:", options: ["Acute Stress", "Eustress", "Chronic Stress", "Critical Incident Stress"], answer: "Chronic Stress", rationale: "Chronic Stress 'is prolonged unrelieved stress also called cumulative stress.' It can lead to burnout.", page: "Page 13" },
+            { question: "Critical Incident Stress (CIS) is a normal response to an abnormal event, with symptoms lasting for how long?", options: ["Less than 24 hours", "Two days to one month", "One to six months", "More than one year"], answer: "Two days to one month", rationale: "CIS 'causes psychological and physical discomfort for two days to one month.'", page: "Page 13" },
+            { question: "If CIS symptoms are prolonged past one month and disrupt a person's life, the condition may be:", options: ["Burnout", "Eustress", "Post Traumatic Stress Disorder (PTSD)", "Acute Stress"], answer: "Post Traumatic Stress Disorder (PTSD)", rationale: "PTSD is similar to CIS, but symptoms are 'prolonged past 1 month. The person is unable to make the event part of their past...'", page: "Page 14" },
+            { question: "The physiological stress response that prepares the body to react is known as:", options: ["The Rest and Digest response", "The Fight or Flight response", "The Wellness Continuum", "The Inverted U Principle"], answer: "The Fight or Flight response", rationale: "The physiological changes that arouse an individual to prepare for a threat 'is often referred to as the \"Fight or Flight\" response.'", page: "Page 14" },
+            { question: "Which part of the nervous system creates the biochemical changes to prepare the body for a threat (fight or flight)?", options: ["Central Nervous System", "Parasympathetic Nervous System", "Sympathetic Nervous System", "Somatic Nervous System"], answer: "Sympathetic Nervous System", rationale: "The Sympathetic Nervous System 'creates biochemical changes to the mind and body to prepare to respond to threat (fight or flight). Like pushing the accelerator of a car.'", page: "Page 14" },
+            { question: "What happens to the Parasympathetic Nervous System during the 'fight or flight' response?", options: ["It is activated to increase digestion.", "It is turned off or reduced.", "It works together with the Sympathetic system.", "Its function is not affected."], answer: "It is turned off or reduced.", rationale: "When the Sympathetic Nervous System is activated, the Parasympathetic Nervous System 'is turned off or reduced,' causing non-critical systems like digestion and immunity to shut down.", page: "Page 15" },
+            { question: "Which of these is an example of a stressor that is 'internal to the agency'?", options: ["Frustration with the judicial system", "Negative media coverage", "Poor training and inadequate career development opportunities", "Fear and dangers of the job"], answer: "Poor training and inadequate career development opportunities", rationale: "The text lists 'Poor training and inadequate career development opportunities' as a stressor that is internal to the agency.", page: "Page 16" },
+            { question: "Which of the following is a characteristic of the law enforcement personality that can cause issues at home?", options: ["Inability to control situations", "Emotional vulnerability and openness", "The need for control and emotional control", "Distrust of fellow officers"], answer: "The need for control and emotional control", rationale: "The text states that 'The need for control is necessary on the job but the ability to relinquish or share control may be difficult at home,' and 'Emotional control can result in the inability to emotionally engage at home.'", page: "Page 17" },
+            { question: "Hypervigilance is described as:", options: ["A state of extreme fatigue and detachment.", "The elevated alertness of surroundings required for officer survival.", "A symptom of PTSD that is always negative.", "The ability to multitask under pressure."], answer: "The elevated alertness of surroundings required for officer survival.", rationale: "Hypervigilance is 'the elevated alertness of surroundings required of law enforcement officers for survival. It is viewing the world from a threat-based perspective...'", page: "Page 18" },
+            { question: "What is the 'other side' of the hypervigilant rollercoaster that officers may experience when off duty?", options: ["Increased energy and sensory input", "Extreme fatigue, detachment, and isolation", "A desire for social engagement", "Heightened emotional awareness"], answer: "Extreme fatigue, detachment, and isolation", rationale: "When off duty, the throttling back of the Sympathetic Nervous System can cause 'extreme fatigue, detachment, isolation, reduction in sensory input, emotional withdrawal...'", page: "Page 18" },
+            { question: "What is the first of the three basic approaches to stress management?", options: ["Adapt/Accept", "Alter", "Avoid", "Analyze"], answer: "Avoid", rationale: "The text lists the three basic approaches as 'Avoid,' 'Alter,' and 'Adapt/Accept.'", page: "Page 18" },
+            { question: "Under the 'Adapt/Accept' stress management approach, what are the four areas of life to build resistance?", options: ["Work, Home, Social, Financial", "Psychological, Physical, Social, Spiritual/Faith", "Mental, Physical, Emotional, Financial", "Mind, Body, Spirit, Family"], answer: "Psychological, Physical, Social, Spiritual/Faith", rationale: "Building resistance involves nurturing a balance in four areas: 'Psychological,' 'Physical,' 'Social,' and 'Spiritual/Faith System.'", page: "Page 19" },
+            { question: "'Tactical Breathing' involves breathing in, holding, and exhaling for what count?", options: ["A count of 3", "A count of 4", "A count of 5", "A count of 6"], answer: "A count of 4", rationale: "'Tactical Breathing' is described as 'Breathe in for a count of 4, hold for 4, and exhale for 4 using diaphragm (belly) breathing.'", page: "Page 20" },
+            { question: "According to the 'Inverted U Principle', at what heart rate do fine motor skills begin to deteriorate?", options: ["About 115 BPM", "About 145 BPM", "About 175 BPM", "About 200 BPM"], answer: "About 115 BPM", rationale: "The text and chart for the 'Inverted U Principle' state that 'Fine motor skills deteriorate first at heart rates about 115.'", page: "Page 20" },
+            { question: "At heart rates above 175 BPM, what sensory changes might an officer experience?", options: ["Improved depth perception and hearing", "Enhanced fine motor skills", "Auditory changes, loss of peripheral vision, and increased reaction time", "A decrease in irrational behavior"], answer: "Auditory changes, loss of peripheral vision, and increased reaction time", rationale: "The text explains that at heart rates above 175, an officer may experience 'auditory changes, loss of peripheral vision and depth perception, increases in reaction time and a declining ability to process information.'", page: "Page 21" },
+            { question: "What is a common memory phenomenon after a critical incident?", options: ["Perfect, linear recall of the event", "Inability to recall any part of the event", "Time often appears to slow down, and memory lapses may occur", "Memories are always more accurate immediately after the event"], answer: "Time often appears to slow down, and memory lapses may occur", rationale: "The text notes that 'Time often appears to slow down' and 'Memory lapses may occur,' with most memory returning after 24 to 48 hours.", page: "Page 21" },
+            { question: "Which is NOT one of the five phases of transition after a traumatic event listed in the text?", options: ["Denial", "Bargaining", "Confusion", "Acceptance"], answer: "Confusion", rationale: "The five phases listed are Denial, Anger, Bargaining, Depression, and Acceptance.", page: "Pages 22-23" },
+            { question: "Which phase of transition after a traumatic event is often the longest?", options: ["Denial", "Anger", "Bargaining", "Depression"], answer: "Depression", rationale: "The text states that the Depression phase 'is often the longest,' and its severity depends on several factors.", page: "Page 23" },
+            { question: "What is a key difference between CIS and PTSD?", options: ["CIS is more severe than PTSD.", "PTSD symptoms are similar to CIS but persist longer than one month.", "Only PTSD can be treated with professional help.", "CIS only affects officers, while PTSD affects the general population."], answer: "PTSD symptoms are similar to CIS but persist longer than one month.", rationale: "PTSD has symptoms 'like CIS but are more severe and persist longer than one month after an incident and will continue to affect person's life.'", page: "Page 24" },
+            { question: "What percentage of people who die by suicide have a diagnosable and treatable psychiatric disorder?", options: ["25%", "50%", "75%", "90%"], answer: "90%", rationale: "The text states that '90% of people who die by suicide have a diagnosable and treatable psychiatric disorder at the time of their death.'", page: "Page 25" },
+            { question: "According to statistics cited, which group is nearly four times more likely to die by suicide?", options: ["Women", "Men", "Teenagers", "The elderly"], answer: "Men", rationale: "The statistics provided indicate that 'Men are nearly four times more likely to die by suicide than women.'", page: "Page 25" },
+            { question: "What does the 'A' in the suicide prevention acronym AID LIFE stand for?", options: ["Acknowledge", "Ask", "Assist", "Act"], answer: "Ask", rationale: "The 'A' in AID LIFE stands for 'Ask - Don't be afraid to ask, \"Are you thinking of hurting or killing yourself?\"'", page: "Page 26" },
+            { question: "What does the 'L' in the suicide prevention acronym AID LIFE stand for?", options: ["Listen", "Leave", "Locate help", "Lead"], answer: "Locate help", rationale: "The 'L' in AID LIFE stands for 'Locate help - Seek a mental health professional, peer support, chaplain, family member, or a friend.'", page: "Page 26" },
+            { question: "What is a common myth about alcoholism?", options: ["It is a disease for which recovery is possible.", "It interferes with necessary REM sleep.", "It is caused by a lack of willpower or weak character.", "Alcohol abuse patterns can vary widely."], answer: "It is caused by a lack of willpower or weak character.", rationale: "The text lists as a myth that 'Alcoholism is caused by a lack of willpower, immorality, weak character...' The reality is that the causes are complex and not fully known.", page: "Page 28" },
+            { question: "What is the reality concerning alcohol's effect on sleep?", options: ["It improves the quality of sleep.", "It helps with the onset of sleep but interferes with REM sleep.", "It has no effect on sleep patterns.", "It only affects sleep if consumed in large quantities."], answer: "It helps with the onset of sleep but interferes with REM sleep.", rationale: "The text explains that while alcohol may help with the onset of sleep, it 'interferes with necessary Rapid Eye Movement (REM) sleep causing sleep impairment.'", page: "Page 28" },
+            { question: "What is the first way a co-worker can help another officer with a substance abuse problem?", options: ["Report them to a supervisor immediately.", "Urge the person to seek help.", "Be aware and recognize the problem.", "Cover for their mistakes to protect their job."], answer: "Be aware and recognize the problem.", rationale: "The first of the five ways co-workers can help is to 'Be aware and recognize the problem.'", page: "Page 29" },
+            { question: "When approaching a coworker you suspect has a substance abuse problem, what should your focus be on?", options: ["Their personal life and relationships.", "Diagnosing them with alcoholism.", "Their performance and the safety of the department.", "Forcing them to admit they have a problem."], answer: "Their performance and the safety of the department.", rationale: "The text advises that 'your approach, to avoid legal traps, is to focus on performance and the safety and efficiency of your department.'", page: "Page 29" },
+            { question: "Which of the following is a symptom of steroid use?", options: ["Decreased aggressiveness", "Calm and placid mood", "Mood swings and increased aggressiveness", "Weight loss and muscle atrophy"], answer: "Mood swings and increased aggressiveness", rationale: "The text lists 'Mood swings and increased aggressiveness' as a symptom of steroid use.", page: "Page 30" },
+            { question: "Steroid use can cause severe physical changes, including an increase in:", options: ["Flexibility", "Good HDL cholesterol", "Red blood cells", "Cholesterol, triglycerides, and glucose"], answer: "Cholesterol, triglycerides, and glucose", rationale: "Among the severe physical and psychological changes, steroid use can cause an 'Increased cholesterol, triglycerides, and glucose.'", page: "Page 30" },
+            { question: "What tool is provided in the handout to help determine readiness for an exercise program?", options: ["The Holmes and Rahe Stress Scale", "The Hassle Test", "The Par-Q (Physical Activity Readiness Questionnaire)", "The MyPlate food guide"], answer: "The Par-Q (Physical Activity Readiness Questionnaire)", rationale: "The Par-Q is described as 'a self-administered screening tool... to assist in determining if medical screening is needed' before starting an exercise program.", page: "Page 3" },
+            { question: "According to the Holmes and Rahe Stress Scale, which life event has the highest 'Life Change Unit' value of 100?", options: ["Divorce", "Imprisonment", "Death of a Spouse", "Personal Injury or Illness"], answer: "Death of a Spouse", rationale: "The Holmes and Rahe Stress Scale chart lists 'Death of a Spouse' at the top with a value of 100 Life Change Units.", page: "Page 35" }
+        ];
+
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const reviewScreen = document.getElementById('review-screen');
+
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const reviewBtn = document.getElementById('review-btn');
+        const backToResultsBtn = document.getElementById('back-to-results-btn');
+        
+        const questionNumberEl = document.getElementById('question-number');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const progressBar = document.getElementById('progress-bar');
+        const questionTextEl = document.getElementById('question-text');
+        const answerOptionsEl = document.getElementById('answer-options');
+        const rationaleBox = document.getElementById('rationale-box');
+        const rationaleText = document.getElementById('rationale-text');
+        const rationaleSource = document.getElementById('rationale-source');
+        
+        const scorePercentageEl = document.getElementById('score-percentage');
+        const correctAnswersEl = document.getElementById('correct-answers');
+        const totalAnsweredEl = document.getElementById('total-answered');
+        const finalTimeEl = document.getElementById('final-time');
+        const timerEl = document.getElementById('timer');
+        const reviewContainer = document.getElementById('review-container');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timerInterval;
+        let secondsElapsed = 0;
+        let userAnswers = [];
+        
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        startBtn.addEventListener('click', startQuiz);
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', startQuiz);
+        reviewBtn.addEventListener('click', showReview);
+        backToResultsBtn.addEventListener('click', () => {
+            reviewScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+        });
+
+        function startTimer() {
+            secondsElapsed = 0;
+            timerEl.textContent = '00:00';
+            timerInterval = setInterval(() => {
+                secondsElapsed++;
+                const minutes = Math.floor(secondsElapsed / 60).toString().padStart(2, '0');
+                const seconds = (secondsElapsed % 60).toString().padStart(2, '0');
+                timerEl.textContent = `${minutes}:${seconds}`;
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function startQuiz() {
+            shuffleArray(quizData);
+            quizData.forEach(q => shuffleArray(q.options));
+
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            startScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            nextBtn.classList.add('hidden');
+            startTimer();
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            rationaleBox.classList.add('hidden');
+            answerOptionsEl.innerHTML = '';
+            const currentQuestion = quizData[currentQuestionIndex];
+            
+            questionNumberEl.textContent = currentQuestionIndex + 1;
+            totalQuestionsEl.textContent = quizData.length;
+            questionTextEl.textContent = currentQuestion.question;
+
+            const progress = ((currentQuestionIndex) / quizData.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('answer-option', 'w-full', 'p-4', 'text-left', 'bg-white', 'border-2', 'border-gray-300', 'rounded-lg', 'hover:bg-gray-50', 'hover:border-blue-500');
+                button.addEventListener('click', () => selectAnswer(button, option, currentQuestion));
+                answerOptionsEl.appendChild(button);
+            });
+        }
+
+        function selectAnswer(button, selectedOption, currentQuestion) {
+            const { answer, rationale, page } = currentQuestion;
+            userAnswers[currentQuestionIndex] = selectedOption;
+
+            const buttons = answerOptionsEl.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === answer) {
+                    btn.classList.add('correct');
+                }
+            });
+
+            if (selectedOption === answer) {
+                score++;
+                button.classList.add('correct');
+            } else {
+                button.classList.add('incorrect');
+            }
+
+            rationaleText.textContent = rationale;
+            rationaleSource.textContent = page;
+            rationaleBox.classList.remove('hidden');
+            nextBtn.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                nextBtn.classList.add('hidden');
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            stopTimer();
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            scorePercentageEl.textContent = percentage;
+            correctAnswersEl.textContent = score;
+            totalAnsweredEl.textContent = quizData.length;
+            finalTimeEl.textContent = timerEl.textContent;
+            
+            const finalProgress = 100;
+            progressBar.style.width = `${finalProgress}%`;
+        }
+
+        function showReview() {
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.remove('hidden');
+            reviewContainer.innerHTML = '';
+
+            quizData.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === question.answer;
+
+                const reviewItem = document.createElement('div');
+                reviewItem.classList.add('border', 'p-4', 'rounded-lg');
+                reviewItem.classList.add(isCorrect ? 'border-green-200' : 'border-red-200');
+
+                let userAnswerHTML = '';
+                if (isCorrect) {
+                    userAnswerHTML = `<p>Your answer: <span class="font-semibold review-correct">${userAnswer} (Correct)</span></p>`;
+                } else {
+                    userAnswerHTML = `
+                        <p>Your answer: <span class="font-semibold review-incorrect">${userAnswer} (Incorrect)</span></p>
+                        <p>Correct answer: <span class="font-semibold review-correct">${question.answer}</span></p>
+                    `;
+                }
+
+                reviewItem.innerHTML = `
+                    <p class="font-bold mb-2">${index + 1}. ${question.question}</p>
+                    ${userAnswerHTML}
+                    <p class="text-sm text-gray-600 mt-2"><em>Rationale: ${question.rationale} (Source: ${question.page})</em></p>
+                `;
+                reviewContainer.appendChild(reviewItem);
+            });
+        }
+
+    </script>
+</body>
+</html>

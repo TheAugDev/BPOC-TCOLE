@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCOLE Arrest, Search, and Seizure Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+        .answer-option {
+            transition: all 0.2s ease-in-out;
+        }
+        .answer-option:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .correct {
+            background-color: #D1FAE5 !important;
+            border-color: #10B981 !important;
+        }
+        .incorrect {
+            background-color: #FEE2E2 !important;
+            border-color: #EF4444 !important;
+        }
+        .progress-bar-fill {
+            transition: width 0.3s ease-in-out;
+        }
+        .review-correct {
+            color: #059669;
+        }
+        .review-incorrect {
+            color: #e11d48;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="quiz-app" class="quiz-container p-4 sm:p-8">
+        
+        <!-- Quiz Start Screen -->
+        <div id="start-screen" class="text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">TCOLE Arrest, Search, & Seizure</h1>
+            <p class="text-lg text-gray-600 mb-8">An exhaustive quiz based on the "Basic Peace Officer Course | Chapter 10" handout to test your knowledge on arrest, search, and seizure.</p>
+            <button id="start-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Start Quiz</button>
+        </div>
+
+        <!-- Quiz Interface -->
+        <div id="quiz-screen" class="hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold">Question <span id="question-number"></span> of <span id="total-questions"></span></h2>
+                <div id="timer" class="text-lg font-mono bg-gray-200 px-3 py-1 rounded-md">00:00</div>
+            </div>
+            
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+                <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full progress-bar-fill" style="width: 0%"></div>
+            </div>
+
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+                <p id="question-text" class="text-xl font-medium mb-8 min-h-[6rem]"></p>
+                <div id="answer-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Answer options will be injected here by JS -->
+                </div>
+            </div>
+             <div id="rationale-box" class="hidden mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h3 class="font-bold text-blue-800">Rationale:</h3>
+                <p id="rationale-text" class="text-blue-700"></p>
+                <p class="text-sm text-blue-600 mt-2">Source: <span id="rationale-source"></span></p>
+            </div>
+            <button id="next-btn" class="hidden w-full bg-blue-600 text-white font-bold py-3 px-8 rounded-lg mt-8 hover:bg-blue-700 transition-colors shadow-md">Next Question</button>
+        </div>
+
+        <!-- Quiz Results Screen -->
+        <div id="results-screen" class="hidden text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">Quiz Complete!</h1>
+            <p class="text-lg text-gray-600 mb-6">Here's how you did:</p>
+            <div class="flex flex-col sm:flex-row justify-around items-center my-8 gap-8 sm:gap-0">
+                <div>
+                    <p class="text-5xl font-bold text-green-600"><span id="score-percentage"></span>%</p>
+                    <p class="text-gray-500">Score</p>
+                </div>
+                 <div>
+                    <p class="text-5xl font-bold text-blue-600"><span id="correct-answers"></span>/<span id="total-answered"></span></p>
+                    <p class="text-gray-500">Correct Answers</p>
+                </div>
+                 <div>
+                    <p class="text-5xl font-bold text-gray-700"><span id="final-time"></span></p>
+                    <p class="text-gray-500">Time Taken</p>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="restart-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Try Again</button>
+                <button id="review-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md">Review Answers</button>
+            </div>
+        </div>
+        
+        <!-- Review Screen -->
+        <div id="review-screen" class="hidden bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6">Answer Review</h1>
+            <div id="review-container" class="space-y-6">
+                <!-- Review content will be injected here -->
+            </div>
+            <button id="back-to-results-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md mt-8">Back to Results</button>
+        </div>
+
+    </div>
+
+    <script>
+        const quizData = [
+            { question: "What is 'Probable Cause to Arrest'?", options: ["A hunch or intuition that a crime occurred.", "Facts and circumstances sufficient to warrant a belief by a person of reasonable caution that a crime is being committed.", "A certainty beyond all doubt that a person is guilty.", "A subjective good faith belief by an officer."], answer: "Facts and circumstances sufficient to warrant a belief by a person of reasonable caution that a crime is being committed.", rationale: "Based on Brinegar v United States, probable cause to arrest exists where facts are sufficient to warrant a belief by a man of reasonable caution that a crime is being committed.", page: "Page 1" },
+            { question: "What is 'Reasonable Suspicion'?", options: ["The same standard as Probable Cause.", "A hunch or mere suspicion.", "A standard based on the totality of circumstances, which is a lesser burden than Probable Cause.", "Sufficient evidence to convict in court."], answer: "A standard based on the totality of circumstances, which is a lesser burden than Probable Cause.", rationale: "Based on US v. Sokolow, Reasonable Suspicion is based upon the totality of the circumstances and is a lesser burden than Probable Cause.", page: "Page 1" },
+            { question: "Which interaction classification allows a person to refuse to identify themselves and simply walk away?", options: ["Arrest", "Investigatory Stop/Detention", "Consensual Encounter", "Custodial Interrogation"], answer: "Consensual Encounter", rationale: "In a consensual encounter, officers are free to approach and ask questions, but persons can refuse to cooperate and are free to leave.", page: "Page 3" },
+            { question: "What legal standard is required for an Investigatory Stop or Detention?", options: ["Mere Suspicion", "Reasonable Suspicion", "Probable Cause", "Proof Beyond a Reasonable Doubt"], answer: "Reasonable Suspicion", rationale: "An investigatory stop or detention is a temporary seizure of a person for investigation based on an officer's reasonable suspicion of criminal activity, as established in Terry v. Ohio.", page: "Page 3" },
+            { question: "What can an officer do with 'mere suspicion'?", options: ["Arrest the individual.", "Conduct a full search of the person.", "Initiate a police-citizen encounter understanding the person can walk away.", "Force the person to provide identification."], answer: "Initiate a police-citizen encounter understanding the person can walk away.", rationale: "With mere suspicion, an officer can initiate a consensual encounter but must understand the person is free to not answer questions and can leave at any time.", page: "Page 3" },
+            { question: "Which of the following is NOT a necessary condition for a lawful arrest?", options: ["Intent", "Authority", "The person's verbal confession", "Actual seizure and understanding"], answer: "The person's verbal confession", rationale: "The four necessary conditions for an arrest are Intent, Authority, Actual Seizure, and Understanding by the person being arrested. A confession is not required for an arrest to be lawful.", page: "Pages 3-4" },
+            { question: "According to CCP Art. 15.22, a person is arrested when they have been:", options: ["Questioned by a police officer.", "Actually placed under restraint or taken into custody.", "Identified as a suspect in a crime.", "Read their Miranda rights."], answer: "Actually placed under restraint or taken into custody.", rationale: "CCP Art. 15.22 defines an arrest as the point when a person has been actually placed under restraint or taken into custody by an officer or person executing a warrant of arrest, or by an officer or person arresting without a warrant.", page: "Page 4" },
+            { question: "Under which circumstance can a peace officer make a warrantless arrest according to CCP Art. 14.01?", options: ["For any offense reported by a third party.", "For any offense committed within the officer's view or presence.", "Only for felonies they personally witnessed.", "When they have a hunch a misdemeanor was committed."], answer: "For any offense committed within the officer's view or presence.", rationale: "CCP Art. 14.01, 'Offense Within View,' states that a peace officer may arrest an offender without a warrant for any offense committed in his presence or within his view.", page: "Page 4" },
+            { question: "The ruling in Payton v. New York established that, absent exigent circumstances, a peace officer may not:", options: ["Make a warrantless arrest for a misdemeanor.", "Enter a suspect's home for a routine felony arrest without a warrant.", "Arrest a person for public intoxication.", "Detain a suspect for more than 24 hours."], answer: "Enter a suspect's home for a routine felony arrest without a warrant.", rationale: "Payton v. New York holds that absent exigent circumstances, a peace officer may not make a warrantless entry into a suspect's home to make a routine felony arrest.", page: "Page 4" },
+            { question: "When considering probable cause, what information will the court examine?", options: ["Only information known to the officer at the time of the seizure or search.", "All evidence found after the arrest or during the search.", "The officer's subjective good faith and intuition.", "The suspect's prior criminal history only."], answer: "Only information known to the officer at the time of the seizure or search.", rationale: "The court will examine the 'totality of the circumstances' but will only consider the information known to the officer at the moment of the arrest or search. Evidence found after cannot be used to prove initial probable cause.", page: "Page 5" },
+            { question: "What rights are protected by the Miranda warnings?", options: ["The right to a speedy trial and the right to face an accuser.", "The right against cruel and unusual punishment.", "The right to remain silent and the right to an attorney.", "The right to bear arms and the right to free speech."], answer: "The right to remain silent and the right to an attorney.", rationale: "Miranda v. Arizona requires that persons in custody be informed of their right to remain silent and their right to an attorney prior to interrogation.", page: "Page 5" },
+            { question: "According to Maryland v. Shatzer, after a person in custody invokes their right to an attorney, how long must the break in Miranda custody be before police can attempt re-interrogation?", options: ["24 hours", "48 hours", "7 days", "14 days"], answer: "14 days", rationale: "Maryland v. Shatzer established that if a person requests an attorney, interrogations must cease until an attorney is present or there is at least a fourteen-day break in Miranda custody.", page: "Page 5" },
+            { question: "What is a 'Warrant of Arrest' according to CCP Art. 15.01?", options: ["A verbal command from a judge.", "A written order from a magistrate, directed to a peace officer, commanding them to take the body of a person accused of an offense.", "A request from a district attorney to detain a suspect.", "A form filled out by an officer after making an arrest."], answer: "A written order from a magistrate, directed to a peace officer, commanding them to take the body of a person accused of an offense.", rationale: "CCP Art. 15.01 defines a 'warrant of arrest' as a written order from a magistrate to a peace officer to take a person into custody to be dealt with according to law.", page: "Page 5" },
+            { question: "According to CCP Art. 15.24, what force may be used in making an arrest?", options: ["Any force necessary, including deadly force for any offense.", "Only the force necessary to restrain the suspect.", "No force is permitted.", "All force necessary to repel the aggression."], answer: "All force necessary to repel the aggression.", rationale: "CCP Art. 15.24 specifies that in making an arrest, all reasonable means are permitted to be used to effect it. If the person resists, the officer may use 'all force necessary to repel the aggression.'", page: "Page 6" },
+            { question: "The ruling in Steagald v. United States limits the execution of an arrest warrant by stating:", options: ["An arrest warrant can be executed at any location.", "Entry may only be forced at the residence where the person named in the warrant lives.", "Officers can never force entry to execute an arrest warrant.", "A search warrant is always required in addition to an arrest warrant."], answer: "Entry may only be forced at the residence where the person named in the warrant lives.", rationale: "Steagald established that to make a forced entry into a third party's home to arrest a suspect, officers need a separate search warrant for that location. Forced entry for an arrest warrant is only permitted at the suspect's own residence.", page: "Page 6" },
+            { question: "Which of the following is an example of an exigent circumstance that could justify a warrantless entry into a dwelling?", options: ["The need to write a report.", "The suspect is likely to fall asleep.", "Breaking up a violent fight.", "The officer's shift is about to end."], answer: "Breaking up a violent fight.", rationale: "The Supreme Court case Brigham City, Utah v. Smart affirmed that exigent circumstances, such as breaking up a violent fight, permit warrantless entry into a dwelling.", page: "Page 6" },
+            { question: "What did the Supreme Court rule in Kentucky v. King regarding police-created exigencies?", options: ["Police can never create an exigency.", "Police can create any exigency they want to justify entry.", "Police cannot create an exigency by engaging or threatening to engage in conduct that violates the Fourth Amendment.", "Police-created exigencies are always permissible."], answer: "Police cannot create an exigency by engaging or threatening to engage in conduct that violates the Fourth Amendment.", rationale: "In Kentucky v. King, the court ruled that 'Peace officers cannot create the exigency by engaging or threatening to engage in conduct that violates the Fourth Amendment.'", page: "Page 6" },
+            { question: "According to CCP Art. 14.05, when may an officer make a warrantless entry into a residence to make an arrest?", options: ["Any time they have probable cause for a felony.", "When a person who resides there consents, or under exigent circumstances.", "Only with a supervisor's approval.", "Never, a warrant is always required to enter a residence."], answer: "When a person who resides there consents, or under exigent circumstances.", rationale: "CCP Art. 14.05 explicitly states an officer making a warrantless arrest may not enter a residence unless 'a person who resides in the residence consents to the entry; or exigent circumstances require' entry.", page: "Pages 7-8" },
+            { question: "What is 'fresh pursuit' as defined by CCP Art. 14.051?", options: ["Chasing a suspect for any traffic violation.", "A pursuit without unreasonable delay by a peace officer of a person suspected of committing a felony.", "Any pursuit that crosses into another jurisdiction.", "A pursuit that lasts longer than 10 minutes."], answer: "A pursuit without unreasonable delay by a peace officer of a person suspected of committing a felony.", rationale: "The text defines 'fresh pursuit' as 'a pursuit without unreasonable delay by a peace officer of a person the officer reasonably suspects has committed a felony.'", page: "Page 8" },
+            { question: "What is a 'search warrant' according to CCP Art. 18.01?", options: ["A verbal order from a magistrate to search a place.", "A form an officer fills out to justify a search.", "A written order, issued by a magistrate and directed to a peace officer, commanding him to search for any property or thing and to seize it.", "A citizen's request to have their property searched for evidence."], answer: "A written order, issued by a magistrate and directed to a peace officer, commanding him to search for any property or thing and to seize it.", rationale: "CCP Art. 18.01 defines a search warrant as a written order from a magistrate directing an officer to search for and seize specified property or things.", page: "Page 9" },
+            { question: "According to CCP Art. 18.07, how many whole days are allowed for a warrant to run, excluding the day of issuance and day of execution?", options: ["One", "Three", "Five", "Ten"], answer: "Three", rationale: "CCP Art. 18.07 specifies that a search warrant must be executed within three days from the time of its issuance, not counting the day of issuance or the day of execution.", page: "Page 9" },
+            { question: "What is the purpose of a 'no knock' warrant?", options: ["To give occupants time to prepare for the police entry.", "To allow officers to enter without warning to protect them or prevent evidence destruction.", "To be used only during daylight hours.", "To require a supervisor to be present during entry."], answer: "To allow officers to enter without warning to protect them or prevent evidence destruction.", rationale: "The purpose is to allow officers to enter without warning 'to protect officers from being shot if occupants are known to be armed or to prevent disposal of contraband.'", page: "Page 9" },
+            { question: "What is a major disadvantage of a 'knock and announce' warrant?", options: ["It is more dangerous for the occupants.", "It could give occupants time to reach for weapons or destroy evidence.", "It requires more officers to execute.", "It can only be served for felony offenses."], answer: "It could give occupants time to reach for weapons or destroy evidence.", rationale: "The primary disadvantage is that the warning 'Could give time for occupants to reach for weapons or destroy evidence.'", page: "Page 10" },
+            { question: "What is a 'Complaint' as defined by CCP Art. 15.04?", options: ["A formal charge filed by a grand jury.", "A citizen's report of a crime.", "The affidavit made before the magistrate or district or county attorney charging the commission of an offense.", "A lawsuit filed against a peace officer."], answer: "The affidavit made before the magistrate or district or county attorney charging the commission of an offense.", rationale: "CCP Art. 15.04 defines the 'complaint' as the affidavit made before a proper official that charges someone with committing an offense.", page: "Page 10" },
+            { question: "What is a 'Probable Cause Affidavit'?", options: ["A sworn statement from a witness.", "A suspect's written confession.", "A sworn statement of a law enforcement officer detailing reasons to believe a crime has occurred for an arrest or search.", "A document filed by a defense attorney."], answer: "A sworn statement of a law enforcement officer detailing reasons to believe a crime has occurred for an arrest or search.", rationale: "It is a sworn statement from a law enforcement officer detailing their reasons/beliefs that there are sufficient grounds to arrest someone or search their property.", page: "Page 10" },
+            { question: "What is the definition of a 'Bail Bond' under CCP Art. 17.01?", options: ["A payment of a fine to secure release.", "A promise to appear in court without financial security.", "The written undertaking entered into by the defendant and his sureties for the appearance of the principal before some court.", "A loan from the court to a defendant."], answer: "The written undertaking entered into by the defendant and his sureties for the appearance of the principal before some court.", rationale: "CCP Art. 17.01 defines a 'bail bond' as the written undertaking by the defendant and their sureties to guarantee their appearance in court.", page: "Page 10" },
+            { question: "According to CCP Art. 17.15, what is one of the primary rules for setting the amount of bail?", options: ["Bail should be used as an instrument of oppression.", "The defendant's criminal record cannot be considered.", "The bail shall be sufficiently high to insure compliance with the undertaking.", "The nature of the offense does not matter."], answer: "The bail shall be sufficiently high to insure compliance with the undertaking.", rationale: "CCP Art. 17.15 lists five rules, the first of which is that 'The bail shall be sufficiently high to insure compliance with the undertaking.'", page: "Page 10" },
+            { question: "Under CCP Art. 17.29, when a defendant posts the required bail bond, they shall be:", options: ["Held for an additional 24 hours.", "Immediately interrogated.", "At once liberated.", "Required to perform community service."], answer: "At once liberated.", rationale: "CCP Art. 17.29 states that once the defendant gives the required bond, 'he shall at once be liberated.'", page: "Page 10" },
+            { question: "The three classifications of interactions between peace officers and persons are Consensual Encounters, Arrests, and:", options: ["Interrogations", "Traffic Stops", "Investigatory Stops/Detentions", "Surveillance"], answer: "Investigatory Stops/Detentions", rationale: "The three classifications discussed are Consensual Encounters, Investigatory Stops/Detentions, and Arrests.", page: "Page 3" },
+            { question: "Which court case is foundational for the concept of an Investigatory Stop/Detention?", options: ["Miranda v. Arizona", "Terry v. Ohio", "Brinegar v. United States", "Payton v. New York"], answer: "Terry v. Ohio", rationale: "Terry v. Ohio is the landmark U.S. Supreme Court case that established the legality of temporary seizures of persons for investigation based on reasonable suspicion.", page: "Page 3" },
+            { question: "What is 'Constructive Custody' under CCP Art. 11.21?", options: ["Being physically handcuffed in a patrol car.", "The confinement of a person within the walls of a prison.", "Being arrested under the authority of a warrant.", "Confining or detaining a person not by physical force, but by the officer's words, conduct, and display of authority."], answer: "Confining or detaining a person not by physical force, but by the officer's words, conduct, and display of authority.", rationale: "CCP 11.21 defines constructive custody as situations where a person is not under actual, physical custody, but is detained through an officer's assertion of authority.", page: "Page 4" },
+            { question: "Under CCP Art. 14.03, a peace officer has the authority to arrest without a warrant for:", options: ["Any misdemeanor violation.", "A violation of a protective order committed in the officer's presence.", "Any person they believe looks suspicious.", "Only for felonies listed in the Penal Code."], answer: "A violation of a protective order committed in the officer's presence.", rationale: "CCP Art. 14.03(b) provides mandatory arrest authority for a violation of certain protective orders if the offense is committed in the officer's presence.", page: "Page 4" },
+            { question: "What does CCP Art. 18.16, 'Preventing Consequences of Theft,' allow?", options: ["Any person has a right to prevent theft by seizing any stolen personal property and bringing it, with the suspect, before a magistrate.", "Only a peace officer can recover stolen property.", "A person can use deadly force to prevent any theft.", "A person must obtain a warrant before recovering their own stolen property."], answer: "Any person has a right to prevent theft by seizing any stolen personal property and bringing it, with the suspect, before a magistrate.", rationale: "This article gives broad authority to any person to seize stolen property and the person suspected of the theft to prevent the consequences of that theft.", page: "Page 4" },
+            { question: "Under which U.S. Constitutional Amendment are citizens protected against self-incrimination?", options: ["First Amendment", "Fourth Amendment", "Fifth Amendment", "Sixth Amendment"], answer: "Fifth Amendment", rationale: "The Fifth Amendment to the U.S. Constitution protects citizens from being compelled to be witnesses against themselves in criminal cases.", page: "Page 5" },
+            { question: "Which court case requires that persons in custody be informed of their rights prior to interrogation?", options: ["Terry v. Ohio", "Payton v. New York", "Carroll v. United States", "Miranda v. Arizona"], answer: "Miranda v. Arizona", rationale: "The landmark case of Miranda v. Arizona established the requirement for police to advise suspects in custody of their constitutional rights before questioning them.", page: "Page 5" },
+            { question: "What is a key requisite of a valid arrest warrant under CCP Art. 15.02?", options: ["It must be signed by the District Attorney.", "It must specify the bail amount.", "It must state the name of the person accused, or if not known, give a reasonably definite description.", "It must be printed on special paper."], answer: "It must state the name of the person accused, or if not known, give a reasonably definite description.", rationale: "CCP Art. 15.02 lists several requisites, including that the warrant must 'state the name of the person whose arrest is ordered, if it be known, if not known, then some reasonably definite description must be given of him.'", page: "Page 5" },
+            { question: "According to CCP Art. 15.26, what must an officer do when executing an arrest warrant?", options: ["Immediately use physical force.", "Show the warrant to the suspect after the arrest.", "Make known to the person the authority under which the arrest is made.", "Keep their authority a secret to maintain a tactical advantage."], answer: "Make known to the person the authority under which the arrest is made.", rationale: "CCP Art. 15.26 requires that the officer 'shall make known to the person about to be arrested under what authority the arrest is made.'", page: "Page 6" },
+            { question: "Which situation would NOT be considered an exigent circumstance for a warrantless search?", options: ["An officer hears screams for help from inside a house.", "An officer sees through a window that a person is about to destroy evidence.", "A person is actively being assaulted inside a residence.", "An officer wants to search a house for evidence after all suspects have been arrested and secured."], answer: "An officer wants to search a house for evidence after all suspects have been arrested and secured.", rationale: "Once the scene is secure and suspects are in custody, the immediate emergency (exigency) has passed, and an officer would typically need a search warrant to conduct a further search for evidence.", page: "Pages 6-9" },
+            { question: "Who has standing to grant consent to search a shared residence like an apartment?", options: ["The landlord.", "A visiting guest.", "A roommate with common authority over the area to be searched.", "A neighbor with a spare key."], answer: "A roommate with common authority over the area to be searched.", rationale: "Consent is valid if given by a person who has 'standing,' meaning they have a reasonable expectation of privacy and authority over the place to be searched, such as a spouse or roommate in a shared space.", page: "Page 7" },
+            { question: "What does the 'plain view' doctrine allow an officer to seize?", options: ["Anything an officer can see, anywhere.", "Contraband located in an area where an officer has a lawful right to be, and the item's nature as contraband is immediately apparent.", "Any item found during an illegal search.", "Evidence that is visible only with the use of special equipment."], answer: "Contraband located in an area where an officer has a lawful right to be, and the item's nature as contraband is immediately apparent.", rationale: "The plain view doctrine requires that the officer be lawfully in the location from which the object is viewed and that the incriminating character of the object be 'immediately apparent.'", page: "Page 7" },
+            { question: "According to United States v. Santana, when can a 'hot pursuit' justify a warrantless entry into a house?", options: ["For any traffic violation.", "When pursuing a suspect for a serious offense (often a felony) who has just fled from a public place where they could have been arrested.", "Any time a suspect runs from the police.", "Only if the officer has a verbal approval from a supervisor."], answer: "When pursuing a suspect for a serious offense (often a felony) who has just fled from a public place where they could have been arrested.", rationale: "U.S. v. Santana upheld the warrantless entry into a suspect's house during a 'hot pursuit' when the pursuit began in a public place where police had probable cause to arrest.", page: "Page 8" },
+            { question: "What are the grounds for issuing a search warrant under CCP Art. 18.02?", options: ["To find a person for a civil lawsuit.", "To inspect a property for code violations without other authority.", "To search for and seize property or items that are evidence of a crime.", "To simply look around a suspicious person's home."], answer: "To search for and seize property or items that are evidence of a crime.", rationale: "CCP Art. 18.02 outlines the various grounds for issuance, all of which relate to searching for and seizing items connected to criminal activity, such as stolen property, weapons, or other evidence.", page: "Page 9" },
+            { question: "What does a search warrant for a cellular telephone (CCP 18.0215) allow an officer to do?", options: ["Listen to all live phone calls indefinitely.", "Access all of the person's online accounts.", "Compel a wireless provider to produce the content of communications.", "Seize and search the physical phone without limitation."], answer: "Compel a wireless provider to produce the content of communications.", rationale: "This article specifically deals with compelling a provider of an electronic communication service or a remote computing service to disclose information, including the content of communications.", page: "Page 9" },
+            { question: "What is a primary disadvantage of a 'no knock' warrant?", options: ["It takes longer to execute.", "It gives suspects time to arm themselves.", "The occupant may believe they are being attacked by home invaders and defend themselves.", "It is less effective at preserving evidence."], answer: "The occupant may believe they are being attacked by home invaders and defend themselves.", rationale: "A major risk is that 'Occupant may believe being attacked by home invaders and try to defend self,' increasing the danger for both officers and occupants.", page: "Page 10" },
+            { question: "Under CCP Art. 56A.051, a victim has the right to:", options: ["Direct the police investigation.", "Have a magistrate's order for emergency protection considered.", "Decide the final sentence of the offender.", "Receive financial compensation from the police department."], answer: "Have a magistrate's order for emergency protection considered.", rationale: "This article is part of the victims' rights chapter, and CCP Art. 17.292 (Magistrate's Order for Emergency Protection), is directly related to ensuring victim safety, a key right.", page: "Page 10" },
+            { question: "What level of proof is defined as 'a hunch or the feeling of intuition'?", options: ["Reasonable Suspicion", "Probable Cause", "Mere Suspicion", "Reasonable Belief"], answer: "Mere Suspicion", rationale: "The text defines mere suspicion as 'A hunch or the feeling of intuition' and notes it is insufficient proof of any fact in a court of law.", page: "Page 1" },
+            { question: "A temporary seizure of a person for investigation based on reasonable suspicion is called an:", options: ["Arrest", "Consensual Encounter", "Investigatory Stop/Detention", "Formal Charge"], answer: "Investigatory Stop/Detention", rationale: "This is the definition provided for an Investigatory Stop/Detention, also known as a Terry Stop.", page: "Page 3" },
+            { question: "According to CCP Art. 14.04, an officer can make a warrantless arrest for a felony not committed in their presence when:", options: ["They receive an anonymous tip.", "The suspect looks like they are about to flee.", "A credible person provides satisfactory proof that a felony has been committed and the offender is about to escape.", "The officer has a mere suspicion the person committed a felony."], answer: "A credible person provides satisfactory proof that a felony has been committed and the offender is about to escape.", rationale: "CCP Art. 14.04 allows a warrantless arrest for a felony when a credible person provides satisfactory proof and the officer believes the offender is about to escape, so there is no time to procure a warrant.", page: "Page 4" },
+            { question: "Diplomatic immunity, which may prevent the arrest of certain foreign officials, is governed by the:", options: ["Texas Constitution", "Uniform Criminal Extradition Act", "Diplomatic Relations Act", "Code of Criminal Procedure"], answer: "Diplomatic Relations Act", rationale: "The text cites the '22 USC 254 Diplomatic Relations Act' in relation to diplomatic immunity.", page: "Page 4" },
+            { question: "An officer's statement in court that they arrested someone because it was their 'good faith belief' they had committed a crime is:", options: ["Sufficient to establish probable cause.", "The legal standard for an arrest.", "Insufficient, as probable cause must be based on objective facts.", "Only valid for misdemeanor arrests."], answer: "Insufficient, as probable cause must be based on objective facts.", rationale: "Citing Beck v. Ohio, the text states 'If subjective good faith alone... were the test, the protection of the Fourth Amendment would evaporate.' Probable cause requires objective facts.", page: "Page 1" },
+            { question: "Under CCP Art. 38.22, a written statement made by an accused as a result of custodial interrogation is admissible if:", options: ["It is signed by the officer.", "It is approved by the district attorney.", "The accused, prior to and during the making of the statement, knowingly, intelligently, and voluntarily waived their rights.", "It was made within 24 hours of the arrest."], answer: "The accused, prior to and during the making of the statement, knowingly, intelligently, and voluntarily waived their rights.", rationale: "CCP Art. 38.22 sets forth the requirements for the admissibility of custodial statements, primary among them being a valid waiver of Miranda rights.", page: "Page 5" },
+            { question: "If an officer arrests a person for an out-of-county offense, what is their duty under CCP Art. 15.18?", options: ["Immediately transport the person to the county where the offense was committed.", "Notify a magistrate of the county of arrest, who shall then notify the sheriff of the county where the offense was committed.", "Release the person on personal bond.", "Hold the person indefinitely until picked up by the other agency."], answer: "Notify a magistrate of the county of arrest, who shall then notify the sheriff of the county where the offense was committed.", rationale: "CCP Art. 15.18 outlines the procedure for an out-of-county arrest, which involves notifying a local magistrate to facilitate the transfer of custody.", page: "Page 6" },
+            { question: "What is a significant risk of leaving a person who has consented to a search secured in the back of a patrol car during the search?", options: ["The search will be considered more thorough.", "The consent may be deemed involuntary because the person could not withdraw it.", "It ensures officer safety, which is the only legal consideration.", "It is the standard procedure for all consent searches."], answer: "The consent may be deemed involuntary because the person could not withdraw it.", rationale: "The scenario analysis points out that for consent to be valid, the person must be able to withdraw it. Securing them in a car while officers search elsewhere removes this ability and could invalidate the consent.", page: "Pages 6-7" },
+            { question: "For an officer to make a warrantless entry into a residence for a medical emergency (e.g., a suicidal person), the search inside must be:", options: ["Unlimited, allowing them to search the entire house for any contraband.", "Limited to what is in plain view from the doorway.", "Strictly related to the emergency at hand, such as looking for pill bottles.", "Postponed until a search warrant can be obtained."], answer: "Strictly related to the emergency at hand, such as looking for pill bottles.", rationale: "The scenario analysis indicates that the scope of the search under a medical emergency exigency is limited to areas related to that emergency, such as searching for pill bottles for an overdose victim.", page: "Page 9" },
+            { question: "Under CCP Art. 18.06, who is authorized to execute a search warrant?", options: ["Any citizen", "A peace officer of the proper county", "A private investigator", "The magistrate who signed it"], answer: "A peace officer of the proper county", rationale: "CCP Art. 18.06 specifies that a peace officer to whom a search warrant is delivered shall execute it without delay.", page: "Page 9" },
+            { question: "The process of an officer appearing before a magistrate to be informed of their rights is governed by:", options: ["CCP Art. 14.06", "CCP Art. 15.17", "Both CCP Art. 14.06 and 15.17", "Miranda v. Arizona"], answer: "Both CCP Art. 14.06 and 15.17", rationale: "CCP 14.06 outlines the duty to take an offender before a magistrate after a warrantless arrest, and CCP 15.17 details the duties of the arresting officer and magistrate, including the warning of rights.", page: "Pages 4, 6" },
+            { question: "What is the primary purpose of bail?", options: ["To punish the accused before trial.", "To generate revenue for the court.", "To ensure the appearance of the accused in court.", "To allow the accused to prepare their defense from home."], answer: "To ensure the appearance of the accused in court.", rationale: "The rules for setting bail under CCP 17.15 are designed to be 'sufficiently high to insure compliance,' meaning to guarantee the defendant shows up for court proceedings.", page: "Page 10" },
+            { question: "A peace officer may not arrest a member of the legislature:", options: ["Under any circumstances.", "For any offense, including treason, felony, or breach of the peace.", "During a legislative session, unless for treason, felony, or breach of the peace.", "If the member is on their way to a legislative session."], answer: "During a legislative session, unless for treason, felony, or breach of the peace.", rationale: "CCP Art. 1.21 grants legislators privilege from arrest during a session, with the explicit exceptions of treason, felony, or breach of the peace.", page: "Page 4" },
+            { question: "If a person is arrested without a warrant and is not taken before a magistrate within 48 hours, what may happen under CCP Art. 17.033?", options: ["The charges are automatically dismissed.", "The person must be released on a bond not to exceed $10,000.", "The arresting officer is subject to criminal charges.", "The person can be held until a magistrate is available."], answer: "The person must be released on a bond not to exceed $10,000.", rationale: "CCP Art. 17.033 addresses the release of persons arrested without a warrant, generally requiring release on bond if not taken before a magistrate within 48 hours.", page: "Page 10" },
+            { question: "An officer observes a subject looking into car windows but not making entry. What level of suspicion does this likely amount to?", options: ["No suspicion", "Mere suspicion or reasonable suspicion", "Probable cause", "Proof beyond a reasonable doubt"], answer: "Mere suspicion or reasonable suspicion", rationale: "Scenario #2 describes behavior that is suspicious but does not clearly point to a specific crime being committed, fitting the definition of reasonable suspicion allowing for an investigative detention, but likely not probable cause for arrest.", page: "Page 2" }
+        ];
+
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const reviewScreen = document.getElementById('review-screen');
+
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const reviewBtn = document.getElementById('review-btn');
+        const backToResultsBtn = document.getElementById('back-to-results-btn');
+        
+        const questionNumberEl = document.getElementById('question-number');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const progressBar = document.getElementById('progress-bar');
+        const questionTextEl = document.getElementById('question-text');
+        const answerOptionsEl = document.getElementById('answer-options');
+        const rationaleBox = document.getElementById('rationale-box');
+        const rationaleText = document.getElementById('rationale-text');
+        const rationaleSource = document.getElementById('rationale-source');
+        
+        const scorePercentageEl = document.getElementById('score-percentage');
+        const correctAnswersEl = document.getElementById('correct-answers');
+        const totalAnsweredEl = document.getElementById('total-answered');
+        const finalTimeEl = document.getElementById('final-time');
+        const timerEl = document.getElementById('timer');
+        const reviewContainer = document.getElementById('review-container');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timerInterval;
+        let secondsElapsed = 0;
+        let userAnswers = [];
+        
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        startBtn.addEventListener('click', startQuiz);
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', startQuiz);
+        reviewBtn.addEventListener('click', showReview);
+        backToResultsBtn.addEventListener('click', () => {
+            reviewScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+        });
+
+        function startTimer() {
+            secondsElapsed = 0;
+            timerEl.textContent = '00:00';
+            timerInterval = setInterval(() => {
+                secondsElapsed++;
+                const minutes = Math.floor(secondsElapsed / 60).toString().padStart(2, '0');
+                const seconds = (secondsElapsed % 60).toString().padStart(2, '0');
+                timerEl.textContent = `${minutes}:${seconds}`;
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function startQuiz() {
+            shuffleArray(quizData);
+            quizData.forEach(q => shuffleArray(q.options));
+
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            startScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            nextBtn.classList.add('hidden');
+            startTimer();
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            rationaleBox.classList.add('hidden');
+            answerOptionsEl.innerHTML = '';
+            const currentQuestion = quizData[currentQuestionIndex];
+            
+            questionNumberEl.textContent = currentQuestionIndex + 1;
+            totalQuestionsEl.textContent = quizData.length;
+            questionTextEl.textContent = currentQuestion.question;
+
+            const progress = ((currentQuestionIndex) / quizData.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('answer-option', 'w-full', 'p-4', 'text-left', 'bg-white', 'border-2', 'border-gray-300', 'rounded-lg', 'hover:bg-gray-50', 'hover:border-blue-500');
+                button.addEventListener('click', () => selectAnswer(button, option, currentQuestion));
+                answerOptionsEl.appendChild(button);
+            });
+        }
+
+        function selectAnswer(button, selectedOption, currentQuestion) {
+            const { answer, rationale, page } = currentQuestion;
+            userAnswers[currentQuestionIndex] = selectedOption;
+
+            const buttons = answerOptionsEl.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === answer) {
+                    btn.classList.add('correct');
+                }
+            });
+
+            if (selectedOption === answer) {
+                score++;
+                button.classList.add('correct');
+            } else {
+                button.classList.add('incorrect');
+            }
+
+            rationaleText.textContent = rationale;
+            rationaleSource.textContent = page;
+            rationaleBox.classList.remove('hidden');
+            nextBtn.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                nextBtn.classList.add('hidden');
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            stopTimer();
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            scorePercentageEl.textContent = percentage;
+            correctAnswersEl.textContent = score;
+            totalAnsweredEl.textContent = quizData.length;
+            finalTimeEl.textContent = timerEl.textContent;
+            
+            const finalProgress = 100;
+            progressBar.style.width = `${finalProgress}%`;
+        }
+
+        function showReview() {
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.remove('hidden');
+            reviewContainer.innerHTML = '';
+
+            quizData.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === question.answer;
+
+                const reviewItem = document.createElement('div');
+                reviewItem.classList.add('border', 'p-4', 'rounded-lg');
+                reviewItem.classList.add(isCorrect ? 'border-green-200' : 'border-red-200');
+
+                let userAnswerHTML = '';
+                if (isCorrect) {
+                    userAnswerHTML = `<p>Your answer: <span class="font-semibold review-correct">${userAnswer} (Correct)</span></p>`;
+                } else {
+                    userAnswerHTML = `
+                        <p>Your answer: <span class="font-semibold review-incorrect">${userAnswer} (Incorrect)</span></p>
+                        <p>Correct answer: <span class="font-semibold review-correct">${question.answer}</span></p>
+                    `;
+                }
+
+                reviewItem.innerHTML = `
+                    <p class="font-bold mb-2">${index + 1}. ${question.question}</p>
+                    ${userAnswerHTML}
+                    <p class="text-sm text-gray-600 mt-2"><em>Rationale: ${question.rationale} (Source: ${question.page})</em></p>
+                `;
+                reviewContainer.appendChild(reviewItem);
+            });
+        }
+
+    </script>
+</body>
+</html>

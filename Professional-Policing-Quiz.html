@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCOLE Professional Policing Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+        .answer-option {
+            transition: all 0.2s ease-in-out;
+        }
+        .answer-option:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .correct {
+            background-color: #D1FAE5 !important;
+            border-color: #10B981 !important;
+        }
+        .incorrect {
+            background-color: #FEE2E2 !important;
+            border-color: #EF4444 !important;
+        }
+        .progress-bar-fill {
+            transition: width 0.3s ease-in-out;
+        }
+        .review-correct {
+            color: #059669;
+        }
+        .review-incorrect {
+            color: #e11d48;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="quiz-app" class="quiz-container p-4 sm:p-8">
+        
+        <!-- Quiz Start Screen -->
+        <div id="start-screen" class="text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">TCOLE Professional Policing</h1>
+            <p class="text-lg text-gray-600 mb-8">An exhaustive quiz based on the "Basic Peace Officer Course | Chapter 2" handout on the evolution of police service models and styles.</p>
+            <button id="start-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Start Quiz</button>
+        </div>
+
+        <!-- Quiz Interface -->
+        <div id="quiz-screen" class="hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold">Question <span id="question-number"></span> of <span id="total-questions"></span></h2>
+                <div id="timer" class="text-lg font-mono bg-gray-200 px-3 py-1 rounded-md">00:00</div>
+            </div>
+            
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+                <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full progress-bar-fill" style="width: 0%"></div>
+            </div>
+
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+                <p id="question-text" class="text-xl font-medium mb-8 min-h-[6rem]"></p>
+                <div id="answer-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Answer options will be injected here by JS -->
+                </div>
+            </div>
+             <div id="rationale-box" class="hidden mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h3 class="font-bold text-blue-800">Rationale:</h3>
+                <p id="rationale-text" class="text-blue-700"></p>
+                <p class="text-sm text-blue-600 mt-2">Source: <span id="rationale-source"></span></p>
+            </div>
+            <button id="next-btn" class="hidden w-full bg-blue-600 text-white font-bold py-3 px-8 rounded-lg mt-8 hover:bg-blue-700 transition-colors shadow-md">Next Question</button>
+        </div>
+
+        <!-- Quiz Results Screen -->
+        <div id="results-screen" class="hidden text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">Quiz Complete!</h1>
+            <p class="text-lg text-gray-600 mb-6">Here's how you did:</p>
+            <div class="flex flex-col sm:flex-row justify-around items-center my-8 gap-8 sm:gap-0">
+                <div>
+                    <p class="text-5xl font-bold text-green-600"><span id="score-percentage"></span>%</p>
+                    <p class="text-gray-500">Score</p>
+                </div>
+                 <div>
+                    <p class="text-5xl font-bold text-blue-600"><span id="correct-answers"></span>/<span id="total-answered"></span></p>
+                    <p class="text-gray-500">Correct Answers</p>
+                </div>
+                 <div>
+                    <p class="text-5xl font-bold text-gray-700"><span id="final-time"></span></p>
+                    <p class="text-gray-500">Time Taken</p>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="restart-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Try Again</button>
+                <button id="review-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md">Review Answers</button>
+            </div>
+        </div>
+        
+        <!-- Review Screen -->
+        <div id="review-screen" class="hidden bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6">Answer Review</h1>
+            <div id="review-container" class="space-y-6">
+                <!-- Review content will be injected here -->
+            </div>
+            <button id="back-to-results-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md mt-8">Back to Results</button>
+        </div>
+
+    </div>
+
+    <script>
+        const quizData = [
+            { question: "Policing in America has its roots in which continent's methods?", options: ["Asian", "African", "European", "South American"], answer: "European", rationale: "The text explicitly states that 'Policing in America has its roots in European methods,' citing concepts like County, Sheriff, and common law.", page: "Page 1" },
+            { question: "In the 'watch and ward' system, what did 'watch' refer to?", options: ["Daytime police", "Nighttime police", "A special investigations unit", "A neighborhood volunteer group"], answer: "Nighttime police", rationale: "'Watch' was the term for nighttime police, while 'ward' was for daytime police in the early American system.", page: "Page 1" },
+            { question: "During the 1900s-1940s, what was a major impact of reassigning officers from walking beats to radio cars?", options: ["Increased personal communication with citizens", "A decrease in response time", "The distancing of police from individual citizens", "Higher quality performance evaluations"], answer: "The distancing of police from individual citizens", rationale: "The text notes that 'The assignment of officers from walking beats initiated the distancing of the police from the individual citizens through increased mobility.'", page: "Page 1" },
+            { question: "The Wickersham Commission report in 1931 stated that the greatest promise for the future of policing was:", options: ["Advanced weaponry", "The automobile", "The two-way radio", "The college or university"], answer: "The college or university", rationale: "The National Commission on Law Observance and Enforcement (Wickersham Commission) reported that 'the greatest promise for the future of policing is the college or university.'", page: "Page 1" },
+            { question: "In the 1950-1970s era, what became common indicators of police performance?", options: ["Officer morale and community trust", "Number of community meetings held", "Response time, crime statistics, and citizen complaints", "Officer education level and physical fitness"], answer: "Response time, crime statistics, and citizen complaints", rationale: "The document states that 'Success measures such as response time, crime statistics, and citizen complaints became common indicators of police performance.'", page: "Page 2" },
+            { question: "The President's Commission on Law Enforcement in 1967 suggested the ultimate aim for police personnel was to have:", options: ["A high school diploma", "A two-year associate degree", "A four-year baccalaureate degree", "A master's degree"], answer: "A four-year baccalaureate degree", rationale: "The Commission indicated 'that the ultimate aim of all police departments was for personnel with general enforcement powers to have baccalaureate degrees.'", page: "Page 2" },
+            { question: "What was the result of the patrol system becoming an 'incident-driven approach' in the 1950s-1970s?", options: ["Officers developed stronger community ties", "Officers became little more than report takers", "Follow-up activities for patrol officers increased", "Crime rates dropped significantly"], answer: "Officers became little more than report takers", rationale: "The text states that 'The patrol system became an incident-driven approach in which police officers often became little more than report takers in most communities.'", page: "Page 2" },
+            { question: "What policing model saw a resurgence of interest in walking beats and citizen interaction from the 1980s to the present?", options: ["The traditional model", "The reform era model", "The incident-driven model", "The community or problem-oriented policing model"], answer: "The community or problem-oriented policing model", rationale: "The text mentions that the professionalization of policing during this era has, ironically, led to an emphasis on walking beats and citizen interaction, key components of community policing.", page: "Page 3" },
+            { question: "Before Texas became an independent republic, who handled policing in the territory?", options: ["The Texas Rangers", "Elected County Sheriffs", "The Spanish military", "Local watch/ward systems"], answer: "The Spanish military", rationale: "During Texas' 100 years as a province of Mexico, 'Policing was handled by the Spanish military.'", page: "Page 3" },
+            { question: "The Texas Rangers were originally a militia group employed by Stephen F. Austin to:", options: ["Fight against Mexico", "Protect settlers from Indian and bandit raids", "Enforce tax laws", "Serve as a formal state police force"], answer: "Protect settlers from Indian and bandit raids", rationale: "The text states that Stephen F. Austin employed a militia group 'to protect the settlers from Indian and bandit raids. This group later became known as the Texas Rangers.'", page: "Page 3" },
+            { question: "Which Texas governing document provides for the election of Constables and Sheriffs?", options: ["The Local Government Code", "The Occupations Code", "The Texas Constitution", "The Texas Code of Criminal Procedure"], answer: "The Texas Constitution", rationale: "The document cites the Texas Constitution specifically: Article 5, Section 18 for Constables and Article 5, Section 23 for Sheriffs.", page: "Page 3" },
+            { question: "What is the statutory authority for the Texas Commission on Law Enforcement (TCOLE) to establish rules?", options: ["The Texas Constitution", "The Local Government Code", "The Occupations Code", "The Texas Penal Code"], answer: "The Occupations Code", rationale: "The Occupations Code is cited as 'the statutory authority for the Commission to establish rules that law enforcement agencies and officers must follow.'", page: "Pages 3-4" },
+            { question: "Which characteristic best describes the 'traditional police service model'?", options: ["Proactive and co-active", "Community-based and decentralized", "Reactive and incident-driven", "Focused on problem-solving"], answer: "Reactive and incident-driven", rationale: "The traditional model is defined by its reactive response to crimes already committed and its incident-driven focus, resolving one incident before moving to the next.", page: "Page 4" },
+            { question: "How does the traditional police model primarily measure performance?", options: ["By community satisfaction surveys", "By the reduction in fear of crime", "By statistical comparisons like crime and arrest rates", "By officer involvement in community projects"], answer: "By statistical comparisons like crime and arrest rates", rationale: "The text explains that in the traditional model, 'the department's performance is largely measured by statistical comparisons.' A low citywide crime rate or a high arrest rate is seen as a sign of success.", page: "Page 5" },
+            { question: "What is the core concept of Community Policing?", options: ["Police officers working in isolation to solve crimes quickly.", "A focus on aggressive patrol and rapid response.", "Police officers and private citizens working together to solve community problems.", "Measuring success purely by the number of arrests made."], answer: "Police officers and private citizens working together to solve community problems.", rationale: "Community Policing is defined as a philosophy where 'police officers and private citizens working together in creative ways can help solve contemporary community problems.'", page: "Page 5" },
+            { question: "A key organizational strategy in Community Policing is:", options: ["Centralizing all decision-making at the chief's level.", "Keeping patrol officers strictly in their cars to cover more ground.", "Freeing patrol officers from the radio to have direct, face-to-face contact with people.", "Creating more specialized units to handle all follow-up investigations."], answer: "Freeing patrol officers from the radio to have direct, face-to-face contact with people.", rationale: "The strategy requires 'freeing some patrol officers from the isolation of the patrol car and the incessant demands of the police radio, so that these officers can maintain direct, face-to-face contact.'", page: "Page 5" },
+            { question: "What is a Community Policing Officer's (CPO) role described as?", options: ["A specialist in a single type of crime", "A generalist who develops new ways to address broad community concerns", "An officer who only takes reports and does not investigate", "An officer who works exclusively on traffic enforcement"], answer: "A generalist who develops new ways to address broad community concerns", rationale: "The CPO 'serves as a generalist: an officer whose mission includes developing imaginative, new ways to address the broad spectrum of community concerns.'", page: "Page 5" },
+            { question: "How does Community Policing differ from Police-Community Relations?", options: ["They are the same concept with different names.", "Community Relations is a line function, while Community Policing is a staff function.", "Community Policing aims to solve problems, while Community Relations aims to change attitudes and project a positive image.", "Community Policing has irregular contact with citizens, while Community Relations has regular contact."], answer: "Community Policing aims to solve problems, while Community Relations aims to change attitudes and project a positive image.", rationale: "The chart clearly states the goal of Community Policing is to 'Solve problems,' with improved relations as a byproduct, whereas the goal of Community Relations is to 'Change attitudes and project a positive image.'", page: "Page 9" },
+            { question: "In the Community Policing model, who ensures police accountability?", options: ["Civilian review boards and formal police supervision only", "The citizens receiving the service in addition to administrative mechanisms", "Internal affairs units exclusively", "The local media and press"], answer: "The citizens receiving the service in addition to administrative mechanisms", rationale: "The comparison chart highlights that in Community Policing, accountability is ensured by 'The citizens receiving the service (in addition to administrative mechanisms).'", page: "Page 9" },
+            { question: "What is an officer's responsibility regarding referrals to private attorneys or bail bondsmen?", options: ["Refer to the most reputable ones they know.", "Provide a list of approved professionals.", "Never make a referral to a private attorney or bail bondsman.", "Only make referrals when asked directly by the citizen."], answer: "Never make a referral to a private attorney or bail bondsman.", rationale: "The text is unequivocal: 'No officer should ever make a referral to a private attorney or bail bondsman. This could result in a suit against an officer... [and] create an ethical dilemma.'", page: "Page 11" },
+            { question: "For what purpose might a citizen apply directly to a County/District Grand Jury?", options: ["To settle a small claims money dispute.", "To file a complaint against an attorney.", "To have a criminal action heard.", "To request emergency financial assistance."], answer: "To have a criminal action heard.", rationale: "The document lists applying directly to the grand jury as a way for citizens 'to hear a criminal action.'", page: "Page 11" },
+            { question: "What is a SART?", options: ["A team focused on child abuse investigations.", "A team that investigates preventable deaths of children.", "A community-based, multi-disciplinary team for responding to adult sexual assault.", "A team that focuses on high-risk domestic violence cases."], answer: "A community-based, multi-disciplinary team for responding to adult sexual assault.", rationale: "SARTs (Sexual Assault Response Teams) are defined as 'community-based, multi-disciplinary teams that work collaboratively to improve their local area's response to adult sexual assault.'", page: "Page 11" },
+            { question: "What is a philosophical difference between Community-Based Policing and the Traditional Model?", options: ["The traditional model is proactive, while community policing is reactive.", "Community policing is incident-driven, while the traditional model is not.", "The traditional model is reactive, while Community Policing Officers are pro-active and co-active.", "There are no philosophical differences."], answer: "The traditional model is reactive, while Community Policing Officers are pro-active and co-active.", rationale: "The text states, 'Traditional model is incident driven, i.e., reactive. CPOs are pro-active and co-active.'", page: "Page 13" },
+            { question: "Who are the primary 'customers' of a police organization?", options: ["The chief of police and city management", "The citizens of the community", "The court system and prosecutors", "Other law enforcement agencies"], answer: "The citizens of the community", rationale: "The text answers the question 'Who are our customers?' with 'Our customers are the citizens of the community...'", page: "Page 13" },
+            { question: "What is 'quality police customer service'?", options: ["Making as many arrests as possible to show efficiency.", "Placing the officer's personal desires before the citizen's needs.", "Providing basic protection in a highly effective, efficient, and friendly manner.", "Strictly enforcing every law without exception."], answer: "Providing basic protection in a highly effective, efficient, and friendly manner.", rationale: "Quality police customer service involves providing the expected protection 'in a highly effective and efficient manner from police personnel who display a highly positive, friendly, and helpful manner.'", page: "Pages 13-14" },
+            { question: "What is 'Procedural Justice'?", options: ["The belief that the ends always justify the means in policing.", "A perspective that links police legitimacy to public judgments about the fairness of police processes.", "A system where police have final authority on legal judgments.", "The statistical measurement of police response times and arrest rates."], answer: "A perspective that links police legitimacy to public judgments about the fairness of police processes.", rationale: "Procedural Justice is defined as a perspective arguing that 'the legitimacy of the police is linked to public judgements about the fairness of the processes through which the police make decisions.'", page: "Page 14" },
+            { question: "What is the difference between 'legitimacy' and 'police legitimacy'?", options: ["There is no difference.", "'Legitimacy' is about lawfulness, while 'police legitimacy' is the community's view of whether police acted legally.", "'Legitimacy' is the police view, while 'police legitimacy' is the court's view.", "'Legitimacy' applies to detectives, while 'police legitimacy' applies to patrol."], answer: "'Legitimacy' is about lawfulness, while 'police legitimacy' is the community's view of whether police acted legally.", rationale: "The text distinguishes the official definition of legitimacy (lawful, legal) from 'police legitimacy,' which is specifically 'the community's view of whether police have acted legally and lawfully.'", page: "Page 14" },
+            { question: "What are the four principles of Procedural Justice?", options: ["Voice, Neutrality, Respectful Treatment, and Trustworthiness.", "Scan, Analyze, Respond, and Assess.", "Watch, Ward, Patrol, and Investigate.", "Fight Crime, Serve, Protect, and Promote Safety."], answer: "Voice, Neutrality, Respectful Treatment, and Trustworthiness.", rationale: "The four principles are explicitly listed as: Give people a Voice (listen), Neutrality (be fair), Respectful treatment (be respectful), and Trustworthiness comes from a Fair and Transparent process.", page: "Page 14" },
+            { question: "Which of the following is NOT a characteristic of the traditional paramilitary police organizational structure?", options: ["Authoritarian", "Chain of command", "Micromanagement", "Community-police partnerships"], answer: "Community-police partnerships", rationale: "Authoritarian structure, chain of command, and micromanagement are listed as characteristics of the paramilitary model. Community-police partnerships are a feature of the alternative, participative model.", page: "Page 15" },
+            { question: "What is a primary reason to study police subculture?", options: ["To encourage officers to be more secretive.", "To understand public perceptions of police and the behavior of officers.", "To reinforce the authoritarian nature of policing.", "To increase social isolation among officers."], answer: "To understand public perceptions of police and the behavior of officers.", rationale: "The text lists several reasons, including to 'better understand the behavior of others,' 'allow for informed choices,' and 'understand public perceptions of police.'", page: "Page 16" },
+            { question: "Which of the following is a characteristic of the police subculture?", options: ["Openness and transparency", "Political and social liberalism", "Solidarity and secrecy", "Trust in the general public"], answer: "Solidarity and secrecy", rationale: "The list of subculture characteristics includes 'Solidarity - taking care of one another' and 'Secrecy - protection from hostile environment.'", page: "Page 16" },
+            { question: "Which of the following is listed as a 'subculture social problem'?", options: ["Support during stressful times", "Commitment to community values", "Cynicism and alienation", "Curiosity and suspiciousness"], answer: "Cynicism and alienation", rationale: "'Cynicism and alienation' is explicitly listed as a social problem stemming from the police subculture.", page: "Page 16" },
+            { question: "According to the document, officers must ultimately choose between the subculture and what?", options: ["Their partner", "The chain of command", "Professionalism", "Early retirement"], answer: "Professionalism", rationale: "The text concludes the section on subculture benefits and problems by stating, 'Officers must choose between the subculture and professionalism.'", page: "Page 16" },
+            { question: "Who is responsible for distributing copies of the current Commission Rules to students in a licensing course?", options: ["The individual student", "The course coordinator", "The lead instructor", "TCOLE headquarters"], answer: "The course coordinator", rationale: "The Instructor Note states, 'The coordinator is required, by rule 215.9, to distribute copies of the current Commission Rules to all students...'", page: "Page 4" },
+            { question: "In Community Policing, what is the CPO's relationship with the community?", options: ["They are an outsider enforcing laws.", "They are the community's ombudsman and a direct link to the police.", "They are only seen when responding to calls for service.", "They are an invisible presence to maintain order."], answer: "They are the community's ombudsman and a direct link to the police.", rationale: "The CPO 'acts as the direct link between the police and people in the community' and serves as the 'community's ombudsman.'", page: "Page 7" },
+            { question: "Community policing adds a vital proactive element to what traditional police role?", options: ["The reactive role", "The administrative role", "The training role", "The judicial role"], answer: "The reactive role", rationale: "The text says community policing 'Adds a vital proactive element to the traditional reactive role of the police, resulting in full-spectrum police service.'", page: "Page 7" },
+            { question: "What is a key difference in influence between Community Policing and Police-Community Relations?", options: ["Community Policing is 'top down'; Community Relations is 'bottom up'.", "Community Policing is 'bottom up'; Community Relations is 'top down'.", "Both are exclusively 'top down'.", "Both are exclusively 'bottom up'."], answer: "Community Policing is 'bottom up'; Community Relations is 'top down'.", rationale: "The chart on page 10 states that in Community Policing, influence is 'from the bottom up,' whereas in Community Relations, it is 'from the top down.'", page: "Page 10" },
+            { question: "What is the purpose of a Domestic Violence High Risk Team (DVHRT)?", options: ["To investigate child abuse offenders.", "To provide services to commercially sexually exploited youth.", "To reduce the risk of lethal violence for family violence victims.", "To review the preventable deaths of persons under 18."], answer: "To reduce the risk of lethal violence for family violence victims.", rationale: "DVHRTs are defined as teams 'focused on reducing risk of near-lethal or lethal violence for family violence victims.'", page: "Page 12" },
+            { question: "In the context of quality customer service, to whom is a peace officer responsible?", options: ["Only to their immediate supervisor.", "To the citizens of the community through the chain of command.", "To the District Attorney's office.", "To themselves and their personal code of ethics."], answer: "To the citizens of the community through the chain of command.", rationale: "The text states the peace officer is 'responsible to the citizens of the community through the chain of command in the organization.'", page: "Page 13" },
+            { question: "What is a potential negative consequence of the police subculture?", options: ["Commitment to community needs becomes secondary.", "Officers feel supported during stressful times.", "Officers develop a strong sense of solidarity.", "Officers become more curious and suspicious."], answer: "Commitment to community needs becomes secondary.", rationale: "Under 'Subculture social problems,' the text lists 'Commitment to community values and needs becomes secondary.'", page: "Page 16" },
+            { question: "The introduction of which two technologies in the early-to-mid 20th century led to a more rapid response but also distanced police from citizens?", options: ["Fingerprinting and DNA analysis", "Body cameras and Tasers", "The automobile and radio communications", "Computers and mobile devices"], answer: "The automobile and radio communications", rationale: "The text from the 1900-1940s section highlights the automobile for rapid response and the radio for dispatching, both of which increased mobility and distanced officers from citizens.", page: "Page 1" },
+            { question: "The professional police model of the 1950s-1970s put emphasis on:", options: ["Walking beats and citizen interaction", "Decentralized decision making", "Accountability and increased standards", "Solving neighborhood decay"], answer: "Accountability and increased standards", rationale: "During this period, 'The professional police model developed with emphasis on accountability and increased standards.'", page: "Page 2" },
+            { question: "Why did the watch/ward system not evolve in early Texas?", options: ["It was deemed unconstitutional.", "Because of its large territory and absence of large cities.", "Stephen F. Austin outlawed it.", "The Spanish military had already established a better system."], answer: "Because of its large territory and absence of large cities.", rationale: "The text explains 'The watch/ward system of police did not evolve in Texas because of its large territory and absence of large cities/urban areas.'", page: "Page 3" },
+            { question: "The traditional policing model's reliance on limited information from victims, witnesses, and suspects is a component of it being:", options: ["Community-oriented", "Incident driven", "Proactive", "Statistically measured"], answer: "Incident driven", rationale: "The 'Incident driven' section states that this approach 'relies on limited information, mostly from victims, witnesses, and suspects.'", page: "Page 4" },
+            { question: "The Community Policing philosophy requires a shift in focus from handling random calls to:", options: ["Writing more traffic citations", "Solving community problems", "Increasing arrest statistics", "Reducing response times"], answer: "Solving community problems", rationale: "The definition of community policing includes that it 'shifts the focus of police work from handling random calls to solving community problems.'", page: "Page 5" },
+            { question: "What does the 'new contract' between police and citizens under Community Policing hope to overcome?", options: ["The impulse to vigilantism and widespread apathy", "The need for a chain of command", "The high cost of police training", "The use of advanced technology"], answer: "The impulse to vigilantism and widespread apathy", rationale: "The text states this new contract 'offers the hope of overcoming widespread apathy, while restraining any impulse to vigilantism.'", page: "Page 7" },
+            { question: "Which of the following is NOT listed as a vulnerable population that Community Policing stresses protecting?", options: ["Juveniles", "Politicians", "The elderly", "People experiencing homelessness"], answer: "Politicians", rationale: "Page 7 lists numerous vulnerable populations, including juveniles, the elderly, people of color, LGBTQIA+, and the homeless, but does not list politicians.", page: "Pages 7-8" },
+            { question: "In a Police-Community Relations model, how are problems typically identified?", options: ["Officers on the beat nominate them", "Citizens cooperate in setting the agenda", "'Blue Ribbon' committees identify them", "Through statistical analysis only"], answer: "'Blue Ribbon' committees identify them", rationale: "The chart on page 9 shows that in PCR, '\"Blue Ribbon\" committees identify the problems and \"preach\" to police.'", page: "Page 9" },
+            { question: "What is the monetary limit for cases in Small Claims Court mentioned in the text?", options: ["$1,000", "$5,000", "$10,000", "$20,000"], answer: "$10,000", rationale: "Small Claims Court is described as being for cases involving money matters of '$10,000.00 or less.'", page: "Page 11" },
+            { question: "A Multidisciplinary Team (MDT) is statutorily authorized to focus on:", options: ["Adult sexual assault", "High-risk domestic violence", "The investigation and prosecution of child abuse", "Coordinating services for exploited youth"], answer: "The investigation and prosecution of child abuse", rationale: "The MDT 'focuses on the investigation and prosecution of child abuse offenders, and the treatment of child abuse victims.'", page: "Page 12" },
+            { question: "What is one of the listed benefits of involving the community in policing activities?", options: ["To help officers define their pension needs.", "To clarify responsibilities on behalf of citizens and peace officers.", "To reduce the need for police training.", "To increase the department's budget."], answer: "To clarify responsibilities on behalf of citizens and peace officers.", rationale: "The text lists several benefits, including 'Clarifying responsibilities on behalf of citizens and peace officers.'", page: "Page 12" },
+            { question: "The new, more complex role of a CPO includes being a law enforcer, a planner, a community organizer, and a:", options: ["Report taker", "Statistician", "Problem Solver", "Traffic director"], answer: "Problem Solver", rationale: "The four complex roles of a CPO are listed as 'Law Enforcer,' 'Planner,' 'Problem Solver,' and 'Community organizer.'", page: "Page 13" },
+            { question: "What is a key benefit of procedural justice and legitimacy for officers?", options: ["Longer shifts", "Less need for community interaction", "Greater officer safety and a lower level of resistance", "Fewer training requirements"], answer: "Greater officer safety and a lower level of resistance", rationale: "The text states the 'gains/benefits of procedural justice and legitimacy are greater officer safety, a lower level of resistance, acceptance of police decision, and less use of 'threats of force' for control.'", page: "Page 15" },
+            { question: "The participative model is an alternative to the paramilitary structure and is characterized by:", options: ["Micromanagement", "A strict chain of command", "Empowered community-police partnerships", "An authoritarian approach"], answer: "Empowered community-police partnerships", rationale: "The alternative participative model is described as one where 'community - police partnerships are established, prioritized, and empowered.'", page: "Page 16" },
+            { question: "What is the Hobbesian view of social work, characteristic of police subculture cynicism?", options: ["A positive view of human nature", "A cynical, negative view of humanity and society", "A belief in community empowerment", "An emphasis on rehabilitation over punishment"], answer: "A cynical, negative view of humanity and society", rationale: "A 'Hobbesian view' refers to the philosophy of Thomas Hobbes, who had a cynical and pessimistic view of human nature, believing life is 'nasty, brutish, and short.' This aligns with the cynicism characteristic of the police subculture.", page: "Page 16" },
+            { question: "According to TCOLE rules, who is it each officer's responsibility to ensure compliance with?", options: ["Their Field Training Officer", "Themselves", "The Chief of Police", "The training coordinator"], answer: "Themselves", rationale: "The instructor note on page 4 emphasizes that 'it is each officer's responsibility to ensure compliance with Commission rules.'", page: "Page 4" },
+            { question: "What is the primary way a CPO maintains contact with the community?", options: ["Through email newsletters", "Via the police radio", "Daily, direct, face-to-face contact", "Through social media updates"], answer: "Daily, direct, face-to-face contact", rationale: "The text emphasizes that CPOs must be freed from patrol cars 'so that they can maintain daily, direct, face-to-face contact with the people they serve.'", page: "Page 7" },
+            { question: "Which of these is NOT a required continuing education topic listed in the table of TCOLE rules?", options: ["Legislatively Required Continuing Education for Licensees", "Firearms Proficiency Requirements", "Advanced Interrogation Techniques", "Reactivation of a License"], answer: "Advanced Interrogation Techniques", rationale: "The table on page 4 lists rules for legislative CE, firearms proficiency, and license reactivation, among others, but does not specify a rule for advanced interrogation techniques in that list.", page: "Page 4" }
+        ];
+
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const reviewScreen = document.getElementById('review-screen');
+
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const reviewBtn = document.getElementById('review-btn');
+        const backToResultsBtn = document.getElementById('back-to-results-btn');
+        
+        const questionNumberEl = document.getElementById('question-number');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const progressBar = document.getElementById('progress-bar');
+        const questionTextEl = document.getElementById('question-text');
+        const answerOptionsEl = document.getElementById('answer-options');
+        const rationaleBox = document.getElementById('rationale-box');
+        const rationaleText = document.getElementById('rationale-text');
+        const rationaleSource = document.getElementById('rationale-source');
+        
+        const scorePercentageEl = document.getElementById('score-percentage');
+        const correctAnswersEl = document.getElementById('correct-answers');
+        const totalAnsweredEl = document.getElementById('total-answered');
+        const finalTimeEl = document.getElementById('final-time');
+        const timerEl = document.getElementById('timer');
+        const reviewContainer = document.getElementById('review-container');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timerInterval;
+        let secondsElapsed = 0;
+        let userAnswers = [];
+        
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        startBtn.addEventListener('click', startQuiz);
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', startQuiz);
+        reviewBtn.addEventListener('click', showReview);
+        backToResultsBtn.addEventListener('click', () => {
+            reviewScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+        });
+
+        function startTimer() {
+            secondsElapsed = 0;
+            timerEl.textContent = '00:00';
+            timerInterval = setInterval(() => {
+                secondsElapsed++;
+                const minutes = Math.floor(secondsElapsed / 60).toString().padStart(2, '0');
+                const seconds = (secondsElapsed % 60).toString().padStart(2, '0');
+                timerEl.textContent = `${minutes}:${seconds}`;
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function startQuiz() {
+            shuffleArray(quizData);
+            quizData.forEach(q => shuffleArray(q.options));
+
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            startScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            nextBtn.classList.add('hidden');
+            startTimer();
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            rationaleBox.classList.add('hidden');
+            answerOptionsEl.innerHTML = '';
+            const currentQuestion = quizData[currentQuestionIndex];
+            
+            questionNumberEl.textContent = currentQuestionIndex + 1;
+            totalQuestionsEl.textContent = quizData.length;
+            questionTextEl.textContent = currentQuestion.question;
+
+            const progress = ((currentQuestionIndex) / quizData.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('answer-option', 'w-full', 'p-4', 'text-left', 'bg-white', 'border-2', 'border-gray-300', 'rounded-lg', 'hover:bg-gray-50', 'hover:border-blue-500');
+                button.addEventListener('click', () => selectAnswer(button, option, currentQuestion));
+                answerOptionsEl.appendChild(button);
+            });
+        }
+
+        function selectAnswer(button, selectedOption, currentQuestion) {
+            const { answer, rationale, page } = currentQuestion;
+            userAnswers[currentQuestionIndex] = selectedOption;
+
+            const buttons = answerOptionsEl.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === answer) {
+                    btn.classList.add('correct');
+                }
+            });
+
+            if (selectedOption === answer) {
+                score++;
+                button.classList.add('correct');
+            } else {
+                button.classList.add('incorrect');
+            }
+
+            rationaleText.textContent = rationale;
+            rationaleSource.textContent = page;
+            rationaleBox.classList.remove('hidden');
+            nextBtn.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                nextBtn.classList.add('hidden');
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            stopTimer();
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            scorePercentageEl.textContent = percentage;
+            correctAnswersEl.textContent = score;
+            totalAnsweredEl.textContent = quizData.length;
+            finalTimeEl.textContent = timerEl.textContent;
+            
+            const finalProgress = 100;
+            progressBar.style.width = `${finalProgress}%`;
+        }
+
+        function showReview() {
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.remove('hidden');
+            reviewContainer.innerHTML = '';
+
+            quizData.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === question.answer;
+
+                const reviewItem = document.createElement('div');
+                reviewItem.classList.add('border', 'p-4', 'rounded-lg');
+                reviewItem.classList.add(isCorrect ? 'border-green-200' : 'border-red-200');
+
+                let userAnswerHTML = '';
+                if (isCorrect) {
+                    userAnswerHTML = `<p>Your answer: <span class="font-semibold review-correct">${userAnswer} (Correct)</span></p>`;
+                } else {
+                    userAnswerHTML = `
+                        <p>Your answer: <span class="font-semibold review-incorrect">${userAnswer} (Incorrect)</span></p>
+                        <p>Correct answer: <span class="font-semibold review-correct">${question.answer}</span></p>
+                    `;
+                }
+
+                reviewItem.innerHTML = `
+                    <p class="font-bold mb-2">${index + 1}. ${question.question}</p>
+                    ${userAnswerHTML}
+                    <p class="text-sm text-gray-600 mt-2"><em>Rationale: ${question.rationale} (Source: ${question.page})</em></p>
+                `;
+                reviewContainer.appendChild(reviewItem);
+            });
+        }
+
+    </script>
+</body>
+</html>

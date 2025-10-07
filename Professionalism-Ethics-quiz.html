@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCOLE Professionalism and Ethics Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+        .answer-option {
+            transition: all 0.2s ease-in-out;
+        }
+        .answer-option:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .correct {
+            background-color: #D1FAE5 !important;
+            border-color: #10B981 !important;
+        }
+        .incorrect {
+            background-color: #FEE2E2 !important;
+            border-color: #EF4444 !important;
+        }
+        .progress-bar-fill {
+            transition: width 0.3s ease-in-out;
+        }
+        .review-correct {
+            color: #059669;
+        }
+        .review-incorrect {
+            color: #e11d48;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="quiz-app" class="quiz-container p-4 sm:p-8">
+        
+        <!-- Quiz Start Screen -->
+        <div id="start-screen" class="text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">TCOLE Professionalism & Ethics</h1>
+            <p class="text-lg text-gray-600 mb-8">An exhaustive quiz based on the "Basic Peace Officer Course | Chapter 1" handout to prepare you for the TCOLE Exam.</p>
+            <button id="start-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Start Quiz</button>
+        </div>
+
+        <!-- Quiz Interface -->
+        <div id="quiz-screen" class="hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold">Question <span id="question-number"></span> of <span id="total-questions"></span></h2>
+                <div id="timer" class="text-lg font-mono bg-gray-200 px-3 py-1 rounded-md">00:00</div>
+            </div>
+            
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+                <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full progress-bar-fill" style="width: 0%"></div>
+            </div>
+
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+                <p id="question-text" class="text-xl font-medium mb-8 min-h-[6rem]"></p>
+                <div id="answer-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Answer options will be injected here by JS -->
+                </div>
+            </div>
+             <div id="rationale-box" class="hidden mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h3 class="font-bold text-blue-800">Rationale:</h3>
+                <p id="rationale-text" class="text-blue-700"></p>
+                <p class="text-sm text-blue-600 mt-2">Source: <span id="rationale-source"></span></p>
+            </div>
+            <button id="next-btn" class="hidden w-full bg-blue-600 text-white font-bold py-3 px-8 rounded-lg mt-8 hover:bg-blue-700 transition-colors shadow-md">Next Question</button>
+        </div>
+
+        <!-- Quiz Results Screen -->
+        <div id="results-screen" class="hidden text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">Quiz Complete!</h1>
+            <p class="text-lg text-gray-600 mb-6">Here's how you did:</p>
+            <div class="flex flex-col sm:flex-row justify-around items-center my-8 gap-8 sm:gap-0">
+                <div>
+                    <p class="text-5xl font-bold text-green-600"><span id="score-percentage"></span>%</p>
+                    <p class="text-gray-500">Score</p>
+                </div>
+                 <div>
+                    <p class="text-5xl font-bold text-blue-600"><span id="correct-answers"></span>/<span id="total-answered"></span></p>
+                    <p class="text-gray-500">Correct Answers</p>
+                </div>
+                 <div>
+                    <p class="text-5xl font-bold text-gray-700"><span id="final-time"></span></p>
+                    <p class="text-gray-500">Time Taken</p>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="restart-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Try Again</button>
+                <button id="review-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md">Review Answers</button>
+            </div>
+        </div>
+        
+        <!-- Review Screen -->
+        <div id="review-screen" class="hidden bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6">Answer Review</h1>
+            <div id="review-container" class="space-y-6">
+                <!-- Review content will be injected here -->
+            </div>
+            <button id="back-to-results-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md mt-8">Back to Results</button>
+        </div>
+
+    </div>
+
+    <script>
+        const quizData = [
+            { question: "According to the Oxford English Dictionary, which of the following is NOT one of the original 'three learned professions'?", options: ["Divinity", "Law", "Medicine", "Engineering"], answer: "Engineering", rationale: "The text specifically lists divinity, law, and medicine as the three learned professions, along with the military profession.", page: "Page 1" },
+            { question: "Which characteristic is a requirement for a vocation to be considered a 'profession'?", options: ["A commitment to serving the public", "Prioritizing financial gain", "Focus on manual labor", "Lack of ethical standards"], answer: "A commitment to serving the public", rationale: "The text lists possessing a specialized body of knowledge, serving the public, promoting the common good, and having a code of ethics as requirements for a profession.", page: "Page 1" },
+            { question: "What does the concept of 'Police Legitimacy' mean?", options: ["People fear the police", "Police have unlimited authority", "People have trust and confidence in the police", "Police can disregard the constitution"], answer: "People have trust and confidence in the police", rationale: "Police legitimacy means the public trusts the police, accepts their authority, and believes they are fair.", page: "Page 2" },
+            { question: "What are the four pillars of procedural justice?", options: ["Fairness/Consistency, Giving Voice, Transparency, and Impartiality", "Arrest, Interrogation, Trial, and Sentencing", "Scanning, Analysis, Response, and Assessment", "Trust, Respect, Responsibility, and Citizenship"], answer: "Fairness/Consistency, Giving Voice, Transparency, and Impartiality", rationale: "These are the four pillars listed that are key to building police legitimacy.", page: "Page 3" },
+            { question: "The problem-solving model 'SARA', used in community policing, stands for:", options: ["Safety, Awareness, Reaction, Action", "Scanning, Analysis, Response, Assessment", "Search, Arrest, Restrain, Advise", "System, Authority, Rules, Application"], answer: "Scanning, Analysis, Response, Assessment", rationale: "SARA is a systematic process for examining problems: Scanning (identifying), Analysis (researching), Response (developing solutions), and Assessment (evaluating success).", page: "Page 5" },
+            { question: "According to the IACP Code of Ethics, what is the fundamental duty of a law enforcement officer?", options: ["To enforce laws strictly", "To serve the community", "To protect government property", "To prosecute criminals relentlessly"], answer: "To serve the community", rationale: "The very first line of the IACP Code of Ethics states the fundamental duty is 'to serve the community'.", page: "Page 5" },
+            { question: "Which of these is NOT one of the 'Pillars of Character' listed as a cornerstone of the ethical role?", options: ["Trustworthiness", "Respect", "Courage", "Citizenship"], answer: "Courage", rationale: "The six pillars of character listed are: Trustworthiness, Respect, Responsibility, Fairness, Caring, and Citizenship. Courage is discussed separately.", page: "Page 7" },
+            { question: "Which component of consistent ethical behavior is defined as 'the ability to recognize the presence and nature of ethical issues'?", options: ["Moral Judgment", "Moral Motivation", "Moral Character", "Moral Sensitivity"], answer: "Moral Sensitivity", rationale: "Moral sensitivity is the first step: the awareness that a situation presents an ethical problem requiring a decision.", page: "Page 8" },
+            { question: "In the attitude stages an officer may go through, which stage is described as when 'idealism crashes into a wall of reality'?", options: ["Idealistic", "Defiant", "Frustrated", "Resigned"], answer: "Frustrated", rationale: "The 'Frustrated' stage is when new officers begin to experience 'the way things really are,' which contrasts with their initial idealistic expectations.", page: "Page 10" },
+            { question: "Which stage of an officer's career attitude is characterized by a loss of joy and 'punching the clock to get to retirement'?", options: ["Defiant", "Resigned", "Aware", "Decisive"], answer: "Resigned", rationale: "The 'Resigned' stage follows defiance for some, where they slip into resignation to the disappointments of their lives and jobs.", page: "Pages 10-11" },
+            { question: "Objectivity, as defined in the training, involves the expression of facts without distortion from what?", options: ["Evidence and witness statements", "Departmental policy", "Personal feelings or prejudices", "Legal statutes"], answer: "Personal feelings or prejudices", rationale: "Objectivity is defined as neutrality, using facts without being distorted by personal feelings or prejudices.", page: "Page 12" },
+            { question: "The 'automatic association people make between groups of people and stereotypes about those groups' is the definition of:", options: ["Unconscious Bias", "Implicit Bias", "Official Oppression", "Personal Prejudice"], answer: "Implicit Bias", rationale: "The text defines implicit bias as the automatic association between groups and stereotypes, which can happen even without conscious bigotry.", page: "Page 12" },
+            { question: "Refusing to participate in an unethical cover-up is an example of what kind of courage?", options: ["Physical Courage", "Tactical Courage", "Moral Courage", "Reckless Courage"], answer: "Moral Courage", rationale: "Moral courage is taking action for moral reasons despite the risk of adverse consequences, such as professional or social backlash.", page: "Page 15" },
+            { question: "Which chapter of the Texas Penal Code covers 'Bribery and Corrupt Influence'?", options: ["Chapter 36", "Chapter 37", "Chapter 39", "Chapter 38"], answer: "Chapter 36", rationale: "Chapter 36 of the Texas Penal Code specifically deals with offenses like Bribery, Coercion of a Public Servant, and Improper Influence.", page: "Page 16" },
+            { question: "A public servant who solicits or accepts a benefit in exchange for their decision or vote is committing what offense under PC 36.02?", options: ["Improper Influence", "Official Oppression", "Bribery", "Abuse of Official Capacity"], answer: "Bribery", rationale: "PC 36.02 defines Bribery as intentionally or knowingly offering, conferring, or agreeing to confer on another, or soliciting, accepting, or agreeing to accept from another any benefit as consideration for the recipient's decision or other exercise of discretion as a public servant.", page: "Page 16" },
+            { question: "An officer knowingly makes a false entry in a police report. What offense has been committed under PC 37.10?", options: ["Perjury", "Aggravated Perjury", "Tampering with Governmental Record", "False Report to Peace Officer"], answer: "Tampering with Governmental Record", rationale: "PC 37.10, Tampering with Governmental Record, addresses knowingly making a false entry in, or false alteration of, a governmental record.", page: "Page 16" },
+            { question: "Under PC 39.03, a public servant who intentionally subjects another to mistreatment or to arrest they know is unlawful is committing:", options: ["Abuse of Official Capacity", "Official Oppression", "Violation of Civil Rights of Person in Custody", "Bribery"], answer: "Official Oppression", rationale: "Official Oppression (PC 39.03) covers a range of abuses of power, including unlawful arrest, detention, search, and sexual harassment.", page: "Page 16" },
+            { question: "Under PC 39.04, improper sexual activity with a person in custody is elevated to what degree of felony?", options: ["State Jail Felony", "3rd Degree Felony", "2nd Degree Felony", "1st Degree Felony"], answer: "2nd Degree Felony", rationale: "The text specifically notes that PC 39.04 increases the criminal penalty for this offense to a 2nd degree felony.", page: "Pages 15, 16" },
+            { question: "A public servant uses confidential information they learned through their job to make a profitable stock trade. This is an example of what offense under PC 39.06?", options: ["Bribery", "Theft", "Insider Trading", "Misuse of Official Information"], answer: "Misuse of Official Information", rationale: "PC 39.06, Misuse of Official Information, makes it an offense to use information that has not been made public, and which was acquired by reason of office, to obtain a benefit.", page: "Page 16" },
+            { question: "Which FEDERAL statute addresses 'Conspiracy Against Rights' (18 USC 241)?", options: ["Two or more persons conspiring to injure or intimidate someone in the exercise of their constitutional rights.", "An official depriving someone of their rights under color of law.", "Filing a civil lawsuit for a rights violation.", "A peace officer failing to report the death of a prisoner."], answer: "Two or more persons conspiring to injure or intimidate someone in the exercise of their constitutional rights.", rationale: "18 USC 241 is the federal law that specifically targets conspiracies against the rights of individuals.", page: "Page 17" },
+            { question: "Which FEDERAL statute addresses 'Deprivation of Rights Under Color of Law' (18 USC 242)?", options: ["Two or more persons conspiring to injure rights.", "An official willfully depriving a person of their rights while acting in an official capacity.", "Accepting an honorarium as a public servant.", "Tampering with a witness in a federal case."], answer: "An official willfully depriving a person of their rights while acting in an official capacity.", rationale: "18 USC 242 is the primary federal statute used to prosecute officials who violate civil rights while acting in their official capacity ('under color of law').", page: "Page 17" },
+            { question: "What is a key reason the FBI controls investigations into civil rights violations by officers from Washington, D.C.?", options: ["Local FBI agents lack the necessary training.", "To avoid compromising the case due to local friendships.", "It is required by the Constitution.", "Washington D.C. has more resources."], answer: "To avoid compromising the case due to local friendships.", rationale: "The text states this is done 'to prevent friendships and working relationships between locally stationed FBI agents and the peace officer being investigated from being compromised.'", page: "Pages 16-17" },
+            { question: "What is the source of the Law Enforcement Code of Ethics and Canons of Ethics provided in the resource material?", options: ["The Texas Commission on Law Enforcement (TCOLE)", "The U.S. Department of Justice", "The Federal Bureau of Investigation (FBI)", "The International Association of Chiefs of Police (IACP)"], answer: "The International Association of Chiefs of Police (IACP)", rationale: "The resource material explicitly credits the IACP for the Code of Ethics and notes the Canons are adapted from their standards.", page: "Pages 5, 20" },
+            { question: "According to the Canons of Ethics, an officer's 'primary responsibility' is the protection of people through upholding what?", options: ["Departmental policies", "Local ordinances", "The Constitution of the United States", "The will of their superior officer"], answer: "The Constitution of the United States", rationale: "The Canons state, 'Chief among these laws is the Constitution of the United States and its amendments.'", page: "Page 21" },
+            { question: "The Canons of Ethics state that the employment of illegal means, no matter how worthy the end, is self-defeating because it...", options: ["is too expensive.", "is against policy.", "instills in the public mind a like disposition.", "is not effective at reducing crime."], answer: "instills in the public mind a like disposition.", rationale: "This principle underscores that using illegal means encourages public disrespect for the law and its officers.", page: "Page 21" },
+            { question: "What advice do the Canons of Ethics give regarding an officer's private conduct?", options: ["Private conduct is not relevant to on-duty performance.", "Officers should lead the life of a decent and honorable person.", "Officers are allowed special privileges in their private lives.", "Minor law-breaking in private life is acceptable."], answer: "Officers should lead the life of a decent and honorable person.", rationale: "The Canons emphasize that an officer's private life reflects on the entire police service and they should be examples of 'stability, fidelity, and morality.'", page: "Page 22" },
+            { question: "The ethical motivation described as 'Virtue is its own reward' is known as:", options: ["Personal Advantage", "Approval", "Inner Benefit", "Habit"], answer: "Inner Benefit", rationale: "The text lists 'Inner Benefit: Virtue is its own reward' as a primary motivation for ethical behavior.", page: "Page 8" },
+            { question: "In the Ethical Decision-Making Model, what is the FIRST question an officer should ask?", options: ["Is it permitted by your organization?", "Does your personal code of ethics approve?", "Is it legal?", "How will it be viewed by the public?"], answer: "Is it legal?", rationale: "The model starts with the most fundamental and objective question: 'Is it legal?'", page: "Page 9" },
+            { question: "Which of the following is listed as a 'disadvantage' of the professional model for law enforcement?", options: ["Stronger community support", "Ethical conduct", "More effective innovations", "Higher salaries or remuneration"], answer: "Higher salaries or remuneration", rationale: "The text lists cost of training and higher salaries as disadvantages, likely from an administrative or budgetary perspective.", page: "Page 4" },
+            { question: "The 'crime triangle' focuses on what three immediate conditions?", options: ["Motive, Opportunity, Means", "Poverty, Drugs, Violence", "Victim, Offender, Location", "Police, Courts, Corrections"], answer: "Victim, Offender, Location", rationale: "The text states the crime triangle is used to focus on the immediate conditions of victim, offender, and location during the 'Response' phase of problem solving.", page: "Page 5" },
+            { question: "An officer threatens a witness to prevent them from testifying. This falls under which offense in PC Chapter 36?", options: ["Bribery (36.02)", "Coercion of Public Servant (36.03)", "Obstruction or Retaliation (36.06)", "Improper Influence (36.04)"], answer: "Obstruction or Retaliation (36.06)", rationale: "PC 36.06, Obstruction or Retaliation, criminalizes harming or threatening to harm another in retaliation for or to prevent their service as a witness or informant.", page: "Page 16" },
+            { question: "Perjury, under PC 37.02, requires a false statement made under oath in connection with what type of proceeding?", options: ["Any conversation", "A media interview", "An official proceeding", "A private dispute"], answer: "An official proceeding", rationale: "Perjury is specifically tied to making a false statement with intent to deceive while under oath in an official proceeding.", page: "Page 16" },
+            { question: "Aggravated Perjury (PC 37.03) occurs if the false statement is...", options: ["made to a federal officer.", "made in writing.", "made during a capital felony trial.", "material and can affect the outcome of the proceeding."], answer: "material and can affect the outcome of the proceeding.", rationale: "The key element that elevates Perjury to Aggravated Perjury is that the false statement is 'material,' meaning it could have affected the course or outcome of the official proceeding.", page: "Page 16" },
+            { question: "An officer reports to a law enforcement employee that a crime occurred, knowing the report is false. What offense is this under PC 37.08?", options: ["Perjury", "Tampering with Evidence", "False Report to Peace Officer", "Obstruction"], answer: "False Report to Peace Officer", rationale: "PC 37.08 specifically addresses making a false report of a crime to a peace officer or law enforcement employee.", page: "Page 16" },
+            { question: "Which one of these is NOT a characteristic of professionalism listed in the text?", options: ["Service to others", "Standards for entry, practice, and ethical conduct", "A theoretical body of knowledge", "Guaranteed high financial rewards"], answer: "Guaranteed high financial rewards", rationale: "While financial rewards are mentioned as a potential disadvantage (higher salaries), they are not a defining characteristic of professionalism. The focus is on knowledge, service, and ethics.", page: "Page 2" },
+            { question: "What is the final stage of the positive attitude progression, described as a 'purposeful and prudent devotion'?", options: ["Aware", "Decisive", "Commitment", "Idealistic"], answer: "Commitment", rationale: "Commitment is the final, positive stage where an officer is dedicated to their ideals with realism and flexibility, after going through the Decisive and Aware stages.", page: "Page 11" },
+            { question: "What is the penalty range for a violation of 18 USC 241 (Conspiracy Against Rights) if death does NOT result?", options: ["Up to 1 year in prison", "Fined not more than $1,000", "Fined not more than $10,000 or imprisoned not more than ten years, or both", "Life imprisonment"], answer: "Fined not more than $10,000 or imprisoned not more than ten years, or both", rationale: "The statute text clearly specifies a fine of up to $10,000 and/or imprisonment up to ten years if death does not result.", page: "Page 17" },
+            { question: "What is the penalty for a violation of 18 USC 242 (Deprivation of Rights) if death results?", options: ["Fined not more than $1,000", "Up to 10 years imprisonment", "Up to 20 years imprisonment", "Imprisonment for any term of years or for life"], answer: "Imprisonment for any term of years or for life", rationale: "The text of the statute specifies that if death results from a violation of 18 USC 242, the punishment can be imprisonment for any term of years or for life.", page: "Page 17" },
+            { question: "According to the Canons of Ethics, an officer shall be concerned equally in the prosecution of the wrongdoer and...", options: ["the reputation of the department.", "the defense of the innocent.", "the wishes of the victim.", "the efficiency of the courts."], answer: "the defense of the innocent.", rationale: "This highlights the officer's duty to be impartial and seek justice, not just convictions, by presenting evidence fairly for both sides.", page: "Page 22" },
+            { question: "An off-duty officer accepts free drinks at a bar in exchange for ignoring liquor law violations. This violates the standard against what?", options: ["Insubordination", "Accepting gratuities", "Poor physical fitness", "Improper use of a firearm"], answer: "Accepting gratuities", rationale: "This is a classic example of accepting gratuities or favors that could, in the public mind, be interpreted as influencing an officer's judgment and duty.", page: "Pages 14, 22" },
+            { question: "What was the earliest meaning of the word 'professionalism'?", options: ["Someone paid for their work, as in sports", "A member of a trade or handicraft guild", "Those professing the vows of a religious order", "A government or military official"], answer: "Those professing the vows of a religious order", rationale: "The document states its earliest meaning comes from those 'professing the vows of a religious order,' meaning a spiritual commitment or academic expertise.", page: "Page 1" },
+            { question: "Within procedural justice, 'giving voice' refers to what?", options: ["Allowing people to shout their complaints", "Giving a person a chance to tell their side of the story", "Ensuring all parties speak at the same volume", "Recording all interactions for public record"], answer: "Giving a person a chance to tell their side of the story", rationale: "Giving voice means involving people in decisions that affect them and letting them feel their opinions matter and are being heard.", page: "Page 3" },
+            { question: "The procedural justice pillar of 'transparency' means that...", options: ["officers must wear body cameras at all times.", "all police records are immediately public.", "decisions are made out in the open, not based on secrecy.", "all decisions must be approved by a supervisor."], answer: "decisions are made out in the open, not based on secrecy.", rationale: "Transparency means the processes for making decisions do not rely on secrecy or deception, allowing people to understand how a result was reached.", page: "Page 3" },
+            { question: "Which of the following would be considered a 'partner' in the context of Community Policing?", options: ["A neighboring police agency only", "A local non-profit organization", "The Federal Bureau of Investigation", "A private security company"], answer: "A local non-profit organization", rationale: "The text lists partners as including community groups, nonprofit organizations, social service providers, and private businesses, among others.", page: "Page 4" },
+            { question: "The IACP Code of Ethics states that information of a confidential nature should be kept secret unless...", options: ["a supervisor asks for it.", "it is interesting to the media.", "revelation is necessary in the performance of duty.", "the officer's partner wants to know."], answer: "revelation is necessary in the performance of duty.", rationale: "The code creates a strict duty of confidentiality, with the only exception being when its revelation is essential for performing one's official duties.", page: "Page 6" },
+            { question: "Which of the following is listed in the handout as an 'Obstacle to Ethical Behavior'?", options: ["Departmental policy", "Self-interest", "Public scrutiny", "Low pay"], answer: "Self-interest", rationale: "The document explicitly lists 'Self-interest' and 'Pursuit of happiness' as the two primary obstacles to ethical behavior.", page: "Page 8" },
+            { question: "'The ability to make the right ethical decision' is the definition of which component of ethical behavior?", options: ["Moral Sensitivity", "Moral Judgment", "Moral Motivation", "Moral Character"], answer: "Moral Judgment", rationale: "Moral Judgment is the second component, which involves using critical thinking to determine the morally correct and wisest course of action after recognizing an issue exists.", page: "Page 8" },
+            { question: "'Possessing the maturity, courage, and discipline to follow through' describes which component of ethical behavior?", options: ["Moral Sensitivity", "Moral Judgment", "Moral Motivation", "Moral Character"], answer: "Moral Character", rationale: "Moral Character is the final component, which is the ability to actually do what you know is right, especially in the face of temptation or pressure.", page: "Page 8" },
+            { question: "The 'Defiant' stage of an officer's attitude is often characterized by actions that are:", options: ["Positive and constructive", "Naïve and idealistic", "Negative and destructive", "Prudent and flexible"], answer: "Negative and destructive", rationale: "In the defiant stage, an officer has overcome fear but takes actions that are 'usually negative and destructive, especially when covert or hidden.'", page: "Page 10" },
+            { question: "According to the Canons of Ethics, what is the 'first duty' of a law enforcement officer concerning the law?", options: ["To enforce it without question", "To know its bounds upon them in enforcing it", "To recommend changes to legislators", "To interpret it as they see fit"], answer: "To know its bounds upon them in enforcing it", rationale: "The 'Limitations of Authority' canon states the 'first duty... is to know its bounds upon them in enforcing the law,' emphasizing awareness of legal limitations on their power.", page: "Page 21" },
+            { question: "Which term is NOT used in the IACP Code of Ethics to describe how an officer should enforce the law?", options: ["Courteously", "Appropriately", "Aggressively", "Without fear or favor"], answer: "Aggressively", rationale: "The code states law will be enforced 'courteously and appropriately without fear or favor, malice or ill will,' but does not use the word 'aggressively'.", page: "Page 6" },
+            { question: "The concept of 'Organizational Transformation' in community policing refers to:", options: ["Changing the agency's name and logo.", "Frequently rotating personnel between departments.", "Aligning management and structure to support community partnerships.", "Hiring more officers from different communities."], answer: "Aligning management and structure to support community partnerships.", rationale: "It refers to the alignment of the agency's internal systems (management, structure, personnel) to support community partnerships and proactive problem solving.", page: "Page 5" },
+            { question: "The duty to intervene is cited as an example of which types of courage?", options: ["Physical and Tactical", "Moral and Ethical", "Physical and Moral", "Tactical and Ethical"], answer: "Physical and Moral", rationale: "The document lists 'Duty to intervene' as an example under both Physical Courage and Moral Courage, indicating it often requires both.", page: "Page 15" },
+            { question: "Which motivation for ethical behavior is based on fitting in with one's upbringing or training?", options: ["Inner Benefit", "Approval", "Religion", "Habit"], answer: "Habit", rationale: "The text lists 'Habit' as a motivation, where 'Ethical decisions can fit in with upbringing or training.'", page: "Page 8" },
+            { question: "According to the IACP Code of Ethics, an officer should maintain 'courageous calm' in the face of danger, scorn, or...?", options: ["Temptation", "Praise", "Ridicule", "Confusion"], answer: "Ridicule", rationale: "The full phrase is 'maintain courageous calm in the face of danger, scorn or ridicule,' highlighting the need for emotional self-control.", page: "Page 6" }
+        ];
+
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const reviewScreen = document.getElementById('review-screen');
+
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const reviewBtn = document.getElementById('review-btn');
+        const backToResultsBtn = document.getElementById('back-to-results-btn');
+        
+        const questionNumberEl = document.getElementById('question-number');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const progressBar = document.getElementById('progress-bar');
+        const questionTextEl = document.getElementById('question-text');
+        const answerOptionsEl = document.getElementById('answer-options');
+        const rationaleBox = document.getElementById('rationale-box');
+        const rationaleText = document.getElementById('rationale-text');
+        const rationaleSource = document.getElementById('rationale-source');
+        
+        const scorePercentageEl = document.getElementById('score-percentage');
+        const correctAnswersEl = document.getElementById('correct-answers');
+        const totalAnsweredEl = document.getElementById('total-answered');
+        const finalTimeEl = document.getElementById('final-time');
+        const timerEl = document.getElementById('timer');
+        const reviewContainer = document.getElementById('review-container');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timerInterval;
+        let secondsElapsed = 0;
+        let userAnswers = [];
+        
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        startBtn.addEventListener('click', startQuiz);
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', startQuiz);
+        reviewBtn.addEventListener('click', showReview);
+        backToResultsBtn.addEventListener('click', () => {
+            reviewScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+        });
+
+        function startTimer() {
+            secondsElapsed = 0;
+            timerEl.textContent = '00:00';
+            timerInterval = setInterval(() => {
+                secondsElapsed++;
+                const minutes = Math.floor(secondsElapsed / 60).toString().padStart(2, '0');
+                const seconds = (secondsElapsed % 60).toString().padStart(2, '0');
+                timerEl.textContent = `${minutes}:${seconds}`;
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function startQuiz() {
+            shuffleArray(quizData);
+            quizData.forEach(q => shuffleArray(q.options));
+
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            startScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            nextBtn.classList.add('hidden');
+            startTimer();
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            rationaleBox.classList.add('hidden');
+            answerOptionsEl.innerHTML = '';
+            const currentQuestion = quizData[currentQuestionIndex];
+            
+            questionNumberEl.textContent = currentQuestionIndex + 1;
+            totalQuestionsEl.textContent = quizData.length;
+            questionTextEl.textContent = currentQuestion.question;
+
+            const progress = ((currentQuestionIndex) / quizData.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('answer-option', 'w-full', 'p-4', 'text-left', 'bg-white', 'border-2', 'border-gray-300', 'rounded-lg', 'hover:bg-gray-50', 'hover:border-blue-500');
+                button.addEventListener('click', () => selectAnswer(button, option, currentQuestion));
+                answerOptionsEl.appendChild(button);
+            });
+        }
+
+        function selectAnswer(button, selectedOption, currentQuestion) {
+            const { answer, rationale, page } = currentQuestion;
+            userAnswers[currentQuestionIndex] = selectedOption;
+
+            const buttons = answerOptionsEl.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === answer) {
+                    btn.classList.add('correct');
+                }
+            });
+
+            if (selectedOption === answer) {
+                score++;
+                button.classList.add('correct');
+            } else {
+                button.classList.add('incorrect');
+            }
+
+            rationaleText.textContent = rationale;
+            rationaleSource.textContent = page;
+            rationaleBox.classList.remove('hidden');
+            nextBtn.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                nextBtn.classList.add('hidden');
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            stopTimer();
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            scorePercentageEl.textContent = percentage;
+            correctAnswersEl.textContent = score;
+            totalAnsweredEl.textContent = quizData.length;
+            finalTimeEl.textContent = timerEl.textContent;
+            
+            const finalProgress = 100;
+            progressBar.style.width = `${finalProgress}%`;
+        }
+
+        function showReview() {
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.remove('hidden');
+            reviewContainer.innerHTML = '';
+
+            quizData.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === question.answer;
+
+                const reviewItem = document.createElement('div');
+                reviewItem.classList.add('border', 'p-4', 'rounded-lg');
+                reviewItem.classList.add(isCorrect ? 'border-green-200' : 'border-red-200');
+
+                let userAnswerHTML = '';
+                if (isCorrect) {
+                    userAnswerHTML = `<p>Your answer: <span class="font-semibold review-correct">${userAnswer} (Correct)</span></p>`;
+                } else {
+                    userAnswerHTML = `
+                        <p>Your answer: <span class="font-semibold review-incorrect">${userAnswer} (Incorrect)</span></p>
+                        <p>Correct answer: <span class="font-semibold review-correct">${question.answer}</span></p>
+                    `;
+                }
+
+                reviewItem.innerHTML = `
+                    <p class="font-bold mb-2">${index + 1}. ${question.question}</p>
+                    ${userAnswerHTML}
+                    <p class="text-sm text-gray-600 mt-2"><em>Rationale: ${question.rationale} (Source: ${question.page})</em></p>
+                `;
+                reviewContainer.appendChild(reviewItem);
+            });
+        }
+
+    </script>
+</body>
+</html>
+
