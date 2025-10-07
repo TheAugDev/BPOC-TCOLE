@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Guide: Sexual Assault & Family Violence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --header-bg: #1f2937;
+            --bg-color: #f3f4f6;
+            --tab-active-bg: #5b21b6; /* Purple for this guide */
+            --tab-active-text: #ffffff;
+            --card-bg: #ffffff;
+            --text-color: #111827;
+            --link-color: #4c1d95;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://rsms.me/inter/inter.css');
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab.active {
+            background-color: var(--tab-active-bg);
+            color: var(--tab-active-text);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tab {
+            transition: all 0.3s ease-in-out;
+        }
+        .punishment-red { color: #dc2626; font-weight: bold; }
+        .punishment-orange { color: #f97316; font-weight: bold; }
+        .punishment-yellow { color: #eab308; font-weight: bold; }
+        .punishment-blue { color: #3b82f6; font-weight: bold; }
+        .punishment-gray { color: #6b7280; font-weight: bold; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-gray-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">
+                <i class="fas fa-ribbon mr-2"></i>Sexual Assault & Family Violence
+            </h1>
+            <p class="text-sm text-gray-300">BPOC Chapter 17 | TCOLE Preparation</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-6">
+        <div class="mb-6 bg-white rounded-lg shadow-md overflow-x-auto">
+            <nav id="tabs" class="flex flex-row space-x-1 p-2">
+                <button data-tab="key-concepts" class="tab active flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-purple-100">
+                    <i class="fas fa-lightbulb mr-2"></i> <span class="hidden md:inline">Key Concepts</span>
+                </button>
+                <button data-tab="sexual-assault" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-purple-100">
+                    <i class="fas fa-hand-paper mr-2"></i> <span class="hidden md:inline">Sexual Assault</span>
+                </button>
+                <button data-tab="family-violence" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-purple-100">
+                    <i class="fas fa-house-damage mr-2"></i> <span class="hidden md:inline">Family Violence</span>
+                </button>
+                <button data-tab="protective-orders" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-purple-100">
+                    <i class="fas fa-file-contract mr-2"></i> <span class="hidden md:inline">Protective Orders</span>
+                </button>
+                 <button data-tab="children" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-purple-100">
+                    <i class="fas fa-child mr-2"></i> <span class="hidden md:inline">Procedures: Children</span>
+                </button>
+                <button data-tab="knowledge-check" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-purple-100">
+                    <i class="fas fa-question-circle mr-2"></i> <span class="hidden md:inline">Knowledge Check</span>
+                </button>
+                <button data-tab="resources" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-purple-100">
+                    <i class="fas fa-link mr-2"></i> <span class="hidden md:inline">Resources</span>
+                </button>
+            </nav>
+        </div>
+
+        <div id="tab-contents">
+            <div id="key-concepts" class="tab-content active space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Family Violence Definitions (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.71.htm" target="_blank" class="text-purple-700 hover:underline">Family Code Ch. 71</a>)</h2>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+                        <p><strong>Family Violence (§71.004):</strong> An act by a member of a family or household against another member of the family or household that is intended to result in physical harm, bodily injury, assault, or sexual assault or that is a threat that places the member in fear of imminent physical harm, bodily injury, assault, or sexual assault, but does not include defensive measures to protect oneself.</p>
+                        <p><strong>Family (§71.003):</strong> Individuals related by consanguinity (blood) or affinity (marriage), individuals who are former spouses of each other, individuals who are the parents of the same child, without regard to marriage, and a foster child and foster parent, without regard to whether those individuals reside together.</p>
+                        <p><strong>Household (§71.005):</strong> A unit composed of persons living together in the same dwelling, without regard to whether they are related to each other.</p>
+                        <p><strong>Member of a Household (§71.006):</strong> Includes a person who previously lived in a household.</p>
+                        <p><strong>Dating Violence (§71.021):</strong> An act, other than a defensive measure to protect oneself, by an actor that is committed against a victim or applicant for a protective order with whom the actor has or has had a dating relationship... that is intended to result in physical harm, bodily injury, assault, or sexual assault or that is a threat that reasonably places the victim or applicant in fear of imminent physical harm.</p>
+                    </div>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Consent (<a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.1.htm#1.07" target="_blank" class="text-purple-700 hover:underline">PC §1.07(11)</a>)</h2>
+                    <p class="text-sm"><strong>Consent</strong> means assent in fact, whether expressed or apparent. It is NOT consent if accomplished through force, threats, or coercion, or if the victim is silent, unconscious, physically unable to resist, or intoxicated to the point of being unaware.</p>
+                    <p class="text-sm font-bold mt-2">Any sexual act against a victim younger than 17 is nonconsensual by law.</p>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Strangulation vs. Choking</h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="font-semibold text-lg">Strangulation</h3>
+                            <p class="text-sm text-gray-700"><strong>External</strong> pressure applied to the neck that obstructs breathing or blood flow. This is a felony (Assault by Impeding Breath/Circulation) and is a high-risk indicator for future lethality.</p>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg">Choking</h3>
+                            <p class="text-sm text-gray-700"><strong>Internal</strong> blockage of the airway (e.g., by food). This is a medical emergency but not typically a criminal offense in this context.</p>
+                        </div>
+                    </div>
+                     <p class="text-sm text-gray-600 mt-4">Victims often use the word "choked" when they mean they were strangled. It is critical for officers to ask clarifying questions to determine if external pressure was applied to the neck.</p>
+                </div>
+            </div>
+
+            <div id="sexual-assault" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                     <h2 class="text-xl font-bold mb-4 border-b pb-2">Sexual Assault (<a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.22.htm#22.011" target="_blank" class="text-purple-700 hover:underline">PC §22.011</a>)</h2>
+                     <div class="space-y-6">
+                        <div>
+                             <p class="text-sm"><strong class="mr-2">Punishment Level:</strong> <span class="punishment-orange">Felony of the Second Degree</span></p>
+                             <h4 class="font-semibold mt-2 text-sm">Elements Checklist:</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700">
+                                 <li>A person</li>
+                                 <li>Intentionally or knowingly</li>
+                                 <li>Causes the penetration of the anus or sexual organ of another person by any means, without that person's consent; OR</li>
+                                 <li>Causes the penetration of the mouth of another person by the sexual organ of the actor, without that person's consent; OR</li>
+                                 <li>Causes the sexual organ of another person, without that person's consent, to contact or penetrate the mouth, anus, or sexual organ of another person, including the actor.</li>
+                             </ul>
+                             <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example:</strong> A person uses threats to force their acquaintance to perform oral sex. This is Sexual Assault, even if no physical force was used.</p>
+                        </div>
+                         <div class="border-t pt-4">
+                             <h3 class="font-semibold text-lg">Sexual Assault of a Child</h3>
+                             <p class="text-sm"><strong class="mr-2">Punishment Level:</strong> <span class="punishment-red">Felony of the First Degree</span> (if against a child under 14) or <span class="punishment-orange">Felony of the Second Degree</span> (if against a child 14-16).</p>
+                             <h4 class="font-semibold mt-2 text-sm">Elements Checklist:</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700">
+                                 <li>Commits an act of sexual assault as defined above, AND</li>
+                                 <li>The victim is a child (under 17).</li>
+                             </ul>
+                             <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example:</strong> An adult engages in sexual intercourse with a 15-year-old. Even if the minor appeared to agree, it is legally Sexual Assault because a child cannot give consent.</p>
+                        </div>
+                     </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Victim Rights & Officer Duties</h2>
+                    <div class="space-y-4">
+                         <div>
+                            <h3 class="font-semibold text-lg">Mandatory Duties on Scene (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.56A.htm#56A.403" target="_blank" class="text-purple-700 hover:underline">CCP Art. 56A.403</a>)</h3>
+                            <p class="text-sm text-gray-700 mb-2">Peace officers responding to a sexual assault call **shall**:</p>
+                            <ul class="list-disc list-inside space-y-2 text-sm">
+                                <li><strong>Provide Written Referrals:</strong> Give the victim written info for the nearest sexual assault program.</li>
+                                <li><strong>Provide Written Notice of Rights:</strong> Inform the victim of their rights, including the right to a pseudonym and information about the Track-Kit system for sexual assault evidence kits (SAEKs).</li>
+                                <li><strong>Offer Forensic Medical Exam (SANE):</strong> Offer to request a Sexual Assault Nurse Examiner (SANE) exam. The victim has the right to the exam (within 120 hours) and the right to refuse it. There is no cost to the victim.</li>
+                            </ul>
+                        </div>
+                        <div class="border-t pt-4">
+                             <h3 class="font-semibold text-lg">Additional Victim Rights (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.56A.htm#56A.052" target="_blank" class="text-purple-700 hover:underline">CCP Art. 56A.052</a>)</h3>
+                             <p class="text-sm text-gray-700 mb-2">Victims of sexual assault have a right to a SANE exam and HIV/AIDS testing. Upon request, they also have the right to:</p>
+                             <ul class="list-disc list-inside space-y-2 text-sm">
+                                <li>Be notified of the status of the evidence collected.</li>
+                                <li>Receive counseling regarding HIV/AIDS.</li>
+                                <li>Receive information about the disposition of the case.</li>
+                                <li>Use a pseudonym to protect their identity (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.58.htm" target="_blank" class="text-purple-700 hover:underline">CCP Ch. 58</a>).</li>
+                             </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Trauma-Informed Approach</h2>
+                    <p class="text-sm text-gray-600 mb-4">An evidence-based approach that understands the effects of trauma on the brain. The goal is to build rapport, reduce re-traumatization, and increase victim participation in the justice process.</p>
+                    <div class="grid md:grid-cols-2 gap-4 text-sm">
+                        <div class="bg-green-50 p-3 rounded-lg">
+                            <h3 class="font-semibold text-green-800">Do:</h3>
+                            <ul class="list-disc list-inside">
+                                <li>Be patient and use a calm tone.</li>
+                                <li>Meet basic needs first (water, safety).</li>
+                                <li>Ask open-ended, non-judgmental questions ("What do you remember feeling?" not "Why didn't you leave?").</li>
+                                <li>Explain what to expect next.</li>
+                                <li>Respect their right to choose whether to participate in the investigation.</li>
+                            </ul>
+                        </div>
+                        <div class="bg-red-50 p-3 rounded-lg">
+                            <h3 class="font-semibold text-red-800">Don't:</h3>
+                            <ul class="list-disc list-inside">
+                                <li>Interrupt or rush the victim.</li>
+                                <li>Threaten prosecution for false reporting.</li>
+                                <li>Use judgmental language ("alleged", "their story").</li>
+                                <li>Ask "why" questions that imply blame.</li>
+                                <li>Have the victim write a statement (can create inconsistencies).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="family-violence" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Responding to Family Violence</h2>
+                    <p class="text-sm text-gray-700 mb-4">Family violence calls are among the most dangerous for officers due to high emotions and unpredictability. The primary goals are to protect the victim and hold the correct person accountable.</p>
+                    <ul class="list-disc list-inside space-y-2 text-sm">
+                        <li><strong>Officer Safety:</strong> Approach with caution, at least two officers if possible, park away from the residence, and be alert for people leaving the scene.</li>
+                        <li><strong>Scene Management:</strong> De-escalate, separate parties, locate and secure weapons, and interview all parties and witnesses independently.</li>
+                        <li><strong>Officer Duties (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.5.htm#5.05" target="_blank" class="text-purple-700 hover:underline">CCP Art. 5.05</a>):</strong> An officer who investigates a family violence allegation **shall** make a written report.</li>
+                        <li><strong>Victim Notification (<a href="https://www.hhs.texas.gov/services/safety/family-violence-program" target="_blank" class="text-purple-700 hover:underline">Notice to Adult Victims</a>):</strong> Officers must give a written notice of a victim's legal rights and local resources to victims of family violence.</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Determining the Predominant Aggressor</h2>
+                     <p class="text-sm text-gray-600 mb-4">It is crucial to investigate beyond the immediate incident to determine who is the primary aggressor versus who may have been acting in self-defense. Consider:</p>
+                     <ul class="list-disc list-inside space-y-2 text-sm text-gray-700">
+                        <li><strong>Injuries:</strong> Relative severity of injuries? Are there signs of defensive wounds?</li>
+                        <li><strong>Fear:</strong> Is one party genuinely afraid of the other?</li>
+                        <li><strong>History:</strong> Is there a history of violence by one person against the other?</li>
+                        <li><strong>Credibility:</strong> Do the stories make sense? Do they align with the evidence at the scene?</li>
+                        <li><strong>Future Risk:</strong> Who poses the most danger to the other in the future?</li>
+                     </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Power and Control Dynamics</h2>
+                    <p class="text-sm text-gray-600 mb-4">Abusers use a pattern of tactics to exert power and control over their victims, making it difficult for them to leave. These tactics are often subtle and escalate over time.</p>
+                    <img src="https://i.imgur.com/gK9Q7xM.jpeg" alt="A diagram called the Power and Control Wheel, showing tactics used in abusive relationships like intimidation, emotional abuse, isolation, coercion, and economic abuse, all revolving around a central hub of power and control." class="w-full max-w-lg mx-auto rounded-lg">
+                </div>
+            </div>
+
+             <div id="protective-orders" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Violation of Protective Order or Bond Condition (<a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.25.htm#25.07" target="_blank" class="text-purple-700 hover:underline">PC §25.07</a>)</h2>
+                     <p class="text-sm"><strong class="mr-2">Punishment Level:</strong> <span class="punishment-gray">Class A Misdemeanor</span>, but can be a <span class="punishment-yellow">State Jail Felony</span> or <span class="punishment-red">Third Degree Felony</span> with prior convictions or enhancements.</p>
+                     <h4 class="font-semibold mt-2 text-sm">Elements Checklist:</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                         <li>A person who is subject to a condition of bond or a protective order</li>
+                         <li>Knowingly or intentionally</li>
+                         <li>Commits an act in violation of the order/condition (e.g., communicating with the protected person, going to a prohibited location, possessing a firearm).</li>
+                     </ul>
+                     <p class="text-sm mt-2 font-bold">Crucially, the offender must have been served with the order for it to be criminally enforceable.</p>
+                     <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example:</strong> A person has a protective order against their ex-partner. The ex-partner, who has been served, sends them a text message. This is a violation of the protective order and a criminal offense.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Types of Protective Orders</h2>
+                    <div class="space-y-4 text-sm">
+                        <div>
+                            <h3 class="font-semibold">Magistrate's Order for Emergency Protection (EPO) (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.17.htm#17.292" target="_blank" class="text-purple-700 hover:underline">CCP Art. 17.292</a>)</h3>
+                            <p>Issued by a magistrate following an arrest for an offense involving family violence, sexual assault, or stalking. It is criminally enforceable and lasts for 31-91 days.</p>
+                        </div>
+                        <div class="border-t pt-4">
+                            <h3 class="font-semibold">Family Violence Protective Order (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.85.htm#85.025" target="_blank" class="text-purple-700 hover:underline">FC §85.025</a>)</h3>
+                            <p>A civil order filed by a victim of family violence. Can last for up to 2 years, or longer in some cases. It becomes criminally enforceable once the respondent is served.</p>
+                        </div>
+                        <div class="border-t pt-4">
+                            <h3 class="font-semibold">Sexual Assault/Stalking Protective Order (SAPO)</h3>
+                            <p>A civil order available to victims of sexual assault or stalking, regardless of their relationship to the offender. Can be issued for life.</p>
+                        </div>
+                    </div>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Officer Powers & Bond Conditions</h2>
+                    <div class="space-y-4 text-sm">
+                        <div>
+                            <h3 class="font-semibold">Arrest for Violation of PO Not in View (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.14.htm#14.03" target="_blank" class="text-purple-700 hover:underline">CCP Art. 14.03(a)(3)</a>)</h3>
+                            <p>A peace officer **may** arrest, without a warrant, a person the peace officer has probable cause to believe has violated a protective order, if the offense is not committed in the presence of the peace officer.</p>
+                             <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example:</strong> A victim shows an officer a text message sent by her ex-husband a few hours ago, which violates the "no contact" provision of a served protective order. Even though the officer did not see the violation occur, they have probable cause and may arrest the ex-husband.</p>
+                        </div>
+                        <div class="border-t pt-4">
+                            <h3 class="font-semibold">Conditions for Defendant Charged with FV (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.17.htm#17.49" target="_blank" class="text-purple-700 hover:underline">CCP Art. 17.49</a>)</h3>
+                            <p>A magistrate may require a defendant charged with a family violence offense to stay away from the victim's residence and place of employment as a condition of their bond.</p>
+                            <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example:</strong> A person is arrested for assaulting their spouse. As a condition of their release on bond, the judge orders them not to return to the family home until the case is resolved. Violating this bond condition can lead to their bond being revoked and re-arrest.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="children" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Mandatory Reporting (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.261.htm#261.101" target="_blank" class="text-purple-700 hover:underline">FC §261.101</a>)</h2>
+                    <p class="text-sm text-gray-700">A person having cause to believe that a child's physical or mental health or welfare has been adversely affected by abuse or neglect by any person shall immediately make a report. This applies to everyone, but professionals (like police officers) who fail to report can be charged with a Class A Misdemeanor.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Taking Possession of a Child</h2>
+                     <div class="space-y-4">
+                        <div>
+                            <h3 class="font-semibold text-lg">In an Emergency Without Court Order (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.262.htm#262.104" target="_blank" class="text-purple-700 hover:underline">FC §262.104</a>)</h3>
+                             <p class="text-sm text-gray-700">A law enforcement officer may take possession of a child without a court order if the officer has information that would lead a person of ordinary prudence and caution to believe that there is an immediate danger to the physical health or safety of the child.</p>
+                             <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example:</strong> An officer responds to a home and finds two adults unconscious from a drug overdose with a toddler wandering nearby. The officer can take possession of the child due to the immediate danger.</p>
+                        </div>
+                        <div class="border-t pt-4">
+                            <h3 class="font-semibold text-lg">Other Scenarios for Taking Possession</h3>
+                            <ul class="list-disc list-inside text-sm text-gray-700 space-y-2">
+                                <li><strong>Voluntary Delivery (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.262.htm#262.004" target="_blank" class="text-purple-700 hover:underline">FC §262.004</a>):</strong> An officer may take possession of a child if the parent or guardian voluntarily delivers the child to them.</li>
+                                <li><strong>Missing Child (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.262.htm#262.007" target="_blank" class="text-purple-700 hover:underline">FC §262.007</a>):</strong> An officer who finds a missing child during an investigation and believes they may be concealed or taken shall take possession.</li>
+                                <li><strong>Temporary Possession to Return Home (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.262.htm#262.110" target="_blank" class="text-purple-700 hover:underline">FC §262.110</a>):</strong> An officer may take temporary possession of a child in a dangerous situation for the sole purpose of delivering them to a parent or guardian.</li>
+                            </ul>
+                        </div>
+                        <div class="border-t pt-4">
+                             <h3 class="font-semibold text-lg">Important Considerations</h3>
+                            <ul class="list-disc list-inside text-sm text-gray-700 space-y-2">
+                                <li>The child may NOT be held in a jail or other secure detention facility (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.262.htm#262.108" target="_blank" class="text-purple-700 hover:underline">FC §262.108</a>).</li>
+                                <li>An officer is immune from civil liability for taking possession if they have reasonable cause (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.262.htm#262.003" target="_blank" class="text-purple-700 hover:underline">FC §262.003</a>).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Medical Consent for a Child (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.32.htm" target="_blank" class="text-purple-700 hover:underline">FC Ch. 32</a>)</h2>
+                    <p class="text-sm text-gray-700">Generally, a parent or guardian must consent to medical treatment for a child. However, there are exceptions:</p>
+                     <ul class="list-disc list-inside space-y-2 text-sm mt-2">
+                         <li><strong>Officer Consent (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.32.htm#32.001" target="_blank" class="text-purple-700 hover:underline">§32.001</a>):</strong> An officer who has lawfully taken custody of a minor may consent to treatment if they believe the minor needs immediate medical care.</li>
+                         <li><strong>Child Consent (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.32.htm#32.003" target="_blank" class="text-purple-700 hover:underline">§32.003</a>):</strong> A child 16 or older can consent to their own treatment if they are unmarried and reside apart from their parents.</li>
+                         <li><strong>Examination without Consent (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.32.htm#32.005" target="_blank" class="text-purple-700 hover:underline">§32.005</a>):</strong> A physician may examine a child without consent if they have reasonable grounds to believe the child has been abused or neglected.</li>
+                     </ul>
+                </div>
+            </div>
+
+            <div id="knowledge-check" class="tab-content">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Knowledge Check</h2>
+                    <p class="mb-6 text-gray-600">Test your understanding of the material.</p>
+                    <div id="quiz-container" class="space-y-8"></div>
+                    <div class="mt-8 text-center">
+                        <button id="check-answers-btn" class="bg-purple-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-purple-700 transition-colors">Check Answers</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="resources" class="tab-content">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Statutory Resources</h2>
+                    <p class="mb-6 text-gray-600">Quick links to the Texas Codes referenced in this guide.</p>
+                    <div id="resources-list" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-sm"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('#tabs button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                });
+            });
+
+            const quizData = [
+                { question: "1. The offense of Sexual Assault under PC 22.011 is what level of offense?", options: ["Class A Misdemeanor", "State Jail Felony", "Second Degree Felony", "First Degree Felony"], answer: "Second Degree Felony", explanation: "Sexual Assault under PC 22.011 is a Felony of the Second Degree. It is enhanced to a First Degree Felony if the victim is a child under 14." },
+                { question: "2. According to the Family Code, which of the following best defines 'Family'?", options: ["Only people living in the same house.", "Only people related by blood or marriage.", "Individuals related by blood/marriage, former spouses, and parents of the same child.", "Any two people in a romantic relationship."], answer: "Individuals related by blood/marriage, former spouses, and parents of the same child.", explanation: "Family Code §71.003 provides a broad definition that includes blood relatives, relatives by marriage (affinity), former spouses, and individuals who share a child, regardless of marital status." },
+                { question: "3. For a protective order to be criminally enforceable under PC 25.07, what must have occurred?", options: ["The victim must call the police.", "The suspect must be arrested.", "The suspect must be served with a copy of the order.", "The judge must sign the order in ink."], answer: "The suspect must be served with a copy of the order.", explanation: "A person cannot be held criminally liable for violating an order they have not been officially notified of. Service of the order is a critical element of the offense." },
+                { question: "4. A peace officer MAY arrest without a warrant for a protective order violation not committed in their presence if they have:", options: ["A gut feeling", "A request from the victim", "Probable cause", "Permission from a supervisor"], answer: "Probable cause", explanation: "CCP Art. 14.03(a)(3) allows a warrantless arrest for a PO violation not seen by the officer, provided the officer has probable cause to believe the violation occurred." },
+                { question: "5. A victim of sexual assault has the right to a forensic medical (SANE) exam within what time frame following the assault?", options: ["24 hours", "48 hours", "72 hours", "120 hours"], answer: "120 hours", explanation: "CCP Art. 56A.303 gives the victim the right to obtain a forensic medical exam within 120 hours (5 days) of the assault, at no cost to them." },
+                { question: "6. An abuser preventing their partner from having a job or controlling all the finances is an example of what tactic from the Power and Control Wheel?", options: ["Intimidation", "Emotional Abuse", "Isolation", "Economic Abuse"], answer: "Economic Abuse", explanation: "Economic abuse is a specific tactic used to make the victim financially dependent on the abuser, making it harder for them to leave." },
+                { question: "7. An officer takes custody of a 10-year-old child who is in immediate danger. The child has a broken arm. What can the officer do regarding medical treatment?", options: ["Nothing, they must wait for a parent.", "They can consent to medical treatment for the child.", "They must get a court order first.", "They can only provide first aid."], answer: "They can consent to medical treatment for the child.", explanation: "Family Code §32.001 allows a peace officer who has lawfully taken custody of a minor to consent to immediate medical treatment if they have reasonable grounds to believe it's needed." },
+                { question: "8. External pressure applied to the neck that impedes breathing is legally defined as:", options: ["Choking", "Assault", "Strangulation", "Deadly Conduct"], answer: "Strangulation", explanation: "This act constitutes Assault by Impeding Breath or Circulation (Strangulation), a felony. Choking refers to an internal blockage of the airway." },
+                { question: "9. To protect their identity, a sexual assault victim can use a __________ on all public records concerning the offense.", options: ["Password", "Secret Code", "Pseudonym", "Initials only"], answer: "Pseudonym", explanation: "Under CCP Chapter 58, victims of sex offenses have the right to use a pseudonym, or a fictitious name, to maintain their confidentiality." },
+                { question: "10. Which type of protective order is issued by a magistrate immediately following a family violence arrest and is typically valid for 31 to 91 days?", options: ["Family Violence Protective Order", "Emergency Protective Order (EPO)", "Sexual Assault Protective Order (SAPO)", "Restraining Order"], answer: "Emergency Protective Order (EPO)", explanation: "An EPO (CCP 17.292) is a magistrate's order issued at the time of arraignment for a family violence offense to provide immediate, short-term protection for the victim." },
+                { question: "11. Under the mandatory reporting law (FC 261.101), a person who has cause to believe a child is being abused or neglected must report it:", options: ["Within 24 hours", "Within 48 hours", "Immediately", "When they have proof"], answer: "Immediately", explanation: "The law requires an immediate report to law enforcement or DFPS. For professionals, failure to do so is a criminal offense." },
+                { question: "12. A 'trauma-informed approach' to interviewing a victim means:", options: ["Demanding the victim tell the story in chronological order.", "Focusing only on physical evidence.", "Asking non-judgmental, open-ended questions and being patient.", "Threatening the victim with a polygraph to ensure they are truthful."], answer: "Asking non-judgmental, open-ended questions and being patient.", explanation: "A trauma-informed approach recognizes that trauma affects memory and recall, and focuses on creating a safe, supportive environment to gather information without re-traumatizing the victim." },
+                { question: "13. A parent brings their child to the police station and says they can no longer care for them. What authority does the officer have?", options: ["None, the parent must go to CPS.", "The officer must arrest the parent for abandonment.", "The officer may take possession of the child based on voluntary delivery.", "The officer must get a court order."], answer: "The officer may take possession of the child based on voluntary delivery.", explanation: "FC §262.004 allows a law enforcement officer to take possession of a child without a court order upon the voluntary delivery by the child's parent or guardian." },
+                { question: "14. An officer investigating a family violence call must determine the:", options: ["Person who called 911", "Predominant Aggressor", "Person with the most injuries", "Person who is the most upset"], answer: "Predominant Aggressor", explanation: "Officers must investigate to determine who is the primary aggressor versus who may have been acting in self-defense, rather than just arresting the person who seems most injured or who didn't call the police." },
+                { question: "15. An 18-year-old has sexual intercourse with their 16-year-old partner. What is the most likely offense committed?", options: ["No offense due to 'Romeo and Juliet' law", "Sexual Assault", "Aggravated Sexual Assault", "Indecent Assault"], answer: "Sexual Assault", explanation: "A person under 17 cannot consent to sex. While there is a 'Romeo and Juliet' exception for close-in-age partners, it typically applies as a defense to prosecution and does not negate the initial offense of Sexual Assault (PC 22.011)." }
+            ];
+
+            const quizContainer = document.getElementById('quiz-container');
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'quiz-question';
+                let optionsHtml;
+                if (q.options.length === 2) { // True/False
+                    optionsHtml = q.options.map(option => `
+                        <label class="inline-flex items-center mr-4"><input type="radio" name="q${index}" value="${option}" class="mr-2">${option}</label>
+                    `).join('');
+                } else {
+                    optionsHtml = q.options.map(option => `
+                        <label class="block"><input type="radio" name="q${index}" value="${option}" class="mr-2">${option}</label>
+                    `).join('');
+                }
+                questionDiv.innerHTML = `<p class="font-semibold mb-2">${q.question}</p><div class="space-y-2">${optionsHtml}</div><div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>`;
+                quizContainer.appendChild(questionDiv);
+            });
+
+            document.getElementById('check-answers-btn').addEventListener('click', () => {
+                quizData.forEach((q, index) => {
+                    const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                    const feedback = document.querySelectorAll('.feedback')[index];
+                    feedback.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+                    if (selected && selected.value === q.answer) {
+                        feedback.textContent = `Correct! ${q.explanation}`;
+                        feedback.classList.add('bg-green-100', 'text-green-800');
+                    } else {
+                        feedback.textContent = `Incorrect. The correct answer is "${q.answer}". ${q.explanation}`;
+                        feedback.classList.add('bg-red-100', 'text-red-800');
+                    }
+                });
+            });
+
+            const resources = [
+                 { name: "PC §1.07 - Definitions (Consent)", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.1.htm#1.07" },
+                 { name: "PC §22.011 - Sexual Assault", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.22.htm#22.011" },
+                 { name: "PC §25.07 - Violation of Protective Order", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.25.htm#25.07" },
+                 { name: "CCP Ch. 5 - Family Violence Reporting", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.5.htm" },
+                 { name: "CCP Art. 14.03 - Arrest Without Warrant", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.14.htm#14.03" },
+                 { name: "CCP Art. 17.292 - Emergency Protective Order", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.17.htm#17.292" },
+                 { name: "CCP Art. 17.49 - Bond Conditions for FV", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.17.htm#17.49" },
+                 { name: "CCP Ch. 56A - Crime Victim Rights", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.56A.htm" },
+                 { name: "CCP Ch. 58 - Pseudonym for Victims", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.58.htm" },
+                 { name: "FC Ch. 32 - Consent to Medical Treatment of Child", url: "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.32.htm" },
+                 { name: "FC Ch. 71 - Family Violence Definitions", url: "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.71.htm" },
+                 { name: "FC Ch. 85 - Family Violence Protective Orders", url: "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.85.htm" },
+                 { name: "FC §261.101 - Mandatory Reporting of Abuse", url: "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.261.htm#261.101" },
+                 { name: "FC Ch. 262 - Taking Possession of Child", url: "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.262.htm" },
+            ];
+            const resourcesList = document.getElementById('resources-list');
+            resources.sort((a, b) => a.name.localeCompare(b.name));
+            resources.forEach(res => {
+                const link = document.createElement('a');
+                link.href = res.url;
+                link.target = '_blank';
+                link.className = 'text-purple-700 hover:underline';
+                link.textContent = res.name;
+                resourcesList.appendChild(link);
+            });
+        });
+    </script>
+</body>
+</html>
+

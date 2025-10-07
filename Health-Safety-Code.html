@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Guide: Health & Safety Code - Controlled Substances</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --header-bg: #1f2937;
+            --bg-color: #f3f4f6;
+            --tab-active-bg: #16a34a; /* Green for this guide */
+            --tab-active-text: #ffffff;
+            --card-bg: #ffffff;
+            --text-color: #111827;
+            --link-color: #15803d;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://rsms.me/inter/inter.css');
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab.active {
+            background-color: var(--tab-active-bg);
+            color: var(--tab-active-text);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tab {
+            transition: all 0.3s ease-in-out;
+        }
+        .punishment-red { color: #dc2626; font-weight: bold; }
+        .punishment-orange { color: #f97316; font-weight: bold; }
+        .punishment-yellow { color: #eab308; font-weight: bold; }
+        .punishment-blue { color: #3b82f6; font-weight: bold; }
+        .punishment-gray { color: #6b7280; font-weight: bold; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-gray-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">
+                <i class="fas fa-pills mr-2"></i>Health & Safety Code: Controlled Substances
+            </h1>
+            <p class="text-sm text-gray-300">BPOC Chapter 15 | TCOLE Preparation</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-6">
+        <div class="mb-6 bg-white rounded-lg shadow-md overflow-x-auto">
+            <nav id="tabs" class="flex flex-row space-x-1 p-2">
+                <button data-tab="key-concepts" class="tab active flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-green-100">
+                    <i class="fas fa-lightbulb mr-2"></i> <span class="hidden md:inline">Key Concepts</span>
+                </button>
+                <button data-tab="offenses" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-green-100">
+                    <i class="fas fa-balance-scale mr-2"></i> <span class="hidden md:inline">Offenses & Penalties</span>
+                </button>
+                 <button data-tab="dangerous-drugs" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-green-100">
+                    <i class="fas fa-prescription-bottle-medical mr-2"></i> <span class="hidden md:inline">Dangerous Drugs</span>
+                </button>
+                <button data-tab="interdiction" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-green-100">
+                    <i class="fas fa-car-on mr-2"></i> <span class="hidden md:inline">Interdiction</span>
+                </button>
+                <button data-tab="procedures" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-green-100">
+                    <i class="fas fa-folder-open mr-2"></i> <span class="hidden md:inline">Procedures & Testimony</span>
+                </button>
+                <button data-tab="knowledge-check" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-green-100">
+                    <i class="fas fa-question-circle mr-2"></i> <span class="hidden md:inline">Knowledge Check</span>
+                </button>
+                <button data-tab="resources" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-green-100">
+                    <i class="fas fa-link mr-2"></i> <span class="hidden md:inline">Resources</span>
+                </button>
+            </nav>
+        </div>
+
+        <div id="tab-contents">
+            <div id="key-concepts" class="tab-content active space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Key Definitions (<a href="https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.002" target="_blank" class="text-green-700 hover:underline">HSC §481.002</a>)</h2>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+                        <p><strong>Administer:</strong> Directly applying a controlled substance to a patient's body.</p>
+                        <p><strong>Controlled Substance:</strong> A substance listed in a penalty group.</p>
+                        <p><strong>Controlled Substance Analogue:</strong> A substance with a chemical structure substantially similar to a controlled substance in PG 1 or 2.</p>
+                        <p><strong>Counterfeit Substance:</strong> A substance that bears an unauthorized trademark or label that falsely identifies it as a controlled substance.</p>
+                        <p><strong>Deliver or Offer to Deliver:</strong> To transfer a controlled substance to another person.</p>
+                        <p><strong>Dispense:</strong> To deliver a controlled substance based on a lawful prescription.</p>
+                        <p><strong>Distribute:</strong> To deliver a controlled substance other than by administering or dispensing.</p>
+                        <p><strong>Drug:</strong> A substance intended for use in the diagnosis, cure, mitigation, treatment, or prevention of disease.</p>
+                        <p><strong>Drug Paraphernalia:</strong> Equipment or material used to plant, cultivate, manufacture, test, package, store, or use a controlled substance.</p>
+                        <p><strong>Immediate Precursor:</strong> A substance the director finds to be a principal compound commonly used in the manufacture of a controlled substance.</p>
+                        <p><strong>Manufacture:</strong> The production, preparation, or processing of a controlled substance.</p>
+                        <p><strong>Marihuana:</strong> The plant Cannabis sativa L., its seeds, and any derivatives with a THC concentration > 0.3%.</p>
+                        <p><strong>Narcotic Drug:</strong> Substances produced from opium, opiates, or their derivatives (e.g., cocaine).</p>
+                        <p><strong>Opiate:</strong> A substance having an addiction-forming or addiction-sustaining liability similar to morphine.</p>
+                        <p><strong>Person:</strong> An individual, corporation, government, business trust, estate, trust, partnership, or association.</p>
+                        <p><strong>Possession:</strong> Actual care, custody, control, or management.</p>
+                        <p><strong>Production:</strong> The manufacturing, planting, cultivating, growing, or harvesting of a controlled substance.</p>
+                    </div>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Marihuana vs. Hemp</h2>
+                    <p class="text-sm text-gray-700 mb-4">The key legal distinction between marihuana and hemp is the concentration of delta-9 tetrahydrocannabinol (THC).</p>
+                    <div class="grid md:grid-cols-2 gap-6 text-center">
+                        <div class="p-4 bg-red-50 rounded-lg">
+                            <h3 class="font-bold text-lg text-red-700">Marihuana (Illegal)</h3>
+                            <p class="text-2xl font-bold">&gt; 0.3% THC</p>
+                             <p class="text-xs text-gray-600">Considered a controlled substance under HSC Chapter 481.</p>
+                        </div>
+                        <div class="p-4 bg-green-50 rounded-lg">
+                            <h3 class="font-bold text-lg text-green-700">Hemp (Legal)</h3>
+                            <p class="text-2xl font-bold">&le; 0.3% THC</p>
+                            <p class="text-xs text-gray-600">Regulated under Agriculture Code Chapter 121.</p>
+                        </div>
+                    </div>
+                     <p class="text-xs italic text-gray-500 mt-4">Note: A quantitative analysis (lab report) is required to prove the THC concentration in a substance to legally differentiate between hemp and marihuana for prosecution.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Six Major Categories of Controlled Substances</h2>
+                    <ul class="list-disc list-inside text-sm space-y-2 text-gray-700">
+                        <li><strong>Narcotics:</strong> Opiates and their derivatives (e.g., heroin, morphine, fentanyl, codeine). Used to relieve pain.</li>
+                        <li><strong>Depressants:</strong> Drugs that slow down the central nervous system (e.g., barbiturates, benzodiazepines, alcohol).</li>
+                        <li><strong>Stimulants:</strong> Drugs that speed up the central nervous system (e.g., cocaine, amphetamines, methamphetamine).</li>
+                        <li><strong>Hallucinogens:</strong> Drugs that alter perception, thoughts, and feelings (e.g., LSD, PCP, psilocybin mushrooms).</li>
+                        <li><strong>Marihuana:</strong> Cannabis sativa L. with a THC concentration greater than 0.3%.</li>
+                        <li><strong>Simulated Controlled Substances:</strong> Substances purported to be a controlled substance that are not.</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Texas Compassionate-Use Program (<a href="https://statutes.capitol.texas.gov/Docs/OC/htm/OC.169.htm" target="_blank" class="text-green-700 hover:underline">OC Ch. 169</a>)</h2>
+                    <p class="text-sm text-gray-700 mb-4">This program allows qualified physicians to prescribe low-THC cannabis for medical use to patients with specific medical conditions like epilepsy, multiple sclerosis, or cancer.</p>
+                     <ul class="list-disc list-inside text-sm space-y-2 text-gray-700">
+                        <li><strong>Low-THC Cannabis:</strong> Defined as containing not more than 0.5% by weight of THC.</li>
+                        <li><strong>Medical Use:</strong> The ingestion by a means other than smoking of a prescribed dose of low-THC cannabis.</li>
+                        <li><strong>Defense to Prosecution:</strong> It is a defense if the person charged with possessing low-THC cannabis is a patient under an approved treatment plan.</li>
+                         <li><strong>Smoking:</strong> Does not include the use of a vaporizer or e-cigarette. The law specifically prohibits smoking.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="offenses" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Offenses by Penalty Group</h2>
+                     <div class="space-y-6">
+                        <!-- PG 1 / 1B -->
+                        <div>
+                            <h3 class="font-semibold text-lg">Penalty Group 1 / 1-B</h3>
+                            <p class="text-sm text-gray-500 mb-2">Includes: Heroin, Cocaine, Methamphetamine, Fentanyl, Oxycodone, GHB.</p>
+                            <p class="text-sm"><strong class="mr-2">Possession (<a href="https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.115" target="_blank" class="text-green-700 hover:underline">§481.115</a>):</strong> <span class="punishment-yellow">State Jail Felony</span> (increases with weight)</p>
+                            <p class="text-sm"><strong class="mr-2">Manufacture/Delivery (<a href="https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.112" target="_blank" class="text-green-700 hover:underline">§481.112</a>, <a href="https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.1123" target="_blank" class="text-green-700 hover:underline">§481.1123</a>):</strong> <span class="punishment-orange">Felony of the Second Degree</span> (increases with weight, PG 1-B has higher penalties)</p>
+                             <h4 class="font-semibold mt-2 text-sm">Elements Checklist (Possession):</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>A person</li><li>Knowingly or intentionally</li><li>Possesses</li><li>A substance listed in Penalty Group 1 or 1-B.</li>
+                             </ul>
+                            <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example (Possession):</strong> An officer finds a small baggie containing a white powdery substance in a driver's pocket during a search incident to arrest. The substance field tests positive for cocaine. The driver is arrested for POCS PG1.</p>
+                        </div>
+                        <!-- PG 2 -->
+                        <div class="border-t pt-4">
+                             <h3 class="font-semibold text-lg">Penalty Group 2 / 2-A</h3>
+                            <p class="text-sm text-gray-500 mb-2">Includes: Psilocybin (mushrooms), Ecstasy (MDMA), PCP, Synthetic Cannabinoids (K2).</p>
+                             <p class="text-sm"><strong class="mr-2">Possession (<a href="https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.116" target="_blank" class="text-green-700 hover:underline">§481.116</a>):</strong> <span class="punishment-yellow">State Jail Felony</span> (increases with weight)</p>
+                             <p class="text-sm"><strong class="mr-2">Manufacture/Delivery (<a href="https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.113" target="_blank" class="text-green-700 hover:underline">§481.113</a>):</strong> <span class="punishment-orange">Felony of the Second Degree</span> (increases with weight)</p>
+                            <h4 class="font-semibold mt-2 text-sm">Elements Checklist (Manufacture/Delivery):</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700">
+                                 <li>A person</li><li>Knowingly</li><li>Manufactures, delivers, or possesses with intent to deliver</li><li>A substance listed in Penalty Group 2 or 2-A.</li>
+                             </ul>
+                             <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example (Manufacture):</strong> Officers execute a search warrant on a residence and find chemicals, glassware, and a large quantity of synthetic cannabinoids being packaged for sale. The residents are arrested for MAN/DEL PG2-A.</p>
+                        </div>
+                         <!-- PG 3 / 4 -->
+                        <div class="border-t pt-4">
+                             <h3 class="font-semibold text-lg">Penalty Group 3 / 4</h3>
+                            <p class="text-sm text-gray-500 mb-2">Includes: Valium, Xanax, Ritalin, Codeine (in limited quantities), Anabolic Steroids.</p>
+                             <p class="text-sm"><strong class="mr-2">Possession (<a href="https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.117" target="_blank" class="text-green-700 hover:underline">§481.117</a>, <a href="https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.118" target="_blank" class="text-green-700 hover:underline">§481.118</a>):</strong> <span class="punishment-gray">Class A Misdemeanor</span> (PG3) or <span class="punishment-blue">Class B Misdemeanor</span> (PG4) (increases with weight)</p>
+                             <p class="text-sm"><strong class="mr-2">Manufacture/Delivery (<a href="https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.114" target="_blank" class="text-green-700 hover:underline">§481.114</a>):</strong> <span class="punishment-yellow">State Jail Felony</span> (increases with weight)</p>
+                            <h4 class="font-semibold mt-2 text-sm">Elements Checklist (Possession PG3):</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700">
+                                 <li>A person</li><li>Knowingly or intentionally</li><li>Possesses</li><li>A substance listed in Penalty Group 3.</li>
+                             </ul>
+                             <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example (Possession):</strong> During a consent search of a purse, an officer finds a bottle of Xanax pills with no prescription label. The owner admits to buying them from a friend and is arrested for POCS PG3.</p>
+                        </div>
+                        <!-- Marihuana -->
+                        <div class="border-t pt-4">
+                             <h3 class="font-semibold text-lg">Marihuana</h3>
+                             <p class="text-sm text-gray-500 mb-2">Cannabis Sativa L. with THC > 0.3%.</p>
+                             <p class="text-sm"><strong class="mr-2">Possession (<a href="https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.121" target="_blank" class="text-green-700 hover:underline">§481.121</a>):</strong> <span class="punishment-blue">Class B Misdemeanor</span> (for 2oz or less, increases with weight)</p>
+                             <p class="text-sm"><strong class="mr-2">Delivery (<a href="https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.120" target="_blank" class="text-green-700 hover:underline">§481.120</a>):</strong> <span class="punishment-blue">Class B Misdemeanor</span> (for 1/4 oz or less, for no remuneration. Increases otherwise.)</p>
+                             <h4 class="font-semibold mt-2 text-sm">Elements Checklist (Delivery):</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700">
+                                 <li>A person</li><li>Knowingly or intentionally</li><li>Delivers</li><li>Marihuana.</li>
+                             </ul>
+                             <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example (Delivery):</strong> An officer observes one person hand a joint to another person in a park. Upon contact, the first person admits they "gave their friend a joint." Since it was a small amount and no money was exchanged, it's Delivery of Marihuana Class B.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Other Key Offenses</h2>
+                    <div class="space-y-6">
+                        <div>
+                             <h4 class="font-semibold">Manufacture/Delivery Causing Death or SBI (<a href="https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.141" target="_blank" class="text-green-700 hover:underline">HSC §481.141</a>)</h4>
+                             <p class="text-sm"><strong class="mr-2">Punishment Level:</strong> The penalty is increased to the next higher category.</p>
+                             <h4 class="font-semibold mt-2 text-sm">Elements Checklist:</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700"><li>A person</li><li>Commits an offense of Man/Del of a controlled substance</li><li>And a person dies or suffers SBI</li><li>As a result of injecting, ingesting, inhaling, or introducing the substance into their body.</li></ul>
+                             <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example:</strong> A dealer sells what they claim is heroin, but it is actually pure fentanyl. The user overdoses and dies. The dealer can be charged with Man/Del, and the penalty will be enhanced to the next higher level.</p>
+                        </div>
+                        <div class="border-t pt-4">
+                            <h4 class="font-semibold">Simulated Controlled Substances (<a href="https://statutes.capitol.texas.gov/Docs/HS/htm/HS.482.htm" target="_blank" class="text-green-700 hover:underline">HSC Ch. 482</a>)</h4>
+                            <p class="text-sm"><strong class="mr-2">Punishment Level:</strong> <span class="punishment-gray">Class A Misdemeanor</span> for delivery.</p>
+                            <h4 class="font-semibold mt-2 text-sm">Elements Checklist:</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700"><li>A person</li><li>Knowingly or intentionally</li><li>Delivers</li><li>A simulated controlled substance with representations that it is a controlled substance.</li></ul>
+                            <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example:</strong> A person sells a bag of crushed drywall to an undercover officer, claiming it is cocaine. The seller is arrested for Delivery of a Simulated Controlled Substance.</p>
+                        </div>
+                        <div class="border-t pt-4">
+                             <h4 class="font-semibold">Possession of Chemicals w/ Intent to Manufacture (<a href="https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.124" target="_blank" class="text-green-700 hover:underline">HSC §481.124</a>)</h4>
+                             <p class="text-sm"><strong class="mr-2">Punishment Level:</strong> Varies based on substance, generally a <span class="punishment-orange">Second Degree Felony</span>.</p>
+                             <h4 class="font-semibold mt-2 text-sm">Elements Checklist:</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700"><li>A person</li><li>With intent to unlawfully manufacture a controlled substance</li><li>Possesses or transports</li><li>Anhydrous ammonia, or certain precursor chemicals (e.g., pseudoephedrine).</li></ul>
+                             <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example:</strong> A trooper stops a car and finds an unusual amount of cold medicine containing pseudoephedrine, along with lithium batteries and other known meth precursors. The driver is arrested for Possession of Chemicals with Intent to Manufacture.</p>
+                        </div>
+                         <div class="border-t pt-4">
+                             <h4 class="font-semibold">Possession or Delivery of Drug Paraphernalia (<a href="https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.125" target="_blank" class="text-green-700 hover:underline">HSC §481.125</a>)</h4>
+                             <p class="text-sm"><strong class="mr-2">Punishment Level:</strong> <span class="punishment-gray">Class C Misdemeanor</span></p>
+                            <h4 class="font-semibold mt-2 text-sm">Elements Checklist:</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700"><li>A person</li><li>Knowingly or intentionally</li><li>Uses, possesses with intent to use, or delivers</li><li>Drug paraphernalia.</li></ul>
+                             <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example:</strong> During a traffic stop, an officer sees a glass pipe with marihuana residue in plain view in the car's cup holder. The driver is issued a citation for Possession of Drug Paraphernalia.</p>
+                        </div>
+                        <div class="border-t pt-4">
+                             <h4 class="font-semibold">Falsifying Drug Test Results (<a href="https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.133" target="_blank" class="text-green-700 hover:underline">HSC §481.133</a>)</h4>
+                             <p class="text-sm"><strong class="mr-2">Punishment Level:</strong> <span class="punishment-blue">Class B Misdemeanor</span></p>
+                            <h4 class="font-semibold mt-2 text-sm">Elements Checklist:</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700"><li>A person</li><li>Knowingly or intentionally</li><li>Uses or possesses with intent to use</li><li>A substance or device designed to falsify a drug test.</li></ul>
+                             <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example:</strong> A person on probation is found with a "Whizzinator" or a bottle of synthetic urine before their scheduled drug test. They can be arrested for Falsifying Drug Test Results.</p>
+                        </div>
+                         <div class="border-t pt-4">
+                             <h4 class="font-semibold">Sale of Kratom to a Minor (<a href="https://statutes.capitol.texas.gov/Docs/HS/htm/HS.444.htm#444.004" target="_blank" class="text-green-700 hover:underline">HSC §444.004</a>)</h4>
+                             <p class="text-sm"><strong class="mr-2">Punishment Level:</strong> <span class="punishment-gray">Class C Misdemeanor</span></p>
+                            <h4 class="font-semibold mt-2 text-sm">Elements Checklist:</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700"><li>A person</li><li>Sells, gives, or causes to be sold or given</li><li>A kratom product</li><li>To an individual younger than 18 years of age.</li></ul>
+                             <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example:</strong> A smoke shop employee sells a package of kratom capsules to a 17-year-old without checking their ID. The employee has committed an offense.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                     <h2 class="text-xl font-bold mb-4 border-b pb-2">Offense Enhancements & Special Circumstances</h2>
+                     <div class="space-y-4 text-sm text-gray-700">
+                         <p><strong>Deadly Weapon Finding (<a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.1.htm#1.07" target="_blank" class="text-green-700 hover:underline">PC §1.07</a>):</strong> If a deadly weapon is used during a drug offense, a State Jail Felony can be punished as a Third Degree Felony, and inmates must serve at least half their sentence before parole eligibility.</p>
+                         <p><strong>Delivery to a Child (<a href="https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.122" target="_blank" class="text-green-700 hover:underline">HSC §481.122</a>):</strong> Delivering any controlled substance or marihuana to a person under 18 is a <span class="punishment-orange">Felony of the Second Degree</span>.</p>
+                         <p><strong>Manufacture of PG1 in Presence of Child (<a href="https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.1122" target="_blank" class="text-green-700 hover:underline">HSC §481.1122</a>):</strong> If a child under 18 is present where a PG1 substance (like methamphetamine) is being manufactured, the penalty is increased to the next higher category.</p>
+                         <p><strong>Endangering a Child (<a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.22.htm#22.041" target="_blank" class="text-green-700 hover:underline">PC §22.041</a>):</strong> A person commits a <span class="punishment-yellow">State Jail Felony</span> if they intentionally, knowingly, recklessly, or with criminal negligence engage in conduct that places a child younger than 15 in imminent danger of death or injury, including by manufacturing, possessing, or using a PG1 or 1-B substance in the child's presence.</p>
+                         <p><strong>Directing Activities of Criminal Street Gang (<a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.71.htm#71.023" target="_blank" class="text-green-700 hover:underline">PC §71.023</a>):</strong> Penalties are enhanced for manufacturing, delivering, or possessing large amounts of PG 1-B substances in connection with a gang.</p>
+                         <p><strong>Diversion by Registrants (<a href="https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.1285" target="_blank" class="text-green-700 hover:underline">HSC §481.1285</a>):</strong> It is a felony offense for a person authorized to dispense controlled substances (like a pharmacist or doctor) to divert those substances for their own use or illegal distribution.</p>
+                     </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                     <h2 class="text-xl font-bold mb-4 border-b pb-2">Affirmative Defenses to Possession</h2>
+                     <p class="text-sm text-gray-700 mb-4">Under various sections of the HSC (e.g., <a href="https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.115" target="_blank" class="text-green-700 hover:underline">§481.115(g)</a>), it is an affirmative defense to prosecution for possession if the actor was:</p>
+                     <ul class="list-disc list-inside text-sm space-y-2 text-gray-700">
+                        <li>An officer or agent of a law enforcement agency acting in the lawful performance of their duties.</li>
+                        <li>A person authorized by law to possess the substance, such as a pharmacist, practitioner, or their agent.</li>
+                        <li>An individual who obtained the substance pursuant to a valid prescription or order from a practitioner.</li>
+                        <li>An employee of a licensed laboratory or research facility acting within the scope of their employment.</li>
+                     </ul>
+                </div>
+            </div>
+
+             <div id="dangerous-drugs" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Dangerous Drugs (<a href="https://statutes.capitol.texas.gov/Docs/HS/htm/HS.483.htm" target="_blank" class="text-green-700 hover:underline">HSC Chapter 483</a>)</h2>
+                    <p class="text-sm text-gray-700 mb-2">A <strong>dangerous drug</strong> is a device or a drug that is unsafe for self-medication and that is not included in Penalty Groups I through IV. It essentially means any prescription drug that is not a controlled substance.</p>
+                    <p class="text-sm text-gray-700 mb-2">A <strong>prescription</strong> is an order from a practitioner for a dangerous drug.</p>
+                    <p class="text-sm text-gray-700 mb-4">A <strong>manufacturer</strong> is a person, other than a pharmacist, who manufactures dangerous drugs.</p>
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="font-semibold text-lg">Possession of Dangerous Drug (<a href="https://statutes.capitol.texas.gov/Docs/HS/htm/HS.483.htm#483.041" target="_blank" class="text-green-700 hover:underline">HSC §483.041</a>)</h3>
+                            <p class="text-sm"><strong class="mr-2">Punishment Level:</strong> <span class="punishment-gray">Class A Misdemeanor</span></p>
+                             <h4 class="font-semibold mt-2 text-sm">Elements Checklist:</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700"><li>A person</li><li>Possesses</li><li>A dangerous drug</li><li>Unless obtained via a valid prescription.</li></ul>
+                             <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example:</strong> An officer finds a bottle of antibiotics with someone else's name on it in a person's bag. The person admits they got the pills from a friend. They can be arrested for Possession of a Dangerous Drug.</p>
+                        </div>
+                         <div class="border-t pt-4">
+                            <h3 class="font-semibold text-lg">Delivery or Offer of Delivery of Dangerous Drug (<a href="https://statutes.capitol.texas.gov/Docs/HS/htm/HS.483.htm#483.042" target="_blank" class="text-green-700 hover:underline">HSC §483.042</a>)</h3>
+                            <p class="text-sm"><strong class="mr-2">Punishment Level:</strong> <span class="punishment-yellow">State Jail Felony</span></p>
+                            <h4 class="font-semibold mt-2 text-sm">Elements Checklist:</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700"><li>A person</li><li>Delivers or offers to deliver</li><li>A dangerous drug.</li></ul>
+                            <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example:</strong> A person sells their prescription for a non-controlled blood pressure medication to someone without a prescription. The seller has committed a State Jail Felony.</p>
+                        </div>
+                         <div class="border-t pt-4">
+                            <h3 class="font-semibold text-lg">Manufacture of Dangerous Drug (<a href="https://statutes.capitol.texas.gov/Docs/HS/htm/HS.483.htm#483.043" target="_blank" class="text-green-700 hover:underline">HSC §483.043</a>)</h3>
+                            <p class="text-sm"><strong class="mr-2">Punishment Level:</strong> <span class="punishment-yellow">State Jail Felony</span></p>
+                            <h4 class="font-semibold mt-2 text-sm">Elements Checklist:</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700"><li>A person</li><li>Manufactures</li><li>A dangerous drug</li><li>And is not authorized by law to do so.</li></ul>
+                            <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example:</strong> A person is found operating an unlicensed laboratory in their garage, creating and packaging pills that are determined to be a dangerous drug.</p>
+                        </div>
+                        <div class="border-t pt-4">
+                            <h3 class="font-semibold text-lg">Forging or Altering a Prescription (<a href="https://statutes.capitol.texas.gov/Docs/HS/htm/HS.483.htm#483.045" target="_blank" class="text-green-700 hover:underline">HSC §483.045</a>)</h3>
+                            <p class="text-sm"><strong class="mr-2">Punishment Level:</strong> <span class="punishment-blue">Class B Misdemeanor</span> (increases if previously convicted)</p>
+                             <h4 class="font-semibold mt-2 text-sm">Elements Checklist:</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700"><li>A person</li><li>Forges a prescription</li><li>OR increases the prescribed quantity in a prescription</li><li>OR issues a prescription bearing a forged signature.</li></ul>
+                             <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example:</strong> A person gets a prescription for 30 pills, but uses a pen to change the number to 80 before taking it to the pharmacy. They have committed an offense.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="interdiction" class="tab-content space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Drug Interdiction: What to Look For</h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                             <h3 class="font-bold text-lg mb-2">Vehicle Indicators</h3>
+                             <ul class="list-disc list-inside text-sm space-y-2 text-gray-700">
+                                <li>Vehicle not registered to driver (especially rentals).</li>
+                                <li>Tool markings on screws, bolts, or trim.</li>
+                                <li>Vehicle appears heavily laden in the rear.</li>
+                                <li>Presence of false compartments.</li>
+                                <li>Unusual odors (marihuana, chemicals, air fresheners).</li>
+                             </ul>
+                        </div>
+                        <div>
+                             <h3 class="font-bold text-lg mb-2">Driver / Occupant Indicators</h3>
+                             <ul class="list-disc list-inside text-sm space-y-2 text-gray-700">
+                                <li>Extreme nervousness, fidgeting, avoids eye contact.</li>
+                                <li>Driver attempts to quickly separate from the vehicle.</li>
+                                <li>Conflicting stories between occupants.</li>
+                                <li>Extended travel with minimal or no luggage.</li>
+                                <li>Driver doesn't have a key to the trunk or glovebox.</li>
+                             </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Interview Techniques & Probable Cause</h2>
+                    <p class="text-sm text-gray-700 mb-4">Effective interviewing is key to developing probable cause. Consider these steps:</p>
+                    <ul class="list-decimal list-inside text-sm space-y-2 text-gray-700">
+                        <li><strong>Separate Suspects:</strong> Remove occupants from the vehicle and each other to prevent them from aligning their stories.</li>
+                        <li><strong>Establish Identity:</strong> Confirm the identity of the driver and any passengers.</li>
+                        <li><strong>Inquire about Travel:</strong> Ask about their origin, destination, and the purpose of the trip. Compare their answers.</li>
+                        <li><strong>Verify Documents:</strong> Ask for registration, insurance, and rental agreements. Check that names and dates are consistent with their story.</li>
+                        <li><strong>Inquire about Ownership:</strong> Ask who owns the vehicle and its contents.</li>
+                    </ul>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Common Paraphernalia By Use</h2>
+                    <div class="grid md:grid-cols-2 gap-4 text-sm">
+                        <p><strong>Injection:</strong> Needles, syringes, spoons, lighters, tourniquets.</p>
+                        <p><strong>Inhalation:</strong> Plastic bags, balloons, pipes (glass, metal, wood), bongs, foil.</p>
+                        <p><strong>Ingestion:</strong> Gelatin capsules, tablets, vials.</p>
+                        <p><strong>Application:</strong> Patches, droppers, foam/gel containers.</p>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Common Concealment Locations</h2>
+                     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+                        <div>
+                             <h4 class="font-semibold">On the Person</h4>
+                             <ul class="list-disc list-inside text-gray-700"><li>Clothing, Body cavities, Belts, Shoes/socks, Hats, Jewelry, Bags, Hair, Taped to body</li></ul>
+                        </div>
+                        <div>
+                             <h4 class="font-semibold">In a Place (House)</h4>
+                             <ul class="list-disc list-inside text-gray-700"><li>Toilet tanks, Furniture, Appliances, Cabinets, Drains, Food canisters, Ceiling tiles, Vents</li></ul>
+                        </div>
+                        <div>
+                             <h4 class="font-semibold">In a Vehicle</h4>
+                             <ul class="list-disc list-inside text-gray-700"><li>Glove box, Dash, Under carpet, Gas tanks, Hub caps, Headliner, A/C ducts, Trunk, Door panels, Spare tire, Engine compartment, Ash tray</li></ul>
+                        </div>
+                     </div>
+                </div>
+            </div>
+            
+            <div id="procedures" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Seizure and Destruction of Evidence</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="font-semibold">Controlled Substances (<a href="https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.159" target="_blank" class="text-green-700 hover:underline">HSC §481.159</a>)</h3>
+                            <p class="text-sm text-gray-700">Law enforcement agencies may, after a case is closed, destroy seized drugs and paraphernalia. The law requires a written order from the court and a detailed inventory of the destroyed items. Samples must be preserved if required.</p>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold">Dangerous Drugs (<a href="https://statutes.capitol.texas.gov/Docs/HS/htm/HS.483.htm#483.074" target="_blank" class="text-green-700 hover:underline">HSC §483.074</a>)</h3>
+                            <p class="text-sm text-gray-700">Similar to controlled substances, dangerous drugs seized by law enforcement are subject to forfeiture and can be destroyed by order of the court after the legal proceedings are concluded.</p>
+                        </div>
+                    </div>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Testimony in Drug Cases</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="font-semibold">Testimony of Accomplice (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.38.htm#38.14" target="_blank" class="text-green-700 hover:underline">CCP Art. 38.14</a>)</h3>
+                            <p class="text-sm text-gray-700">A defendant cannot be convicted on the testimony of an accomplice unless it is corroborated by other evidence that tends to connect the defendant to the offense.</p>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold">Testimony of Undercover Officer (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.38.htm#38.141" target="_blank" class="text-green-700 hover:underline">CCP Art. 38.141</a>)</h3>
+                            <p class="text-sm text-gray-700">A defendant cannot be convicted of a drug offense if the only evidence is the uncorroborated testimony of an undercover officer or special investigator who the defendant was introduced to for the purpose of the investigation.</p>
+                             <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example:</strong> If an undercover officer buys drugs from a suspect, the prosecution needs more than just that officer's testimony to get a conviction. This could be audio/video of the transaction, testimony from a confidential informant who was present, or physical evidence linking the suspect to the drugs.</p>
+                        </div>
+                        <div class="border-t pt-4">
+                            <h3 class="font-semibold">Uncorroborated Testimony (Dangerous Drugs) (<a href="https://statutes.capitol.texas.gov/Docs/HS/htm/HS.483.htm#483.072" target="_blank" class="text-green-700 hover:underline">HSC §483.072</a>)</h3>
+                            <p class="text-sm text-gray-700">A conviction under the Dangerous Drugs Act may be obtained on the uncorroborated testimony of a party to the offense. This is a key difference from the rules for controlled substance cases.</p>
+                        </div>
+                    </div>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Identifying Suspected Substances</h2>
+                     <p class="text-sm text-gray-700 mb-4">Besides lab analysis, officers can use several resources to help identify drugs in the field:</p>
+                    <ul class="list-disc list-inside text-sm space-y-2 text-gray-700">
+                        <li><strong>Agency Labs:</strong> Suspected substances should be sent to an accredited lab (like Texas DPS) for definitive analysis.</li>
+                        <li><strong>Field Test Kits:</strong> If authorized, these kits can provide presumptive positive results, but they are not a substitute for lab analysis. Officer safety is paramount when handling unknown substances.</li>
+                        <li><strong>Reference Materials:</strong> Websites like Drugs.com or a Physicians' Desk Reference (PDR) can help identify pills by their inscriptions, shape, and color.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="knowledge-check" class="tab-content">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Knowledge Check</h2>
+                    <p class="mb-6 text-gray-600">Test your understanding of the material.</p>
+                    <div id="quiz-container" class="space-y-8"></div>
+                    <div class="mt-8 text-center">
+                        <button id="check-answers-btn" class="bg-green-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-green-700 transition-colors">Check Answers</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="resources" class="tab-content">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Statutory Resources</h2>
+                    <p class="mb-6 text-gray-600">Quick links to the Texas Codes referenced in this guide.</p>
+                    <div id="resources-list" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-sm"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('#tabs button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                });
+            });
+
+            const quizData = [
+                { question: "1. The legal distinction between Marihuana and Hemp is based on a Delta-9 THC concentration of:", options: ["0.5%", "1.0%", "0.3%", "3.0%"], answer: "0.3%", explanation: "Marihuana is defined as Cannabis Sativa L. with a Delta-9 THC concentration of MORE than 0.3%. Hemp has a concentration of 0.3% or less." },
+                { question: "2. What is the base-level offense for possessing less than one gram of a substance in Penalty Group 1, such as cocaine?", options: ["Class A Misdemeanor", "State Jail Felony", "Third Degree Felony", "Second Degree Felony"], answer: "State Jail Felony", explanation: "Under HSC §481.115, possession of any amount under one gram of a Penalty Group 1 substance is a State Jail Felony." },
+                { question: "3. Selling baking soda to someone while claiming it is cocaine is the offense of:", options: ["Theft by Deception", "Delivery of a Controlled Substance PG1", "Delivery of a Simulated Controlled Substance", "No offense"], answer: "Delivery of a Simulated Controlled Substance", explanation: "HSC Chapter 482 makes it a Class A Misdemeanor to knowingly deliver a substance that is represented as a controlled substance but is not." },
+                { question: "4. An officer finds a person with a bottle of prescription antibiotics that has another person's name on it. What is the most appropriate charge?", options: ["POCS PG 3", "Possession of Dangerous Drug", "No offense committed", "Theft of Prescription Pad"], answer: "Possession of Dangerous Drug", explanation: "Prescription drugs not in a penalty group are Dangerous Drugs. Possessing them without a valid prescription is a Class A Misdemeanor under HSC §483.041." },
+                { question: "5. A person uses a pen to change a prescription for 30 pills to read 80 pills. What offense has been committed?", options: ["Forgery", "Possession of Dangerous Drug", "Forging or Altering a Prescription", "No offense if the drug is not a controlled substance"], answer: "Forging or Altering a Prescription", explanation: "Under HSC §483.045, increasing the quantity of a prescribed drug is a Class B Misdemeanor." },
+                { question: "6. Which of the following is required to convict a defendant based on the testimony of an accomplice in a controlled substance case?", options: ["A signed confession", "Testimony from a second accomplice", "Corroborating evidence", "Nothing else is required"], answer: "Corroborating evidence", explanation: "Under CCP 38.14, the testimony of an accomplice must be corroborated by other evidence tending to connect the defendant to the offense." },
+                { question: "7. Manufacturing methamphetamine in an apartment while a 10-year-old child is in the next room is an enhancement that:", options: ["Makes the offense a federal crime", "Increases the penalty to the next higher category", "Doubles the potential fine", "Has no effect on the penalty"], answer: "Increases the penalty to the next higher category", explanation: "HSC §481.1122 enhances the penalty for manufacturing a PG1 substance if a child under 18 is present on the premises." },
+                { question: "8. A person possessing Xanax without a prescription may claim it is an affirmative defense if:", options: ["They were only holding it for a friend", "They are a pharmacist acting in the scope of their duties", "They intended to get a prescription later", "They did not know it was illegal"], answer: "They are a pharmacist acting in the scope of their duties", explanation: "Being a person authorized by law to possess the substance, such as a pharmacist or practitioner, is a statutory affirmative defense." },
+                { question: "9. The Texas Compassionate-Use Program specifically prohibits what method of consumption?", options: ["Vaporizing", "Ingesting oils", "Smoking", "Applying creams"], answer: "Smoking", explanation: "The law defines 'Medical Use' as ingestion by a means other than smoking." },
+                { question: "10. Possession of two ounces or less of marihuana is a:", options: ["Class C Misdemeanor", "Class B Misdemeanor", "Class A Misdemeanor", "State Jail Felony"], answer: "Class B Misdemeanor", explanation: "HSC §481.121 establishes that possession of two ounces or less of marihuana is a Class B Misdemeanor." },
+                { question: "11. 'Actual care, custody, control, or management' is the legal definition of:", options: ["Ownership", "Possession", "Distribution", "Manufacture"], answer: "Possession", explanation: "This is the definition of 'Possession' found in both the Health and Safety Code §481.002(38) and the Penal Code §1.07(a)(39)." },
+                { question: "12. What is the base-level offense for delivering a Dangerous Drug?", options: ["Class A Misdemeanor", "State Jail Felony", "Third Degree Felony", "It is not an offense"], answer: "State Jail Felony", explanation: "Under HSC §483.042, delivering or offering to deliver a dangerous drug is a State Jail Felony." },
+                { question: "13. Possessing pseudoephedrine with the intent to manufacture methamphetamine is a violation under:", options: ["Possession of Dangerous Drug", "Possession of Drug Paraphernalia", "Possession of Chemicals w/ Intent to Manufacture", "No offense"], answer: "Possession of Chemicals w/ Intent to Manufacture", explanation: "HSC §481.124 specifically makes it a felony to possess precursor chemicals with the intent to unlawfully manufacture a controlled substance." },
+                { question: "14. A key difference in testimony requirements between Controlled Substance and Dangerous Drug cases is that:", options: ["Accomplice testimony is not allowed in Dangerous Drug cases", "A Dangerous Drug conviction can be based on uncorroborated testimony of a party", "Undercover officer testimony cannot be used in Dangerous Drug cases", "There is no difference"], answer: "A Dangerous Drug conviction can be based on uncorroborated testimony of a party", explanation: "HSC §483.072 allows for conviction based on uncorroborated testimony, which is different from the rule in CCP 38.14 for other offenses." },
+                { question: "15. A person who dies after using fentanyl sold to them by a dealer could cause the dealer's delivery charge to be:", options: ["Dismissed", "Reduced to a misdemeanor", "Enhanced to the next higher penalty category", "Tried as a Capital Murder"], answer: "Enhanced to the next higher penalty category", explanation: "HSC §481.141 allows for the enhancement of a manufacture or delivery charge if a person's death or serious bodily injury results from using the drug." }
+            ];
+
+            const quizContainer = document.getElementById('quiz-container');
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'quiz-question';
+                let optionsHtml = q.options.map(option => `
+                    <label class="block"><input type="radio" name="q${index}" value="${option}" class="mr-2">${option}</label>
+                `).join('');
+                questionDiv.innerHTML = `<p class="font-semibold mb-2">${q.question}</p><div class="space-y-2">${optionsHtml}</div><div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>`;
+                quizContainer.appendChild(questionDiv);
+            });
+
+            document.getElementById('check-answers-btn').addEventListener('click', () => {
+                quizData.forEach((q, index) => {
+                    const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                    const feedback = document.querySelectorAll('.feedback')[index];
+                    feedback.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+                    if (selected && selected.value === q.answer) {
+                        feedback.textContent = `Correct! ${q.explanation}`;
+                        feedback.classList.add('bg-green-100', 'text-green-800');
+                    } else {
+                        feedback.textContent = `Incorrect. The correct answer is "${q.answer}". ${q.explanation}`;
+                        feedback.classList.add('bg-red-100', 'text-red-800');
+                    }
+                });
+            });
+
+            const resources = [
+                { name: "Agriculture Code Ch. 121 - Hemp", url: "https://statutes.capitol.texas.gov/Docs/AG/htm/AG.121.htm" },
+                { name: "CCP 38.14 - Accomplice Testimony", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.38.htm#38.14" },
+                { name: "CCP 38.141 - Undercover Officer Testimony", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.38.htm#38.141" },
+                { name: "HSC Ch. 481 - Controlled Substances Act", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm" },
+                { name: "HSC Ch. 482 - Simulated CS", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.482.htm" },
+                { name: "HSC Ch. 483 - Dangerous Drugs", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.483.htm" },
+                { name: "HSC §481.1122 - Manuf. w/ Child Present", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.1122" },
+                { name: "HSC §481.122 - Delivery to a Child", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.122" },
+                { name: "HSC §481.124 - Poss. of Chemicals", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.124" },
+                { name: "HSC §481.1285 - Diversion", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.1285" },
+                { name: "HSC §481.141 - Man/Del Causing Death/SBI", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.141" },
+                { name: "HSC §481.159 - Destruction of CS", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.159" },
+                { name: "HSC §483.072 - Uncorroborated Testimony", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.483.htm#483.072" },
+                { name: "OC Ch. 169 - Compassionate-Use", url: "https://statutes.capitol.texas.gov/Docs/OC/htm/OC.169.htm" },
+                { name: "PC §22.041 - Endangering a Child", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.22.htm#22.041" },
+                { name: "PC §71.023 - Directing Gang Activity", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.71.htm#71.023" },
+            ];
+            const resourcesList = document.getElementById('resources-list');
+            resources.sort((a, b) => a.name.localeCompare(b.name));
+            resources.forEach(res => {
+                const link = document.createElement('a');
+                link.href = res.url;
+                link.target = '_blank';
+                link.className = 'text-green-700 hover:underline';
+                link.textContent = res.name;
+                resourcesList.appendChild(link);
+            });
+        });
+    </script>
+</body>
+</html>
+

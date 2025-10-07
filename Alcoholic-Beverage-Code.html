@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Guide: Texas Alcoholic Beverage Code</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --header-bg: #1f2937;
+            --bg-color: #f3f4f6;
+            --tab-active-bg: #ca8a04; /* Yellow for this guide */
+            --tab-active-text: #ffffff;
+            --card-bg: #ffffff;
+            --text-color: #111827;
+            --link-color: #a16207;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://rsms.me/inter/inter.css');
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab.active {
+            background-color: var(--tab-active-bg);
+            color: var(--tab-active-text);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tab {
+            transition: all 0.3s ease-in-out;
+        }
+        .punishment-red { color: #dc2626; font-weight: bold; }
+        .punishment-orange { color: #f97316; font-weight: bold; }
+        .punishment-yellow { color: #eab308; font-weight: bold; }
+        .punishment-blue { color: #3b82f6; font-weight: bold; }
+        .punishment-gray { color: #6b7280; font-weight: bold; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-gray-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">
+                <i class="fas fa-martini-glass-citrus mr-2"></i>Texas Alcoholic Beverage Code
+            </h1>
+            <p class="text-sm text-gray-300">BPOC Chapter 16 | TCOLE Preparation</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-6">
+        <div class="mb-6 bg-white rounded-lg shadow-md overflow-x-auto">
+            <nav id="tabs" class="flex flex-row space-x-1 p-2">
+                <button data-tab="key-concepts" class="tab active flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-yellow-100">
+                    <i class="fas fa-lightbulb mr-2"></i> <span class="hidden md:inline">Key Concepts</span>
+                </button>
+                <button data-tab="officer-duties" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-yellow-100">
+                    <i class="fas fa-shield-halved mr-2"></i> <span class="hidden md:inline">Officer Duties</span>
+                </button>
+                <button data-tab="offenses-minors" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-yellow-100">
+                    <i class="fas fa-user-xmark mr-2"></i> <span class="hidden md:inline">Offenses: Minors</span>
+                </button>
+                <button data-tab="offenses-general" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-yellow-100">
+                    <i class="fas fa-scale-balanced mr-2"></i> <span class="hidden md:inline">General Offenses</span>
+                </button>
+                 <button data-tab="hours" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-yellow-100">
+                    <i class="fas fa-clock mr-2"></i> <span class="hidden md:inline">Hours of Operation</span>
+                </button>
+                <button data-tab="knowledge-check" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-yellow-100">
+                    <i class="fas fa-question-circle mr-2"></i> <span class="hidden md:inline">Knowledge Check</span>
+                </button>
+                <button data-tab="resources" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-yellow-100">
+                    <i class="fas fa-link mr-2"></i> <span class="hidden md:inline">Resources</span>
+                </button>
+            </nav>
+        </div>
+
+        <div id="tab-contents">
+            <div id="key-concepts" class="tab-content active space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Key Definitions (<a href="https://statutes.capitol.texas.gov/Docs/AL/htm/AL.1.htm#1.04" target="_blank" class="text-yellow-700 hover:underline">TABC §1.04</a>)</h2>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+                        <p><strong>Alcoholic Beverage:</strong> Alcohol, or any beverage containing more than one-half of one percent of alcohol by volume, which is capable of use for beverage purposes, either alone or when diluted.</p>
+                         <p><strong>Distilled Spirits:</strong> Alcohol, spirits of wine, whiskey, rum, brandy, gin, or any liquor produced in whole or in part by the process of distillation.</p>
+                        <p><strong>Illicit Beverage:</strong> An alcoholic beverage manufactured, distributed, bought, sold, transported, or possessed in violation of this code.</p>
+                        <p><strong>Licensee:</strong> A person who is the holder of a license provided for in this code, or any agent, servant, or employee of that person.</p>
+                        <p><strong>Malt Beverage:</strong> A fermented beverage of any name or description containing one-half of one percent or more of alcohol by volume, brewed or produced from malt.</p>
+                        <p><strong>Mixed Beverage:</strong> One or more servings of a beverage composed in whole or part of an alcoholic beverage in a sealed or unsealed container of any legal size for consumption on the premises.</p>
+                        <p><strong>Permittee:</strong> A person who is the holder of a permit provided for in this code, or any agent, servant, or employee of that person.</p>
+                        <p><strong>Minor:</strong> A person under 21 years of age (<a href="https://statutes.capitol.texas.gov/Docs/AL/htm/AL.106.htm#106.01" target="_blank" class="text-yellow-700 hover:underline">§106.01</a>).</p>
+                        <p><strong>Premises:</strong> The grounds and all buildings, vehicles, and appurtenances pertaining to the grounds, including any adjacent premises if they are directly or indirectly under the control of the same person (<a href="https://statutes.capitol.texas.gov/Docs/AL/htm/AL.11.htm#11.49" target="_blank" class="text-yellow-700 hover:underline">§11.49</a>).</p>
+                        <p><strong>General Penalty (<a href="https://statutes.capitol.texas.gov/Docs/AL/htm/AL.1.htm#1.05" target="_blank" class="text-yellow-700 hover:underline">§1.05</a>):</strong> A person who violates a provision of this code for which a specific penalty is not provided is guilty of a misdemeanor and on conviction is punishable by a fine of not less than $100 nor more than $1,000 or by confinement in the county jail for not more than one year, or both.</p>
+                    </div>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Search vs. Inspection</h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="font-semibold text-lg">Inspection (<a href="https://statutes.capitol.texas.gov/Docs/AL/htm/AL.101.htm#101.04" target="_blank" class="text-yellow-700 hover:underline">§101.04</a>)</h3>
+                            <p class="text-sm text-gray-700">By accepting a license or permit, a person consents for TABC or any peace officer to enter and inspect the premises at any time to perform any duty imposed by the code. This is a broad authority to check for TABC violations on licensed premises.</p>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg">Search (<a href="https://statutes.capitol.texas.gov/Docs/AL/htm/AL.101.htm#101.03" target="_blank" class="text-yellow-700 hover:underline">§101.03</a>)</h3>
+                            <p class="text-sm text-gray-700">A search requires a search warrant, which may be issued by a magistrate on a sworn complaint showing probable cause that an offense is occurring, to search a suspected place and seize illicit beverages and equipment used to manufacture them.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Criminal vs. Administrative Actions</h2>
+                    <p class="text-sm text-gray-700">A single violation of the TABC can result in two separate and parallel actions because they are different types of law (criminal vs. civil). Double jeopardy does not apply.</p>
+                    <div class="grid md:grid-cols-2 gap-6 text-center">
+                        <div class="p-4 bg-red-50 rounded-lg">
+                            <h3 class="font-bold text-lg text-red-700">Criminal Action</h3>
+                            <p class="text-sm text-gray-600">Taken against an **individual** (bartender, clerk, owner). Results in fines, jail time, and a criminal record.</p>
+                        </div>
+                        <div class="p-4 bg-blue-50 rounded-lg">
+                            <h3 class="font-bold text-lg text-blue-700">Administrative Action</h3>
+                            <p class="text-sm text-gray-600">Taken by TABC against the **business license/permit**. Results in suspension or cancellation of the permit, or civil penalties (fines).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="officer-duties" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Peace Officer Duties & Powers</h2>
+                    <div class="space-y-4">
+                        <p class="text-sm"><strong>Duty of Peace Officers (<a href="https://statutes.capitol.texas.gov/Docs/AL/htm/AL.101.htm#101.07" target="_blank" class="text-yellow-700 hover:underline">§101.07</a>):</strong> All peace officers in the state have a duty to seize illicit beverages and arrest any person they see violating any provision of the TABC.</p>
+                        <p class="text-sm"><strong>Arrest Without Warrant (<a href="https://statutes.capitol.texas.gov/Docs/AL/htm/AL.101.htm#101.02" target="_blank" class="text-yellow-700 hover:underline">§101.02</a>):</strong> A peace officer may arrest without a warrant any person they see violating the code, but the person must be taken before a magistrate and a complaint filed.</p>
+                        <p class="text-sm"><strong>Seizure of Illicit Beverages (<a href="https://statutes.capitol.texas.gov/Docs/AL/htm/AL.103.htm#103.03" target="_blank" class="text-yellow-700 hover:underline">§103.03</a>):</strong> A peace officer may seize, without a warrant, any illicit beverage, its container, and any vehicle used to transport it.</p>
+                        <p class="text-sm"><strong>Arrest of Person in Possession (<a href="https://statutes.capitol.texas.gov/Docs/AL/htm/AL.103.htm#103.04" target="_blank" class="text-yellow-700 hover:underline">§103.04</a>):</strong> A peace officer shall arrest without a warrant any person found in possession of an illicit beverage.</p>
+                        <p class="text-sm"><strong>Report of Seizure (<a href="https://statutes.capitol.texas.gov/Docs/AL/htm/AL.103.htm#103.05" target="_blank" class="text-yellow-700 hover:underline">§103.05</a>):</strong> An officer who makes a seizure must make a sworn report to the attorney general or county/district attorney, stating a list of items seized and the person from whom they were seized.</p>
+                        <p class="text-sm"><strong>Beverage Seized by Peace Officer (<a href="https://statutes.capitol.texas.gov/Docs/AL/htm/AL.103.htm#103.06" target="_blank" class="text-yellow-700 hover:underline">§103.06</a>):</strong> Any beverage seized by a peace officer shall be delivered to the TABC.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="offenses-minors" class="tab-content space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                     <h2 class="text-xl font-bold mb-4 border-b pb-2">Offenses Involving Minors</h2>
+                     <div class="space-y-6">
+                        <div>
+                             <h3 class="font-semibold text-lg">Purchase / Attempt to Purchase Alcohol by a Minor (<a href="https://statutes.capitol.texas.gov/Docs/AL/htm/AL.106.htm#106.02" target="_blank" class="text-yellow-700 hover:underline">§106.02</a>, <a href="https://statutes.capitol.texas.gov/Docs/AL/htm/AL.106.htm#106.025" target="_blank" class="text-yellow-700 hover:underline">§106.025</a>)</h3>
+                             <p class="text-sm"><strong class="mr-2">Punishment Level:</strong> <span class="punishment-gray">Class C Misdemeanor</span></p>
+                             <h4 class="font-semibold mt-2 text-sm">Elements Checklist:</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700"><li>A minor</li><li>With specific intent to commit an offense (purchase)</li><li>Does an act that amounts to more than mere preparation</li><li>That tends but fails to effect the commission of the offense intended.</li></ul>
+                             <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example:</strong> An officer sees a 19-year-old hand cash to a clerk for a six-pack of beer. The clerk asks for ID, sees the person is a minor, and refuses the sale. The minor has committed Attempt to Purchase Alcohol.</p>
+                        </div>
+                         <div class="border-t pt-4">
+                             <h3 class="font-semibold text-lg">Sale of Alcohol to a Minor (<a href="https://statutes.capitol.texas.gov/Docs/AL/htm/AL.106.htm#106.03" target="_blank" class="text-yellow-700 hover:underline">§106.03</a>)</h3>
+                             <p class="text-sm"><strong class="mr-2">Punishment Level:</strong> <span class="punishment-gray">Class A Misdemeanor</span></p>
+                             <h4 class="font-semibold mt-2 text-sm">Elements Checklist:</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700"><li>A person</li><li>With criminal negligence</li><li>Sells an alcoholic beverage</li><li>To a minor.</li></ul>
+                             <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example:</strong> A convenience store clerk sells beer to a 17-year-old without asking for their ID. The clerk has committed an offense.</p>
+                        </div>
+                         <div class="border-t pt-4">
+                             <h3 class="font-semibold text-lg">Consumption of Alcohol by a Minor (<a href="https://statutes.capitol.texas.gov/Docs/AL/htm/AL.106.htm#106.04" target="_blank" class="text-yellow-700 hover:underline">§106.04</a>)</h3>
+                             <p class="text-sm"><strong class="mr-2">Punishment Level:</strong> <span class="punishment-gray">Class C Misdemeanor</span></p>
+                             <h4 class="font-semibold mt-2 text-sm">Elements Checklist:</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700"><li>A minor</li><li>Consumes an alcoholic beverage.</li></ul>
+                             <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example:</strong> An officer is dispatched to a park and observes a group of teenagers drinking beer. One of them, age 20, is seen taking a drink from a can. This is Consumption of Alcohol by a Minor. (Exception: only if in the visible presence of their adult parent/guardian/spouse).</p>
+                        </div>
+                         <div class="border-t pt-4">
+                            <h3 class="font-semibold text-lg">Driving or Operating Watercraft Under Influence by Minor (<a href="https://statutes.capitol.texas.gov/Docs/AL/htm/AL.106.htm#106.041" target="_blank" class="text-yellow-700 hover:underline">§106.041</a>)</h3>
+                             <p class="text-sm"><strong class="mr-2">Punishment Level:</strong> <span class="punishment-gray">Class C Misdemeanor</span></p>
+                             <h4 class="font-semibold mt-2 text-sm">Elements Checklist:</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700"><li>A minor</li><li>Operates a motor vehicle or watercraft</li><li>In a public place</li><li>While having any detectable amount of alcohol in the minor's system.</li></ul>
+                             <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example:</strong> An officer stops a 19-year-old for speeding. The officer smells alcohol on the driver's breath. A portable breath test shows the presence of alcohol, but the driver is not intoxicated. The driver has committed DUIA by a Minor.</p>
+                        </div>
+                         <div class="border-t pt-4">
+                             <h3 class="font-semibold text-lg">Possession of Alcohol by a Minor (<a href="https://statutes.capitol.texas.gov/Docs/AL/htm/AL.106.htm#106.05" target="_blank" class="text-yellow-700 hover:underline">§106.05</a>)</h3>
+                             <p class="text-sm"><strong class="mr-2">Punishment Level:</strong> <span class="punishment-gray">Class C Misdemeanor</span></p>
+                             <h4 class="font-semibold mt-2 text-sm">Elements Checklist:</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700"><li>A minor</li><li>Possesses an alcoholic beverage.</li></ul>
+                             <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example:</strong> An officer stops a car for a traffic violation and sees an 18-year-old passenger holding an unopened can of beer. This is Possession of Alcohol by a Minor. (Exceptions: in the scope of employment, or in the visible presence of parent/guardian/spouse).</p>
+                        </div>
+                         <div class="border-t pt-4">
+                             <h3 class="font-semibold text-lg">Furnishing Alcohol to a Minor (<a href="https://statutes.capitol.texas.gov/Docs/AL/htm/AL.106.htm#106.06" target="_blank" class="text-yellow-700 hover:underline">§106.06</a>)</h3>
+                             <p class="text-sm"><strong class="mr-2">Punishment Level:</strong> <span class="punishment-gray">Class A Misdemeanor</span></p>
+                             <h4 class="font-semibold mt-2 text-sm">Elements Checklist:</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700"><li>A person</li><li>Purchases for or gives or makes available an alcoholic beverage</li><li>To a minor</li><li>With criminal negligence.</li></ul>
+                             <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example:</strong> An 18-year-old's parent hosts a graduation party and allows the teenagers to drink beer. The parent has committed the offense of Furnishing Alcohol to a Minor.</p>
+                        </div>
+                         <div class="border-t pt-4">
+                             <h3 class="font-semibold text-lg">Misrepresentation of Age by a Minor (<a href="https://statutes.capitol.texas.gov/Docs/AL/htm/AL.106.htm#106.07" target="_blank" class="text-yellow-700 hover:underline">§106.07</a>)</h3>
+                             <p class="text-sm"><strong class="mr-2">Punishment Level:</strong> <span class="punishment-gray">Class C Misdemeanor</span></p>
+                             <h4 class="font-semibold mt-2 text-sm">Elements Checklist:</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700"><li>A minor</li><li>Falsely states they are 21 years of age or older</li><li>Or presents any document that indicates they are 21 or older</li><li>To a person engaged in the sale of alcoholic beverages.</li></ul>
+                             <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example:</strong> A 20-year-old uses their older sibling's driver's license to try to buy alcohol at a liquor store. They have committed Misrepresentation of Age by a Minor.</p>
+                        </div>
+                     </div>
+                 </div>
+            </div>
+            
+            <div id="offenses-general" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">General Offenses</h2>
+                    <div class="space-y-6">
+                        <div>
+                             <h3 class="font-semibold text-lg">Sale to Certain Persons (<a href="https://statutes.capitol.texas.gov/Docs/AL/htm/AL.101.htm#101.63" target="_blank" class="text-yellow-700 hover:underline">§101.63</a>)</h3>
+                             <p class="text-sm"><strong class="mr-2">Punishment Level:</strong> Fine of $100-$500; and/or up to 1 year in jail.</p>
+                             <h4 class="font-semibold mt-2 text-sm">Elements Checklist:</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700"><li>A person</li><li>Sells an alcoholic beverage</li><li>To a habitual drunkard or an intoxicated or insane person.</li></ul>
+                             <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example:</strong> A bartender serves another beer to a patron who is slurring their words, stumbling, and showing other clear signs of intoxication. The bartender has committed an offense.</p>
+                        </div>
+                        <div class="border-t pt-4">
+                             <h3 class="font-semibold text-lg">Consumption of Alcohol Near Schools (<a href="https://statutes.capitol.texas.gov/Docs/AL/htm/AL.101.htm#101.75" target="_blank" class="text-yellow-700 hover:underline">§101.75</a>)</h3>
+                             <p class="text-sm"><strong class="mr-2">Punishment Level:</strong> <span class="punishment-gray">Class C Misdemeanor</span></p>
+                             <h4 class="font-semibold mt-2 text-sm">Elements Checklist:</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700"><li>A person</li><li>Possesses an open container or consumes an alcoholic beverage</li><li>On a public street, alley, or sidewalk</li><li>Within 1000 feet of a public or private school.</li></ul>
+                             <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example:</strong> A person is walking down the sidewalk in front of an elementary school while drinking a can of beer. They have committed an offense.</p>
+                        </div>
+                        <div class="border-t pt-4">
+                             <h3 class="font-semibold text-lg">Possession of Intoxicants on Public School Grounds (<a href="https://statutes.capitol.texas.gov/Docs/ED/htm/ED.37.htm#37.122" target="_blank" class="text-yellow-700 hover:underline">EC §37.122</a>)</h3>
+                             <p class="text-sm"><strong class="mr-2">Punishment Level:</strong> <span class="punishment-gray">Class C Misdemeanor</span></p>
+                             <h4 class="font-semibold mt-2 text-sm">Elements Checklist:</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700"><li>A person</li><li>Possesses an intoxicating beverage</li><li>On the grounds of any public school.</li></ul>
+                             <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example:</strong> A parent brings a flask of whiskey to a high school football game and is found with it in the stands. They have committed an offense.</p>
+                        </div>
+                         <div class="border-t pt-4">
+                             <h3 class="font-semibold text-lg">Open Container (<a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.49.htm#49.031" target="_blank" class="text-yellow-700 hover:underline">PC §49.031</a>)</h3>
+                             <p class="text-sm text-gray-500">Note: This offense is in the Penal Code, not TABC.</p>
+                             <p class="text-sm"><strong class="mr-2">Punishment Level:</strong> <span class="punishment-gray">Class C Misdemeanor</span></p>
+                             <h4 class="font-semibold mt-2 text-sm">Elements Checklist:</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700"><li>A person</li><li>Knowingly</li><li>Possesses an open container</li><li>In a passenger area of a motor vehicle that is located on a public highway.</li></ul>
+                             <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example:</strong> A driver is stopped for a traffic violation and the officer sees a half-empty bottle of wine in the passenger seat. The driver has committed Possession of an Open Container.</p>
+                        </div>
+                        <div class="border-t pt-4">
+                             <h3 class="font-semibold text-lg">Lewd, Immoral, Indecent Conduct (<a href="https://statutes.capitol.texas.gov/Docs/AL/htm/AL.104.htm#104.01" target="_blank" class="text-yellow-700 hover:underline">§104.01</a>)</h3>
+                             <p class="text-sm"><strong class="mr-2">Punishment Level:</strong> This is an administrative violation against the license/permit, not a direct criminal offense for the patron.</p>
+                             <h4 class="font-semibold mt-2 text-sm">Checklist: A licensee or permittee shall not:</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700"><li>Employ a person on the premises who is intoxicated.</li><li>Permit any lewd or immoral conduct on the premises.</li><li>Permit any conduct that is loud, boisterous, or profane.</li></ul>
+                             <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example:</strong> An officer enters a bar and finds an off-duty bartender who is extremely intoxicated and yelling profanities at other customers. The TABC can take administrative action against the bar's permit for this violation.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="hours" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Hours of Sale & Consumption</h2>
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="font-semibold text-lg">Liquor (Package Store) (<a href="https://statutes.capitol.texas.gov/Docs/AL/htm/AL.105.htm#105.01" target="_blank" class="text-yellow-700 hover:underline">§105.01</a>)</h3>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li><strong>Hours:</strong> 10:00 AM to 9:00 PM.</li>
+                                <li><strong>Days:</strong> Monday - Saturday.</li>
+                                <li><strong>Closed:</strong> Sunday, Thanksgiving Day, Christmas Day, New Year's Day.</li>
+                            </ul>
+                        </div>
+                        <div class="border-t pt-4">
+                            <h3 class="font-semibold text-lg">Hours of Sale: Wine and Malt Beverage Retailer (<a href="https://statutes.capitol.texas.gov/Docs/AL/htm/AL.105.htm#105.04" target="_blank" class="text-yellow-700 hover:underline">§105.04</a>)</h3>
+                             <p class="text-sm text-gray-500 mb-2">Applies to places like convenience and grocery stores.</p>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li><strong>Monday - Friday:</strong> 7:00 AM to Midnight.</li>
+                                <li><strong>Saturday:</strong> 7:00 AM to 1:00 AM (Sunday).</li>
+                                <li><strong>Sunday:</strong> 10:00 AM to Midnight. (Previously Noon).</li>
+                            </ul>
+                        </div>
+                        <div class="border-t pt-4">
+                            <h3 class="font-semibold text-lg">Hours of Consumption (On-Premise) (<a href="https://statutes.capitol.texas.gov/Docs/AL/htm/AL.105.htm#105.06" target="_blank" class="text-yellow-700 hover:underline">§105.06</a>)</h3>
+                             <p class="text-sm text-gray-500 mb-2">Applies to places like bars and restaurants.</p>
+                             <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li><strong>Standard Hours:</strong> Ends at 12:15 AM. Patrons have until then to finish drinks.</li>
+                                <li><strong>Extended Hours (by local ordinance):</strong> Ends at 2:15 AM.</li>
+                                <li><strong>Sunday:</strong> Can begin serving at 10:00 AM with food.</li>
+                            </ul>
+                        </div>
+                        <div class="border-t pt-4">
+                            <h3 class="font-semibold text-lg">Sports Venues, Wineries, & Other Events (<a href="https://statutes.capitol.texas.gov/Docs/AL/htm/AL.105.htm#105.07" target="_blank" class="text-yellow-700 hover:underline">§105.07-09</a>)</h3>
+                             <ul class="list-disc list-inside text-sm text-gray-700">
+                                 <li>Special provisions exist for locations like sports venues, wineries, festivals, and other specific events that may allow for different hours of sale and consumption than standard establishments.</li>
+                            </ul>
+                        </div>
+                        <div class="border-t pt-4">
+                             <h3 class="font-semibold text-lg">Penalty for Hours Violation (<a href="https://statutes.capitol.texas.gov/Docs/AL/htm/AL.105.htm#105.10" target="_blank" class="text-yellow-700 hover:underline">§105.10</a>)</h3>
+                             <p class="text-sm"><strong class="mr-2">Punishment Level:</strong> Subject to the <span class="punishment-gray">General Penalty under §1.05</span> (Misdemeanor).</p>
+                             <h4 class="font-semibold mt-2 text-sm">Elements Checklist:</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700"><li>A person</li><li>Sells, offers for sale, or delivers an alcoholic beverage</li><li>During prohibited hours.</li></ul>
+                             <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example:</strong> A grocery store clerk sells a case of beer to a customer at 6:30 AM on a Tuesday. The store has committed an offense for selling outside of legal hours.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="knowledge-check" class="tab-content">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Knowledge Check</h2>
+                    <p class="mb-6 text-gray-600">Test your understanding of the material.</p>
+                    <div id="quiz-container" class="space-y-8"></div>
+                    <div class="mt-8 text-center">
+                        <button id="check-answers-btn" class="bg-yellow-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-yellow-700 transition-colors">Check Answers</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="resources" class="tab-content">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Statutory Resources</h2>
+                    <p class="mb-6 text-gray-600">Quick links to the Texas Codes referenced in this guide.</p>
+                    <div id="resources-list" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-sm"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('#tabs button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                });
+            });
+
+            const quizData = [
+                { question: "1. A person under 21 years of age is defined in the TABC as a:", options: ["Juvenile", "Child", "Minor", "Young Adult"], answer: "Minor", explanation: "TABC §106.01 defines a minor as a person under 21 years of age for the purposes of the code." },
+                { question: "2. The authority for a peace officer to enter a bar to check for TABC violations without a warrant is known as:", options: ["Reasonable Suspicion", "Probable Cause", "An Inspection", "A Search"], answer: "An Inspection", explanation: "Under TABC §101.04, a licensee or permittee consents to inspection of their premises by a peace officer at any time." },
+                { question: "3. A convenience store clerk sells a six-pack of beer to a 20-year-old with criminal negligence. What offense has the clerk committed?", options: ["No offense", "Furnishing Alcohol to a Minor", "Sale of Alcohol to a Minor", "Public Intoxication"], answer: "Sale of Alcohol to a Minor", explanation: "TABC §106.03 makes it a Class A Misdemeanor for a person to sell an alcoholic beverage to a minor with criminal negligence." },
+                { question: "4. A 19-year-old is stopped for a traffic violation and has a blood alcohol concentration of 0.02. What offense has been committed?", options: ["Driving While Intoxicated", "Driving Under the Influence of Alcohol by a Minor", "No Offense", "Public Intoxication"], answer: "Driving Under the Influence of Alcohol by a Minor", explanation: "TABC §106.041 makes it a Class C Misdemeanor for a minor to operate a motor vehicle in a public place with any detectable amount of alcohol in their system." },
+                { question: "5. An adult parent who hosts a party and knowingly allows their 17-year-old child's friends to drink alcohol has committed:", options: ["No offense, this is legal", "Sale to a Minor", "Furnishing Alcohol to a Minor", "Consumption of Alcohol by a Minor"], answer: "Furnishing Alcohol to a Minor", explanation: "TABC §106.06 makes it a Class A Misdemeanor to purchase for, give, or make available an alcoholic beverage to a minor with criminal negligence." },
+                { question: "6. A bar patron is slurring their speech, stumbling, and is clearly intoxicated. The bartender serves them another drink. This is the offense of:", options: ["Public Intoxication", "Sale to Certain Persons", "Disorderly Conduct", "No offense"], answer: "Sale to Certain Persons", explanation: "TABC §101.63 prohibits the sale of an alcoholic beverage to an intoxicated person." },
+                { question: "7. On which of the following days is a package liquor store required to be closed?", options: ["Labor Day", "Halloween", "Thanksgiving Day", "July 4th"], answer: "Thanksgiving Day", explanation: "Under TABC §105.01, liquor stores must be closed on Thanksgiving Day, Christmas Day, and New Year's Day." },
+                { question: "8. A 20-year-old uses their older brother's valid Driver's License to try and buy beer. What offense has been committed?", options: ["Forgery", "Tampering with a Government Record", "Misrepresentation of Age by a Minor", "No Offense"], answer: "Misrepresentation of Age by a Minor", explanation: "TABC §106.07 makes it a Class C Misdemeanor for a minor to present a document indicating they are 21 or older to someone selling alcohol." },
+                { question: "9. TABC can suspend a bar's permit for a violation, and the District Attorney can charge the bartender criminally for the same incident. This is:", options: ["Double Jeopardy", "Illegal", "Allowed, because one is an administrative action and one is a criminal action", "Only allowed if the violation is a felony"], answer: "Allowed, because one is an administrative action and one is a criminal action", explanation: "Criminal and administrative (civil) actions are separate legal processes, and double jeopardy does not apply between them." },
+                { question: "10. 'An alcoholic beverage manufactured, sold, or possessed in violation of the code' is defined as:", options: ["Bootleg Liquor", "Moonshine", "An Illicit Beverage", "A Prohibited Beverage"], answer: "An Illicit Beverage", explanation: "This is the definition of 'Illicit Beverage' found in TABC §1.04." },
+                { question: "11. An officer finds a person in possession of an illicit beverage. The officer:", options: ["Must obtain a warrant before arresting", "Shall arrest the person without a warrant", "Can only seize the beverage", "Must issue a citation"], answer: "Shall arrest the person without a warrant", explanation: "TABC §103.04 states that a peace officer SHALL arrest without a warrant any person found in possession of an illicit beverage." },
+                { question: "12. What is the penalty for possessing an open container of alcohol in the passenger area of a car on a public highway?", options: ["Class A Misdemeanor", "Class B Misdemeanor", "Class C Misdemeanor", "No offense if the driver is sober"], answer: "Class C Misdemeanor", explanation: "Penal Code §49.031 makes possession of an open container in a vehicle a Class C Misdemeanor." },
+                { question: "13. A violation of the hours of sale for which no specific penalty is listed is punishable as a:", options: ["Class C Misdemeanor", "Civil infraction only", "A misdemeanor under the General Penalty clause", "Felony"], answer: "A misdemeanor under the General Penalty clause", explanation: "TABC §105.10 refers to the General Penalty under §1.05, which is a misdemeanor punishable by a fine of $100-$1000 and/or up to a year in jail." },
+                { question: "14. What time can a grocery store begin selling beer on a Sunday?", options: ["7:00 AM", "9:00 AM", "10:00 AM", "Noon"], answer: "10:00 AM", explanation: "Under TABC §105.04, retailers can begin selling malt beverages and wine at 10:00 AM on Sundays." },
+                { question: "15. A parent having a glass of wine at a high school graduation party on school grounds commits:", options: ["No offense", "Public Intoxication", "Possession of Intoxicants on Public School Grounds", "Furnishing Alcohol to a Minor"], answer: "Possession of Intoxicants on Public School Grounds", explanation: "Education Code §37.122 makes it a Class C Misdemeanor to possess an intoxicating beverage on public school grounds." }
+            ];
+
+            const quizContainer = document.getElementById('quiz-container');
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'quiz-question';
+                let optionsHtml;
+                if (q.options.length === 2) { // True/False
+                    optionsHtml = q.options.map(option => `
+                        <label class="inline-flex items-center mr-4"><input type="radio" name="q${index}" value="${option}" class="mr-2">${option}</label>
+                    `).join('');
+                } else {
+                    optionsHtml = q.options.map(option => `
+                        <label class="block"><input type="radio" name="q${index}" value="${option}" class="mr-2">${option}</label>
+                    `).join('');
+                }
+                questionDiv.innerHTML = `<p class="font-semibold mb-2">${q.question}</p><div class="space-y-2">${optionsHtml}</div><div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>`;
+                quizContainer.appendChild(questionDiv);
+            });
+
+            document.getElementById('check-answers-btn').addEventListener('click', () => {
+                quizData.forEach((q, index) => {
+                    const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                    const feedback = document.querySelectorAll('.feedback')[index];
+                    feedback.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+                    if (selected && selected.value === q.answer) {
+                        feedback.textContent = `Correct! ${q.explanation}`;
+                        feedback.classList.add('bg-green-100', 'text-green-800');
+                    } else {
+                        feedback.textContent = `Incorrect. The correct answer is "${q.answer}". ${q.explanation}`;
+                        feedback.classList.add('bg-red-100', 'text-red-800');
+                    }
+                });
+            });
+
+            const resources = [
+                { name: "EC §37.122 - Intoxicants on School Grounds", url: "https://statutes.capitol.texas.gov/Docs/ED/htm/ED.37.htm#37.122" },
+                { name: "PC §49.031 - Open Container in Vehicle", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.49.htm#49.031"},
+                { name: "TABC §1.04 - Definitions", url: "https://statutes.capitol.texas.gov/Docs/AL/htm/AL.1.htm#1.04" },
+                { name: "TABC §1.05 - General Penalty", url: "https://statutes.capitol.texas.gov/Docs/AL/htm/AL.1.htm#1.05" },
+                { name: "TABC §11.49 - Premises Defined", url: "https://statutes.capitol.texas.gov/Docs/AL/htm/AL.11.htm#11.49" },
+                { name: "TABC §101.02 - Arrest Without Warrant", url: "https://statutes.capitol.texas.gov/Docs/AL/htm/AL.101.htm#101.02" },
+                { name: "TABC §101.03 - Search and Seizure", url: "https://statutes.capitol.texas.gov/Docs/AL/htm/AL.101.htm#101.03" },
+                { name: "TABC §101.04 - Consent to Inspection", url: "https://statutes.capitol.texas.gov/Docs/AL/htm/AL.101.htm#101.04" },
+                { name: "TABC §101.07 - Duty of Peace Officers", url: "https://statutes.capitol.texas.gov/Docs/AL/htm/AL.101.htm#101.07" },
+                { name: "TABC §101.63 - Sale to Certain Persons", url: "https://statutes.capitol.texas.gov/Docs/AL/htm/AL.101.htm#101.63" },
+                { name: "TABC §101.75 - Consumption Near Schools", url: "https://statutes.capitol.texas.gov/Docs/AL/htm/AL.101.htm#101.75" },
+                { name: "TABC §103.03 - Seizure of Illicit Beverages", url: "https://statutes.capitol.texas.gov/Docs/AL/htm/AL.103.htm#103.03" },
+                { name: "TABC §103.04 - Arrest of Person in Possession", url: "https://statutes.capitol.texas.gov/Docs/AL/htm/AL.103.htm#103.04" },
+                { name: "TABC §104.01 - Lewd, Immoral Conduct", url: "https://statutes.capitol.texas.gov/Docs/AL/htm/AL.104.htm#104.01" },
+                { name: "TABC Ch. 105 - Hours of Sale/Consumption", url: "https://statutes.capitol.texas.gov/Docs/AL/htm/AL.105.htm" },
+                { name: "TABC §105.10 - Hours Violation Penalty", url: "https://statutes.capitol.texas.gov/Docs/AL/htm/AL.105.htm#105.10" },
+                { name: "TABC Ch. 106 - Provisions Relating to Minors", url: "https://statutes.capitol.texas.gov/Docs/AL/htm/AL.106.htm" },
+            ];
+            const resourcesList = document.getElementById('resources-list');
+            resources.sort((a, b) => a.name.localeCompare(b.name));
+            resources.forEach(res => {
+                const link = document.createElement('a');
+                link.href = res.url;
+                link.target = '_blank';
+                link.className = 'text-yellow-700 hover:underline';
+                link.textContent = res.name;
+                resourcesList.appendChild(link);
+            });
+        });
+    </script>
+</body>
+</html>
+

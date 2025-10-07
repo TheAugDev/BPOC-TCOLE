@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCOLE Consular Notification Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+        .answer-option {
+            transition: all 0.2s ease-in-out;
+        }
+        .answer-option:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .correct {
+            background-color: #D1FAE5 !important;
+            border-color: #10B981 !important;
+        }
+        .incorrect {
+            background-color: #FEE2E2 !important;
+            border-color: #EF4444 !important;
+        }
+        .progress-bar-fill {
+            transition: width 0.3s ease-in-out;
+        }
+        .review-correct {
+            color: #059669;
+        }
+        .review-incorrect {
+            color: #e11d48;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="quiz-app" class="quiz-container p-4 sm:p-8">
+        
+        <!-- Quiz Start Screen -->
+        <div id="start-screen" class="text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">TCOLE Consular Notification</h1>
+            <p class="text-lg text-gray-600 mb-8">An exhaustive quiz based on the "Basic Peace Officer Course | Chapter 13" handout to test your knowledge on the duties and responsibilities regarding consular notification.</p>
+            <button id="start-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Start Quiz</button>
+        </div>
+
+        <!-- Quiz Interface -->
+        <div id="quiz-screen" class="hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold">Question <span id="question-number"></span> of <span id="total-questions"></span></h2>
+                <div id="timer" class="text-lg font-mono bg-gray-200 px-3 py-1 rounded-md">00:00</div>
+            </div>
+            
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+                <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full progress-bar-fill" style="width: 0%"></div>
+            </div>
+
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+                <p id="question-text" class="text-xl font-medium mb-8 min-h-[6rem]"></p>
+                <div id="answer-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Answer options will be injected here by JS -->
+                </div>
+            </div>
+             <div id="rationale-box" class="hidden mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h3 class="font-bold text-blue-800">Rationale:</h3>
+                <p id="rationale-text" class="text-blue-700"></p>
+                <p class="text-sm text-blue-600 mt-2">Source: <span id="rationale-source"></span></p>
+            </div>
+            <button id="next-btn" class="hidden w-full bg-blue-600 text-white font-bold py-3 px-8 rounded-lg mt-8 hover:bg-blue-700 transition-colors shadow-md">Next Question</button>
+        </div>
+
+        <!-- Quiz Results Screen -->
+        <div id="results-screen" class="hidden text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">Quiz Complete!</h1>
+            <p class="text-lg text-gray-600 mb-6">Here's how you did:</p>
+            <div class="flex flex-col sm:flex-row justify-around items-center my-8 gap-8 sm:gap-0">
+                <div>
+                    <p class="text-5xl font-bold text-green-600"><span id="score-percentage"></span>%</p>
+                    <p class="text-gray-500">Score</p>
+                </div>
+                 <div>
+                    <p class="text-5xl font-bold text-blue-600"><span id="correct-answers"></span>/<span id="total-answered"></span></p>
+                    <p class="text-gray-500">Correct Answers</p>
+                </div>
+                 <div>
+                    <p class="text-5xl font-bold text-gray-700"><span id="final-time"></span></p>
+                    <p class="text-gray-500">Time Taken</p>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="restart-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Try Again</button>
+                <button id="review-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md">Review Answers</button>
+            </div>
+        </div>
+        
+        <!-- Review Screen -->
+        <div id="review-screen" class="hidden bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6">Answer Review</h1>
+            <div id="review-container" class="space-y-6">
+                <!-- Review content will be injected here -->
+            </div>
+            <button id="back-to-results-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md mt-8">Back to Results</button>
+        </div>
+
+    </div>
+
+    <script>
+        const quizData = [
+            { question: "What is the 'Basic Rule' under VCCR Article 36 regarding a foreign detainee?", options: ["They must be deported immediately.", "They must be informed of the right to have their consulate notified.", "They lose all rights upon arrest.", "They can only speak to a U.S. attorney."], answer: "They must be informed of the right to have their consulate notified.", rationale: "The Basic Rule under VCCR Article 36 is that 'A foreign detainee must be informed of his right to have his consulate notified.'", page: "Page 1" },
+            { question: "Does the basic rule of consular notification apply to foreign detainees who are in the country illegally?", options: ["No, it only applies to those with valid visas.", "Yes, it applies to all foreign detainees, whether in the country legally or not.", "Only if the crime is a felony.", "No, illegal status forfeits this right."], answer: "Yes, it applies to all foreign detainees, whether in the country legally or not.", rationale: "The text explicitly states the rule 'Applies to all foreign detainees, whether in the country illegally or not.'", page: "Page 1" },
+            { question: "Under VCCR Article 36, if a detainee requests that their consulate be notified, what must the authorities do?", options: ["Wait 48 hours before notifying.", "Inform the consular post without delay.", "Send a written letter via postal mail.", "Get a judge's approval first."], answer: "Inform the consular post without delay.", rationale: "Article 36(b) states 'if he so requests, the competent authorities of the receiving State shall, without delay, inform the consular post...'", page: "Page 1" },
+            { question: "What right do consular officers have regarding their nationals who are in detention?", options: ["The right to demand their immediate release.", "The right to visit, converse with, and arrange legal representation for them.", "The right to be present during all interrogations.", "The right to take them back to their home country."], answer: "The right to visit, converse with, and arrange legal representation for them.", rationale: "Article 36(c) grants consular officers 'the right to visit a national of the sending State who is in prison, custody or detention, to converse and correspond with him and to arrange for his legal representation.'", page: "Page 1" },
+            { question: "A consular officer must refrain from taking action on behalf of a national in detention if the national does what?", options: ["Fails to pay their legal fees.", "Is a citizen of a non-VCCR country.", "Expressly opposes such action.", "Is suspected of a serious felony."], answer: "Expressly opposes such action.", rationale: "Article 36(c) specifies that 'consular officers shall refrain from taking action on behalf of a national who is in prison, custody or detention if he expressly opposes such action.'", page: "Page 1" },
+            { question: "What is the 'Mandatory Rule' for consular notification?", options: ["All consulates must be notified for all foreign detainees.", "Notification is mandatory only for felony arrests.", "Certain consulates MUST be notified regardless of the detainee's wishes.", "The detainee must agree in writing before any notification is made."], answer: "Certain consulates MUST be notified regardless of the detainee's wishes.", rationale: "The 'Mandatory Rule' applies to certain countries where their consulate 'MUST be notified regardless of the wishes of the detainee.'", page: "Page 2" },
+            { question: "Does a foreign national's 'Right to Privacy' prevent mandatory notification to a consulate covered by a bilateral treaty?", options: ["Yes, the right to privacy always takes precedence.", "Only if the detainee makes a written request for privacy.", "No, it does not apply to mandatory notification of foreign nationals covered by a bilateral treaty.", "Only for misdemeanor offenses."], answer: "No, it does not apply to mandatory notification of foreign nationals covered by a bilateral treaty.", rationale: "The text specifies that the 'Right to Privacy... Does not apply to mandatory notification of foreign nationals covered by a bilateral treaty.'", page: "Page 2" },
+            { question: "What is the first step an officer should take when dealing with a detainee who may be a foreign national?", options: ["Immediately notify the State Department.", "Ask the detainee if they are a U.S. citizen.", "Check the list of mandatory notification countries.", "Document their personal property."], answer: "Ask the detainee if they are a U.S. citizen.", rationale: "The first step listed in the process is to 'Ask the detainee if they are a U.S. citizen.' This determines if consular notification rules apply.", page: "Page 2" },
+            { question: "Most bilateral treaties allow a maximum of how many hours to make a mandatory consular notification?", options: ["24 hours", "48 hours", "72 hours", "96 hours"], answer: "72 hours", rationale: "The text notes that 'most bilateral treaties allow a maximum of 72 hours to make notification.'", page: "Page 2" },
+            { question: "If a foreign national is from a country with mandatory notification, what must an officer do?", options: ["Ask them if they want their consulate notified.", "Notify the consulate only if the detainee agrees.", "Notify the consulate without delay, regardless of the detainee's wishes.", "Wait for the detainee to contact their own consulate."], answer: "Notify the consulate without delay, regardless of the detainee's wishes.", rationale: "For countries on the mandatory list, the officer must 'do so without delay,' even if the detainee objects.", page: "Page 2" },
+            { question: "What is a crucial part of the documentation process after offering or making a consular notification?", options: ["Getting a verbal confirmation.", "Keeping a written record of the detainee's response and any notification made.", "Sending an email to the Chief of Police.", "Filming the detainee's response."], answer: "Keeping a written record of the detainee's response and any notification made.", rationale: "Officers must 'Keep a written record of the arrestees'/detainees' response' and 'Document the notification (date, time, method of notification, and the person notified).'", page: "Page 2" },
+            { question: "What is the primary purpose of the Vienna Convention on Consular Relations (VCCR)?", options: ["To promote international trade.", "To ensure a foreign national can receive assistance from their own government.", "To establish rules for diplomatic immunity.", "To regulate international travel and visas."], answer: "To ensure a foreign national can receive assistance from their own government.", rationale: "The purpose is 'To ensure a foreign national is not placed in a situation in which they cannot receive assistance from their own government.'", page: "Page 2" },
+            { question: "Which of the following is NOT a form of access a consular official may have to an arrested foreign national?", options: ["Visit", "Call", "Write", "Serve as their attorney"], answer: "Serve as their attorney", rationale: "The text lists 'Visit,' 'Call,' and 'Write' as forms of access. While a consular official can 'arrange legal representation,' they do not typically serve as the attorney themselves.", page: "Page 2" },
+            { question: "What must consular officials follow when visiting a detainee?", options: ["Their home country's laws.", "The regulations of the detention facility.", "The detainee's personal wishes.", "International law only."], answer: "The regulations of the detention facility.", rationale: "The text states, 'Consuls must follow the regulations of the detention facility (security, time, place, manner of visits).'", page: "Page 2" },
+            { question: "Which of these is a service a consular officer might provide to a detained national?", options: ["Post their bail.", "Investigate the crime on their behalf.", "Monitor the progress of the case and ensure a fair trial.", "Order their release from detention."], answer: "Monitor the progress of the case and ensure a fair trial.", rationale: "Services of a consular officer include arranging legal representation, monitoring the case, ensuring a fair trial, and monitoring conditions of confinement.", page: "Pages 2-3" },
+            { question: "Which is NOT a service a consular officer typically provides?", options: ["Provide reading material and food.", "Arrange legal representation.", "Act as the lead investigator for the defense.", "Monitor conditions of confinement."], answer: "Act as the lead investigator for the defense.", rationale: "While consular officers can arrange legal representation and monitor the case, they do not act as private investigators for the detainee.", page: "Pages 2-3" },
+            { question: "What is the primary legal reason for complying with the VCCR?", options: ["It is a suggestion from the United Nations.", "It is considered 'the law of the land.'", "It avoids bad publicity.", "It is required by state law only."], answer: "It is considered 'the law of the land.'", rationale: "The text lists 'Its \"the law of the land\"' as the primary legal reason for compliance.", page: "Page 3" },
+            { question: "The policy reason for complying with consular notification, based on the idea of mutual cooperation between countries, is known as:", options: ["Pragmatism", "Reciprocity", "Legality", "Obligation"], answer: "Reciprocity", rationale: "The text lists 'Reciprocity' as the policy reason for compliance, implying that if the U.S. honors the treaty, other countries will do the same for detained U.S. citizens.", page: "Page 3" },
+            { question: "The pragmatic reason for complying with consular notification is:", options: ["To be polite to foreign governments.", "To build international relationships.", "To avoid investigation and litigation.", "Because it is required by department policy."], answer: "To avoid investigation and litigation.", rationale: "The pragmatic, or practical, reason is 'To avoid investigation and litigation' that can arise from failing to comply with the treaty.", page: "Page 3" },
+            { question: "You arrest John Sato, a citizen of Japan (not a mandatory notification country). He says he does NOT want his consulate notified. What should you do?", options: ["Notify the consulate anyway.", "Record his response and take no further action.", "Hold him until he agrees to notification.", "Release him with a warning."], answer: "Record his response and take no further action.", rationale: "The scenario for a Japanese citizen, whose country is not on the mandatory list, demonstrates that the officer should respect the detainee's wishes after recording their response.", page: "Page 3" },
+            { question: "You arrest Robert Tan, a citizen of Singapore (a mandatory notification country). He says he does NOT want his consulate notified. What should you do?", options: ["Honor his request and do not notify.", "Release him immediately.", "Record his response but proceed with notification 'without delay.'", "Wait 72 hours and ask him again."], answer: "Record his response but proceed with notification 'without delay.'", rationale: "The scenario for a Singaporean citizen, whose country is on the mandatory list, shows that the officer must proceed with notification even if the detainee objects.", page: "Page 3" },
+            { question: "You arrest a citizen of Mexico who is in the U.S. illegally. He requests notification. What should you do?", options: ["Refuse because he is in the country illegally.", "Record his response, contact the Mexican consulate, and document the notification.", "Tell him he must contact them himself.", "Only notify if the crime is a felony."], answer: "Record his response, contact the Mexican consulate, and document the notification.", rationale: "The scenario for a Mexican citizen shows that his request should be honored regardless of his immigration status, and all proper steps should be followed.", page: "Page 4" },
+            { question: "Which bureau within the U.S. Department of State is tasked with overseeing diplomatic immunities?", options: ["Bureau of Consular Affairs", "Diplomatic Security Service", "Office of Foreign Missions (OFM)", "Bureau of International Narcotics and Law Enforcement"], answer: "Office of Foreign Missions (OFM)", rationale: "The text states, 'Office of Foreign Missions (OFM) is the leading bureau within the U.S. Department of State tasked with overseeing diplomatic immunities...'", page: "Page 5" },
+            { question: "What is the C.A.N. Principle regarding diplomatic immunity?", options: ["A guide for tourists to avoid arrest.", "A set of actions law enforcement can take: Call, Assist, Notify.", "A treaty between Canada, America, and Mexico.", "A rule stating diplomats Cannot be Arrested for anYthing."], answer: "A set of actions law enforcement can take: Call, Assist, Notify.", rationale: "The C.A.N. Principle stands for CALL the Department of State, ASSIST by documenting, and NOTIFY by sending reports.", page: "Page 5" },
+            { question: "In the C.A.N. Principle, what does the 'C' stand for?", options: ["Cite the individual.", "Caution the diplomat.", "Call the Department of State to verify immunity status.", "Confiscate their diplomatic passport."], answer: "Call the Department of State to verify immunity status.", rationale: "'CALL the Department of State to verify immunity status' is the first step in the C.A.N. principle.", page: "Page 5" },
+            { question: "According to the 'A' in the C.A.N. principle, can a person with diplomatic immunity be given a traffic citation?", options: ["No, they are immune from all citations.", "Yes, anyone can get a traffic citation.", "Only if they are driving recklessly.", "Only with their embassy's permission."], answer: "Yes, anyone can get a traffic citation.", rationale: "The 'ASSIST' part of the principle explicitly states, 'Remember that anyone can get a traffic citation!'", page: "Page 5" },
+            { question: "What does the 'N' in the C.A.N. principle require an officer to do?", options: ["Negotiate a resolution with the diplomat.", "Notify the diplomat's embassy directly.", "Notify the media of the incident.", "Notify the Dept. of State by sending copies of citations and reports."], answer: "Notify the Dept. of State by sending copies of citations and reports.", rationale: "'NOTIFY us by sending a copy of all citations and reports to the Department of State, Office of Foreign Missions...' is the final step.", page: "Page 5" },
+            { question: "Even if a person has diplomatic immunity, what is the most important consideration for a law enforcement officer?", options: ["Avoiding a diplomatic incident.", "Getting a clear photo for the report.", "Officer and public safety.", "Respecting their claim of immunity without question."], answer: "Officer and public safety.", rationale: "The text emphasizes, 'Immunity is to be respected, but nothing is more important than officer and public safety.'", page: "Page 5" },
+            { question: "What allows the Office of Foreign Missions (OFM) to pursue an incident with a diplomat through diplomatic channels?", options: ["A verbal report from the arresting officer.", "A request from the diplomat's embassy.", "Thorough documentation of incidents from law enforcement.", "Media coverage of the incident."], answer: "Thorough documentation of incidents from law enforcement.", rationale: "The text states 'When law enforcement provides the Department of State with thorough documentation of incidents, this allows OFM to pursue the matter through diplomatic channels...'", page: "Page 5" },
+            { question: "Under Article 36, if a detainee sends a letter to their consulate, what must the detention facility do?", options: ["Read and censor the letter.", "Forward it without delay.", "Hold it for 72 hours for inspection.", "Translate it into English first."], answer: "Forward it without delay.", rationale: "Article 36(b) states 'Any communication addressed to the consular post by the person arrested...shall also be forwarded by the said authorities without delay.'", page: "Page 1" },
+            { question: "The rights referred to in VCCR Article 36 must be exercised in conformity with the laws of the receiving state, provided that these laws:", options: ["Are approved by the sending state's consulate.", "Do not contradict the officer's judgment.", "Enable full effect to be given to the purposes for which the rights are intended.", "Are less than five years old."], answer: "Enable full effect to be given to the purposes for which the rights are intended.", rationale: "Article 36, Paragraph 2, places a condition on local laws, stating they 'must enable full effect to be given to the purposes for which the rights accorded under this Article are intended.'", page: "Page 1" },
+            { question: "Which of the following must be documented after an officer notifies a consulate?", options: ["The detainee's criminal history.", "The method of notification and the person notified.", "The officer's opinion of the detainee's guilt.", "The cost of the international phone call."], answer: "The method of notification and the person notified.", rationale: "The steps require an officer to 'Document the notification (date, time, method of notification, and the person notified).'", page: "Page 2" },
+            { question: "The privacy of citizens from which countries should be respected if they decline notification?", options: ["All countries, without exception.", "Countries with a mandatory notification treaty.", "VCCR countries not covered by a mandatory bilateral treaty.", "Only English-speaking countries."], answer: "VCCR countries not covered by a mandatory bilateral treaty.", rationale: "The text states, 'Privacy of citizens of VCCR countries should be respected,' which refers to the non-mandatory countries where the detainee's choice is the deciding factor.", page: "Page 2" },
+            { question: "If an officer is unsure whether a country requires mandatory notification, what is the best resource to check?", options: ["Ask the detainee.", "The Consular Notification and Access handbook or reference card.", "A standard world map.", "The department's policy on traffic stops."], answer: "The Consular Notification and Access handbook or reference card.", rationale: "The 'Mandatory Rule' section refers the officer to the 'Consular Notification and Access handbook and Consular Notification and Access reference card' to get this information.", page: "Page 2" },
+            { question: "Who provides training and guidance on immunity issues for U.S. law enforcement?", options: ["The Federal Bureau of Investigation (FBI).", "Local district attorney's offices.", "The Department of State's Office of Foreign Missions (OFM).", "The United Nations Security Council."], answer: "The Department of State's Office of Foreign Missions (OFM).", rationale: "The text states that the 'Office of Foreign Missions (OFM)... provides training and guidance on immunity issues for law enforcement and attorneys.'", page: "Page 5" }
+        ];
+
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const reviewScreen = document.getElementById('review-screen');
+
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const reviewBtn = document.getElementById('review-btn');
+        const backToResultsBtn = document.getElementById('back-to-results-btn');
+        
+        const questionNumberEl = document.getElementById('question-number');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const progressBar = document.getElementById('progress-bar');
+        const questionTextEl = document.getElementById('question-text');
+        const answerOptionsEl = document.getElementById('answer-options');
+        const rationaleBox = document.getElementById('rationale-box');
+        const rationaleText = document.getElementById('rationale-text');
+        const rationaleSource = document.getElementById('rationale-source');
+        
+        const scorePercentageEl = document.getElementById('score-percentage');
+        const correctAnswersEl = document.getElementById('correct-answers');
+        const totalAnsweredEl = document.getElementById('total-answered');
+        const finalTimeEl = document.getElementById('final-time');
+        const timerEl = document.getElementById('timer');
+        const reviewContainer = document.getElementById('review-container');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timerInterval;
+        let secondsElapsed = 0;
+        let userAnswers = [];
+        
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        startBtn.addEventListener('click', startQuiz);
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', startQuiz);
+        reviewBtn.addEventListener('click', showReview);
+        backToResultsBtn.addEventListener('click', () => {
+            reviewScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+        });
+
+        function startTimer() {
+            secondsElapsed = 0;
+            timerEl.textContent = '00:00';
+            timerInterval = setInterval(() => {
+                secondsElapsed++;
+                const minutes = Math.floor(secondsElapsed / 60).toString().padStart(2, '0');
+                const seconds = (secondsElapsed % 60).toString().padStart(2, '0');
+                timerEl.textContent = `${minutes}:${seconds}`;
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function startQuiz() {
+            shuffleArray(quizData);
+            quizData.forEach(q => shuffleArray(q.options));
+
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            startScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            nextBtn.classList.add('hidden');
+            startTimer();
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            rationaleBox.classList.add('hidden');
+            answerOptionsEl.innerHTML = '';
+            const currentQuestion = quizData[currentQuestionIndex];
+            
+            questionNumberEl.textContent = currentQuestionIndex + 1;
+            totalQuestionsEl.textContent = quizData.length;
+            questionTextEl.textContent = currentQuestion.question;
+
+            const progress = ((currentQuestionIndex) / quizData.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('answer-option', 'w-full', 'p-4', 'text-left', 'bg-white', 'border-2', 'border-gray-300', 'rounded-lg', 'hover:bg-gray-50', 'hover:border-blue-500');
+                button.addEventListener('click', () => selectAnswer(button, option, currentQuestion));
+                answerOptionsEl.appendChild(button);
+            });
+        }
+
+        function selectAnswer(button, selectedOption, currentQuestion) {
+            const { answer, rationale, page } = currentQuestion;
+            userAnswers[currentQuestionIndex] = selectedOption;
+
+            const buttons = answerOptionsEl.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === answer) {
+                    btn.classList.add('correct');
+                }
+            });
+
+            if (selectedOption === answer) {
+                score++;
+                button.classList.add('correct');
+            } else {
+                button.classList.add('incorrect');
+            }
+
+            rationaleText.textContent = rationale;
+            rationaleSource.textContent = page;
+            rationaleBox.classList.remove('hidden');
+            nextBtn.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                nextBtn.classList.add('hidden');
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            stopTimer();
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            scorePercentageEl.textContent = percentage;
+            correctAnswersEl.textContent = score;
+            totalAnsweredEl.textContent = quizData.length;
+            finalTimeEl.textContent = timerEl.textContent;
+            
+            const finalProgress = 100;
+            progressBar.style.width = `${finalProgress}%`;
+        }
+
+        function showReview() {
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.remove('hidden');
+            reviewContainer.innerHTML = '';
+
+            quizData.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === question.answer;
+
+                const reviewItem = document.createElement('div');
+                reviewItem.classList.add('border', 'p-4', 'rounded-lg');
+                reviewItem.classList.add(isCorrect ? 'border-green-200' : 'border-red-200');
+
+                let userAnswerHTML = '';
+                if (isCorrect) {
+                    userAnswerHTML = `<p>Your answer: <span class="font-semibold review-correct">${userAnswer} (Correct)</span></p>`;
+                } else {
+                    userAnswerHTML = `
+                        <p>Your answer: <span class="font-semibold review-incorrect">${userAnswer} (Incorrect)</span></p>
+                        <p>Correct answer: <span class="font-semibold review-correct">${question.answer}</span></p>
+                    `;
+                }
+
+                reviewItem.innerHTML = `
+                    <p class="font-bold mb-2">${index + 1}. ${question.question}</p>
+                    ${userAnswerHTML}
+                    <p class="text-sm text-gray-600 mt-2"><em>Rationale: ${question.rationale} (Source: ${question.page})</em></p>
+                `;
+                reviewContainer.appendChild(reviewItem);
+            });
+        }
+
+    </script>
+</body>
+</html>
+

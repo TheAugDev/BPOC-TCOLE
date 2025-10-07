@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCOLE Civil Process and Liability Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+        .answer-option {
+            transition: all 0.2s ease-in-out;
+        }
+        .answer-option:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .correct {
+            background-color: #D1FAE5 !important;
+            border-color: #10B981 !important;
+        }
+        .incorrect {
+            background-color: #FEE2E2 !important;
+            border-color: #EF4444 !important;
+        }
+        .progress-bar-fill {
+            transition: width 0.3s ease-in-out;
+        }
+        .review-correct {
+            color: #059669;
+        }
+        .review-incorrect {
+            color: #e11d48;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="quiz-app" class="quiz-container p-4 sm:p-8">
+        
+        <!-- Quiz Start Screen -->
+        <div id="start-screen" class="text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">TCOLE Civil Process & Liability</h1>
+            <p class="text-lg text-gray-600 mb-8">An exhaustive quiz based on the "Basic Peace Officer Course | Chapter 14" handout to test your knowledge on civil law procedures and liability.</p>
+            <button id="start-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Start Quiz</button>
+        </div>
+
+        <!-- Quiz Interface -->
+        <div id="quiz-screen" class="hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold">Question <span id="question-number"></span> of <span id="total-questions"></span></h2>
+                <div id="timer" class="text-lg font-mono bg-gray-200 px-3 py-1 rounded-md">00:00</div>
+            </div>
+            
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+                <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full progress-bar-fill" style="width: 0%"></div>
+            </div>
+
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+                <p id="question-text" class="text-xl font-medium mb-8 min-h-[6rem]"></p>
+                <div id="answer-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Answer options will be injected here by JS -->
+                </div>
+            </div>
+             <div id="rationale-box" class="hidden mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h3 class="font-bold text-blue-800">Rationale:</h3>
+                <p id="rationale-text" class="text-blue-700"></p>
+                <p class="text-sm text-blue-600 mt-2">Source: <span id="rationale-source"></span></p>
+            </div>
+            <button id="next-btn" class="hidden w-full bg-blue-600 text-white font-bold py-3 px-8 rounded-lg mt-8 hover:bg-blue-700 transition-colors shadow-md">Next Question</button>
+        </div>
+
+        <!-- Quiz Results Screen -->
+        <div id="results-screen" class="hidden text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">Quiz Complete!</h1>
+            <p class="text-lg text-gray-600 mb-6">Here's how you did:</p>
+            <div class="flex flex-col sm:flex-row justify-around items-center my-8 gap-8 sm:gap-0">
+                <div>
+                    <p class="text-5xl font-bold text-green-600"><span id="score-percentage"></span>%</p>
+                    <p class="text-gray-500">Score</p>
+                </div>
+                 <div>
+                    <p class="text-5xl font-bold text-blue-600"><span id="correct-answers"></span>/<span id="total-answered"></span></p>
+                    <p class="text-gray-500">Correct Answers</p>
+                </div>
+                 <div>
+                    <p class="text-5xl font-bold text-gray-700"><span id="final-time"></span></p>
+                    <p class="text-gray-500">Time Taken</p>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="restart-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Try Again</button>
+                <button id="review-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md">Review Answers</button>
+            </div>
+        </div>
+        
+        <!-- Review Screen -->
+        <div id="review-screen" class="hidden bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6">Answer Review</h1>
+            <div id="review-container" class="space-y-6">
+                <!-- Review content will be injected here -->
+            </div>
+            <button id="back-to-results-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md mt-8">Back to Results</button>
+        </div>
+
+    </div>
+
+    <script>
+        const quizData = [
+            { question: "Which of the following can be held liable in a civil action for an officer's improper act?", options: ["The individual officer only", "The agency only", "The level of government only", "The government, agency, and individual officer"], answer: "The government, agency, and individual officer", rationale: "The text states that a level of government, an agency, and an individual peace officer may all be held liable in their respective capacities.", page: "Page 1" },
+            { question: "In addition to the state and county, which other level of government may be held liable in a civil action?", options: ["Federal government only", "International courts", "Municipality or special district", "The officer's union"], answer: "Municipality or special district", rationale: "The text explicitly lists entities that may be held liable: 'the state, county, municipality, or special district.'", page: "Page 1" },
+            { question: "Under Texas Civil Practice and Remedies Code 7.001, an officer who neglects or refuses to perform a required duty is liable for what?", options: ["Punitive damages only", "Actual damages only", "A fixed fine of $1,000", "No damages, but may face contempt charges"], answer: "Actual damages only", rationale: "Section 7.001 specifies that a clerk, sheriff, or other officer who neglects or refuses to perform a duty 'is liable for actual damages only in a suit brought by a person injured.'", page: "Page 2" },
+            { question: "Under CPRC 7.001, what notice must be given to an officer before a motion for contempt can be heard?", options: ["24 hours' verbal notice", "3 days' written notice", "10 days' notice", "Immediate notice"], answer: "10 days' notice", rationale: "Section 7.001(b) states, 'The officer must be given 10 days' notice of the motion.'", page: "Page 2" },
+            { question: "Can a party who brings an action under CPRC 7.001 seek both actual damages and contempt sanctions for the same offense?", options: ["Yes, both are always awarded.", "No, the party may seek one or the other, but not both.", "Only if the officer's neglect was intentional.", "Yes, but only a court can decide to award both."], answer: "No, the party may seek one or the other, but not both.", rationale: "Section 7.001(c) clearly states, 'the party may not seek both damages and contempt.'", page: "Page 2" },
+            { question: "Under Texas Civil Practice and Remedies Code 7.003, an officer is not liable for damages from executing a writ if they act in what manner?", options: ["With absolute certainty", "Under direct orders from a superior", "In good faith", "As quickly as possible"], answer: "In good faith", rationale: "Section 7.003 states that 'an officer is not liable for damages resulting from the execution of a writ... if the officer in good faith executes or attempts to execute the writ as provided by law.'", page: "Page 2" },
+            { question: "How does an officer show they acted in 'good faith' when executing a writ?", options: ["By proving they had no personal bias against the individual.", "By showing a reasonably prudent officer, under similar circumstances, could have believed the conduct was justified.", "By having their supervisor approve the action beforehand.", "By video recording the entire execution of the writ."], answer: "By showing a reasonably prudent officer, under similar circumstances, could have believed the conduct was justified.", rationale: "An officer shows good faith 'when the officer shows that a reasonably prudent officer, under the same or similar circumstances, could have believed that the officer's conduct was justified.'", page: "Page 2" },
+            { question: "According to Texas Local Government Code 85.021, a sheriff commits an offense if they fail to return a process or precept, or if they do what?", options: ["Damage the document", "Serve it to the wrong person", "Make a false return", "Charge an excessive fee"], answer: "Make a false return", rationale: "Section 85.021(b) states that a sheriff commits an offense if they '(1) fails to return a process or precept... or (2) makes a false return.'", page: "Pages 2-3" },
+            { question: "What is the maximum fine a sheriff can receive for contempt for making a false return under LGC 85.021?", options: ["$50", "$100", "$500", "$1,000"], answer: "$100", rationale: "LGC 85.021(c) states the offense is punishable by 'a fine of not more than $100.'", page: "Page 3" },
+            { question: "Where is a fine collected from a sheriff under LGC 85.021 deposited?", options: ["The state's general fund", "The court's registry", "The county treasury", "The injured party's account"], answer: "The county treasury", rationale: "LGC 85.021(c) directs that 'A fine collected under this section shall be deposited in the county treasury.'", page: "Page 3" },
+            { question: "Under Texas Local Government Code 86.024, if a constable fails or refuses to execute a process, they can be fined for what?", options: ["Official misconduct", "A Class C Misdemeanor", "Contempt", "A felony"], answer: "Contempt", rationale: "Section 86.024 states that if a constable fails or refuses to execute a process, 'the constable shall be fined for contempt before the court that issued the process.'", page: "Page 3" },
+            { question: "What is the primary difference between criminal law and civil law?", options: ["Criminal law involves only felonies, while civil law involves only misdemeanors.", "Criminal law regulates public conduct for the state, while civil law involves legal actions between two individual parties.", "Criminal law penalties are only fines, while civil law penalties can include jail time.", "There is no significant difference."], answer: "Criminal law regulates public conduct for the state, while civil law involves legal actions between two individual parties.", rationale: "Criminal laws regulate the conduct of people for the state ('Against the Peace and Dignity of the State'), while Civil Law 'involves legal actions between two individual parties.'", page: "Page 3" },
+            { question: "The authority for states to regulate the conduct of people within their borders, known as police powers, is granted by which amendment?", options: ["1st Amendment", "4th Amendment", "10th Amendment", "14th Amendment"], answer: "10th Amendment", rationale: "The text specifies that 'Under the authority of the 10th Amendment of the U.S. Constitution states have reserved, or police powers.'", page: "Page 3" },
+            { question: "When a crime is committed in Texas, it is officially considered to be done 'Against the Peace and dignity of...'?", options: ["...the victim.", "...the County.", "...the United States.", "...the State."], answer: "...the State.", rationale: "The text notes that when a crime is committed in Texas, 'it is done so \"Against the Peace and dignity of the State.\"'", page: "Page 3" },
+            { question: "Which of the following IS listed in the handout as a category of civil law?", options: ["Maritime Law", "Military Law", "Family Law", "International Law"], answer: "Family Law", rationale: "The text lists 'Tort Law, Family Law, Real Estate Law, Business and Employment Law' as categories of civil actions.", page: "Page 3" },
+            { question: "What is the standard of proof required for a conviction in a criminal case?", options: ["Preponderance of the evidence", "Clear and convincing evidence", "Proof beyond a reasonable doubt", "Reasonable suspicion"], answer: "Proof beyond a reasonable doubt", rationale: "The text states, 'The standard required in a criminal case for conviction is proof beyond a reasonable doubt. (Texas Penal Code Sec. 2.01)'", page: "Page 3" },
+            { question: "What is the standard of proof required for determining responsibility in a civil case?", options: ["Proof beyond a reasonable doubt", "A preponderance of the evidence", "Absolute certainty", "A unanimous jury decision"], answer: "A preponderance of the evidence", rationale: "The standard in a civil action for determining responsibility is 'a preponderance of the evidence.'", page: "Page 3" },
+            { question: "A legal harm or injury alleged in a civil action is known as a:", options: ["Crime", "Tort", "Penalty", "Statute"], answer: "Tort", rationale: "In a civil action, 'one party is alleging some type of harm, or tort that has been inflicted as a result of the action(s) of another individual party.'", page: "Page 3" },
+            { question: "What is the maximum fine for contempt of a court other than a justice or municipal court?", options: ["$100", "$500", "$1,000", "$5,000"], answer: "$500", rationale: "Government Code 21.002(b) states, 'The punishment for contempt of a court other than a justice court or municipal court is a fine of not more than $500.'", page: "Page 4" },
+            { question: "What is the maximum confinement period for contempt of a justice or municipal court?", options: ["24 hours", "Three days", "Six months", "One year"], answer: "Three days", rationale: "Government Code 21.002(c) sets the punishment for contempt of a justice or municipal court as 'confinement in the county or city jail for not more than three days.'", page: "Page 5" },
+            { question: "What is 'constructive (or indirect) contempt'?", options: ["Disrespectful behavior that occurs directly in the judge's presence.", "Failure to pay a court-ordered fine.", "Objectionable behavior that occurs outside the presence of the court.", "A formal charge filed by a prosecutor."], answer: "Objectionable behavior that occurs outside the presence of the court.", rationale: "The text defines constructive contempt as 'Objectionable behavior that occurs outside the presence of the court.'", page: "Page 4" },
+            { question: "What is a person accused of contempt of court entitled to before a ruling is made on constructive contempt?", options: ["An immediate verdict from the judge.", "A jury trial.", "Formal notice of the allegation and a hearing.", "The right to remain silent without consequence."], answer: "Formal notice of the allegation and a hearing.", rationale: "Because the judge has no personal knowledge of the act, the alleged contemnor 'is entitled to formal notice of the allegation of contempt and must be afforded a hearing.'", page: "Page 4" },
+            { question: "What is the maximum cumulative period a person can be confined for criminal contempt arising out of the same matter?", options: ["Six months", "12 months", "18 months", "There is no limit."], answer: "18 months", rationale: "Government Code 21.002(h) states a person may not be confined longer than '18 months, including three or more periods of confinement... that equal a cumulative total of 18 months, if the confinement is for criminal contempt.'", page: "Page 5" },
+            { question: "What is the maximum period of confinement for civil contempt?", options: ["18 months, always.", "The period until the person complies with the court order.", "The lesser of 18 months or the period until the person complies with the court order.", "Six months, or until the person complies."], answer: "The lesser of 18 months or the period until the person complies with the court order.", rationale: "Government Code 21.002(h)(2) sets the limit for civil contempt as 'the lesser of 18 months or the period from the date of confinement to the date the person complies with the court order.'", page: "Page 5" },
+            { question: "Which of the following is NOT a source of authority for the creation of courts in Texas?", options: ["The state's constitution", "Acts of the state legislature", "Acts of the U.S. Congress", "Acts of the governing body of a chartered municipality"], answer: "Acts of the U.S. Congress", rationale: "The text lists three sources: the state's constitution (constitutional courts), the state legislature (courts at law), and municipalities (municipal courts). Federal congressional acts are not listed as a source for Texas courts.", page: "Page 5" },
+            { question: "The power of a court to hear a case is known as its:", options: ["Jurisdiction", "Mandate", "Discretion", "Precedent"], answer: "Jurisdiction", rationale: "'The jurisdiction of a court is recognized as the power of a court to hear a case.'", page: "Page 5" },
+            { question: "In a criminal case, what determines a court's jurisdiction?", options: ["The location of the crime", "The severity of the offense charged", "The age of the defendant", "The preference of the arresting officer"], answer: "The severity of the offense charged", rationale: "'The jurisdiction in a criminal case is determined by the severity of the offense charged as specified in the Texas Penal Code.'", page: "Page 5" },
+            { question: "In a civil case, what primarily determines a court's jurisdiction?", options: ["The complexity of the legal arguments", "The location of the plaintiff's residence", "The amount of compensation sought or the area of law", "The number of parties involved"], answer: "The amount of compensation sought or the area of law", rationale: "In a civil case, jurisdiction 'will be determined by the amount of compensation sought or may be determined by the area of law under which the civil action is initiated.'", page: "Page 6" },
+            { question: "What is the function of an appellate court?", options: ["To conduct the initial trial of a case.", "To hear an appeal from a lower court's decision.", "To issue arrest warrants.", "To handle only civil matters."], answer: "To hear an appeal from a lower court's decision.", rationale: "Appellate courts have 'the power to hear a case... for which a decision has been rendered by a court of competent jurisdiction, but for which a situation or condition has resulted in the filing of an appeal.'", page: "Page 6" },
+            { question: "How is a civil action officially initiated?", options: ["By making a verbal complaint to a peace officer.", "When an aggrieved party files a petition with the court clerk.", "By publishing a notice in the newspaper.", "When a judge issues a warrant."], answer: "When an aggrieved party files a petition with the court clerk.", rationale: "A civil action 'is initiated when an aggrieved party makes a claim of a tort... [and files a] petition... with the court clerk.'", page: "Page 6" },
+            { question: "In a civil case, the aggrieved party who files the petition is referred to as the:", options: ["Defendant", "Plaintiff", "Contemnor", "Appellee"], answer: "Plaintiff", rationale: "With the completion and filing of the petition, 'the aggrieved party is referred to as the plaintiff.'", page: "Page 6" },
+            { question: "What is the legal document that provides a defendant with notice of a civil action?", options: ["A warrant", "A petition", "An answer", "A citation"], answer: "A citation", rationale: "The defendant receives 'legal notice of the civil action with the service of a citation.'", page: "Page 6" },
+            { question: "What can happen if a defendant fails to respond to a civil action after being served?", options: ["The case is automatically dismissed.", "A default judgment may be rendered in favor of the plaintiff.", "A warrant is issued for their arrest.", "The plaintiff must serve them again."], answer: "A default judgment may be rendered in favor of the plaintiff.", rationale: "A 'failure of the defendant to respond to the action could result in a default judgment... rendered in favor of the plaintiff.'", page: "Page 7" },
+            { question: "What is the defendant's official response to the demands of the plaintiff filed with the court?", options: ["A motion", "A petition", "An answer", "A counterclaim"], answer: "An answer", rationale: "'A defendant files an answer with the court as an official response to the demands from the plaintiff.'", page: "Page 7" },
+            { question: "Who has the authority to enforce a civil judgment if a party fails to comply?", options: ["Any certified peace officer", "The plaintiff's attorney", "The Sheriff's or Constable's Office", "The Texas Rangers"], answer: "The Sheriff's or Constable's Office", rationale: "A judgment 'may be enforced using the civil enforcement capacity of the Sheriff's or Constable's Office for that jurisdiction.'", page: "Page 7" },
+            { question: "When may a court direct the use of 'alternate service' of a citation?", options: ["When the plaintiff requests it for convenience.", "When the defendant lives out of state.", "When the defendant is uncooperative or attempts to avoid service.", "When the case involves more than $10,000."], answer: "When the defendant is uncooperative or attempts to avoid service.", rationale: "The text explains that 'When a defendant is uncooperative or attempts to avoid service, at the direction of the court alternate service may be used.'", page: "Page 7" },
+            { question: "The legal and procedural processes for civil cases in Texas are contained in which body of law?", options: ["Texas Penal Code", "Texas Code of Criminal Procedure", "Texas Civil Practices and Remedies Code", "Texas Government Code"], answer: "Texas Civil Practices and Remedies Code", rationale: "The text states that 'The legal and procedural processes are contained in the state's Texas Civil Practices and Remedies Code.'", page: "Page 4" },
+            { question: "Criminal laws in Texas are enacted by the:", options: ["Governor's office", "Texas Supreme Court", "State legislature", "Attorney General"], answer: "State legislature", rationale: "The text states that 'Criminal laws are enacted by the state legislature and define what is considered a violation of law.'", page: "Page 3" },
+            { question: "Which is a potential penalty in a criminal case?", options: ["An injunction", "Compensation for damages", "Execution", "Restoration to whole status"], answer: "Execution", rationale: "The text lists three types of criminal penalties: 'fine, imprisonment, or execution.' The other options are civil remedies.", page: "Page 3" },
+            { question: "What is a common remedy sought in a civil action?", options: ["Imprisonment", "A fine paid to the state", "An injunction or compensation", "Community service"], answer: "An injunction or compensation", rationale: "In a civil action, 'What is sought is a remedy that may come in the form of an injunction... or compensation used to restore the harmed party back to whole status.'", page: "Page 3" },
+            { question: "An officer who is held in contempt by a trial court shall be released on what, pending determination of guilt or innocence?", options: ["A cash bond", "A surety bond", "Their own personal recognizance", "Pre-trial supervision"], answer: "Their own personal recognizance", rationale: "Government Code 21.002(d) states that an officer of a court held in contempt 'shall, on proper motion filed... be released on his own personal recognizance.'", page: "Page 5" },
+            { question: "A court created by an act of the state legislature is referred to as a:", options: ["Constitutional court", "Court at law", "Municipal court", "Federal court"], answer: "Court at law", rationale: "The text specifies that 'Courts may be created by acts of the state legislature and are referred to as courts at law.'", page: "Page 5" },
+            { question: "A court created under the authority of the state's constitution is referred to as a:", options: ["Constitutional court", "Court at law", "Municipal court", "District court"], answer: "Constitutional court", rationale: "A court 'may be created under the authority of the state's constitution and are referred to as constitutional courts.'", page: "Page 5" },
+            { question: "A sheriff who makes a false return on a process or precept commits an offense punishable as:", options: ["A state jail felony", "Official oppression", "Contempt", "Perjury"], answer: "Contempt", rationale: "Local Government Code 85.021 states 'An offense under this section is punishable by the court to which the process is returnable, as for contempt, by a fine of not more than $100.'", page: "Page 3" },
+            { question: "What is the minimum fine for a constable who fails or refuses to execute a process under Local Government Code 86.024?", options: ["$10", "$50", "$100", "$500"], answer: "$10", rationale: "Section 86.024 states, 'The fine shall be set at not less than $10 or more than $100, with costs.'", page: "Page 3" },
+            { question: "A court's power to reverse a decision from a lower court is a characteristic of:", options: ["Original jurisdiction", "Concurrent jurisdiction", "Appellate jurisdiction", "Exclusive jurisdiction"], answer: "Appellate jurisdiction", rationale: "Appeals must be heard by a court with superior jurisdiction so 'a prior court's decision may, upon finding, reverse the previous decision.' This describes appellate jurisdiction.", page: "Page 6" },
+            { question: "A court's decision in a civil case, which instructs a party on actions to be undertaken, is called a:", options: ["Petition", "Citation", "Verdict", "Judgment"], answer: "Judgment", rationale: "'A judgment represents the decision of the court and instructs the named party on the actions that shall be undertaken.'", page: "Page 7" },
+            { question: "A civil judgment that is not complied with is considered:", options: ["Advisory", "Optional", "Enforceable", "Dismissed"], answer: "Enforceable", rationale: "The text states, 'A judgment is enforceable and when a named party fails to comply, the judgment may be enforced using the civil enforcement capacity of the Sheriff's or Constable's Office.'", page: "Page 7" },
+            { question: "Under Civil Practice and Remedies Code 7.001, an officer who neglects their duty can be punished for contempt, in addition to being liable for damages. What is the minimum fine for this contempt?", options: ["$10", "$100", "$500", "There is no minimum."], answer: "$10", rationale: "Section 7.001(b) states that for contempt, 'The court shall set the fine at not less than $10 or more than $100, with costs.'", page: "Page 2" },
+            { question: "An officer executing a writ is NOT required to demand what for their own indemnification?", options: ["A copy of the court order", "Identification from the parties", "That a bond be posted", "The presence of an attorney"], answer: "That a bond be posted", rationale: "Civil Practice and Remedies Code 7.003(b) states, 'An officer shall execute a writ... without requiring that bond be posted for the indemnification of the officer.'", page: "Page 2" },
+            { question: "The fine collected from a sheriff found in contempt under Local Government Code 85.021 is deposited where?", options: ["The state treasury", "The county treasury", "The injured person's bank account", "The court's operating fund"], answer: "The county treasury", rationale: "Section 85.021(c) directs that 'A fine collected under this section shall be deposited in the county treasury.'", page: "Page 3" },
+            { question: "The fine for a constable found in contempt under Local Government Code 86.024 is for the benefit of whom?", options: ["The county", "The court", "The injured person", "The state"], answer: "The injured person", rationale: "Section 86.024 states, 'The fine shall be for the benefit of the injured person.'", page: "Page 3" },
+            { question: "What is the maximum confinement period for contempt of a court (other than justice/municipal) under Government Code 21.002?", options: ["Three days", "30 days", "Six months", "18 months"], answer: "Six months", rationale: "Section 21.002(b) sets the maximum confinement at 'not more than six months.'", page: "Page 4" },
+            { question: "Under what condition may a court NOT punish a state employee for contempt for failing to initiate a program?", options: ["If the employee objects on personal grounds", "If the program is unpopular with the public", "If the legislature has not specifically and adequately funded the program", "If the employee's supervisor gives them other duties"], answer: "If the legislature has not specifically and adequately funded the program", rationale: "Government Code 21.002(g) provides an exception for contempt 'if the legislature has not specifically and adequately funded the program.'", page: "Page 5" },
+            { question: "A court created by the governing body of a chartered municipality is a:", options: ["Justice Court", "County Court at Law", "Constitutional County Court", "Municipal Court"], answer: "Municipal Court", rationale: "The text states that 'A court may be created by the acts of the governing body of a chartered municipality. These courts are referred to as municipal courts.'", page: "Page 5" },
+            { question: "The document detailing the facts of a tort and the expected remedy, filed by the plaintiff, is the:", options: ["Citation", "Answer", "Judgment", "Petition"], answer: "Petition", rationale: "A civil action starts when a plaintiff files a 'civil complaint, referred to as a petition, detailing out the facts of the tort and the expected remedy.'", page: "Page 6" },
+            { question: "The service of a citation is typically done in what manner?", options: ["By postal mail", "By email", "In a direct, face-to-face action", "By publication in a newspaper"], answer: "In a direct, face-to-face action", rationale: "The text states, 'Service is usually done in a direct, face to face action.'", page: "Page 6" },
+            { question: "What does an 'answer' from a defendant typically contain?", options: ["A request for a new judge", "A denial of the charge, acceptance of the demand, or another explanation", "A list of witnesses for the plaintiff", "A payment for the full amount demanded"], answer: "A denial of the charge, acceptance of the demand, or another explanation", rationale: "'An answer may deny the charge, accept the demand, or allege some other explanation or recourse.'", page: "Page 7" },
+            { question: "Who can be parties in a civil action?", options: ["Only individuals", "Only corporations", "Individuals, corporations, associations, or levels of government", "Only government entities"], answer: "Individuals, corporations, associations, or levels of government", rationale: "The text states that 'Civil Law: involves legal actions between two individual parties that may include individuals, corporations, associations, or levels of government.'", page: "Page 3" },
+            { question: "What is the key purpose of due process requirements in a criminal case?", options: ["To ensure a quick trial", "To protect the person charged with a crime", "To guarantee a conviction", "To allow for civil remedies"], answer: "To protect the person charged with a crime", rationale: "The text notes that 'when a person is charged with a crime that person is protected by the due process requirements.'", page: "Page 3" },
+            { question: "If an officer of a court is held in contempt, a judge from where is assigned to determine guilt or innocence?", options: ["The same court", "A federal court", "A higher appellate court", "The same administrative judicial region, but not the offended court"], answer: "The same administrative judicial region, but not the offended court", rationale: "Gov. Code 21.002(d) requires the presiding judge of the administrative region to assign a judge 'other than the judge of the offended court to determine the guilt or innocence.'", page: "Page 5" },
+            { question: "An officer's potential for liability increases if they fail to have a thorough knowledge of:", options: ["Departmental gossip", "The laws of the State and Constitutional restraints", "The local political climate", "Advanced interrogation techniques"], answer: "The laws of the State and Constitutional restraints", rationale: "The introduction states that to reduce liability, officers must 'have a thorough knowledge of the laws of the State, and the application of Constitutional restraints.'", page: "Page 1" },
+            { question: "In a civil action, restoring the harmed party back to 'whole status' is typically done through:", options: ["A formal apology", "Incarceration of the defendant", "Compensation", "Mandatory counseling"], answer: "Compensation", rationale: "A civil remedy may come in the form of 'compensation used to restore the harmed party back to whole status.'", page: "Page 3" }
+        ];
+
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const reviewScreen = document.getElementById('review-screen');
+
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const reviewBtn = document.getElementById('review-btn');
+        const backToResultsBtn = document.getElementById('back-to-results-btn');
+        
+        const questionNumberEl = document.getElementById('question-number');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const progressBar = document.getElementById('progress-bar');
+        const questionTextEl = document.getElementById('question-text');
+        const answerOptionsEl = document.getElementById('answer-options');
+        const rationaleBox = document.getElementById('rationale-box');
+        const rationaleText = document.getElementById('rationale-text');
+        const rationaleSource = document.getElementById('rationale-source');
+        
+        const scorePercentageEl = document.getElementById('score-percentage');
+        const correctAnswersEl = document.getElementById('correct-answers');
+        const totalAnsweredEl = document.getElementById('total-answered');
+        const finalTimeEl = document.getElementById('final-time');
+        const timerEl = document.getElementById('timer');
+        const reviewContainer = document.getElementById('review-container');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timerInterval;
+        let secondsElapsed = 0;
+        let userAnswers = [];
+        
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        startBtn.addEventListener('click', startQuiz);
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', startQuiz);
+        reviewBtn.addEventListener('click', showReview);
+        backToResultsBtn.addEventListener('click', () => {
+            reviewScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+        });
+
+        function startTimer() {
+            secondsElapsed = 0;
+            timerEl.textContent = '00:00';
+            timerInterval = setInterval(() => {
+                secondsElapsed++;
+                const minutes = Math.floor(secondsElapsed / 60).toString().padStart(2, '0');
+                const seconds = (secondsElapsed % 60).toString().padStart(2, '0');
+                timerEl.textContent = `${minutes}:${seconds}`;
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function startQuiz() {
+            shuffleArray(quizData);
+            quizData.forEach(q => shuffleArray(q.options));
+
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            startScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            nextBtn.classList.add('hidden');
+            startTimer();
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            rationaleBox.classList.add('hidden');
+            answerOptionsEl.innerHTML = '';
+            const currentQuestion = quizData[currentQuestionIndex];
+            
+            questionNumberEl.textContent = currentQuestionIndex + 1;
+            totalQuestionsEl.textContent = quizData.length;
+            questionTextEl.textContent = currentQuestion.question;
+
+            const progress = ((currentQuestionIndex) / quizData.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('answer-option', 'w-full', 'p-4', 'text-left', 'bg-white', 'border-2', 'border-gray-300', 'rounded-lg', 'hover:bg-gray-50', 'hover:border-blue-500');
+                button.addEventListener('click', () => selectAnswer(button, option, currentQuestion));
+                answerOptionsEl.appendChild(button);
+            });
+        }
+
+        function selectAnswer(button, selectedOption, currentQuestion) {
+            const { answer, rationale, page } = currentQuestion;
+            userAnswers[currentQuestionIndex] = selectedOption;
+
+            const buttons = answerOptionsEl.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === answer) {
+                    btn.classList.add('correct');
+                }
+            });
+
+            if (selectedOption === answer) {
+                score++;
+                button.classList.add('correct');
+            } else {
+                button.classList.add('incorrect');
+            }
+
+            rationaleText.textContent = rationale;
+            rationaleSource.textContent = page;
+            rationaleBox.classList.remove('hidden');
+            nextBtn.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                nextBtn.classList.add('hidden');
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            stopTimer();
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            scorePercentageEl.textContent = percentage;
+            correctAnswersEl.textContent = score;
+            totalAnsweredEl.textContent = quizData.length;
+            finalTimeEl.textContent = timerEl.textContent;
+            
+            const finalProgress = 100;
+            progressBar.style.width = `${finalProgress}%`;
+        }
+
+        function showReview() {
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.remove('hidden');
+            reviewContainer.innerHTML = '';
+
+            quizData.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === question.answer;
+
+                const reviewItem = document.createElement('div');
+                reviewItem.classList.add('border', 'p-4', 'rounded-lg');
+                reviewItem.classList.add(isCorrect ? 'border-green-200' : 'border-red-200');
+
+                let userAnswerHTML = '';
+                if (isCorrect) {
+                    userAnswerHTML = `<p>Your answer: <span class="font-semibold review-correct">${userAnswer} (Correct)</span></p>`;
+                } else {
+                    userAnswerHTML = `
+                        <p>Your answer: <span class="font-semibold review-incorrect">${userAnswer} (Incorrect)</span></p>
+                        <p>Correct answer: <span class="font-semibold review-correct">${question.answer}</span></p>
+                    `;
+                }
+
+                reviewItem.innerHTML = `
+                    <p class="font-bold mb-2">${index + 1}. ${question.question}</p>
+                    ${userAnswerHTML}
+                    <p class="text-sm text-gray-600 mt-2"><em>Rationale: ${question.rationale} (Source: ${question.page})</em></p>
+                `;
+                reviewContainer.appendChild(reviewItem);
+            });
+        }
+
+    </script>
+</body>
+</html>
+

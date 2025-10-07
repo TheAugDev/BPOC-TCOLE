@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Guide: Civil Process and Liability</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --header-bg: #1f2937;
+            --bg-color: #f3f4f6;
+            --tab-active-bg: #3b82f6;
+            --tab-active-text: #ffffff;
+            --card-bg: #ffffff;
+            --text-color: #111827;
+            --link-color: #2563eb;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://rsms.me/inter/inter.css');
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab.active {
+            background-color: var(--tab-active-bg);
+            color: var(--tab-active-text);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tab {
+            transition: all 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="bg-gray-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">
+                <i class="fas fa-file-signature mr-2"></i>Civil Process and Liability
+            </h1>
+            <p class="text-sm text-gray-300">BPOC Chapter 14 | TCOLE Preparation</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-4 md:p-6">
+        <!-- Tab Navigation -->
+        <div class="mb-6 bg-white rounded-lg shadow-md overflow-x-auto">
+            <nav id="tabs" class="flex flex-row space-x-1 p-2">
+                <button data-tab="liability" class="tab active flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-exclamation-triangle mr-2"></i> <span class="hidden md:inline">Liability</span>
+                </button>
+                <button data-tab="law-types" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-balance-scale mr-2"></i> <span class="hidden md:inline">Civil vs. Criminal</span>
+                </button>
+                <button data-tab="courts" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-gavel mr-2"></i> <span class="hidden md:inline">Courts & Process</span>
+                </button>
+                <button data-tab="knowledge-check" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-question-circle mr-2"></i> <span class="hidden md:inline">Knowledge Check</span>
+                </button>
+                <button data-tab="resources" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-link mr-2"></i> <span class="hidden md:inline">Resources</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Tab Content -->
+        <div id="tab-contents">
+            <!-- Liability Tab -->
+            <div id="liability" class="tab-content active space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Officer Liability</h2>
+                    <p class="text-sm text-gray-700 mb-2">A misapplication of law or procedure can result in civil action against an officer and/or their agency. To reduce this potential, officers must understand their responsibilities and have a thorough knowledge of state laws and constitutional restraints.</p>
+                    <h4 class="font-semibold mt-3">Elements Checklist (Who Can Be Held Liable?):</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>A level of government:</strong> State, county, municipality, or special district.</li>
+                        <li><strong>An agency:</strong> Any law enforcement agency, regardless of how it was created.</li>
+                        <li><strong>An individual peace officer:</strong> May be held liable in their individual capacity.</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Statutes on Officer Liability</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold">Liability for Refusal or Neglect in Performance of Official Duties (<a href="https://statutes.capitol.texas.gov/Docs/CP/htm/CP.7.htm#7.001" target="_blank" class="text-blue-600 hover:underline">CPRC 7.001</a>)</h4>
+                            <p class="text-sm text-gray-700">A clerk, sheriff, or other officer who neglects or refuses to perform a duty required under the Texas Rules of Civil Procedure is liable for actual damages to the injured person. They may also be punished for contempt of court with a fine of not less than $10 or more than $100.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Liability Regarding Execution of Writs (<a href="https://statutes.capitol.texas.gov/Docs/CP/htm/CP.7.htm#7.003" target="_blank" class="text-blue-600 hover:underline">CPRC 7.003</a>)</h4>
+                            <p class="text-sm text-gray-700">An officer is NOT liable for damages from executing a writ if the officer acts in "good faith." Good faith is shown if a reasonably prudent officer, under similar circumstances, could have believed their conduct was justified based on the information they possessed.</p>
+                        </div>
+                         <div>
+                            <h4 class="font-semibold">Execution of Process; Penalty (Sheriff) (<a href="https://statutes.capitol.texas.gov/Docs/LG/htm/LG.85.htm#85.021" target="_blank" class="text-blue-600 hover:underline">LGC 85.021</a>)</h4>
+                            <p class="text-sm text-gray-700">A sheriff commits an offense if they fail to return a process or precept as required, or if they make a false return. This is punishable by contempt with a fine up to $100, and the sheriff is liable for all damages sustained by the injured person.</p>
+                        </div>
+                         <div>
+                            <h4 class="font-semibold">Failure to Execute Process (Constable) (<a href="https://statutes.capitol.texas.gov/Docs/LG/htm/LG.86.htm#86.024" target="_blank" class="text-blue-600 hover:underline">LGC 86.024</a>)</h4>
+                            <p class="text-sm text-gray-700">If a constable fails or refuses to execute and return a process, they shall be fined for contempt between $10 and $100 for the benefit of the injured person.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Liability Scenarios (Case Studies)</h2>
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-semibold">Case Study 1: Officer-Involved Shooting</h4>
+                            <p class="text-sm text-gray-700 mb-2"><strong>Scenario:</strong> An officer returns fire at an active shooter outside a liquor store. The suspect is killed, but two bystanders inside the store are critically injured by the officer's gunfire, and one later dies.</p>
+                            <h5 class="font-semibold text-sm mt-2">Potential Liability Analysis:</h5>
+                            <ul class="list-disc list-inside text-sm text-gray-700 ml-4">
+                                <li><strong>Personal Civil Liability:</strong> The officer's actions would be scrutinized for reasonableness under the circumstances. Was the use of deadly force justified? Did the officer consider the backdrop and potential for injuring bystanders?</li>
+                                <li><strong>Agency Liability:</strong> The agency could be held liable if its training on use of force, particularly in crowded environments, was inadequate.</li>
+                                <li><strong>Criminal Considerations:</strong> The conduct would be evaluated under <a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.9.htm#9.05" target="_blank" class="text-blue-600 hover:underline">PC 9.05</a> (Reckless Injury of Innocent Third Person) and <a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.9.htm#9.06" target="_blank" class="text-blue-600 hover:underline">PC 9.06</a> (Civil Remedies Unaffected). Even if the use of force was justified against the suspect, the officer can still be held civilly liable for reckless injury to an innocent third person.</li>
+                            </ul>
+                        </div>
+                         <div class="border-t pt-6">
+                            <h4 class="font-semibold">Case Study 2: In-Custody Death</h4>
+                            <p class="text-sm text-gray-700 mb-2"><strong>Scenario:</strong> After a struggle, officers secure a suspect in a patrol car. In violation of policy, they leave the suspect unobserved while they get a soda. They return to find the suspect has died of a heart attack.</p>
+                            <h5 class="font-semibold text-sm mt-2">Potential Liability Analysis:</h5>
+                            <ul class="list-disc list-inside text-sm text-gray-700 ml-4">
+                                <li><strong>Officer Liability (Civil):</strong> The officers were negligent by violating a policy designed for suspect safety. Their failure to maintain constant observation directly contradicts the agency's required standard of care.</li>
+                                <li><strong>Agency Liability:</strong> The agency may be liable if the policy was unclear, or if there was a pattern of such policy violations being ignored (failure to supervise/discipline).</li>
+                                 <li><strong>Criminal Liability:</strong> The officers' actions could be investigated for a potential offense under <a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.19.htm" target="_blank" class="text-blue-600 hover:underline">PC Chapter 19</a> (Criminal Homicide), such as Criminally Negligent Homicide, if their failure to render aid and observe the prisoner constituted a gross deviation from the standard of care.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Law Types Tab -->
+            <div id="law-types" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Criminal Law vs. Civil Law</h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="font-bold text-lg mb-2">Criminal Law</h3>
+                            <ul class="list-disc list-inside text-sm space-y-2 text-gray-700">
+                                <li><strong>Purpose:</strong> Regulates conduct considered unacceptable by the state.</li>
+                                <li><strong>Violation:</strong> Called a "crime," committed "Against the Peace and Dignity of the State."</li>
+                                <li><strong>Parties:</strong> The State vs. an individual defendant.</li>
+                                <li><strong>Burden of Proof:</strong> Proof Beyond a Reasonable Doubt.</li>
+                                <li><strong>Penalty:</strong> Fine, imprisonment, or execution.</li>
+                                <li><strong>Governing Code:</strong> Texas Penal Code, Code of Criminal Procedure.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg mb-2">Civil Law</h3>
+                             <ul class="list-disc list-inside text-sm space-y-2 text-gray-700">
+                                <li><strong>Purpose:</strong> Resolves legal disputes between two individual parties.</li>
+                                <li><strong>Violation:</strong> Called a "tort" or legal harm.</li>
+                                <li><strong>Parties:</strong> Plaintiff (aggrieved party) vs. Defendant.</li>
+                                <li><strong>Burden of Proof:</strong> Preponderance of the Evidence.</li>
+                                <li><strong>Remedy:</strong> Usually monetary compensation or an injunction.</li>
+                                <li><strong>Governing Code:</strong> Texas Civil Practice and Remedies Code, Rules of Civil Procedure.</li>
+                            </ul>
+                        </div>
+                    </div>
+                     <p class="text-sm mt-4"><strong>Practical Example:</strong> An officer responds to a dispute where a neighbor opened the wrong irrigation gate, flooding and damaging another's pecan trees. The officer should advise the property owner that this is a civil matter (a tort against property). The owner can file a civil suit seeking compensation for the damaged trees. However, if the neighbor acted intentionally or knowingly, it could also be a criminal offense (<a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.28.htm" target="_blank" class="text-blue-600 hover:underline">Criminal Mischief, PC Chap 28</a>), and criminal charges could be filed by the state.</p>
+                </div>
+            </div>
+
+            <!-- Courts & Process Tab -->
+            <div id="courts" class="tab-content space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Texas Courts & Jurisdiction</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold">Creation of Courts</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li><strong>Constitutional Courts:</strong> Created by the Texas Constitution.</li>
+                                <li><strong>Courts at Law:</strong> Created by acts of the state legislature.</li>
+                                <li><strong>Municipal Courts:</strong> Created by acts of a chartered municipality's governing body.</li>
+                            </ul>
+                        </div>
+                         <div>
+                            <h4 class="font-semibold">Jurisdiction</h4>
+                            <p class="text-sm text-gray-700">The power of a court to hear a case. In criminal cases, it's determined by the severity of the offense. In civil cases, it's determined by the amount of compensation sought or the area of law.</p>
+                             <p class="text-sm mt-2"><strong>Practical Example:</strong> A deputy attempts to seize property based on a District Court order for a $125,000 judgment. The property owner resists. The deputy has authority because a District Court has civil jurisdiction over cases with amounts in controversy of that size. The owner's resistance could lead to criminal charges or contempt of court.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Contempt of Court (<a href="https://statutes.capitol.texas.gov/Docs/GV/htm/GV.21.htm#21.002" target="_blank" class="text-blue-600 hover:underline">GC 21.002</a>)</h2>
+                    <p class="text-sm text-gray-700 mb-2">Conduct that obstructs the proper administration of justice or brings the authority of the law into disrespect.</p>
+                    <div class="grid md:grid-cols-2 gap-6 text-sm">
+                        <div>
+                             <h4 class="font-semibold">Direct Contempt</h4>
+                             <p>Occurs in the presence of the court.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Constructive (Indirect) Contempt</h4>
+                            <p>Occurs outside the presence of the court. Requires a formal hearing to consider evidence.</p>
+                        </div>
+                    </div>
+                     <h4 class="font-semibold mt-3">Punishments:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Higher Courts (District, County):</strong> Fine up to $500, jail up to 6 months, or both.</li>
+                        <li><strong>Lower Courts (JP, Municipal):</strong> Fine up to $100, jail up to 3 days, or both.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">The Civil Action Process</h2>
+                    <p class="text-sm text-gray-700 mb-2">A step-by-step overview of how a typical civil lawsuit proceeds.</p>
+                    <ol class="list-decimal list-inside text-sm space-y-2">
+                        <li><strong>Petition:</strong> An aggrieved party (Plaintiff) files a petition with the court clerk, detailing the tort and the requested remedy.</li>
+                        <li><strong>Citation:</strong> The party alleged to have caused the harm (Defendant) receives legal notice of the suit via service of a citation.</li>
+                        <li><strong>Answer:</strong> The defendant files an "answer" with the court, responding to the plaintiff's claims.</li>
+                        <li><strong>Default Judgment:</strong> If the defendant fails to answer, the court may render a default judgment in favor of the plaintiff.</li>
+                        <li><strong>Trial/Settlement:</strong> If the parties cannot settle, the case may go to trial, where a court renders a decision.</li>
+                        <li><strong>Judgment:</strong> The final decision of the court, which instructs a party on actions to be taken. It is enforceable by law.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Knowledge Check Tab -->
+            <div id="knowledge-check" class="tab-content">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Knowledge Check</h2>
+                    <p class="mb-6 text-gray-600">Test your understanding of the material.</p>
+                    <div id="quiz-container" class="space-y-8">
+                        <!-- Questions will be dynamically inserted here -->
+                    </div>
+                    <div class="mt-8 text-center">
+                        <button id="check-answers-btn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors">Check Answers</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resources Tab -->
+            <div id="resources" class="tab-content">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Statutory Resources</h2>
+                    <p class="mb-6 text-gray-600">Quick links to the Texas Codes referenced in this guide.</p>
+                    <div id="resources-list" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-sm">
+                        <!-- Links will be dynamically inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('#tabs button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                });
+            });
+
+            // --- QUIZ DATA ---
+            const quizData = [
+                {
+                    question: "1. The burden of proof required in a civil case to determine responsibility is:",
+                    options: ["Proof Beyond a Reasonable Doubt", "Reasonable Suspicion", "Preponderance of the Evidence", "Clear and Convincing Evidence"],
+                    answer: "Preponderance of the Evidence",
+                    explanation: "Preponderance of the evidence is the standard in civil cases, meaning it is more likely than not that the defendant is responsible."
+                },
+                {
+                    question: "2. A sheriff who neglects or refuses to perform a duty under the Rules of Civil Procedure can be held liable for:",
+                    options: ["Punitive damages only", "Actual damages only", "No damages, only contempt", "Felony charges"],
+                    answer: "Actual damages only",
+                    explanation: "Under CPRC 7.001, an officer who neglects or refuses a duty is liable for actual damages only."
+                },
+                {
+                    question: "3. An officer is protected from liability for damages when executing a writ if they act in:",
+                    options: ["Accordance with their agency's policy", "Good faith", "The interest of public safety", "A way that minimizes cost"],
+                    answer: "Good faith",
+                    explanation: "CPRC 7.003 states that an officer is not liable for damages if they execute the writ in good faith, as a reasonably prudent officer would."
+                },
+                {
+                    question: "4. Conduct that obstructs the administration of justice outside the presence of the court is known as:",
+                    options: ["Direct Contempt", "General Contempt", "Constructive (Indirect) Contempt", "Judicial Misconduct"],
+                    answer: "Constructive (Indirect) Contempt",
+                    explanation: "Constructive or indirect contempt occurs outside the judge's presence and requires a formal hearing to consider evidence."
+                },
+                {
+                    question: "5. What is the maximum punishment for contempt of a District Court?",
+                    options: ["Fine of $100, 3 days in jail, or both", "Fine of $500, 6 months in jail, or both", "Fine of $1,000, 1 year in jail, or both", "Fine of $10, 10 days in jail, or both"],
+                    answer: "Fine of $500, 6 months in jail, or both",
+                    explanation: "According to Government Code 21.002, the punishment for contempt of a court other than a JP or Municipal court is a fine up to $500 and/or confinement up to six months."
+                },
+                {
+                    question: "6. A civil action is officially initiated when the plaintiff files a(n) ________ with the court.",
+                    options: ["Answer", "Citation", "Judgment", "Petition"],
+                    answer: "Petition",
+                    explanation: "The plaintiff begins a civil lawsuit by filing a petition, which details the facts of the harm and the requested remedy."
+                },
+                {
+                    question: "7. If a defendant in a civil suit fails to respond to a citation, the court may issue a:",
+                    options: ["Warrant of Arrest", "Default Judgment", "Summary Judgment", "Mistrial"],
+                    answer: "Default Judgment",
+                    explanation: "A default judgment can be rendered in favor of the plaintiff if the defendant fails to respond to or appear in court."
+                },
+                {
+                    question: "8. Which of the following is NOT a type of court created by one of the three sources of authority in Texas?",
+                    options: ["Constitutional Courts", "Federal Appellate Courts", "Courts at Law", "Municipal Courts"],
+                    answer: "Federal Appellate Courts",
+                    explanation: "Texas courts are created by the state constitution, the state legislature (courts at law), or municipalities. Federal courts are part of a separate system."
+                },
+                {
+                    question: "9. In a criminal case, jurisdiction is primarily determined by:",
+                    options: ["The location of the defendant", "The severity of the offense", "The amount of damages", "The age of the plaintiff"],
+                    answer: "The severity of the offense",
+                    explanation: "The jurisdiction of a criminal court is determined by the level of the offense charged (e.g., Class B Misdemeanor, 1st Degree Felony)."
+                },
+                {
+                    question: "10. An officer who makes a false return on a legal process commits an offense punishable as contempt under which code?",
+                    options: ["Civil Practice and Remedies Code", "Penal Code", "Government Code", "Local Government Code"],
+                    answer: "Local Government Code",
+                    explanation: "LGC 85.021 states that a sheriff commits an offense punishable by contempt if they fail to return a process or make a false return."
+                },
+                 {
+                    question: "11. The legal harm alleged in a civil action is known as a:",
+                    options: ["Crime", "Infraction", "Tort", "Charge"],
+                    answer: "Tort",
+                    explanation: "In a civil action, one party alleges a 'tort,' or legal harm, has been inflicted by another party."
+                },
+                {
+                    question: "12. The final decision of the court in a civil case, which is enforceable by law, is called a:",
+                    options: ["Petition", "Verdict", "Judgment", "Finding"],
+                    answer: "Judgment",
+                    explanation: "A judgment represents the final decision of the court and instructs the named party on the actions that must be taken."
+                },
+                {
+                    question: "13. Two officers leave a suspect unattended in a patrol car in violation of policy, and the suspect dies. The officers' actions could be criminally investigated as:",
+                    options: ["Official Oppression", "Aggravated Assault", "Criminally Negligent Homicide", "No crime was committed"],
+                    answer: "Criminally Negligent Homicide",
+                    explanation: "If the officers' failure to observe the suspect was a gross deviation from the standard of care and caused the death, it could be considered Criminally Negligent Homicide under PC Chapter 19."
+                },
+                {
+                    question: "14. An officer is justified in using deadly force against a suspect, but a stray bullet injures an innocent third person. Under PC 9.05, the officer may still be held:",
+                    options: ["Criminally liable for murder", "Civilly liable for the reckless injury", "In contempt of court", "Not liable for any damages"],
+                    answer: "Civilly liable for the reckless injury",
+                    explanation: "PC 9.05 specifies that even a justified use of force does not protect an actor from civil liability for recklessly injuring an innocent third person."
+                }
+            ];
+
+            const quizContainer = document.getElementById('quiz-container');
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'quiz-question';
+                let optionsHtml = q.options.map(option => `
+                    <label class="block"><input type="radio" name="q${index}" value="${option}" class="mr-2">${option}</label>
+                `).join('');
+                questionDiv.innerHTML = `
+                    <p class="font-semibold mb-2">${q.question}</p>
+                    <div class="space-y-2">${optionsHtml}</div>
+                    <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                `;
+                quizContainer.appendChild(questionDiv);
+            });
+
+            document.getElementById('check-answers-btn').addEventListener('click', () => {
+                quizData.forEach((q, index) => {
+                    const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                    const feedback = document.querySelectorAll('.feedback')[index];
+                    feedback.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+                    if (selected && selected.value === q.answer) {
+                        feedback.textContent = `Correct! ${q.explanation}`;
+                        feedback.classList.add('bg-green-100', 'text-green-800');
+                    } else {
+                        feedback.textContent = `Incorrect. The correct answer is "${q.answer}". ${q.explanation}`;
+                        feedback.classList.add('bg-red-100', 'text-red-800');
+                    }
+                });
+            });
+
+            // --- RESOURCES LIST ---
+            const resources = [
+                { name: "CPRC 7.001", url: "https://statutes.capitol.texas.gov/Docs/CP/htm/CP.7.htm#7.001" },
+                { name: "CPRC 7.003", url: "https://statutes.capitol.texas.gov/Docs/CP/htm/CP.7.htm#7.003" },
+                { name: "GC 21.002", url: "https://statutes.capitol.texas.gov/Docs/GV/htm/GV.21.htm#21.002" },
+                { name: "LGC 85.021", url: "https://statutes.capitol.texas.gov/Docs/LG/htm/LG.85.htm#85.021" },
+                { name: "LGC 86.024", url: "https://statutes.capitol.texas.gov/Docs/LG/htm/LG.86.htm#86.024" },
+                { name: "PC 2.01", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.2.htm#2.01" },
+                { name: "PC 9.05", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.9.htm#9.05" },
+                { name: "PC 9.06", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.9.htm#9.06" },
+                { name: "PC Chapter 19", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.19.htm" },
+                { name: "PC Chapter 28", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.28.htm" },
+            ];
+            const resourcesList = document.getElementById('resources-list');
+            resources.sort((a, b) => a.name.localeCompare(b.name));
+            resources.forEach(res => {
+                const link = document.createElement('a');
+                link.href = res.url;
+                link.target = '_blank';
+                link.className = 'text-blue-600 hover:underline';
+                link.textContent = res.name;
+                resourcesList.appendChild(link);
+            });
+        });
+    </script>
+</body>
+</html>
+

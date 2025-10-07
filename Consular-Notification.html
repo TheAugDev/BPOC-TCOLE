@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Guide: Consular Notification</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --header-bg: #1f2937;
+            --bg-color: #f3f4f6;
+            --tab-active-bg: #3b82f6;
+            --tab-active-text: #ffffff;
+            --card-bg: #ffffff;
+            --text-color: #111827;
+            --link-color: #2563eb;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://rsms.me/inter/inter.css');
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab.active {
+            background-color: var(--tab-active-bg);
+            color: var(--tab-active-text);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tab {
+            transition: all 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="bg-gray-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">
+                <i class="fas fa-globe-americas mr-2"></i>Consular Notification
+            </h1>
+            <p class="text-sm text-gray-300">BPOC Chapter 13 | TCOLE Preparation</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-4 md:p-6">
+        <!-- Tab Navigation -->
+        <div class="mb-6 bg-white rounded-lg shadow-md overflow-x-auto">
+            <nav id="tabs" class="flex flex-row space-x-1 p-2">
+                <button data-tab="concepts" class="tab active flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-lightbulb mr-2"></i> <span class="hidden md-inline">Key Concepts</span>
+                </button>
+                <button data-tab="procedures" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-tasks mr-2"></i> <span class="hidden md-inline">Procedures</span>
+                </button>
+                <button data-tab="access" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-id-card mr-2"></i> <span class="hidden md-inline">Consular Access</span>
+                </button>
+                 <button data-tab="immunity" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-user-shield mr-2"></i> <span class="hidden md-inline">Diplomatic Immunity</span>
+                </button>
+                <button data-tab="knowledge-check" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-question-circle mr-2"></i> <span class="hidden md-inline">Knowledge Check</span>
+                </button>
+                <button data-tab="resources" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-link mr-2"></i> <span class="hidden md-inline">Resources</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Tab Content -->
+        <div id="tab-contents">
+            <!-- Key Concepts Tab -->
+            <div id="concepts" class="tab-content active space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Vienna Convention on Consular Relations (VCCR)</h2>
+                    <p class="text-sm text-gray-700 mb-2"><strong>Legal Definition:</strong> An international treaty that outlines the framework for consular relations between independent states. Its purpose is to ensure that a foreign national arrested or detained in another country is not cut off from assistance from their own government.</p>
+                    <h4 class="font-semibold mt-3">Elements Checklist (Key Principles of VCCR Article 36):</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>A foreign detainee must be informed of their right to have their consulate notified.</li>
+                        <li>The detainee's decision whether to notify must be documented.</li>
+                        <li>Applies to ALL foreign detainees, regardless of their immigration status (legal or illegal).</li>
+                        <li>If the detainee requests notification, it must be done "without delay."</li>
+                        <li>Consular officers have the right to visit, correspond with, and arrange legal representation for their nationals in detention.</li>
+                    </ul>
+                     <p class="text-sm mt-2"><strong>Practical Example:</strong> An officer arrests a person for DWI near the Texas-Mexico border. The driver produces a Mexican driver's license. The officer knows that because the driver is a foreign national, they have certain rights under the VCCR and begins the notification procedure.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Notification Rules: Basic vs. Mandatory</h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold">Basic Rule (Most Countries)</h4>
+                            <p class="text-sm text-gray-700">Applies to countries without a specific bilateral treaty. Officers must inform the detainee of their right to have their consulate notified.</p>
+                             <h4 class="font-semibold mt-2">Elements Checklist:</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>Inform the detainee of their right to consular notification.</li>
+                                <li>Ask them if they want their consulate to be notified.</li>
+                                <li>If they say yes, notify the consulate without delay.</li>
+                                <li>If they say no, do not notify the consulate (respect their right to privacy).</li>
+                                <li>Document their choice.</li>
+                             </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Mandatory Rule (Certain Countries)</h4>
+                            <p class="text-sm text-gray-700">Applies to countries with which the U.S. has a bilateral treaty. Officers MUST notify the consulate of the arrest, regardless of the detainee's wishes.</p>
+                            <h4 class="font-semibold mt-2">Elements Checklist:</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>Inform the detainee that you are required to notify their consulate.</li>
+                                <li>Notify the consulate without delay (usually within 72 hours).</li>
+                                <li>The detainee's wishes do not matter. The right to privacy does not apply.</li>
+                                <li>Document that notification was made.</li>
+                             </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Procedures Tab -->
+            <div id="procedures" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Steps in the Arrest of a Foreign National</h2>
+                    <p class="text-sm text-gray-700 mb-2">Follow these sequential steps to ensure compliance with consular notification requirements.</p>
+                    <h4 class="font-semibold mt-3">Elements Checklist (Procedural Steps):</h4>
+                     <ol class="list-decimal list-inside text-sm text-gray-700 space-y-2">
+                        <li><strong>Determine Citizenship:</strong> Ask the detainee if they are a U.S. citizen. If they are a foreign national, proceed.</li>
+                        <li><strong>Check for Mandatory Notification:</strong> Consult the list of mandatory notification countries. (This is found in the U.S. Department of State's Consular Notification and Access handbook/pocket card).</li>
+                        <li><strong>Provide Notification Based on Rule:</strong>
+                            <ul class="list-disc list-inside ml-4">
+                                <li>If the country is on the **mandatory list**, inform the detainee that you will be notifying their consulate and do so without delay.</li>
+                                <li>If the country is **not** on the mandatory list, ask the detainee if they wish for their consulate to be notified.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Document the Response:</strong> Keep a written record of the detainee's response to your question or the notification you provided.</li>
+                        <li><strong>Document the Notification (if made):</strong> Record the date, time, method of notification (e.g., phone call, fax), and the name or title of the person notified at the consulate.</li>
+                    </ol>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Practical Scenarios</h2>
+                    <div class="space-y-4 text-sm">
+                        <div>
+                            <h4 class="font-semibold">Scenario 1: Citizen of Japan (Basic Rule)</h4>
+                            <p class="text-gray-700">You arrest John Sato for assault. He states he is a citizen of Japan. Japan is not a mandatory notification country. You read him Statement #1 from the pocket card. He says he does NOT want his consulate notified. You record his response and take no further action.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Scenario 2: Citizen of Belize (Mandatory Rule)</h4>
+                            <p class="text-gray-700">You arrest Maria Garcia for prostitution. She states she is a citizen of Belize. Belize IS a mandatory notification country. You read her Statement #2 from the pocket card, informing her notification is required. She acknowledges. You record her response, notify the Belize consulate without delay, and document the notification details.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Scenario 3: Citizen of Singapore (Mandatory Rule with Objection)</h4>
+                            <p class="text-gray-700">You arrest Robert Tan for theft. He states he is a citizen of Singapore (a mandatory notification country). You read him Statement #2. He says he does NOT want his consulate notified. You must proceed with notification "without delay" despite his objection, and document both his response and the notification details.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Scenario 4: Citizen of Mexico (Basic Rule - Illegal Status)</h4>
+                            <p class="text-gray-700">You arrest a person for DWI. He states he is a citizen of Mexico, but is in the U.S. illegally. Mexico is NOT a mandatory notification country. His illegal status does not change the rule. You read him Statement #1. He says he DOES want his consulate notified. You record his response, contact the Mexican consulate, and document the notification details.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Consular Access Tab -->
+            <div id="access" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Forms of Consular Access & Services</h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold">Forms of Access</h4>
+                            <p class="text-sm text-gray-700 mb-2">Consular access must be exercised in conformity with the laws and regulations of the receiving state (e.g., detention facility rules).</p>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li><strong>Visit:</strong> In person.</li>
+                                <li><strong>Call:</strong> By phone.</li>
+                                <li><strong>Write:</strong> By mail/correspondence.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Services of a Consular Officer</h4>
+                            <p class="text-sm text-gray-700 mb-2">Consular officers provide a range of support services.</p>
+                             <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>Arrange for legal representation.</li>
+                                <li>Monitor the progress of the case to ensure a fair trial.</li>
+                                <li>Monitor the conditions of confinement.</li>
+                                <li>Provide reading materials, food, medicine, and other necessities.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Why Comply with VCCR?</h2>
+                    <p class="text-sm text-gray-700 mb-2">There are several important reasons to follow consular notification procedures correctly.</p>
+                    <h4 class="font-semibold mt-3">Elements Checklist (Reasons for Compliance):</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Legal Reasons:</strong> The VCCR is "the law of the land" in the United States.</li>
+                        <li><strong>Policy Reasons:</strong> Reciprocity. If we protect foreign nationals here, U.S. citizens arrested abroad can expect the same protections.</li>
+                        <li><strong>Pragmatic Reasons:</strong> To avoid suppression of evidence, civil liability, and costly litigation.</li>
+                     </ul>
+                </div>
+            </div>
+            
+            <!-- Diplomatic Immunity Tab -->
+            <div id="immunity" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Diplomatic Immunity & The C.A.N. Principle</h2>
+                     <p class="text-sm text-gray-700 mb-2">While related to foreign nationals, diplomatic immunity is distinct from consular notification and grants certain protections from arrest and prosecution. Immunity is to be respected, but nothing is more important than officer and public safety.</p>
+                    <div class="mt-4 p-4 bg-blue-50 rounded-lg">
+                        <h3 class="font-bold text-lg text-blue-800">The C.A.N. Principle</h3>
+                        <p class="text-sm text-blue-700">Law enforcement <span class="font-bold">C.A.N.</span> take action when encountering claims of immunity.</p>
+                    </div>
+                    <ul class="mt-4 space-y-3 text-sm">
+                        <li class="flex items-start">
+                            <div class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold flex-shrink-0 mr-4">C</div>
+                            <div>
+                                <h4 class="font-semibold">CALL the Department of State</h4>
+                                <p class="text-gray-600">Immediately verify the individual's immunity status by calling the Department of State's 24/7 verification line. <br><strong>During Business Hours:</strong> 202-647-3417 <br><strong>After Hours:</strong> 571-345-3146 or 1-866-217-2089</p>
+                            </div>
+                        </li>
+                         <li class="flex items-start">
+                            <div class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold flex-shrink-0 mr-4">A</div>
+                            <div>
+                                <h4 class="font-semibold">ASSIST by Documenting</h4>
+                                <p class="text-gray-600">Provide detailed documentation of the incident following usual procedures and issue any relevant citations. A person with immunity can still receive a traffic citation.</p>
+                            </div>
+                        </li>
+                         <li class="flex items-start">
+                            <div class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold flex-shrink-0 mr-4">N</div>
+                            <div>
+                                <h4 class="font-semibold">NOTIFY OFM</h4>
+                                <p class="text-gray-600">Send a copy of all citations and reports to the Department of State, Office of Foreign Missions (OFM) at <span class="font-mono">OFMImmunity@state.gov</span> or <span class="font-mono">OFMHouston@state.gov</span>. This allows OFM to pursue the matter through diplomatic channels.</p>
+                            </div>
+                        </li>
+                    </ul>
+                    <p class="text-sm mt-4"><strong>Practical Example:</strong> An officer stops a driver for speeding who presents a diplomatic ID card. The officer cannot arrest the driver for the traffic offense, but they can (and should) issue a citation, document the encounter thoroughly, and follow the C.A.N. principle by calling to verify status and notifying the OFM.</p>
+                </div>
+            </div>
+
+            <!-- Knowledge Check Tab -->
+            <div id="knowledge-check" class="tab-content">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Knowledge Check</h2>
+                    <p class="mb-6 text-gray-600">Test your understanding of the material.</p>
+                    <div id="quiz-container" class="space-y-8">
+                        <!-- Questions will be dynamically inserted here -->
+                    </div>
+                    <div class="mt-8 text-center">
+                        <button id="check-answers-btn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors">Check Answers</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resources Tab -->
+            <div id="resources" class="tab-content">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Official Resources</h2>
+                    <p class="mb-6 text-gray-600">Quick links to the U.S. Department of State resources referenced in this guide.</p>
+                    <div class="space-y-3">
+                        <a href="https://travel.state.gov/content/travel/en/consularnotification.html" target="_blank" class="block p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                            <p class="font-semibold text-blue-600">Main Consular Notification and Access Page</p>
+                            <p class="text-sm text-gray-600">The primary resource hub for law enforcement from the Department of State.</p>
+                        </a>
+                        <a href="https://travel.state.gov/content/dam/travel/CNAtrainingresources/CNA%20Manual%205th%20Edition%20September%202018.pdf" target="_blank" class="block p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                            <p class="font-semibold text-blue-600">Consular Notification and Access Manual (PDF)</p>
+                            <p class="text-sm text-gray-600">The comprehensive handbook for federal, state, and local law enforcement.</p>
+                        </a>
+                        <a href="https://travel.state.gov/content/dam/travel/cna_pdf/CNA%20Pocket%20Card_BW_2018.pdf" target="_blank" class="block p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                            <p class="font-semibold text-blue-600">Consular Notification Pocket Card (PDF)</p>
+                            <p class="text-sm text-gray-600">A quick-reference card for officers in the field.</p>
+                        </a>
+                        <a href="https://www.state.gov/information-for-law-enforcement" target="_blank" class="block p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                            <p class="font-semibold text-blue-600">Information for Law Enforcement (Diplomatic Immunity)</p>
+                            <p class="text-sm text-gray-600">Additional resources from the Office of Foreign Missions regarding diplomatic immunity.</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('#tabs button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                });
+            });
+
+            // --- QUIZ DATA ---
+            const quizData = [
+                {
+                    question: "1. What is the primary purpose of the Vienna Convention on Consular Relations (VCCR)?",
+                    options: ["To give foreign nationals immunity from arrest.", "To ensure a foreign national is not cut off from their government's assistance.", "To regulate international trade.", "To establish diplomatic embassies."],
+                    answer: "To ensure a foreign national is not cut off from their government's assistance.",
+                    explanation: "The purpose of the VCCR is to ensure a foreign national is not placed in a situation where they cannot receive assistance from their own government."
+                },
+                {
+                    question: "2. You arrest a citizen of a country that is on the 'mandatory notification' list. The detainee tells you they do NOT want their consulate notified. What should you do?",
+                    options: ["Respect their wishes and do not notify.", "Notify the consulate without delay, regardless of their wishes.", "Ask them a second time to be sure.", "Release them with a warning."],
+                    answer: "Notify the consulate without delay, regardless of their wishes.",
+                    explanation: "For countries on the mandatory notification list, the consulate MUST be notified regardless of the detainee's wishes. The right to privacy does not apply."
+                },
+                {
+                    question: "3. What is the first step an officer should take after arresting someone, to determine if consular notification is required?",
+                    options: ["Check the list of mandatory notification countries.", "Ask the detainee if they are a U.S. citizen.", "Read them their Miranda rights.", "Document the time of the arrest."],
+                    answer: "Ask the detainee if they are a U.S. citizen.",
+                    explanation: "The first step is to determine the person's citizenship. If they are not a U.S. citizen, the consular notification process begins."
+                },
+                {
+                    question: "4. A consular official wishes to visit a detained national from their country. What must the official do?",
+                    options: ["They have unrestricted access at any time.", "They must first get a court order.", "They must follow the detention facility's regulations for visits.", "They can only communicate by phone or mail."],
+                    answer: "They must follow the detention facility's regulations for visits.",
+                    explanation: "Consular officials have the right to visit, but their access must conform to the laws and regulations of the receiving state, including detention facility rules."
+                },
+                {
+                    question: "5. The VCCR applies to which foreign detainees?",
+                    options: ["Only those in the country legally.", "Only those who are tourists.", "Only those who have committed felonies.", "All foreign detainees, whether in the country legally or illegally."],
+                    answer: "All foreign detainees, whether in the country legally or illegally.",
+                    explanation: "The VCCR's provisions apply to all foreign detainees, regardless of their immigration status."
+                },
+                {
+                    question: "6. Which of the following is NOT a service typically provided by a consular officer to a detained national?",
+                    options: ["Arranging legal representation.", "Posting their bail or bond.", "Monitoring the conditions of confinement.", "Providing reading material and other necessities."],
+                    answer: "Posting their bail or bond.",
+                    explanation: "While consular officers can help arrange legal representation and monitor the case, they do not typically pay legal fees or post bail for the detainee."
+                },
+                {
+                    question: "7. Under the C.A.N. principle for diplomatic immunity, what does the 'C' stand for?",
+                    options: ["Cite the individual.", "Contact your supervisor.", "Call the Department of State.", "Cease the detention immediately."],
+                    answer: "Call the Department of State.",
+                    explanation: "The 'C' in C.A.N. stands for CALL the Department of State to verify the individual's immunity status."
+                },
+                {
+                    question: "8. You arrest a citizen of Mexico (not a mandatory notification country). You inform them of their right to have their consulate notified, and they request it. What is your next step?",
+                    options: ["Document their request and take no further action.", "Notify the Mexican consulate 'without delay.'", "Wait 72 hours before notifying the consulate.", "Tell them they must contact the consulate themselves."],
+                    answer: "Notify the Mexican consulate 'without delay.'",
+                    explanation: "If a detainee from a non-mandatory country requests notification, the officer is obligated to make that notification 'without delay' on their behalf."
+                },
+                {
+                    question: "9. If a foreign national is arrested and their country is NOT on the mandatory notification list, what determines if their consulate is notified?",
+                    options: ["The seriousness of the crime.", "The officer's discretion.", "The wishes of the detainee.", "The policy of the detention facility."],
+                    answer: "The wishes of the detainee.",
+                    explanation: "For most countries, the detainee has the right to decide whether their consulate is notified. Their privacy is respected."
+                },
+                {
+                    question: "10. 'Reciprocity,' the idea that U.S. citizens abroad will receive the same protections we provide to foreign nationals here, is an example of which reason for compliance with the VCCR?",
+                    options: ["Legal Reason", "Policy Reason", "Pragmatic Reason", "Ethical Reason"],
+                    answer: "Policy Reason",
+                    explanation: "Reciprocity is a key policy reason for compliance, as it ensures mutual protection for citizens of all signatory countries."
+                },
+                 {
+                    question: "11. You arrest a citizen of Belize. According to the practical scenarios, what must you do?",
+                    options: ["Ask them if they want their consulate notified.", "Inform them that you are required to notify their consulate.", "Do nothing unless they mention their consulate.", "Wait for their lawyer to arrive before taking action."],
+                    answer: "Inform them that you are required to notify their consulate.",
+                    explanation: "Belize is a mandatory notification country, so you must inform the detainee that notification is required and then proceed with it."
+                },
+                {
+                    question: "12. A person claiming diplomatic immunity can still be issued a traffic citation.",
+                    options: ["True", "False"],
+                    answer: "True",
+                    explanation: "Immunity does not prevent an officer from documenting an incident or issuing a citation. The C.A.N. principle encourages officers to ASSIST by documenting and NOTIFYING the Department of State."
+                },
+                {
+                    question: "13. You arrest a citizen of Singapore who objects to their consulate being notified. What action must you take?",
+                    options: ["Respect their objection and document it.", "Proceed with the notification without delay.", "Detain them until they agree to the notification.", "Contact the Department of State for guidance."],
+                    answer: "Proceed with the notification without delay.",
+                    explanation: "Singapore is a mandatory notification country. Therefore, notification must be made 'without delay' even if the detainee objects."
+                },
+                {
+                    question: "14. A pragmatic reason for complying with the VCCR is to:",
+                    options: ["Uphold international law.", "Ensure reciprocity for U.S. citizens.", "Avoid suppression of evidence and civil liability.", "Promote good foreign relations."],
+                    answer: "Avoid suppression of evidence and civil liability.",
+                    explanation: "Pragmatic reasons for compliance focus on practical outcomes, such as avoiding legal challenges like evidence suppression or lawsuits."
+                }
+            ];
+
+            const quizContainer = document.getElementById('quiz-container');
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'quiz-question';
+                let optionsHtml = q.options.map(option => `
+                    <label class="block"><input type="radio" name="q${index}" value="${option}" class="mr-2">${option}</label>
+                `).join('');
+                questionDiv.innerHTML = `
+                    <p class="font-semibold mb-2">${q.question}</p>
+                    <div class="space-y-2">${optionsHtml}</div>
+                    <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                `;
+                quizContainer.appendChild(questionDiv);
+            });
+
+            document.getElementById('check-answers-btn').addEventListener('click', () => {
+                quizData.forEach((q, index) => {
+                    const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                    const feedback = document.querySelectorAll('.feedback')[index];
+                    feedback.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+                    if (selected && selected.value === q.answer) {
+                        feedback.textContent = `Correct! ${q.explanation}`;
+                        feedback.classList.add('bg-green-100', 'text-green-800');
+                    } else {
+                        feedback.textContent = `Incorrect. The correct answer is "${q.answer}". ${q.explanation}`;
+                        feedback.classList.add('bg-red-100', 'text-red-800');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+

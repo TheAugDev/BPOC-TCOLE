@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCOLE Health & Safety Code Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+        .answer-option {
+            transition: all 0.2s ease-in-out;
+        }
+        .answer-option:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .correct {
+            background-color: #D1FAE5 !important;
+            border-color: #10B981 !important;
+            color: #065F46 !important;
+        }
+        .incorrect {
+            background-color: #FEE2E2 !important;
+            border-color: #EF4444 !important;
+            color: #991B1B !important;
+        }
+        .progress-bar-fill {
+            transition: width 0.3s ease-in-out;
+        }
+        .review-correct {
+            color: #059669;
+        }
+        .review-incorrect {
+            color: #e11d48;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="quiz-app" class="quiz-container p-4 sm:p-8">
+        
+        <!-- Quiz Start Screen -->
+        <div id="start-screen" class="text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Health & Safety Code: Controlled Substances</h1>
+            <p class="text-lg text-gray-600 mb-8">An exhaustive quiz based on the "Basic Peace Officer Course | Chapter 15" handout to test your knowledge on the Texas Controlled Substance Act.</p>
+            <button id="start-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Start Quiz</button>
+        </div>
+
+        <!-- Quiz Interface -->
+        <div id="quiz-screen" class="hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold">Question <span id="question-number"></span> of <span id="total-questions"></span></h2>
+                <div id="timer" class="text-lg font-mono bg-gray-200 px-3 py-1 rounded-md">00:00</div>
+            </div>
+            
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+                <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full progress-bar-fill" style="width: 0%"></div>
+            </div>
+
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+                <p id="question-text" class="text-xl font-medium mb-8 min-h-[6rem]"></p>
+                <div id="answer-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Answer options will be injected here by JS -->
+                </div>
+            </div>
+             <div id="rationale-box" class="hidden mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h3 class="font-bold text-blue-800">Rationale:</h3>
+                <p id="rationale-text" class="text-blue-700"></p>
+                <p class="text-sm text-blue-600 mt-2">Source: <span id="rationale-source"></span></p>
+            </div>
+            <button id="next-btn" class="hidden w-full bg-blue-600 text-white font-bold py-3 px-8 rounded-lg mt-8 hover:bg-blue-700 transition-colors shadow-md">Next Question</button>
+        </div>
+
+        <!-- Quiz Results Screen -->
+        <div id="results-screen" class="hidden text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">Quiz Complete!</h1>
+            <p class="text-lg text-gray-600 mb-6">Here's how you did:</p>
+            <div class="flex flex-col sm:flex-row justify-around items-center my-8 gap-8 sm:gap-0">
+                <div>
+                    <p id="score-percentage" class="text-5xl font-bold text-green-600">0%</p>
+                    <p class="text-gray-500">Score</p>
+                </div>
+                 <div>
+                    <p class="text-5xl font-bold text-blue-600"><span id="correct-answers">0</span>/<span id="total-answered">0</span></p>
+                    <p class="text-gray-500">Correct Answers</p>
+                </div>
+                 <div>
+                    <p id="final-time" class="text-5xl font-bold text-gray-700">00:00</p>
+                    <p class="text-gray-500">Time Taken</p>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="restart-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Try Again</button>
+                <button id="review-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md">Review Answers</button>
+            </div>
+        </div>
+        
+        <!-- Review Screen -->
+        <div id="review-screen" class="hidden bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6">Answer Review</h1>
+            <div id="review-container" class="space-y-6">
+                <!-- Review content will be injected here -->
+            </div>
+            <button id="back-to-results-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md mt-8">Back to Results</button>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            // Original Questions
+            { question: "Which of the following is NOT one of the six major categories of controlled substances listed in the handout?", options: ["Narcotics", "Stimulants", "Depressants", "Solvents"], answer: "Solvents", rationale: "The six major categories of controlled substances are: Narcotics, Depressants, Stimulants, Hallucinogens, Marihuana, and Simulated controlled substances.", page: "Page 1" },
+            { question: "According to HSC 481.112, the manufacture or delivery of a substance in which penalty group is addressed?", options: ["Penalty Group 1A", "Penalty Group 2", "Penalty Group 1", "Penalty Group 3"], answer: "Penalty Group 1", rationale: "HSC 481.112 specifically covers the offense of Manufacturing or Delivering a substance in Penalty Group 1.", page: "Page 2" },
+            { question: "What is the specific Health and Safety Code for the offense of 'Possession of Marihuana'?", options: ["HSC 481.120", "HSC 481.121", "HSC 481.122", "HSC 481.115"], answer: "HSC 481.121", rationale: "The table lists HSC 481.121 as the statute for the offense of 'Possession of Marihuana.'", page: "Page 2" },
+            { question: "Delivering a controlled substance or marihuana to a child is an offense under which statute?", options: ["HSC 481.119", "HSC 481.120", "HSC 481.122", "HSC 481.125"], answer: "HSC 481.122", rationale: "The offense of 'Delivery of controlled substance or marihuana to child' is listed under HSC 481.122.", page: "Page 2" },
+            { question: "What is the penalty for manufacturing a substance from Penalty Group 1 in the presence of a child?", options: ["Reduced sentence", "No change in penalty", "Enhanced penalty", "Mandatory probation"], answer: "Enhanced penalty", rationale: "HSC 481.1122 provides an enhancement for the manufacture of a substance in PG 1 if a child is present.", page: "Page 3" },
+            { question: "Which legal document defines 'Dangerous Drug'?", options: ["HSC 481.002", "HSC 483.001", "Penal Code 1.07", "Occupations Code 169.001"], answer: "HSC 483.001", rationale: "The definition for 'Dangerous drug' and other related terms is found in Health and Safety Code Chapter 483.001.", page: "Page 3" },
+            { question: "What is the legal THC concentration threshold that distinguishes legal hemp from illegal marihuana?", options: ["0.5%", "1.0%", "0.3%", "3.0%"], answer: "0.3%", rationale: "A cannabis product with a THC concentration of more than 0.3% is considered illegal marihuana, while a product with less than 0.3% is considered legal hemp.", page: "Page 4" },
+            { question: "Which item is listed as paraphernalia associated with 'Inhalation' of drugs?", options: ["Needles", "Gelatin capsules", "Bags, balloons", "Patches"], answer: "Bags, balloons", rationale: "The handout lists bags and balloons as examples of paraphernalia used for the inhalation of drugs.", page: "Page 4" },
+            { question: "Which statute covers the offense of 'Possession of dangerous drug'?", options: ["HSC 483.041", "HSC 483.042", "HSC 483.043", "HSC 481.125"], answer: "HSC 483.041", rationale: "HSC 483.041 is the specific statute for the offense of 'Possession of dangerous drug.'", page: "Page 4" },
+            { question: "Under the Texas Compassionate-Use Program, 'Low-THC Cannabis' is defined in which code?", options: ["Health and Safety Code", "Penal Code", "Agriculture Code", "Occupations Code"], answer: "Occupations Code", rationale: "The definition for 'Low-THC Cannabis' is found in Occupations Code Chapter 169.001.", page: "Page 4" },
+            { question: "Which of these is a characteristic of a 'load car' used for smuggling narcotics?", options: ["Bright, flashy paint job", "Vehicle not registered to the driver", "Small, compact vehicle", "Driver is the registered owner"], answer: "Vehicle not registered to the driver", rationale: "A common characteristic of drug smuggling vehicles is that the vehicle is not registered to the driver (e.g., it's a rental or belongs to a third party).", page: "Page 5" },
+            { question: "What is a physical indicator on a vehicle that might suggest the presence of a false compartment?", options: ["Brand new tires", "Clean interior", "Lug nuts or bolts appear to have been tampered with", "Loud exhaust system"], answer: "Lug nuts or bolts appear to have been tampered with", rationale: "Tool markings or signs of tampering on lug nuts, screws, and bolts can indicate that parts of the vehicle have been modified to create false compartments.", page: "Page 5" },
+            { question: "Which behavior from a driver during a traffic stop is listed as a factor contributing to probable cause in a drug investigation?", options: ["Making direct eye contact", "Asking for the officer's name", "Pungent odor of controlled substances from the vehicle", "Having a valid driver's license"], answer: "Pungent odor of controlled substances from the vehicle", rationale: "A pungent odor of certain controlled substances emanating from the vehicle is a key factor that can contribute to probable cause.", page: "Page 6" },
+            { question: "What is a common characteristic of a drug smuggler mentioned in the training material?", options: ["Traveling with extensive, well-packed luggage", "Appears calm and relaxed when contacted by an officer", "Extended travel without luggage or with minimal luggage", "Willingly consents to a vehicle search"], answer: "Extended travel without luggage or with minimal luggage", rationale: "One of the listed characteristics of drug smugglers is undertaking extended travel with little to no luggage, which is inconsistent with the stated purpose of the trip.", page: "Page 6" },
+            { question: "Which of the following is listed as a common place of concealment for drugs 'on the person'?", options: ["In a wallet", "Inside shoes or footwear", "In a sealed beverage container", "Under the driver's seat"], answer: "Inside shoes or footwear", rationale: "The handout explicitly lists 'Shoes/socks/footwear' as a common place to conceal controlled substances on a person.", page: "Page 6" },
+            { question: "Where in a home is a common place to find concealed drugs, according to the handout?", options: ["In a bookshelf", "Inside toilet tanks", "Under a bed", "In a kitchen pantry"], answer: "Inside toilet tanks", rationale: "'Toilet tanks' are specifically mentioned as a common concealment location in a place (like a house).", page: "Page 7" },
+            { question: "According to the guide, which part of a vehicle is a common place for drug concealment?", options: ["The sun visor", "The floor mats", "Inside the spare tire", "The rear-view mirror"], answer: "Inside the spare tire", rationale: "The 'Spare tire' is listed as one of the many common places to conceal drugs within a vehicle.", page: "Page 7" },
+            { question: "The testimony of an accomplice in a drug case requires what to be considered valid?", options: ["A signed affidavit", "Corroboration", "Approval from a judge", "A polygraph test"], answer: "Corroboration", rationale: "CCP 38.14, referenced in the text, establishes that the testimony of an accomplice must be corroborated by other evidence.", page: "Page 7" },
+            { question: "The term 'Deliver or offer to deliver' is defined in which chapter of the Health & Safety Code?", options: ["HSC 483.001", "HSC 481.002", "HSC 482.001", "HSC 481.121"], answer: "HSC 481.002", rationale: "HSC Chapter 481.002 provides the definitions for important terms in the Texas Controlled Substances Act, including 'Deliver or offer to deliver'.", page: "Page 1" },
+            { question: "An object specifically designed for consuming, injecting, or preparing a controlled substance is defined as what?", options: ["A dangerous drug", "A counterfeit substance", "Drug paraphernalia", "An immediate precursor"], answer: "Drug paraphernalia", rationale: "The definition of 'Drug paraphernalia' in HSC 481.002 covers items used to introduce controlled substances into the human body.", page: "Page 1" },
+            { question: "Possession of a substance in Penalty Group 2A is covered by which statute?", options: ["HSC 481.116", "HSC 481.1161", "HSC 481.117", "HSC 481.115"], answer: "HSC 481.1161", rationale: "The table of offenses explicitly lists HSC 481.1161 as the statute for Possession of a substance in Penalty Group 2A.", page: "Page 2" },
+            { question: "What is the offense for possessing or transporting certain chemicals with the intent to manufacture a controlled substance?", options: ["HSC 481.122", "HSC 481.124", "HSC 481.125", "HSC 481.133"], answer: "HSC 481.124", rationale: "HSC 481.124 covers the offense of possessing or transporting chemicals with the intent to manufacture controlled substances.", page: "Page 2" },
+            { question: "The use of a deadly weapon during a drug offense can lead to what consequence for the convict's sentence?", options: ["They are ineligible for parole.", "They must serve at least half of their sentence.", "The sentence is automatically doubled.", "It has no effect on their prison time."], answer: "They must serve at least half of their sentence.", rationale: "A deadly weapon finding means a convict must serve at least half of their sentence before being eligible for parole, as per Government Code Chapter Sec. 508.145.", page: "Page 3" },
+            { question: "A 'prescription' is defined as an order from a practitioner to a pharmacist for a ____________ to be dispensed.", options: ["Controlled substance", "Dangerous drug", "Medical device", "Narcotic only"], answer: "Dangerous drug", rationale: "Under HSC 483.001, a prescription is an order for a 'dangerous drug'.", page: "Page 3" },
+            { question: "Which is listed as a method for drug 'Ingestion'?", options: ["Syringes", "Balloons", "Patches", "Gelatin capsules, tablets"], answer: "Gelatin capsules, tablets", rationale: "The material identifies 'gelatin capsules, tablets, etc.' as paraphernalia associated with the ingestion of drugs.", page: "Page 4" },
+            { question: "The statute HSC 483.042 deals with what offense related to dangerous drugs?", options: ["Possession", "Manufacture", "Delivery or offer of delivery", "Forging a prescription"], answer: "Delivery or offer of delivery", rationale: "The table on page 4 clearly indicates that HSC 483.042 is the statute for 'Delivery or offer of delivery of dangerous drug.'", page: "Page 4" },
+            { question: "What is a 'Patient Treatment Plan' related to in the Occupations Code?", options: ["Standard hospital admissions", "The Texas Compassionate-Use program", "Emergency room procedures", "Physical therapy"], answer: "The Texas Compassionate-Use program", rationale: "OC 169.005, 'Patient Treatment Plan', is a key component of the Texas Compassionate-Use program for low-THC cannabis.", page: "Page 4" },
+            { question: "What is a primary interview technique mentioned for drug investigations?", options: ["Questioning suspects together to see if they collaborate", "Asking only yes or no questions", "Separating suspects and comparing their answers", "Offering leniency in exchange for information"], answer: "Separating suspects and comparing their answers", rationale: "A key interview technique is to 'Separate suspects and compare answers' to check for inconsistencies in their stories.", page: "Page 6" },
+            { question: "Which of the following is NOT listed as a common place of concealment in a vehicle?", options: ["Glove box", "Headliner", "Inside the seats", "Engine compartment"], answer: "Inside the seats", rationale: "While drugs could be hidden in seats, the list of common vehicle concealment spots includes the glove box, headliner, and engine compartment, but not specifically 'inside the seats'.", page: "Page 7" },
+            { question: "The testimony of an undercover peace officer or special investigator is addressed in which article of the Code of Criminal Procedure?", options: ["CCP 38.14", "CCP 38.141", "HSC 483.072", "Penal Code 71.023"], answer: "CCP 38.141", rationale: "The handout cites CCP 38.141 as the statute concerning the testimony of an undercover peace officer or special investigator.", page: "Page 7" },
+
+            // New Questions
+            { question: "Under HSC 481.002, what does the term 'Manufacture' mean?", options: ["Only the packaging of a drug", "The production, preparation, or processing of a controlled substance", "Selling a controlled substance", "Transporting a controlled substance"], answer: "The production, preparation, or processing of a controlled substance", rationale: "The definition of 'Manufacture' in HSC 481.002 includes the production, preparation, propagation, compounding, conversion, or processing of a controlled substance.", page: "Page 1" },
+            { question: "What is the definition of 'Possession' under the Texas Controlled Substances Act?", options: ["Ownership of the substance", "Actual care, custody, control, or management", "Being in the same room as the substance", "Knowledge of the substance's location"], answer: "Actual care, custody, control, or management", rationale: "'Possession' is defined as actual care, custody, control, or management of a controlled substance (HSC 481.002).", page: "Page 1" },
+            { question: "A substance that is chemically similar to a controlled substance in Penalty Group 1 or 2 is known as what?", options: ["A counterfeit substance", "A controlled substance analogue", "A dangerous drug", "An immediate precursor"], answer: "A controlled substance analogue", rationale: "A 'Controlled substance analogue' is defined as a substance with a chemical structure substantially similar to a controlled substance in PG 1 or 2 (HSC 481.002).", page: "Page 1" },
+            { question: "The offense of manufacturing or delivering a substance in Penalty Group 1A falls under which statute?", options: ["HSC 481.112", "HSC 481.1121", "HSC 481.1123", "HSC 481.113"], answer: "HSC 481.1121", rationale: "The table of offenses specifically lists HSC 481.1121 for the manufacture or delivery of a substance in Penalty Group 1A.", page: "Page 2" },
+            { question: "Which statute governs the manufacture or delivery of substances in Penalty Groups 2 and 2A?", options: ["HSC 481.112", "HSC 481.113", "HSC 481.114", "HSC 481.115"], answer: "HSC 481.113", rationale: "HSC 481.113 is the statute for the offense of manufacturing or delivering a substance in Penalty Group 2 or 2A.", page: "Page 2" },
+            { question: "Which offense is covered under HSC 481.133?", options: ["Possession of drug paraphernalia", "Delivery of marihuana to a child", "Falsifying drug test results", "Manufacture of a dangerous drug"], answer: "Falsifying drug test results", rationale: "The table of offenses identifies HSC 481.133 as the statute for 'Falsifying drug test results'.", page: "Page 2" },
+            { question: "Under HSC 481.141, manufacturing or delivering a controlled substance can be enhanced if it causes what?", options: ["Financial loss", "Public alarm", "Death or serious bodily injury", "Property damage"], answer: "Death or serious bodily injury", rationale: "HSC 481.141 provides an enhancement for manufacturing or delivering a controlled substance that causes death or serious bodily injury.", page: "Page 2" },
+            { question: "Unlawful delivery or manufacture with intent to deliver a simulated controlled substance is an offense under which statute?", options: ["HSC 481.141", "HSC 482.001", "HSC 482.002", "HSC 481.125"], answer: "HSC 482.002", rationale: "The table lists HSC 482.002 for the offense of 'Unlawful delivery or manufacture with intent to deliver' a simulated controlled substance.", page: "Page 2" },
+            { question: "A defense to prosecution is available under HSC 481.117(f) for possession of which penalty group?", options: ["Penalty Group 1", "Penalty Group 2", "Penalty Group 3", "Penalty Group 4"], answer: "Penalty Group 3", rationale: "HSC 481.117(f) provides a defense to prosecution for the possession of a substance in Penalty Group 3.", page: "Pages 2-3" },
+            { question: "What is the penalty enhancement under PC 22.041(C-1)(3) related to controlled substances?", options: ["Using a deadly weapon", "Manufacturing in a drug-free zone", "Endangering a child by introducing a PG 1 substance into their body", "Smuggling drugs across state lines"], answer: "Endangering a child by introducing a PG 1 substance into their body", rationale: "The penalty is enhanced for Endangering a Child if the defendant introduced a CS from PG 1 or 1-B into the human body.", page: "Page 3" },
+            { question: "Which statute deals with the diversion of controlled substances by registrants and dispensers?", options: ["HSC 481.1122", "PC 71.023", "HSC 481.1285", "HSC 481.153"], answer: "HSC 481.1285", rationale: "HSC 481.1285 specifically addresses the enhancement for 'Diversion of controlled substance by registrants, dispensers, and certain other persons.'", page: "Page 3" },
+            { question: "The general procedures for the seizure and destruction of controlled substance property are found in which statute?", options: ["HSC 481.141", "HSC 481.153", "HSC 483.041", "HSC 483.074"], answer: "HSC 481.153", rationale: "HSC 481.153 outlines the procedures for the seizure and destruction of controlled substances.", page: "Page 3" },
+            { question: "According to the National Institute on Drug Abuse, which of these is NOT one of the most commonly abused drug types?", options: ["Narcotic/opioid", "Stimulants/cocaine", "Depressants", "Hallucinogens"], answer: "Hallucinogens", rationale: "The handout lists Narcotic/opioid, Stimulants/cocaine, and Depressants as the most commonly abused drug types according to NIDA. Hallucinogens, while a major category, are not on this specific list.", page: "Page 3" },
+            { question: "Paraphernalia such as needles and syringes are associated with what method of drug use?", options: ["Inhalation", "Ingestion", "Application", "Injection"], answer: "Injection", rationale: "The text lists needles and syringes as common paraphernalia for the injection of drugs.", page: "Page 4" },
+            { question: "The statute HSC 483.043 relates to which offense concerning dangerous drugs?", options: ["Possession", "Delivery", "Manufacture", "Prescription forgery"], answer: "Manufacture", rationale: "HSC 483.043 is the statute that covers the 'Manufacture of dangerous drug.'", page: "Page 4" },
+            { question: "What does the term 'Smoking' mean under the Texas Compassionate-Use Program definitions?", options: ["Using a vaporizer", "Any method of ingesting cannabis", "Burning a plant material and inhaling the smoke", "It is not defined and therefore allowed"], answer: "Burning a plant material and inhaling the smoke", rationale: "The definition of 'Smoking' in Occupations Code 169.001 refers to burning a plant material and inhaling the smoke, which is a prohibited method of use in the program.", page: "Page 4" },
+            { question: "Which statute outlines the qualifications for a physician to prescribe low-THC cannabis?", options: ["OC 169.001", "OC 169.002", "OC 169.003", "OC 169.004"], answer: "OC 169.002", rationale: "Occupations Code 169.002 specifies the qualifications a physician must have to be able to prescribe low-THC cannabis under the Compassionate-Use Program.", page: "Page 4" },
+            { question: "Which agency is named as a primary resource for analyzing suspected controlled substances in Texas?", options: ["The FBI", "The DEA", "The Texas Dept. of Public Safety", "Local university chemistry labs"], answer: "The Texas Dept. of Public Safety", rationale: "The text explicitly mentions 'The Texas Dept. of Public Safety' as an agency that analyzes suspected controlled substances.", page: "Page 5" },
+            { question: "Which statute governs the seizure and destruction of DANGEROUS DRUGS?", options: ["HSC 481.153", "HSC 483.041", "HSC 483.074", "CCP 38.14"], answer: "HSC 483.074", rationale: "HSC 483.074 specifically outlines the procedures for the seizure and destruction of dangerous drugs, distinct from controlled substances.", page: "Page 5" },
+            { question: "A drug smuggler's vehicle might have trim on the side that does not line up. What does this potentially indicate?", options: ["The vehicle was in a recent accident", "The cab was raised or lowered to accommodate false compartments", "It is a standard feature of that model", "Poor factory assembly"], answer: "The cab was raised or lowered to accommodate false compartments", rationale: "Mismatched vehicle trim is a sign that the body of the vehicle may have been altered to hide a false compartment.", page: "Page 5" },
+            { question: "Which of these is a factor contributing to probable cause during a drug investigation stop?", options: ["The driver is polite and cooperative", "The driver states he does not have a key to the trunk", "The vehicle has out-of-state license plates", "The vehicle is a rental car"], answer: "The driver states he does not have a key to the trunk", rationale: "A driver stating he does not have a key to a compartment of the vehicle he is operating is a suspicious indicator that contributes to probable cause.", page: "Page 6" },
+            { question: "A drug smuggler who is stopped by an officer might quickly exit and physically move away from their vehicle. Why?", options: ["To get better cell phone reception", "To stretch their legs after a long drive", "To attempt to separate from the vehicle and any illegal items inside", "To show respect for the officer's authority"], answer: "To attempt to separate from the vehicle and any illegal items inside", rationale: "This behavior is a tactic to create distance and disassociate from the vehicle, hoping to avoid being linked to any contraband found.", page: "Page 6" },
+            { question: "What is an important interview technique during a traffic stop for a suspected drug smuggler?", options: ["Only speaking to the driver", "Asking the passenger to verify the driver's story in front of the driver", "Inquiring about the origin, destination, and purpose of the trip", "Immediately asking for consent to search"], answer: "Inquiring about the origin, destination, and purpose of the trip", rationale: "Asking about the details of the trip helps an officer identify inconsistencies and deception in the suspects' stories.", page: "Page 6" },
+            { question: "Which of the following is an example of drug concealment 'on the person'?", options: ["Inside a food package", "Taped to the body", "Under a car seat", "In a ceiling tile"], answer: "Taped to the body", rationale: "The handout explicitly lists drugs being 'Taped to body' as a method of concealment on a person.", page: "Page 6" },
+            { question: "According to the handout, where might drugs be concealed in a place like a kitchen?", options: ["In a cookbook", "Inside food canisters", "Taped under a chair", "Mixed in with silverware"], answer: "Inside food canisters", rationale: "'Food canisters' are listed as a specific place of concealment within a location such as a house.", page: "Page 7" },
+            { question: "Which is a common place of concealment in a vehicle's passenger compartment?", options: ["Inside the radio", "Within the A/C ducts or vents", "Tucked into the seatbelt retractor", "Glued to the roof"], answer: "Within the A/C ducts or vents", rationale: "The list of vehicle concealment locations includes 'A/C ducts or vents' as a common hiding spot.", page: "Page 7" },
+            { question: "What does HSC 483.072 address in drug cases?", options: ["Testimony of an accomplice", "Use of uncorroborated testimony", "Testimony of an undercover officer", "Rules for evidence collection"], answer: "Use of uncorroborated testimony", rationale: "HSC 483.072 specifically pertains to the use of uncorroborated testimony in cases involving dangerous drugs.", page: "Page 7" }
+        ];
+
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const reviewScreen = document.getElementById('review-screen');
+
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const reviewBtn = document.getElementById('review-btn');
+        const backToResultsBtn = document.getElementById('back-to-results-btn');
+        
+        const questionNumberEl = document.getElementById('question-number');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const progressBar = document.getElementById('progress-bar');
+        const questionTextEl = document.getElementById('question-text');
+        const answerOptionsEl = document.getElementById('answer-options');
+        const rationaleBox = document.getElementById('rationale-box');
+        const rationaleText = document.getElementById('rationale-text');
+        const rationaleSource = document.getElementById('rationale-source');
+        
+        const scorePercentageEl = document.getElementById('score-percentage');
+        const correctAnswersEl = document.getElementById('correct-answers');
+        const totalAnsweredEl = document.getElementById('total-answered');
+        const finalTimeEl = document.getElementById('final-time');
+        const timerEl = document.getElementById('timer');
+        const reviewContainer = document.getElementById('review-container');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timerInterval;
+        let secondsElapsed = 0;
+        let userAnswers = [];
+        
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        startBtn.addEventListener('click', startQuiz);
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', startQuiz);
+        reviewBtn.addEventListener('click', showReview);
+        backToResultsBtn.addEventListener('click', () => {
+            reviewScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+        });
+
+        function startTimer() {
+            secondsElapsed = 0;
+            timerEl.textContent = '00:00';
+            timerInterval = setInterval(() => {
+                secondsElapsed++;
+                const minutes = Math.floor(secondsElapsed / 60).toString().padStart(2, '0');
+                const seconds = (secondsElapsed % 60).toString().padStart(2, '0');
+                timerEl.textContent = `${minutes}:${seconds}`;
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function startQuiz() {
+            shuffleArray(quizData);
+            quizData.forEach(q => shuffleArray(q.options));
+
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            startScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            nextBtn.classList.add('hidden');
+            startTimer();
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            rationaleBox.classList.add('hidden');
+            answerOptionsEl.innerHTML = '';
+            const currentQuestion = quizData[currentQuestionIndex];
+            
+            questionNumberEl.textContent = currentQuestionIndex + 1;
+            totalQuestionsEl.textContent = quizData.length;
+            questionTextEl.textContent = currentQuestion.question;
+
+            const progress = ((currentQuestionIndex) / quizData.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('answer-option', 'w-full', 'p-4', 'text-left', 'bg-white', 'border-2', 'border-gray-300', 'rounded-lg', 'hover:bg-gray-50', 'hover:border-blue-500');
+                button.addEventListener('click', () => selectAnswer(button, option, currentQuestion));
+                answerOptionsEl.appendChild(button);
+            });
+        }
+
+        function selectAnswer(button, selectedOption, currentQuestion) {
+            const { answer, rationale, page } = currentQuestion;
+            userAnswers[currentQuestionIndex] = selectedOption;
+
+            const buttons = answerOptionsEl.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === answer) {
+                    btn.classList.add('correct');
+                }
+            });
+
+            if (selectedOption === answer) {
+                score++;
+                button.classList.add('correct');
+            } else {
+                button.classList.add('incorrect');
+            }
+
+            rationaleText.textContent = rationale;
+            rationaleSource.textContent = page;
+            rationaleBox.classList.remove('hidden');
+            nextBtn.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                nextBtn.classList.add('hidden');
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            stopTimer();
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            scorePercentageEl.textContent = `${percentage}%`;
+            correctAnswersEl.textContent = score;
+            totalAnsweredEl.textContent = quizData.length;
+            finalTimeEl.textContent = timerEl.textContent;
+            
+            // Ensure progress bar is full at the end
+            progressBar.style.width = `100%`;
+        }
+
+        function showReview() {
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.remove('hidden');
+            reviewContainer.innerHTML = '';
+
+            quizData.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === question.answer;
+
+                const reviewItem = document.createElement('div');
+                reviewItem.classList.add('border', 'p-4', 'rounded-lg');
+                reviewItem.classList.add(isCorrect ? 'bg-green-50/50 border-green-200' : 'bg-red-50/50 border-red-200');
+
+                let userAnswerHTML = '';
+                if (isCorrect) {
+                    userAnswerHTML = `<p>Your answer: <span class="font-semibold review-correct">${userAnswer} (Correct)</span></p>`;
+                } else {
+                    userAnswerHTML = `
+                        <p>Your answer: <span class="font-semibold review-incorrect">${userAnswer ? userAnswer : 'Not answered'} (Incorrect)</span></p>
+                        <p>Correct answer: <span class="font-semibold review-correct">${question.answer}</span></p>
+                    `;
+                }
+
+                reviewItem.innerHTML = `
+                    <p class="font-bold mb-2">${index + 1}. ${question.question}</p>
+                    ${userAnswerHTML}
+                    <p class="text-sm text-gray-600 mt-2"><em><strong>Rationale:</strong> ${question.rationale} (Source: ${question.page})</em></p>
+                `;
+                reviewContainer.appendChild(reviewItem);
+            });
+        }
+
+    </script>
+</body>
+</html>
+

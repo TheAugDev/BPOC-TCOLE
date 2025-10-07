@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCOLE Alcoholic Beverage Code Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+        .answer-option {
+            transition: all 0.2s ease-in-out;
+        }
+        .answer-option:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .correct {
+            background-color: #D1FAE5 !important;
+            border-color: #10B981 !important;
+            color: #065F46 !important;
+        }
+        .incorrect {
+            background-color: #FEE2E2 !important;
+            border-color: #EF4444 !important;
+            color: #991B1B !important;
+        }
+        .progress-bar-fill {
+            transition: width 0.3s ease-in-out;
+        }
+        .review-correct {
+            color: #059669;
+        }
+        .review-incorrect {
+            color: #e11d48;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="quiz-app" class="quiz-container p-4 sm:p-8">
+        
+        <!-- Quiz Start Screen -->
+        <div id="start-screen" class="text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Alcoholic Beverage Code</h1>
+            <p class="text-lg text-gray-600 mb-8">An exhaustive quiz based on the "Basic Peace Officer Course | Chapter 16" handout to test your knowledge on the Texas Alcoholic Beverage Code.</p>
+            <button id="start-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Start Quiz</button>
+        </div>
+
+        <!-- Quiz Interface -->
+        <div id="quiz-screen" class="hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold">Question <span id="question-number"></span> of <span id="total-questions"></span></h2>
+                <div id="timer" class="text-lg font-mono bg-gray-200 px-3 py-1 rounded-md">00:00</div>
+            </div>
+            
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+                <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full progress-bar-fill" style="width: 0%"></div>
+            </div>
+
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+                <p id="question-text" class="text-xl font-medium mb-8 min-h-[6rem]"></p>
+                <div id="answer-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Answer options will be injected here by JS -->
+                </div>
+            </div>
+             <div id="rationale-box" class="hidden mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h3 class="font-bold text-blue-800">Rationale:</h3>
+                <p id="rationale-text" class="text-blue-700"></p>
+                <p class="text-sm text-blue-600 mt-2">Source: <span id="rationale-source"></span></p>
+            </div>
+            <button id="next-btn" class="hidden w-full bg-blue-600 text-white font-bold py-3 px-8 rounded-lg mt-8 hover:bg-blue-700 transition-colors shadow-md">Next Question</button>
+        </div>
+
+        <!-- Quiz Results Screen -->
+        <div id="results-screen" class="hidden text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">Quiz Complete!</h1>
+            <p class="text-lg text-gray-600 mb-6">Here's how you did:</p>
+            <div class="flex flex-col sm:flex-row justify-around items-center my-8 gap-8 sm:gap-0">
+                <div>
+                    <p id="score-percentage" class="text-5xl font-bold text-green-600">0%</p>
+                    <p class="text-gray-500">Score</p>
+                </div>
+                 <div>
+                    <p class="text-5xl font-bold text-blue-600"><span id="correct-answers">0</span>/<span id="total-answered">0</span></p>
+                    <p class="text-gray-500">Correct Answers</p>
+                </div>
+                 <div>
+                    <p id="final-time" class="text-5xl font-bold text-gray-700">00:00</p>
+                    <p class="text-gray-500">Time Taken</p>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="restart-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Try Again</button>
+                <button id="review-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md">Review Answers</button>
+            </div>
+        </div>
+        
+        <!-- Review Screen -->
+        <div id="review-screen" class="hidden bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6">Answer Review</h1>
+            <div id="review-container" class="space-y-6">
+                <!-- Review content will be injected here -->
+            </div>
+            <button id="back-to-results-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md mt-8">Back to Results</button>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            // Original Questions
+            { question: "Under ABC 1.04, what is the definition of an 'Alcoholic beverage'?", options: ["Any beverage containing more than 1% alcohol by volume", "Any beverage containing more than one-half of one percent of alcohol by volume", "Only distilled spirits and wine", "Only beer and malt liquor"], answer: "Any beverage containing more than one-half of one percent of alcohol by volume", rationale: "Alcoholic Beverage Code Chapter 1.04 defines an alcoholic beverage as any beverage containing more than one-half of one percent of alcohol by volume, which is capable of use for beverage purposes.", page: "Page 1" },
+            { question: "A beverage manufactured, distributed, or sold in violation of the TABC code is known as what?", options: ["A mixed beverage", "A distilled spirit", "An illicit beverage", "A malt beverage"], answer: "An illicit beverage", rationale: "An 'Illicit beverage' is defined under ABC 1.04 as any alcoholic beverage that is manufactured, distributed, bought, sold, or possessed in violation of the code.", page: "Page 1" },
+            { question: "According to ABC 106.01, what is the definition of a 'Minor'?", options: ["A person under 18 years of age", "A person under 20 years of age", "A person under 21 years of age", "A person who is not a legal adult"], answer: "A person under 21 years of age", rationale: "Alcoholic Beverage Code Chapter 106.01 specifically defines a 'Minor' as a person under 21 years of age for the purposes of this code.", page: "Page 1" },
+            { question: "Under ABC 101.07, what is the primary duty of a peace officer in relation to the Alcoholic Beverage Code?", options: ["To collect taxes on alcohol sales", "To supervise all licensed premises", "To arrest all violators of this code with or without a warrant", "To issue licenses and permits"], answer: "To arrest all violators of this code with or without a warrant", rationale: "ABC 101.07, 'Duty of peace officers', states that it is the duty of all peace officers to arrest all violators of the code, with or without a warrant.", page: "Page 1" },
+            { question: "According to ABC 103.03, what are peace officers authorized to seize without a warrant?", options: ["Any alcoholic beverage", "Only untaxed liquor", "Illicit beverages, vehicles, and equipment used to transport them", "Cash from alcohol sales"], answer: "Illicit beverages, vehicles, and equipment used to transport them", rationale: "ABC 103.03 gives peace officers the authority to seize, without a warrant, any illicit beverages, their containers, and any vehicle, equipment, or instrumentality used for transporting them.", page: "Page 1" },
+            { question: "What is the key difference between a search and an inspection under the TABC?", options: ["A search requires a warrant, while an inspection does not", "An inspection requires probable cause, while a search does not", "Searches are for licensed premises, inspections are for private homes", "There is no difference"], answer: "A search requires a warrant, while an inspection does not", rationale: "An inspection, under ABC 101.04, is a consent-based administrative check of a licensed premise for violations, while a search under ABC 101.03 typically requires a warrant based on probable cause for evidence of a crime.", page: "Page 1" },
+            { question: "What offense is committed if a person possesses an intoxicant on the grounds of a public school?", options: ["Public Intoxication", "Possession of intoxicants on public school grounds", "Disorderly Conduct", "No offense if the container is sealed"], answer: "Possession of intoxicants on public school grounds", rationale: "Education Code Chapter 37.122 makes it an offense to possess intoxicants on public school grounds.", page: "Page 2" },
+            { question: "Under ABC 101.63, it is an offense to sell or deliver an alcoholic beverage to which type of person?", options: ["A person of a different nationality", "An intoxicated person", "A person who has a prior DWI conviction", "A person paying with a credit card"], answer: "An intoxicated person", rationale: "ABC 101.63, 'Sale or delivery to certain persons', makes it an offense to sell an alcoholic beverage to a habitual drunkard or an intoxicated or insane person.", page: "Page 2" },
+            { question: "What is the offense for a minor who consumes an alcoholic beverage?", options: ["Public Intoxication", "Disorderly Conduct", "No offense, only the provider is liable", "Consumption of alcohol by a minor"], answer: "Consumption of alcohol by a minor", rationale: "Alcoholic Beverage Code Chapter 106.04 specifically makes it an offense for a minor to consume an alcoholic beverage.", page: "Page 2" },
+            { question: "A minor who drives a motor vehicle in a public place while having any detectable amount of alcohol in their system commits which offense?", options: ["Driving While Intoxicated (DWI)", "Driving or operating a watercraft under the influence of alcohol by minor", "Reckless Driving", "Possession of alcohol by a minor"], answer: "Driving or operating a watercraft under the influence of alcohol by minor", rationale: "ABC 106.041 defines the zero-tolerance offense for a minor operating a motor vehicle or watercraft with any detectable amount of alcohol.", page: "Page 2" },
+            { question: "What is the offense for an adult who purchases alcohol for or furnishes it to a minor?", options: ["No offense if they are the parent", "Sale to minors", "Purchase of alcohol for a minor; furnishing alcohol to a minor", "Contributing to the delinquency of a minor"], answer: "Purchase of alcohol for a minor; furnishing alcohol to a minor", rationale: "ABC 106.06 makes it a violation for an adult to purchase alcohol for or make it available to a minor, with certain exceptions.", page: "Page 2" },
+            { question: "If a minor falsely states they are 21 years old to induce a sale of alcohol, what offense have they committed?", options: ["Perjury", "Fraud", "Misrepresentation of age by a minor", "No offense, it's the seller's responsibility"], answer: "Misrepresentation of age by a minor", rationale: "ABC 106.07 outlines the offense of a minor misrepresenting their age to purchase or obtain alcohol.", page: "Page 2" },
+            { question: "What are the standard legal hours for the sale of liquor on a weekday?", options: ["7 a.m. to midnight", "10 a.m. to 9 p.m.", "Noon to 2 a.m.", "24 hours a day"], answer: "10 a.m. to 9 p.m.", rationale: "Under ABC 105.01, the legal hours for the sale of liquor are between 10 a.m. and 9 p.m. on any day except Sunday, Christmas Day, and certain other holidays.", page: "Page 3" },
+            { question: "What are the standard hours of consumption for alcoholic beverages in a licensed establishment on a weekday?", options: ["Until 9 p.m.", "Until midnight", "Until 2:15 a.m.", "Until 1 a.m."], answer: "Until 2:15 a.m.", rationale: "ABC 105.06 allows a person to consume an alcoholic beverage on the premises, with extended hours for consumption generally ending at 2:15 a.m. on the following day.", page: "Page 4" },
+            { question: "Can a business face both criminal and administrative action for the same TABC violation?", options: ["No, it would be double jeopardy", "Yes, because they are different types of actions (criminal and civil)", "Only if the violation resulted in a death", "Only if the business has prior violations"], answer: "Yes, because they are different types of actions (criminal and civil)", rationale: "The text explains that since criminal and administrative actions are different (one against an individual, one against a business), double jeopardy does not apply and both can be pursued for the same event.", page: "Page 4" },
+            { question: "What is a potential administrative penalty for a TABC violation?", options: ["Mandatory community service for the owner", "Jail time for the employees", "Suspension or cancellation of the license or permit", "A permanent ban on selling alcohol in that county"], answer: "Suspension or cancellation of the license or permit", rationale: "The document states that administrative actions generally result in the suspension or cancellation of a license or permit.", page: "Page 4" },
+            { question: "Who is the designated state agency for filing administrative actions related to the Alcoholic Beverage Code?", options: ["The Attorney General's Office", "The Texas Department of Public Safety", "The Texas Alcoholic Beverage Commission (TABC)", "The local District Attorney's office"], answer: "The Texas Alcoholic Beverage Commission (TABC)", rationale: "The handout clearly states, 'The Texas Alcoholic Beverage Commission is the designated agency for filing administrative actions.'", page: "Page 4" },
+            { question: "What piece of information is crucial for the TABC to successfully prosecute an administrative case?", options: ["The weather on the day of the offense", "The identities of all patrons in the establishment", "The location, including the permit or license number", "The profit margin of the business"], answer: "The location, including the permit or license number", rationale: "The list of information needed for a successful administrative case includes 'Location to include permit or license number.'", page: "Page 4" },
+            { question: "If a license is cancelled, for how long is the permittee generally prohibited from obtaining another one?", options: ["6 months", "1 year", "2 years", "5 years"], answer: "2 years", rationale: "If a license or permit is cancelled, the licensee or permittee is generally prohibited from obtaining another one for a period of 2 years.", page: "Page 4" },
+            { question: "Under ABC 101.02, when can a peace officer arrest someone without a warrant?", options: ["Only for felonies", "For any violation of the TABC committed in their presence or view", "Only when a citizen complains", "Never, a warrant is always required"], answer: "For any violation of the TABC committed in their presence or view", rationale: "ABC 101.02 gives a peace officer the authority to arrest without a warrant any person they see violating a provision of the code.", page: "Page 1" },
+            { question: "After seizing illicit beverages, what must a peace officer provide to the person they were seized from?", options: ["A cash payment for the value", "A report of the seizure", "A court date for a hearing", "Nothing is required"], answer: "A report of the seizure", rationale: "ABC 103.05, Report of Seizure, indicates a report must be made, and this is typically provided to the person in possession.", page: "Page 1" },
+            { question: "It is an offense to consume an alcoholic beverage within how many feet of a public school?", options: ["100 feet", "500 feet", "1,000 feet", "1,500 feet"], answer: "1,000 feet", rationale: "ABC 101.75 makes it an offense to consume alcoholic beverages on a public street, alley, or sidewalk within 1,000 feet of a public or private school.", page: "Page 2" },
+            
+            // New Questions
+            { question: "A person who holds a license under the provisions of the TABC is known as a _________.", options: ["Permittee", "Licensee", "Bartender", "Owner"], answer: "Licensee", rationale: "ABC 1.04 defines a 'Licensee' as a person who is the holder of a license provided for in this code, or an agent, servant, or employee of that person.", page: "Page 1" },
+            { question: "What is the offense under ABC 104.01?", options: ["Sale to Minors", "Open Container", "Lewd, immoral, indecent conduct", "Public Intoxication"], answer: "Lewd, immoral, indecent conduct", rationale: "ABC 104.01 prohibits a licensee or permittee from engaging in or permitting lewd, immoral, or indecent conduct on the licensed premises.", page: "Page 2" },
+            { question: "What offense does a minor commit if they present a false ID in an attempt to buy alcohol?", options: ["Attempt to purchase alcohol by a minor", "Misrepresentation of age by a minor", "Purchase of alcohol by a minor", "No offense is committed"], answer: "Misrepresentation of age by a minor", rationale: "While it is part of an attempt to purchase, the specific act of using a false ID or misrepresenting age falls under ABC 106.07.", page: "Page 2" },
+            { question: "A minor commits an offense under ABC 106.05 if they _________ an alcoholic beverage.", options: ["Consume", "Purchase", "Possess", "Transport"], answer: "Possess", rationale: "ABC 106.05 specifically makes it an offense for a minor to possess an alcoholic beverage, with certain exceptions.", page: "Page 2" },
+            { question: "Under ABC 105.03, on-premise permittees (mixed beverages) can sell alcohol on a Sunday between what hours?", options: ["They cannot sell on Sunday", "Noon to midnight", "10 a.m. to 2 a.m. the next day", "7 a.m. to 1 a.m. the next day"], answer: "10 a.m. to 2 a.m. the next day", rationale: "ABC 105.03 allows for the sale of mixed beverages on Sunday between 10 a.m. and 2 a.m. on Monday, provided food service is available.", page: "Page 3" },
+            { question: "What is the general penalty for violating a provision of the TABC if no specific penalty is listed?", options: ["A written warning", "A fine of not less than $100 nor more than $1,000, confinement in jail for not more than one year, or both", "License suspension for 30 days", "Mandatory community service"], answer: "A fine of not less than $100 nor more than $1,000, confinement in jail for not more than one year, or both", rationale: "ABC 1.05, 'General Penalty', provides a default penalty for violations where a specific penalty is not provided.", page: "Page 1" },
+            { question: "According to ABC 11.49, what does 'Premises' refer to?", options: ["The entire city where the bar is located", "The grounds and all buildings of a licensed or permitted business", "Only the interior of the building where alcohol is served", "The parking lot of the establishment"], answer: "The grounds and all buildings of a licensed or permitted business", rationale: "ABC 11.49 defines 'Premises' as the grounds and all buildings, vehicles, and appurtenances pertaining to the grounds, including any adjacent premises if they are directly or indirectly under the control of the permittee or licensee.", page: "Page 1" },
+            { question: "Under ABC 103.04, who may be arrested without a warrant at the location where an illicit beverage is seized?", options: ["Only the owner of the premises", "Any person found in possession of the illicit beverage", "No one can be arrested without a warrant", "The person who manufactured the beverage"], answer: "Any person found in possession of the illicit beverage", rationale: "ABC 103.04, 'Arrest of person in possession', authorizes a peace officer to arrest without a warrant any person found in possession of an illicit beverage.", page: "Page 1" },
+            { question: "A person commits what offense under ABC 106.025?", options: ["Possession of alcohol by a minor", "Furnishing alcohol to a minor", "Attempt to purchase alcohol by a minor", "Sale to minors"], answer: "Attempt to purchase alcohol by a minor", rationale: "ABC 106.025 specifically makes it an offense for a minor to do an act amounting to more than mere preparation that tends, but fails, to effect the commission of purchasing alcohol.", page: "Page 2" },
+            { question: "What is the standard for alcohol violations that TABC needs for a successful administrative case?", options: ["Beyond a reasonable doubt", "Preponderance of the evidence", "Criminal negligence", "Strict liability"], answer: "Criminal negligence", rationale: "The list of information needed for TABC administrative actions includes the 'Standard for alcohol violations (criminal negligence)'.", page: "Page 4" },
+            { question: "What action will TABC often take after receiving a violation report from a law enforcement agency?", options: ["Immediately suspend the license", "Begin a separate, parallel investigation", "Forward the report to the IRS", "Take no action unless there are multiple reports"], answer: "Begin a separate, parallel investigation", rationale: "The document states, 'Upon receiving a report from a law enforcement agency, the TABC will begin a separate, parallel investigation...'", page: "Page 4" },
+            { question: "The offense of 'Open container' is found in which code?", options: ["Alcoholic Beverage Code Chapter 109.35(e)", "Penal Code 49.031", "Transportation Code 545.413", "Health and Safety Code 481.121"], answer: "Alcoholic Beverage Code Chapter 109.35(e)", rationale: "The handout specifically lists the offense of 'Open container' under Alcoholic Beverage Code Chapter 109.35(e).", page: "Page 2" }
+        ];
+
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const reviewScreen = document.getElementById('review-screen');
+
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const reviewBtn = document.getElementById('review-btn');
+        const backToResultsBtn = document.getElementById('back-to-results-btn');
+        
+        const questionNumberEl = document.getElementById('question-number');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const progressBar = document.getElementById('progress-bar');
+        const questionTextEl = document.getElementById('question-text');
+        const answerOptionsEl = document.getElementById('answer-options');
+        const rationaleBox = document.getElementById('rationale-box');
+        const rationaleText = document.getElementById('rationale-text');
+        const rationaleSource = document.getElementById('rationale-source');
+        
+        const scorePercentageEl = document.getElementById('score-percentage');
+        const correctAnswersEl = document.getElementById('correct-answers');
+        const totalAnsweredEl = document.getElementById('total-answered');
+        const finalTimeEl = document.getElementById('final-time');
+        const timerEl = document.getElementById('timer');
+        const reviewContainer = document.getElementById('review-container');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timerInterval;
+        let secondsElapsed = 0;
+        let userAnswers = [];
+        
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        startBtn.addEventListener('click', startQuiz);
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', startQuiz);
+        reviewBtn.addEventListener('click', showReview);
+        backToResultsBtn.addEventListener('click', () => {
+            reviewScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+        });
+
+        function startTimer() {
+            secondsElapsed = 0;
+            timerEl.textContent = '00:00';
+            timerInterval = setInterval(() => {
+                secondsElapsed++;
+                const minutes = Math.floor(secondsElapsed / 60).toString().padStart(2, '0');
+                const seconds = (secondsElapsed % 60).toString().padStart(2, '0');
+                timerEl.textContent = `${minutes}:${seconds}`;
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function startQuiz() {
+            shuffleArray(quizData);
+            quizData.forEach(q => shuffleArray(q.options));
+
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            startScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            nextBtn.classList.add('hidden');
+            startTimer();
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            rationaleBox.classList.add('hidden');
+            answerOptionsEl.innerHTML = '';
+            const currentQuestion = quizData[currentQuestionIndex];
+            
+            questionNumberEl.textContent = currentQuestionIndex + 1;
+            totalQuestionsEl.textContent = quizData.length;
+            questionTextEl.textContent = currentQuestion.question;
+
+            const progress = ((currentQuestionIndex) / quizData.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('answer-option', 'w-full', 'p-4', 'text-left', 'bg-white', 'border-2', 'border-gray-300', 'rounded-lg', 'hover:bg-gray-50', 'hover:border-blue-500');
+                button.addEventListener('click', () => selectAnswer(button, option, currentQuestion));
+                answerOptionsEl.appendChild(button);
+            });
+        }
+
+        function selectAnswer(button, selectedOption, currentQuestion) {
+            const { answer, rationale, page } = currentQuestion;
+            userAnswers[currentQuestionIndex] = selectedOption;
+
+            const buttons = answerOptionsEl.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === answer) {
+                    btn.classList.add('correct');
+                }
+            });
+
+            if (selectedOption === answer) {
+                score++;
+                button.classList.add('correct');
+            } else {
+                button.classList.add('incorrect');
+            }
+
+            rationaleText.textContent = rationale;
+            rationaleSource.textContent = page;
+            rationaleBox.classList.remove('hidden');
+            nextBtn.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                nextBtn.classList.add('hidden');
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            stopTimer();
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            scorePercentageEl.textContent = `${percentage}%`;
+            correctAnswersEl.textContent = score;
+            totalAnsweredEl.textContent = quizData.length;
+            finalTimeEl.textContent = timerEl.textContent;
+            
+            // Ensure progress bar is full at the end
+            progressBar.style.width = `100%`;
+        }
+
+        function showReview() {
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.remove('hidden');
+            reviewContainer.innerHTML = '';
+
+            quizData.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === question.answer;
+
+                const reviewItem = document.createElement('div');
+                reviewItem.classList.add('border', 'p-4', 'rounded-lg');
+                reviewItem.classList.add(isCorrect ? 'bg-green-50/50 border-green-200' : 'bg-red-50/50 border-red-200');
+
+                let userAnswerHTML = '';
+                if (isCorrect) {
+                    userAnswerHTML = `<p>Your answer: <span class="font-semibold review-correct">${userAnswer} (Correct)</span></p>`;
+                } else {
+                    userAnswerHTML = `
+                        <p>Your answer: <span class="font-semibold review-incorrect">${userAnswer ? userAnswer : 'Not answered'} (Incorrect)</span></p>
+                        <p>Correct answer: <span class="font-semibold review-correct">${question.answer}</span></p>
+                    `;
+                }
+
+                reviewItem.innerHTML = `
+                    <p class="font-bold mb-2">${index + 1}. ${question.question}</p>
+                    ${userAnswerHTML}
+                    <p class="text-sm text-gray-600 mt-2"><em><strong>Rationale:</strong> ${question.rationale} (Source: ${question.page})</em></p>
+                `;
+                reviewContainer.appendChild(reviewItem);
+            });
+        }
+
+    </script>
+</body>
+</html>
+

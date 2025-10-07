@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCOLE Sexual Assault & Family Violence Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+        .answer-option {
+            transition: all 0.2s ease-in-out;
+        }
+        .answer-option:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .correct {
+            background-color: #D1FAE5 !important;
+            border-color: #10B981 !important;
+            color: #065F46 !important;
+        }
+        .incorrect {
+            background-color: #FEE2E2 !important;
+            border-color: #EF4444 !important;
+            color: #991B1B !important;
+        }
+        .progress-bar-fill {
+            transition: width 0.3s ease-in-out;
+        }
+        .review-correct {
+            color: #059669;
+        }
+        .review-incorrect {
+            color: #e11d48;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="quiz-app" class="quiz-container p-4 sm:p-8">
+        
+        <!-- Quiz Start Screen -->
+        <div id="start-screen" class="text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Sexual Assault & Family Violence</h1>
+            <p class="text-lg text-gray-600 mb-8">An exhaustive quiz based on the "Basic Peace Officer Course | Chapter 17" handout to test your knowledge on Sexual Assault and Family Violence.</p>
+            <button id="start-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Start Quiz</button>
+        </div>
+
+        <!-- Quiz Interface -->
+        <div id="quiz-screen" class="hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold">Question <span id="question-number"></span> of <span id="total-questions"></span></h2>
+                <div id="timer" class="text-lg font-mono bg-gray-200 px-3 py-1 rounded-md">00:00</div>
+            </div>
+            
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+                <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full progress-bar-fill" style="width: 0%"></div>
+            </div>
+
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+                <p id="question-text" class="text-xl font-medium mb-8 min-h-[6rem]"></p>
+                <div id="answer-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Answer options will be injected here by JS -->
+                </div>
+            </div>
+             <div id="rationale-box" class="hidden mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h3 class="font-bold text-blue-800">Rationale:</h3>
+                <p id="rationale-text" class="text-blue-700"></p>
+                <p class="text-sm text-blue-600 mt-2">Source: <span id="rationale-source"></span></p>
+            </div>
+            <button id="next-btn" class="hidden w-full bg-blue-600 text-white font-bold py-3 px-8 rounded-lg mt-8 hover:bg-blue-700 transition-colors shadow-md">Next Question</button>
+        </div>
+
+        <!-- Quiz Results Screen -->
+        <div id="results-screen" class="hidden text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">Quiz Complete!</h1>
+            <p class="text-lg text-gray-600 mb-6">Here's how you did:</p>
+            <div class="flex flex-col sm:flex-row justify-around items-center my-8 gap-8 sm:gap-0">
+                <div>
+                    <p id="score-percentage" class="text-5xl font-bold text-green-600">0%</p>
+                    <p class="text-gray-500">Score</p>
+                </div>
+                 <div>
+                    <p class="text-5xl font-bold text-blue-600"><span id="correct-answers">0</span>/<span id="total-answered">0</span></p>
+                    <p class="text-gray-500">Correct Answers</p>
+                </div>
+                 <div>
+                    <p id="final-time" class="text-5xl font-bold text-gray-700">00:00</p>
+                    <p class="text-gray-500">Time Taken</p>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="restart-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Try Again</button>
+                <button id="review-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md">Review Answers</button>
+            </div>
+        </div>
+        
+        <!-- Review Screen -->
+        <div id="review-screen" class="hidden bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6">Answer Review</h1>
+            <div id="review-container" class="space-y-6">
+                <!-- Review content will be injected here -->
+            </div>
+            <button id="back-to-results-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md mt-8">Back to Results</button>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            // Unit 1: Sexual Assault
+            { question: "Under Penal Code 22.011, what is a key consideration of sexual assault?", options: ["It always involves a weapon.", "It is an aggressive act, even without physical force.", "The perpetrator is almost always a stranger.", "There are always signs of physical violence."], answer: "It is an aggressive act, even without physical force.", rationale: "Sexual assault is defined as an aggressive act that can be facilitated by various means, not just physical force or a weapon, such as intoxication, threats, or coercion.", page: "Page 1" },
+            { question: "What is a common characteristic of child sexual abuse cases?", options: ["The abuse is usually a single incident.", "The abuser is typically a stranger to the child.", "The abuser spends time establishing trust prior to the abuse.", "The abuse always involves physical violence."], answer: "The abuser spends time establishing trust prior to the abuse.", rationale: "Most child sexual abusers choose victims they have easy access to and spend time building trust before the abuse occurs, which is a key dynamic of this crime.", page: "Page 1" },
+            { question: "What does 'consent' mean according to the Texas Penal Code, Sec. 1.07 (11)?", options: ["Lack of resistance", "Assent in fact, whether expressed or apparent", "A prior relationship between the parties", "Silence during the act"], answer: "Assent in fact, whether expressed or apparent", rationale: "The Penal Code defines consent as 'assent in fact, whether expressed or apparent.' Silence or lack of resistance does not constitute consent.", page: "Pages 1-2" },
+            { question: "Which of the following scenarios demonstrates a lack of consent, even if the victim is silent?", options: ["The parties have a prior dating history.", "The act occurs in the offender's home.", "The offender knows the victim is unconscious or physically unable to resist.", "The victim does not say 'no' verbally."], answer: "The offender knows the victim is unconscious or physically unable to resist.", rationale: "Consent cannot be given if the offender knows the victim is unconscious, physically unable to resist, or has a diminished mental capacity.", page: "Page 2" },
+            { question: "Any sexual act perpetrated against a victim younger than what age is considered nonconsensual in Texas?", options: ["16 years old", "18 years old", "17 years old", "21 years old"], answer: "17 years old", rationale: "With the exception of the 'Romeo and Juliet' law, any sexual act with a person younger than 17 years of age is nonconsensual by law.", page: "Page 2" },
+            { question: "When interacting with high-risk populations, what is a critical first step for an officer?", options: ["Assume all victims want to press charges.", "Be mindful of your own biases and beliefs.", "Only speak to victims of the same gender.", "Disregard cultural differences."], answer: "Be mindful of your own biases and beliefs.", rationale: "Being mindful of personal biases is critical to ensure a fair and objective response when dealing with any victim, especially those from high-risk populations.", page: "Page 2" },
+            { question: "What is a trauma-informed approach primarily based on?", options: ["Officer's intuition", "Traditional investigative techniques", "Victim's willingness to prosecute", "Scientific research on how trauma affects the brain"], answer: "Scientific research on how trauma affects the brain", rationale: "A trauma-informed approach is based on scientific research and understanding how trauma affects the brain, which helps reduce re-traumatization and increases victim participation.", page: "Page 3" },
+            { question: "When building rapport with a survivor, why is it recommended to allow at least two full sleep cycles before the investigative interview?", options: ["To give the officer a break.", "To allow time for the forensic exam, report review, and witness interviews.", "To see if the victim changes their story.", "This is not a recommended practice."], answer: "To allow time for the forensic exam, report review, and witness interviews.", rationale: "Allowing sleep cycles helps the victim's memory consolidation and gives the officer crucial time to gather other evidence like the forensic exam, review reports, and interview witnesses.", page: "Page 4" },
+            { question: "What should an officer avoid doing when a victim is reporting a sexual assault?", options: ["Offering the victim a jacket or water.", "Speaking in a calm tone of voice.", "Threatening prosecution for false reporting.", "Providing their contact information."], answer: "Threatening prosecution for false reporting.", rationale: "Officers must not threaten victims with prosecution for false reporting or imply they are being untruthful, as this undermines a trauma-informed approach and discourages cooperation.", page: "Page 4" },
+            { question: "What information should an officer provide to a victim to prepare them for what comes next in the process?", options: ["A prediction of the court case outcome.", "The suspect's criminal history.", "Who will follow up with them and how contact will be made.", "Legal advice on filing a civil lawsuit."], answer: "Who will follow up with them and how contact will be made.", rationale: "Preparing the victim with what to expect, including who will follow up and how, is a key part of a trauma-informed response that empowers the victim.", page: "Page 4" },
+            { question: "A victim has a legal right to have an advocate from a sexual assault program present during which specific event?", options: ["The initial 911 call.", "The ride to the hospital.", "The investigative interview.", "The trial verdict."], answer: "The investigative interview.", rationale: "While a victim has the right to an advocate at any time, officers are legally required to offer them an advocate to be present during the investigative interview.", page: "Page 4" },
+            { question: "When using a trauma-informed approach, which of the following is something an officer should AVOID?", options: ["Using a calm tone of voice.", "Asking 'why' a victim did or did not do something.", "Offering available resources.", "Explaining why certain questions are being asked."], answer: "Asking 'why' a victim did or did not do something.", rationale: "Asking 'why' questions can sound judgmental. Instead, officers should rephrase questions to understand the circumstances, such as 'Tell me about the conditions that prevented you from leaving/escaping'.", page: "Page 5" },
+            { question: "Which of the following is a recognized reason a victim might stay in or return to an abusive relationship?", options: ["They enjoy the conflict.", "Financial or emotional dependence on the abuser.", "They are not aware of available resources.", "They believe the abuse is normal."], answer: "Financial or emotional dependence on the abuser.", rationale: "Mitigating circumstances, such as financial or emotional dependence, are complex reasons why victims may stay with an abuser.", page: "Page 5" },
+            { question: "Why is it generally recommended that officers do not have a victim prepare a written statement immediately after an assault?", options: ["It creates too much paperwork for the officer.", "Victims are not capable of writing after a trauma.", "Inconsistencies between the statement and later interviews may be used against the victim by the defense.", "Written statements are not admissible in court."], answer: "Inconsistencies between the statement and later interviews may be used against the victim by the defense.", rationale: "Due to the effects of trauma on memory, a hastily written statement may contain inconsistencies that a defense attorney could use to challenge the victim's credibility.", page: "Page 5" },
+            { question: "What type of question is best to use when interviewing a trauma victim to avoid leading answers?", options: ["Yes/No questions", "Chronological questions", "Open-ended questions", "Questions about the suspect's motives"], answer: "Open-ended questions", rationale: "Using open-ended questions (e.g., 'How were you laying?') instead of leading questions (e.g., 'Were you laying on your stomach?') is a key trauma-informed technique.", page: "Page 6" },
+            { question: "Due to trauma's effect on the brain, what should an officer avoid when asking a victim to recount an incident?", options: ["Asking about what they remember.", "Prompting for a strictly chronological narrative.", "Using a calm tone of voice.", "Asking about sensory details."], answer: "Prompting for a strictly chronological narrative.", rationale: "Trauma affects how memories are stored, making a chronological recall difficult. Prompts like 'start at the beginning' should be avoided in favor of 'where would you like to start?'", page: "Page 6" },
+            { question: "A trauma-informed questioning technique involves asking about sensory details. Which is an example of such a question?", options: ["'Why were you there?'", "'What do you recall hearing?'", "'What was the suspect's motive?'", "'Are you sure about that?'"], answer: "'What do you recall hearing?'", rationale: "Asking about sensory details (what the victim saw, smelled, heard, felt) can help access trauma memories more effectively than asking for a linear story.", page: "Page 6" },
+            { question: "Under Texas Family Code 261.101, who is considered a mandatory reporter of child abuse or neglect?", options: ["Only teachers and doctors", "Only parents", "Any person suspecting abuse", "Professionals whose job brings them into contact with children"], answer: "Professionals whose job brings them into contact with children", rationale: "Texas law mandates that any professional who has cause to believe a child's physical or mental health has been adversely affected by abuse or neglect must report it. This includes law enforcement officers.", page: "Page 6" },
+            { question: "In cases of child abuse, besides completing a criminal report, what are officers statutorily mandated to do?", options: ["Notify the school principal.", "Report the case to the Department of Family and Protective Services (DFPS).", "Interview every family member.", "Obtain a confession from the suspect."], answer: "Report the case to the Department of Family and Protective Services (DFPS).", rationale: "Law enforcement officers have a statutory mandate to report all cases of child abuse and neglect to DFPS, in addition to their criminal investigation duties.", page: "Page 6" },
+            { question: "What should first responders generally do regarding interviewing a child victim upon initial contact?", options: ["Conduct a detailed interview immediately.", "Refrain from interviewing the child.", "Only interview the child if a parent is present.", "Record the interview on their body camera."], answer: "Refrain from interviewing the child.", rationale: "First responders should refrain from interviewing the child to avoid causing additional psychological problems. The interview should be left to a trained forensic interviewer, often at a CAC.", page: "Page 7" },
+            { question: "Child Advocacy Centers (CACs) are a crucial resource that provides what service for child victims?", options: ["Long-term housing.", "Legal representation for the family.", "Forensic interviews by trained professionals.", "Offender rehabilitation programs."], answer: "Forensic interviews by trained professionals.", rationale: "CACs are a primary resource for conducting forensic interviews of child victims, in addition to providing mental health, medical, and advocacy services.", page: "Page 7" },
+            { question: "What is a key strategy for building rapport with a child victim?", options: ["Speaking in a loud, authoritative voice.", "Using technical legal language.", "Making sure they do not feel 'in trouble' or 'at fault'.", "Interviewing them in front of their parents."], answer: "Making sure they do not feel 'in trouble' or 'at fault'.", rationale: "It's crucial to reassure child victims that they are not in trouble or at fault, as they may be reluctant to speak due to their dependence on the accused.", page: "Page 7" },
+            { question: "What is a recommended body language technique when interacting with a small child victim?", options: ["Stand with your arms crossed.", "Avoid eye contact.", "Do not tower over them, as your height can be intimidating.", "Remain standing at all times."], answer: "Do not tower over them, as your height can be intimidating.", rationale: "To avoid intimidating a small child, an officer should try to get on their level rather than towering over them.", page: "Page 7" },
+            { question: "When speaking to a child victim, what approach should an officer take?", options: ["Use complex vocabulary to test their understanding.", "Ask leading questions to get a quick answer.", "Keep conversations simple and on their level.", "Let the parents answer for the child."], answer: "Keep conversations simple and on their level.", rationale: "Using simple, age-appropriate language and avoiding technical terms is essential for effective communication with a child victim.", page: "Page 7" },
+            { question: "According to CCP Art. 56A.403, what must a peace officer provide to a victim of sexual assault?", options: ["A ride to a friend's house.", "The officer's personal phone number.", "A written referral to the nearest sexual assault program.", "A guaranteed arrest of the suspect."], answer: "A written referral to the nearest sexual assault program.", rationale: "The law requires peace officers to provide sexual assault victims with a written referral to a local program and a written notice of their rights.", page: "Page 8" },
+            { question: "A Sexual Assault Response Team (SART) is established by each county to do what?", options: ["Prosecute all sexual assault cases.", "Provide funding for sexual assault programs.", "Provide continuing care to the victim and further investigate the offense.", "Lobby for new sexual assault laws."], answer: "Provide continuing care to the victim and further investigate the offense.", rationale: "SARTs are local response teams that coordinate to provide ongoing care and support to victims and to aid in the investigation of the offense.", page: "Page 9" },
+            { question: "Upon request, a victim of sexual assault has the additional right to what information?", options: ["The suspect's home address.", "A list of all other cases the officer is working on.", "Notification of the status of evidence collected from the victim.", "A copy of the complete unredacted police report."], answer: "Notification of the status of evidence collected from the victim.", rationale: "Under CCP Art. 56A.052, victims have several additional rights upon request, including the right to be notified about the status of their collected evidence.", page: "Page 9" },
+            { question: "How long after an assault does a victim have a legal right to obtain a forensic medical exam (FME)?", options: ["24 hours", "72 hours", "96 hours", "120 hours"], answer: "120 hours", rationale: "Under CCP Art. 56A.303, victims have a legal right to obtain a forensic medical examination within 120 hours of the assault, at no cost to them.", page: "Page 9" },
+            { question: "Regarding a medical forensic exam (FME) for a child victim, what is the recommended protocol?", options: ["An exam is only done if the assault was within 120 hours.", "An exam should always be conducted, regardless of how long ago the assault occurred.", "An exam is only done if the child can describe the assault in detail.", "A child of any age can refuse the exam."], answer: "An exam should always be conducted, regardless of how long ago the assault occurred.", rationale: "The handbook states that in the case of child victims, a medical forensic exam should always be conducted, regardless of the time since the assault.", page: "Page 9" },
+            { question: "What system must officers provide information about to victims, even if they don't wish to pursue an investigation?", options: ["The Amber Alert system", "The local crime stoppers program", "The Track-Kit system for sexual assault evidence kits", "The National Sex Offender Registry"], answer: "The Track-Kit system for sexual assault evidence kits", rationale: "Texas Government Code Sec. 420.034 requires officers to provide information about Track-Kit, the statewide electronic tracking system for evidence collection kits.", page: "Page 9" },
+            { question: "Under the Texas Government Code, what is the status of information maintained by a family violence shelter?", options: ["It is public information.", "It is available to law enforcement upon request.", "It is exempt from being public information.", "It is only available via a court order."], answer: "It is exempt from being public information.", rationale: "Gov. Code Sec. 552.138 makes information maintained by a family violence shelter center confidential and exempt from public information requests.", page: "Page 9" },
+            { question: "What protection does CCP Chapter 58 offer to victims of sex offenses?", options: ["The ability to sue the offender for damages.", "The right to adopt a pseudonym for public records.", "A lifetime protective order.", "Financial compensation from the state."], answer: "The right to adopt a pseudonym for public records.", rationale: "This chapter allows victims to use a pseudonym on public files and records concerning the offense to protect their identifying information.", page: "Page 10" },
+
+            // Unit 2: Family Violence
+            { question: "Under Texas Family Code 71.003, the definition of 'Family' includes individuals related by blood or marriage, former spouses, and...", options: ["Neighbors who live in the same apartment complex.", "Individuals who currently or formerly lived together.", "Parents of the same child, without regard to marriage.", "Co-workers in the same office."], answer: "Parents of the same child, without regard to marriage.", rationale: "The definition of family is broad and includes not only those related by blood, marriage, or living arrangement, but also the biological parents of the same child.", page: "Page 10" },
+            { question: "How does the Family Code define a 'Household'?", options: ["A legal marriage or blood relationship.", "A unit composed of persons living together in the same dwelling, without regard to whether they are related.", "Any group of people who own property together.", "A family with at least one child under 18."], answer: "A unit composed of persons living together in the same dwelling, without regard to whether they are related.", rationale: "Family Code 71.005 defines a household as persons living together in the same dwelling, meaning roommates can be considered members of a household for family violence purposes.", page: "Page 10" },
+            { question: "What is a key element in the Family Code's definition of 'Dating Violence'?", options: ["The act must occur on a formal date.", "The relationship must be current, not in the past.", "An act by a defendant against a victim with whom they have or have had a dating relationship.", "The individuals must have been in the relationship for at least 30 days."], answer: "An act by a defendant against a victim with whom they have or have had a dating relationship.", rationale: "Dating violence under FC 71.021 involves violence committed by a person against a victim with whom that person has or has had a dating relationship.", page: "Page 10" },
+            { question: "Under Texas Family Code 71.004, what constitutes 'Family Violence'?", options: ["Only physical assault between spouses.", "An act against a family member intended to result in physical harm, injury, assault, or sexual assault.", "Any argument between family members.", "Financial control over a household member."], answer: "An act against a family member intended to result in physical harm, injury, assault, or sexual assault.", rationale: "Family violence is an act by a member of a family or household against another member that is intended to result in physical harm, bodily injury, assault, or sexual assault or is a threat that places the member in fear of such.", page: "Page 10" },
+            { question: "According to the Legislative Statement in CCP Art. 5.01, family violence is considered a...", options: ["Private family matter.", "Minor misdemeanor.", "Serious danger and threat to society.", "Civil issue, not a criminal one."], answer: "Serious danger and threat to society.", rationale: "The legislative statement explicitly declares that family violence is a serious danger and threat to society and its members, entitling victims to maximum protection under the law.", page: "Page 10" },
+            { question: "What is a primary goal for an officer responding to a family violence call?", options: ["To force the victim to press charges.", "To decide which party is telling the truth.", "To identify and protect the victim.", "To issue citations to both parties."], answer: "To identify and protect the victim.", rationale: "The primary goals of the response are to connect the dots, identify and protect the victim, and hold the correct person accountable while maintaining safety.", page: "Page 11" },
+            { question: "What is the central theme of the Power and Control Wheel used to describe abusive relationships?", options: ["Mutual respect", "Cycles of forgiveness", "An offender's use of tactics to gain power and control over a victim", "Financial disputes"], answer: "An offender's use of tactics to gain power and control over a victim", rationale: "The Power and Control Wheel illustrates the various tactics (e.g., intimidation, isolation, economic abuse) that an offender intentionally uses to dominate the victim.", page: "Page 11" },
+            { question: "Preventing a victim from getting a job or taking their money is an example of which tactic from the Power and Control Wheel?", options: ["Intimidation", "Male Privilege", "Isolation", "Economic Abuse"], answer: "Economic Abuse", rationale: "Economic abuse is a specific tactic of power and control where an abuser controls the victim's finances to prevent them from leaving and create dependence.", page: "Page 11" },
+            { question: "When responding to a family violence call, why is it recommended to avoid using sirens and lights when approaching the scene?", options: ["To save vehicle battery.", "To prevent alerting the assailant, unless a victim is in imminent danger.", "It is against department policy.", "To avoid disturbing the neighbors."], answer: "To prevent alerting the assailant, unless a victim is in imminent danger.", rationale: "A cautious approach without lights and sirens is a safety strategy to avoid giving the assailant time to flee, destroy evidence, or further harm the victim.", page: "Page 12" },
+            { question: "What is meant by 'exigent circumstances' allowing an officer to enter a residence without consent?", options: ["The dispatcher received a 911 hang-up call.", "A situation requiring immediate action to prevent harm or destruction of evidence.", "A neighbor reported hearing a loud argument.", "The front door of the residence is open."], answer: "A situation requiring immediate action to prevent harm or destruction of evidence.", rationale: "Exigent circumstances mean that the situation is so urgent (e.g., sounds of a violent struggle) that it requires immediate entry to protect life or prevent the loss of evidence.", page: "Page 12" },
+            { question: "When trying to determine the predominant aggressor, which factor should an officer consider?", options: ["Who called 911 first.", "The relative severity of the injuries inflicted on each person.", "Who is more upset.", "Which person is willing to leave the residence."], answer: "The relative severity of the injuries inflicted on each person.", rationale: "Investigating the severity of injuries, including looking for signs of self-defense, is a key strategy to determine who was the primary aggressor versus who was defending themselves.", page: "Page 13" },
+            { question: "What is the critical difference between choking and strangulation?", options: ["Choking is more lethal than strangulation.", "Choking is an external blockage of the airway, while strangulation is internal.", "Choking is an internal blockage of the windpipe, while strangulation is external pressure.", "They are the same thing."], answer: "Choking is an internal blockage of the windpipe, while strangulation is external pressure.", rationale: "It is imperative to differentiate the two. Choking is an internal blockage (e.g., from food), while strangulation is external pressure on the neck that obstructs oxygen flow and is a major predictor of future lethality.", page: "Page 13" },
+            { question: "Strangulation is one of the most accurate predictors of what?", options: ["Future financial abuse.", "Future lethality / homicide.", "Whether the victim will recant.", "Whether the suspect will flee."], answer: "Future lethality / homicide.", rationale: "The training material emphasizes that strangulation is one of the most accurate predictors of future lethality, making its identification critical for victim safety.", page: "Page 13" },
+            { question: "According to the training material, a majority (80%) of crisis situations can be diffused through what action?", options: ["Asserting authority", "Listening", "Making an immediate arrest", "Threatening use of force"], answer: "Listening", rationale: "The handout states that 80% of crisis situations can be deescalated through listening, making it a primary strategy for officers handling volatile calls.", page: "Page 14" },
+            { question: "If family violence is present or alleged, what are officers mandated to do under CCP Art 5.05?", options: ["Make a discretionary report.", "Make an arrest in every situation.", "Make a written report.", "Refer the parties to counseling."], answer: "Make a written report.", rationale: "CCP Art 5.05 mandates that officers make a written report in all incidents of family violence, typically including the UCR-10 Family Violence Checklist.", page: "Page 15" },
+            { question: "Under Family Code 81.002, what is the cost to an applicant for filing a protective order?", options: ["A standard court filing fee.", "There is no fee for an applicant.", "$100", "It depends on the county."], answer: "There is no fee for an applicant.", rationale: "The law states that there is no fee charged to an applicant for filing an application for a protective order.", page: "Page 15" },
+            { question: "For how long can a final protective order remain in effect?", options: ["For 30 days", "For 1 year", "For 2 years, but can be longer", "Permanently"], answer: "For 2 years, but can be longer", rationale: "Family Code 85.025 states the duration of a protective order is typically for 2 years, but the court can order a duration that is longer if necessary.", page: "Page 15" },
+            { question: "Before an offender can be criminally charged for violating a temporary ex parte order, what must have occurred?", options: ["The victim must have warned them.", "The order must have been in place for 24 hours.", "The offender must have been served with the order.", "The judge must give verbal approval."], answer: "The offender must have been served with the order.", rationale: "A temporary ex parte order is only criminally enforceable against an offender once they have been properly served and are aware of the order's conditions.", page: "Page 15" },
+            { question: "Who can issue a Magistrate's Order for Emergency Protection (EPO)?", options: ["The arresting officer.", "The victim.", "A magistrate, at a defendant's appearance after an arrest for a family violence offense.", "The District Attorney."], answer: "A magistrate, at a defendant's appearance after an arrest for a family violence offense.", rationale: "CCP 17.292 specifies that a magistrate can issue an EPO when a person is arrested for an offense involving family violence, stalking, or sexual assault.", page: "Page 16" },
+            { question: "Under Penal Code 25.07, what offense is committed by violating a condition of bond in a family violence case?", options: ["Contempt of Court", "Disorderly Conduct", "Violation of Certain Court Orders or Conditions of Bond", "No offense unless the victim is injured"], answer: "Violation of Certain Court Orders or Conditions of Bond", rationale: "PC 25.07 is the specific statute that makes it a criminal offense to violate a protective order or a condition of bond related to a family violence case.", page: "Page 16" },
+            { question: "Under CCP 14.03(a)(3), a peace officer may arrest for a violation of a protective order...", options: ["only if the victim signs a complaint.", "only if the violation occurred within the last hour.", "even if the violation was not committed in the officer's view.", "only if the suspect has a prior conviction."], answer: "even if the violation was not committed in the officer's view.", rationale: "This statute gives officers the authority to make a warrantless arrest for a violation of a protective order based on probable cause, even if they did not witness it.", page: "Page 16" },
+            { question: "Can a peace officer consent to medical treatment for a minor in their custody?", options: ["Never, only a parent can consent.", "Only if the minor is over 16.", "Yes, if the officer has reasonable grounds to believe the minor needs immediate medical treatment.", "Only with a court order."], answer: "Yes, if the officer has reasonable grounds to believe the minor needs immediate medical treatment.", rationale: "Family Code 32.001 allows a peace officer who has lawfully taken custody of a minor to consent to treatment if they believe it is immediately necessary.", page: "Page 16" },
+            { question: "At what age may a child consent to their own medical treatment for sexual assault under certain conditions in Texas?", options: ["14 years of age or older", "18 years of age or older", "Any age with parental consent", "A child of any age may consent to treatment for sexual assault."], answer: "A child of any age may consent to treatment for sexual assault.", rationale: "Family Code 32.003 has provisions that allow a child to consent to treatment related to sexual assault, but the provided PDF material notes under FC 32.003 that a child 16 years of age or older may consent to medical treatment and/or examination. For CSA, treatment is often consented to by law enforcement or DFPS.", page: "Page 16 (Note: This is a complex area, but the general principle for treatment vs exam is key)" },
+            { question: "A physician may examine a child 16 or younger without consent if...", options: ["The child appears to be lying about their injuries.", "The officer requests the exam for evidence collection.", "There are reasonable grounds to believe the child has been affected by abuse or neglect.", "The parents refuse to pay for the examination."], answer: "There are reasonable grounds to believe the child has been affected by abuse or neglect.", rationale: "Family Code 32.005 allows for an examination without consent if there are reasonable grounds to suspect abuse or neglect has adversely affected the child's physical or mental condition.", page: "Page 16" },
+            { question: "Under what circumstances is a person immune from civil liability for taking possession of a child without a court order?", options: ["If they are a close family relative.", "If the child asks to be taken.", "If, at the time, there is reasonable cause to believe there is an immediate danger to the child.", "There is no immunity from civil liability."], answer: "If, at the time, there is reasonable cause to believe there is an immediate danger to the child.", rationale: "Family Code 262.003 provides immunity from civil liability for a person, including an officer, who takes a child if there's reasonable cause to believe immediate danger exists.", page: "Page 16" },
+            { question: "Under Family Code 262.108, where can a child taken into emergency possession NOT be held?", options: ["A foster home", "A designated emergency shelter", "A hospital", "A jail or other secure detention facility"], answer: "A jail or other secure detention facility", rationale: "The law explicitly prohibits holding a child taken into possession in isolation, a jail, a juvenile detention facility, or any other secure detention facility.", page: "Page 17" },
+            { question: "An officer may take temporary possession of a child without a court order for the sole purpose of...", options: ["Questioning them about their parents.", "Taking them to a Child Advocacy Center.", "Delivering them without unnecessary delay to a parent or other custodian.", "Placing them in a foster home."], answer: "Delivering them without unnecessary delay to a parent or other custodian.", rationale: "Family Code 262.110 allows for temporary possession of a child in a dangerous situation for the sole purpose of immediately returning them to a person entitled to possession.", page: "Page 17" }
+        ];
+
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const reviewScreen = document.getElementById('review-screen');
+
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const reviewBtn = document.getElementById('review-btn');
+        const backToResultsBtn = document.getElementById('back-to-results-btn');
+        
+        const questionNumberEl = document.getElementById('question-number');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const progressBar = document.getElementById('progress-bar');
+        const questionTextEl = document.getElementById('question-text');
+        const answerOptionsEl = document.getElementById('answer-options');
+        const rationaleBox = document.getElementById('rationale-box');
+        const rationaleText = document.getElementById('rationale-text');
+        const rationaleSource = document.getElementById('rationale-source');
+        
+        const scorePercentageEl = document.getElementById('score-percentage');
+        const correctAnswersEl = document.getElementById('correct-answers');
+        const totalAnsweredEl = document.getElementById('total-answered');
+        const finalTimeEl = document.getElementById('final-time');
+        const timerEl = document.getElementById('timer');
+        const reviewContainer = document.getElementById('review-container');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timerInterval;
+        let secondsElapsed = 0;
+        let userAnswers = [];
+        
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        startBtn.addEventListener('click', startQuiz);
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', startQuiz);
+        reviewBtn.addEventListener('click', showReview);
+        backToResultsBtn.addEventListener('click', () => {
+            reviewScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+        });
+
+        function startTimer() {
+            secondsElapsed = 0;
+            timerEl.textContent = '00:00';
+            timerInterval = setInterval(() => {
+                secondsElapsed++;
+                const minutes = Math.floor(secondsElapsed / 60).toString().padStart(2, '0');
+                const seconds = (secondsElapsed % 60).toString().padStart(2, '0');
+                timerEl.textContent = `${minutes}:${seconds}`;
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function startQuiz() {
+            shuffleArray(quizData);
+            quizData.forEach(q => shuffleArray(q.options));
+
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            startScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            nextBtn.classList.add('hidden');
+            startTimer();
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            rationaleBox.classList.add('hidden');
+            answerOptionsEl.innerHTML = '';
+            const currentQuestion = quizData[currentQuestionIndex];
+            
+            questionNumberEl.textContent = currentQuestionIndex + 1;
+            totalQuestionsEl.textContent = quizData.length;
+            questionTextEl.textContent = currentQuestion.question;
+
+            const progress = ((currentQuestionIndex) / quizData.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('answer-option', 'w-full', 'p-4', 'text-left', 'bg-white', 'border-2', 'border-gray-300', 'rounded-lg', 'hover:bg-gray-50', 'hover:border-blue-500');
+                button.addEventListener('click', () => selectAnswer(button, option, currentQuestion));
+                answerOptionsEl.appendChild(button);
+            });
+        }
+
+        function selectAnswer(button, selectedOption, currentQuestion) {
+            const { answer, rationale, page } = currentQuestion;
+            userAnswers[currentQuestionIndex] = selectedOption;
+
+            const buttons = answerOptionsEl.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === answer) {
+                    btn.classList.add('correct');
+                }
+            });
+
+            if (selectedOption === answer) {
+                score++;
+                button.classList.add('correct');
+            } else {
+                button.classList.add('incorrect');
+            }
+
+            rationaleText.textContent = rationale;
+            rationaleSource.textContent = page;
+            rationaleBox.classList.remove('hidden');
+            nextBtn.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                nextBtn.classList.add('hidden');
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            stopTimer();
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            scorePercentageEl.textContent = `${percentage}%`;
+            correctAnswersEl.textContent = score;
+            totalAnsweredEl.textContent = quizData.length;
+            finalTimeEl.textContent = timerEl.textContent;
+            
+            // Ensure progress bar is full at the end
+            progressBar.style.width = `100%`;
+        }
+
+        function showReview() {
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.remove('hidden');
+            reviewContainer.innerHTML = '';
+
+            quizData.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === question.answer;
+
+                const reviewItem = document.createElement('div');
+                reviewItem.classList.add('border', 'p-4', 'rounded-lg');
+                reviewItem.classList.add(isCorrect ? 'bg-green-50/50 border-green-200' : 'bg-red-50/50 border-red-200');
+
+                let userAnswerHTML = '';
+                if (isCorrect) {
+                    userAnswerHTML = `<p>Your answer: <span class="font-semibold review-correct">${userAnswer} (Correct)</span></p>`;
+                } else {
+                    userAnswerHTML = `
+                        <p>Your answer: <span class="font-semibold review-incorrect">${userAnswer ? userAnswer : 'Not answered'} (Incorrect)</span></p>
+                        <p>Correct answer: <span class="font-semibold review-correct">${question.answer}</span></p>
+                    `;
+                }
+
+                reviewItem.innerHTML = `
+                    <p class="font-bold mb-2">${index + 1}. ${question.question}</p>
+                    ${userAnswerHTML}
+                    <p class="text-sm text-gray-600 mt-2"><em><strong>Rationale:</strong> ${question.rationale} (Source: ${question.page})</em></p>
+                `;
+                reviewContainer.appendChild(reviewItem);
+            });
+        }
+
+    </script>
+</body>
+</html>
+
