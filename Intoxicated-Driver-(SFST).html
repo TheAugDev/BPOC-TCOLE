@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Guide: Intoxicated Driver & SFST</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --header-bg: #1f2937;
+            --bg-color: #f3f4f6;
+            --tab-active-bg: #991b1b; /* Red for this guide */
+            --tab-active-text: #ffffff;
+            --card-bg: #ffffff;
+            --text-color: #111827;
+            --link-color: #991b1b;
+            --punishment-felony3: #f97316;
+            --punishment-felony2: #ef4444;
+            --punishment-felony1: #dc2626;
+            --punishment-classA: #f59e0b;
+            --punishment-classB: #fbbf24;
+            --punishment-classC: #d1d5db;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://rsms.me/inter/inter.css');
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab.active {
+            background-color: var(--tab-active-bg);
+            color: var(--tab-active-text);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tab {
+            transition: all 0.3s ease-in-out;
+        }
+        .punishment-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            color: white;
+            font-size: 0.8rem;
+        }
+        .punishment-badge.text-black { color: #111827; }
+        .f1 { background-color: var(--punishment-felony1); }
+        .f2 { background-color: var(--punishment-felony2); }
+        .f3 { background-color: var(--punishment-felony3); }
+        .ma { background-color: var(--punishment-classA); }
+        .mb { background-color: var(--punishment-classB); }
+        .mc { background-color: var(--punishment-classC); }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-gray-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">
+                <i class="fas fa-car-side mr-2"></i>Intoxicated Driver & SFST
+            </h1>
+            <p class="text-sm text-gray-300">BPOC Chapter 23 | TCOLE Preparation</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-6">
+        <div class="mb-6 bg-white rounded-lg shadow-md overflow-x-auto">
+            <nav id="tabs" class="flex flex-row space-x-1 p-2">
+                <button data-tab="dwi-investigation" class="tab active flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-red-100">
+                    <i class="fas fa-search mr-2"></i> <span class="hidden md:inline">DWI Investigation</span>
+                </button>
+                 <button data-tab="related-offenses" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-red-100">
+                    <i class="fas fa-car-crash mr-2"></i> <span class="hidden md:inline">Related Offenses</span>
+                </button>
+                <button data-tab="chemical-tests" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-red-100">
+                    <i class="fas fa-vial mr-2"></i> <span class="hidden md:inline">Chemical Tests</span>
+                </button>
+                <button data-tab="enforcement-procedure" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-red-100">
+                    <i class="fas fa-file-alt mr-2"></i> <span class="hidden md:inline">Enforcement & Procedure</span>
+                </button>
+                <button data-tab="knowledge-check" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-red-100">
+                    <i class="fas fa-question-circle mr-2"></i> <span class="hidden md:inline">Knowledge Check</span>
+                </button>
+                <button data-tab="resources" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-red-100">
+                    <i class="fas fa-link mr-2"></i> <span class="hidden md:inline">Resources</span>
+                </button>
+            </nav>
+        </div>
+
+        <div id="tab-contents">
+            <div id="dwi-investigation" class="tab-content active space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Driving While Intoxicated (DWI) - <a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.49.htm#49.04" target="_blank" class="text-red-800 hover:underline">PC §49.04</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> A person commits an offense if the person is intoxicated while operating a motor vehicle in a public place.</p>
+                    <h4 class="font-semibold mt-4 text-sm">Punishment Levels:</h4>
+                    <div class="mt-2 space-y-2 text-sm">
+                        <div class="flex items-center">
+                            <span class="punishment-badge mb text-black mr-3 w-40 text-center">Class B Misdemeanor</span>
+                            <span>Standard first offense.</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="punishment-badge ma text-black mr-3 w-40 text-center">Class A Misdemeanor</span>
+                            <span>If BAC is 0.15 or more (first offense).</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="punishment-badge f3 mr-3 w-40 text-center">State Jail Felony</span>
+                            <span>If a passenger is younger than 15 years old.</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="punishment-badge f3 mr-3 w-40 text-center">3rd Degree Felony</span>
+                            <span>If the person has two or more previous DWI convictions.</span>
+                        </div>
+                    </div>
+                    <h4 class="font-semibold mt-4 text-sm">"Intoxicated" Defined (PC §49.01):</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>Not having the normal use of mental or physical faculties by reason of the introduction of alcohol, a controlled substance, a drug, a dangerous drug, a combination of two or more of those substances, or any other substance into the body; OR</li>
+                        <li>Having an alcohol concentration of 0.08 or more.</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-red-50 rounded-md"><strong>Practical Example:</strong> An officer stops a car for swerving. The driver has slurred speech, red glassy eyes, and a strong odor of alcohol. The driver is intoxicated because they do not have the normal use of their mental and physical faculties, regardless of their BAC. If a breath test later shows a 0.10 BAC, they are also intoxicated *per se*.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">NHTSA DWI Detection Phases</h2>
+                    <p class="text-sm">The National Highway Traffic Safety Administration (NHTSA) provides a systematic approach to identifying intoxicated drivers, broken into three phases. Each phase builds on the last to develop probable cause for arrest.</p>
+                    <h4 class="font-semibold mt-4 text-sm">Phase One: Vehicle in Motion</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Goal:</strong> Observe the vehicle in operation to determine if reasonable suspicion exists to initiate a traffic stop.</li>
+                        <li><strong>Key Cues:</strong> Weaving, drifting, swerving, turning with a wide radius, driving without headlights at night, speeding or driving unusually slow, and braking erratically.</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-red-50 rounded-md"><strong>Practical Example:</strong> At 2 AM, an officer observes a vehicle drifting from the center line to the shoulder line multiple times. This "weaving" provides the officer with reasonable suspicion that the driver may be intoxicated, justifying a traffic stop.</p>
+                    <h4 class="font-semibold mt-4 text-sm">Phase Two: Personal Contact</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Goal:</strong> After the stop, observe and speak with the driver to determine if there is sufficient cause to ask them to exit the vehicle for further testing.</li>
+                        <li><strong>Key Cues:</strong> Odor of alcoholic beverage, slurred speech, red/glassy/watery eyes, fumbling with license/insurance, soiled clothing, admission of drinking.</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-red-50 rounded-md"><strong>Practical Example:</strong> Upon contacting the driver from the previous example, the officer smells a strong odor of alcohol from within the car and notices the driver's eyes are red and glassy. The officer asks the driver to step out for sobriety tests.</p>
+                    <h4 class="font-semibold mt-4 text-sm">Phase Three: Pre-Arrest Screening (SFSTs)</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Goal:</strong> Administer Standardized Field Sobriety Tests (SFSTs) to determine if there is probable cause to arrest for DWI.</li>
+                        <li><strong>The Three Tests:</strong> Horizontal Gaze Nystagmus (HGN), Walk and Turn, and One-Leg Stand.</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-red-50 rounded-md"><strong>Practical Example:</strong> The officer administers the SFSTs. The driver shows 6/6 clues on HGN, steps off the line multiple times on the Walk and Turn, and puts their foot down three times on the One-Leg Stand. Based on the totality of circumstances (driving, physical cues, and SFST performance), the officer develops probable cause and arrests the driver for DWI.</p>
+                </div>
+            </div>
+            
+            <div id="related-offenses" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Intoxication Assault - <a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.49.htm#49.07" target="_blank" class="text-red-800 hover:underline">PC §49.07</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> A person commits an offense if the person, by accident or mistake...while operating a...motor vehicle in a public place while intoxicated, by reason of that intoxication causes serious bodily injury to another.</p>
+                    <h4 class="font-semibold mt-4 text-sm">Punishment Level:</h4>
+                    <div class="mt-2 space-y-2 text-sm">
+                        <div class="flex items-center">
+                            <span class="punishment-badge f3 mr-3 w-40 text-center">3rd Degree Felony</span>
+                            <span>Standard offense level.</span>
+                        </div>
+                    </div>
+                    <h4 class="font-semibold mt-4 text-sm">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>A person is operating a motor vehicle in a public place.</li>
+                        <li>The person is intoxicated.</li>
+                        <li>By reason of that intoxication, they cause serious bodily injury (SBI) to another person.</li>
+                        <li>"Serious Bodily Injury" means injury that creates a substantial risk of death or that causes serious permanent disfigurement or protracted loss or impairment of the function of any bodily member or organ.</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-red-50 rounded-md"><strong>Practical Example:</strong> An intoxicated driver runs a stop sign and T-bones another car. The driver of the other car suffers a compound leg fracture. Because the intoxicated operation of the vehicle caused an injury that results in protracted loss of function of a limb, the intoxicated driver has committed Intoxication Assault.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Intoxication Manslaughter - <a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.49.htm#49.08" target="_blank" class="text-red-800 hover:underline">PC §49.08</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> A person commits an offense if the person...operates a motor vehicle in a public place...is intoxicated and by reason of that intoxication causes the death of another by accident or mistake.</p>
+                    <h4 class="font-semibold mt-4 text-sm">Punishment Level:</h4>
+                    <div class="mt-2 space-y-2 text-sm">
+                        <div class="flex items-center">
+                            <span class="punishment-badge f2 mr-3 w-40 text-center">2nd Degree Felony</span>
+                            <span>Standard offense level.</span>
+                        </div>
+                    </div>
+                    <h4 class="font-semibold mt-4 text-sm">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>A person is operating a motor vehicle in a public place.</li>
+                        <li>The person is intoxicated.</li>
+                        <li>By reason of that intoxication, they cause the death of another person.</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-red-50 rounded-md"><strong>Practical Example:</strong> An intoxicated driver is speeding and loses control, crossing the center line and hitting an oncoming car head-on. The driver of the other car is killed. The intoxicated driver has committed Intoxication Manslaughter.</p>
+                </div>
+            </div>
+
+            <div id="chemical-tests" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Consent to Taking of Specimen (Implied Consent) - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.011" target="_blank" class="text-red-800 hover:underline">TC §724.011</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> If a person is arrested for an offense arising out of acts alleged to have been committed while the person was operating a motor vehicle in a public place...while intoxicated...the person is deemed to have consented...to submit to the taking of one or more specimens of the person's breath or blood for analysis...</p>
+                    <h4 class="font-semibold mt-4 text-sm">Key Concepts:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>Applies to any offense under Penal Code Ch. 49 (DWI, BWI, Intox Assault, etc.).</li>
+                        <li>By driving on a Texas road, a person gives their "implied consent."</li>
+                        <li>An officer is not asking for consent, but asking a person to comply with the consent already given by law.</li>
+                        <li>A person can still withdraw this consent by refusing, which triggers other consequences.</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-red-50 rounded-md"><strong>Practical Example:</strong> A boater is stopped for Boating While Intoxicated (BWI). Upon arrest, the officer requests a breath test. The boater is subject to the implied consent law just like a driver on a highway and faces the same consequences for refusal.</p>
+                </div>
+
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Prohibition on Taking Specimen if Person Refuses - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.013" target="_blank" class="text-red-800 hover:underline">TC §724.013</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> Except as provided by Section 724.012(b), a specimen may not be taken if a person refuses to submit to the taking of a specimen designated by a peace officer.</p>
+                    <h4 class="font-semibold mt-4 text-sm">Key Concepts:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>If a person refuses a chemical test, the officer cannot force them to provide one.</li>
+                        <li>The officer's only recourse is to seek a search warrant for the person's blood.</li>
+                        <li>The only exception is the "Mandatory Blood Draw" statute (TC §724.012), which applies in cases of death or SBI.</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-red-50 rounded-md"><strong>Practical Example:</strong> An officer arrests a driver for a standard, no-crash DWI. The driver refuses to provide a breath sample after the statutory warning is read. The officer cannot physically force the driver to blow. Instead, the officer must begin the process of writing an affidavit to obtain a search warrant from a judge to have the driver's blood drawn.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Information Provided Before Requesting Specimen (DIC-24) - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.015" target="_blank" class="text-red-800 hover:underline">TC §724.015</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> Before requesting a specimen, an officer must inform the person orally and in writing of the consequences of refusing or failing a test. This is known as the "Statutory Warning."</p>
+                    <h4 class="font-semibold mt-4 text-sm">Elements of the Warning:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>A refusal can be used against them in court.</li>
+                        <li>A refusal results in a 180-day license suspension.</li>
+                        <li>Failing the test (0.08 BAC or more) results in a 90-day license suspension.</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-red-50 rounded-md"><strong>Practical Example:</strong> After arrest, an officer reads the DIC-24 form verbatim to the suspect. After hearing the warnings about license suspensions, the driver, who was initially hesitant, agrees to provide a breath sample.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Taking of Specimen (Mandatory Blood Draw) - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.012" target="_blank" class="text-red-800 hover:underline">TC §724.012</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> A peace officer SHALL require the taking of a specimen if they reasonably believe a crash caused by an intoxicated driver resulted in the death or serious bodily injury of another person.</p>
+                    <h4 class="font-semibold mt-4 text-sm">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>The person is under arrest for an intoxication offense (DWI, Intoxication Assault/Manslaughter).</li>
+                        <li>The person was operating a vehicle involved in a crash.</li>
+                        <li>The officer reasonably believes the crash resulted in Death or Serious Bodily Injury to another person.</li>
+                        <li>In these cases, the officer does not need a warrant to take blood, even if refused. (Other mandatory draw situations also exist, e.g., for repeat offenders).</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-red-50 rounded-md"><strong>Practical Example:</strong> An intoxicated driver causes a crash resulting in SBI. The driver is arrested and refuses consent for blood. Because the crash resulted in SBI, the officer can use the "mandatory blood draw" provision and transport the suspect to a hospital to have their blood drawn without a warrant.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Person Incapable of Refusal - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.014" target="_blank" class="text-red-800 hover:underline">TC §724.014</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> A person who is dead, unconscious, or otherwise incapable of refusal is considered not to have withdrawn the consent provided by Section 724.011.</p>
+                    <h4 class="font-semibold mt-4 text-sm">Key Concepts:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>This applies to suspects who are arrested for an intoxication-related offense.</li>
+                        <li>If the person cannot communicate a refusal due to injury, extreme intoxication, or being unconscious, their implied consent remains valid.</li>
+                        <li>A specimen may be taken without a warrant in these circumstances.</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-red-50 rounded-md"><strong>Practical Example:</strong> A driver is found passed out behind the wheel of a crashed vehicle, clearly intoxicated and unresponsive. Officers arrest him for DWI. Because he is unconscious and incapable of refusing, his implied consent stands. Officers can transport him to the hospital for a blood draw based on this statute.</p>
+                </div>
+
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Rules for Taking Breath & Blood Specimens - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.016" target="_blank" class="text-red-800 hover:underline">TC §724.016 & .017</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> The law sets specific requirements for how chemical specimens must be taken to be admissible in court.</p>
+                    <h4 class="font-semibold mt-4 text-sm">Key Concepts:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Breath Specimen (TC §724.016):</strong> Must be taken by a person certified by DPS to operate a breath testing instrument.</li>
+                        <li><strong>Blood Specimen (TC §724.017):</strong> Only a physician, qualified technician, chemist, registered professional nurse, or licensed vocational nurse may take a blood specimen at the request of a peace officer. The location must be a sanitary place.</li>
+                        <li><strong>Additional Analysis (TC §724.019):</strong> A person who provides a specimen has the right to request their own independent analysis by a qualified person of their choosing.</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-red-50 rounded-md"><strong>Practical Example:</strong> Following a DWI arrest and warrant, an officer takes the suspect to a local hospital for a blood draw. The officer ensures that the person drawing the blood is a registered nurse to comply with the statute. The officer also informs the suspect of their right to have their own expert test the blood sample later.</p>
+                </div>
+            </div>
+
+            <div id="enforcement-procedure" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">DWI Enforcement Forms</h2>
+                    <p class="text-sm">Properly completing and submitting administrative and evidentiary forms is a critical part of a DWI arrest.</p>
+                    <h4 class="font-semibold mt-4 text-sm">Key Forms:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>DIC-23 (Peace Officer's Sworn Report):</strong> The officer's affidavit of probable cause for the arrest, detailing the facts and circumstances of the stop and investigation. It is a required document for the administrative license revocation (ALR) hearing.</li>
+                        <li><strong>DIC-24 (Statutory Warning):</strong> The form that is read to the suspect which details the consequences of refusing or failing a chemical test. The officer must document that it was read and whether the suspect consented or refused.</li>
+                        <li><strong>DIC-25 (Notice of Suspension):</strong> If a suspect refuses or fails a test, this form is served on them. It acts as their official notice of suspension and serves as their temporary driving permit for a limited time.</li>
+                        <li><strong>THP-51 (Mandatory Blood Draws Form):</strong> A form used to document the statutory authority and circumstances justifying a mandatory blood specimen collection.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Case Law: Curtis v. State</h2>
+                    <p class="text-sm"><strong>Key Holding:</strong> The Texas Court of Criminal Appeals held that an officer's observation of a vehicle weaving within its own lane can be sufficient grounds to establish reasonable suspicion for a traffic stop, especially when considering the officer's training and experience in DWI enforcement.</p>
+                    <h4 class="font-semibold mt-4 text-sm">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>An officer observes a vehicle failing to maintain a single marked lane (weaving).</li>
+                        <li>The officer's training and experience lead them to believe this driving behavior is indicative of intoxication.</li>
+                        <li>Based on the totality of the circumstances, the traffic stop is considered reasonable and lawful.</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-red-50 rounded-md"><strong>Practical Example:</strong> An officer trained in SFST is on patrol and sees a car ahead weave within its lane three times over a quarter-mile. The officer does not observe the car cross any lines, but based on their training that this is a common cue for intoxicated driving, they initiate a traffic stop. The stop is legally justified under *Curtis v. State*.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Allowing Dangerous Driver to Borrow Motor Vehicle - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.705.htm#705.001" target="_blank" class="text-red-800 hover:underline">TC §705.001</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> A person commits an offense if the person: (1) is the owner of a motor vehicle; (2) knows that the person who will operate the vehicle is an unlicensed driver; and (3) permits that person to operate the vehicle on a highway.</p>
+                    <h4 class="font-semibold mt-4 text-sm">Punishment Level:</h4>
+                    <div class="mt-2 space-y-2 text-sm">
+                        <div class="flex items-center">
+                            <span class="punishment-badge mc text-black mr-3 w-40 text-center">Class C Misdemeanor</span>
+                            <span>Standard offense level.</span>
+                        </div>
+                    </div>
+                    <h4 class="font-semibold mt-4 text-sm">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>A person owns a motor vehicle.</li>
+                        <li>They know the person they are lending it to does not have a valid license.</li>
+                        <li>They permit that person to operate the vehicle on a highway.</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-red-50 rounded-md"><strong>Practical Example:</strong> John knows his 15-year-old nephew only has a learner's permit and is not legally allowed to drive alone. John lets his nephew take his car to the store by himself anyway. If the nephew is stopped, not only can he be cited, but John can also be cited for Allowing a Dangerous Driver to Borrow his Vehicle.</p>
+                </div>
+            </div>
+
+            <div id="knowledge-check" class="tab-content">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Knowledge Check</h2>
+                    <p class="mb-6 text-gray-600">Test your understanding of the material.</p>
+                    <div id="quiz-container" class="space-y-8"></div>
+                    <div class="mt-8 text-center">
+                        <button id="check-answers-btn" class="bg-red-700 text-white font-bold py-2 px-6 rounded-lg hover:bg-red-800 transition-colors">Check Answers</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="resources" class="tab-content">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Statutory & Organizational Resources</h2>
+                    <p class="mb-6 text-gray-600">Quick links to the laws and organizations referenced in this guide.</p>
+                    <div id="resources-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('#tabs button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                });
+            });
+
+            const quizData = [
+                { question: "1. What are the three phases of DWI detection as defined by NHTSA?", options: ["The Stop, The Contact, The Arrest", "Observation, Interaction, Testing", "Vehicle in Motion, Personal Contact, Pre-Arrest Screening", "Suspicion, Probable Cause, Arrest"], answer: "Vehicle in Motion, Personal Contact, Pre-Arrest Screening", explanation: "The three standardized phases are Vehicle in Motion, Personal Contact, and Pre-Arrest Screening (SFSTs)." },
+                { question: "2. A driver is arrested for DWI after a crash that caused the death of another person. The driver refuses to provide a blood sample. What must an officer do?", options: ["Honor the refusal and release the driver.", "Get a search warrant for the blood.", "Take the driver's blood based on the mandatory blood draw statute.", "Ask for a breath sample instead."], answer: "Take the driver's blood based on the mandatory blood draw statute.", explanation: "Under TC §724.012, an officer SHALL require a specimen if the DWI arrest involves a crash where someone has died or suffered serious bodily injury. This is a statutory exception to the warrant requirement." },
+                { question: "3. The legal principle that every person who operates a motor vehicle on a public roadway in Texas has already agreed to provide a breath or blood sample upon a lawful DWI arrest is known as:", options: ["Statutory Warning", "Reasonable Suspicion", "Probable Cause", "Implied Consent"], answer: "Implied Consent", explanation: "TC §724.011 establishes the principle of Implied Consent. The act of driving itself is what constitutes consent." },
+                { question: "4. Which form must be read to a DWI suspect before requesting a chemical test, outlining the administrative penalties for refusal or failure?", options: ["DIC-23 (Sworn Report)", "DIC-24 (Statutory Warning)", "DIC-25 (Notice of Suspension)", "THP-51 (Mandatory Blood Draw Form)"], answer: "DIC-24 (Statutory Warning)", explanation: "The DIC-24 form contains the statutory warnings required by TC §724.015 and must be read to the suspect before requesting a specimen." },
+                { question: "5. A driver is arrested for DWI (1st Offense) with a 0.16 BAC. What is the most serious offense they have committed?", options: ["Class B Misdemeanor DWI", "Class A Misdemeanor DWI", "State Jail Felony DWI", "3rd Degree Felony DWI"], answer: "Class A Misdemeanor DWI", explanation: "Under PC §49.04(d), a first-offense DWI is enhanced to a Class A Misdemeanor if the operator's alcohol concentration is 0.15 or more." },
+                { question: "6. An officer observes a vehicle weaving within its lane but never crossing the line. Based on their training, the officer believes the driver may be intoxicated and initiates a stop. This stop is justified by what case law?", options: ["Miranda v. Arizona", "Terry v. Ohio", "Curtis v. State", "Graham v. Connor"], answer: "Curtis v. State", explanation: "Curtis v. State specifically addresses this issue, holding that weaving within a lane can be sufficient for reasonable suspicion when viewed in light of an officer's training and experience." },
+                { question: "7. A person who refuses to provide a breath sample after being arrested for DWI faces an automatic driver's license suspension of at least:", options: ["30 days", "90 days", "180 days", "1 year"], answer: "180 days", explanation: "The statutory warning (DIC-24) states that a refusal to provide a specimen will result in a license suspension of not less than 180 days." },
+                { question: "8. Which of the following is NOT one of the three standardized field sobriety tests?", options: ["Horizontal Gaze Nystagmus", "Walk and Turn", "Alphabet Recital (A-Z)", "One-Leg Stand"], answer: "Alphabet Recital (A-Z)", explanation: "The three tests validated by NHTSA are HGN, Walk and Turn, and One-Leg Stand. Other tests like the alphabet recital are not standardized and carry less weight." },
+                { question: "9. An officer serves a DIC-25 (Notice of Suspension) on a DWI suspect. What is the purpose of this form?", options: ["To get a sworn statement from the officer.", "To warn the suspect of the consequences.", "To act as the official suspension notice and a temporary license.", "To request a blood sample."], answer: "To act as the official suspension notice and a temporary license.", explanation: "The DIC-25 is served on a person who refuses or fails a chemical test. It notifies them that their license is suspended and also serves as a temporary permit to drive for a specific period." },
+                { question: "10. Bob knows his friend Bill's driver's license is suspended. He lets Bill borrow his car to go to the store. Bill gets stopped by the police. Besides Bill being arrested for DWLI, what offense has Bob committed?", options: ["No offense, he wasn't driving.", "Hindering Apprehension", "Allowing Dangerous Driver to Borrow Motor Vehicle", "Conspiracy to Commit DWLI"], answer: "Allowing Dangerous Driver to Borrow Motor Vehicle", explanation: "Under TC §705.001, Bob, as the owner, committed an offense by knowingly permitting an unlicensed person to operate his vehicle on a highway." },
+                { question: "11. An intoxicated driver causes a crash that results in a broken arm for the other driver. What is the most appropriate charge?", options: ["DWI", "Aggravated Assault with a Deadly Weapon", "Intoxication Assault", "Intoxication Manslaughter"], answer: "Intoxication Assault", explanation: "A broken bone constitutes a 'protracted loss or impairment of the function of any bodily member,' which meets the definition of Serious Bodily Injury under the Penal Code. Therefore, Intoxication Assault (PC §49.07) is the correct charge." },
+                { question: "12. An officer finds a driver unconscious behind the wheel after a single-vehicle crash. The driver smells strongly of alcohol. Under TC §724.014, can the officer get a blood sample?", options: ["No, the driver cannot give consent.", "Yes, because being unconscious means consent is not withdrawn.", "No, a warrant is always required for blood.", "Yes, but only if the driver's family agrees."], answer: "Yes, because being unconscious means consent is not withdrawn.", explanation: "TC §724.014 (Person Incapable of Refusal) states that an unconscious person is considered not to have withdrawn their implied consent, so a specimen may be taken." },
+                { question: "13. What is the primary goal of Phase Two (Personal Contact) of the DWI investigation?", options: ["To decide if there's reasonable suspicion to stop the vehicle.", "To determine if there's probable cause to arrest.", "To decide whether to ask the driver to exit the vehicle for SFSTs.", "To issue a citation for the initial traffic violation."], answer: "To decide whether to ask the driver to exit the vehicle for SFSTs.", explanation: "During Phase Two, the officer uses their observations of the driver (sight, sound, smell) to determine if there is enough evidence of intoxication to proceed to the next phase, which is pre-arrest screening (SFSTs)." },
+                { question: "14. A driver is arrested for DWI with a 14-year-old child in the car. What is the highest offense level this can be charged as?", options: ["Class A Misdemeanor", "State Jail Felony", "3rd Degree Felony", "2nd Degree Felony"], answer: "State Jail Felony", explanation: "PC §49.045 enhances a DWI to a State Jail Felony if the vehicle is occupied by a passenger who is younger than 15 years of age." },
+                { question: "15. An intoxicated driver causes a crash that results in the death of their own passenger. What is the most appropriate charge?", options: ["DWI", "Murder", "Manslaughter", "Intoxication Manslaughter"], answer: "Intoxication Manslaughter", explanation: "PC §49.08 applies when an intoxicated operator causes the death of 'another,' which includes passengers in their own vehicle." },
+                { question: "16. For a DWI blood draw, who is legally qualified to take the specimen?", options: ["Any peace officer", "An EMT or paramedic", "A physician, qualified technician, RN, or LVN", "The suspect's personal doctor only"], answer: "A physician, qualified technician, RN, or LVN", explanation: "TC §724.017 specifies a limited list of medical professionals who are authorized to take a blood specimen at the request of a peace officer." },
+                { question: "17. A DWI suspect refuses a breath test. There are no mandatory draw conditions. What is the officer's next legal step to get a sample?", options: ["Release the suspect.", "Charge them with another crime.", "Obtain a search warrant for their blood.", "Hold them until they consent."], answer: "Obtain a search warrant for their blood.", explanation: "Under TC §724.013, if a person refuses and there are no exceptions, a specimen may not be taken. The officer's only recourse to compel a sample is to seek a search warrant from a neutral magistrate." },
+                { question: "18. After providing a blood sample, the suspect has a right to what?", options: ["An immediate release from custody.", "A free phone call.", "Have their own expert perform an additional analysis.", "Refuse to answer any more questions."], answer: "Have their own expert perform an additional analysis.", explanation: "TC §724.019 grants the person who provided a specimen the right to have a physician, chemist, or other qualified person of their own choosing perform an independent analysis on that specimen." }
+            ];
+
+            const quizContainer = document.getElementById('quiz-container');
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'quiz-question';
+                let optionsHtml = q.options.map(option => `
+                    <label class="block"><input type="radio" name="q${index}" value="${option}" class="mr-2">${option}</label>
+                `).join('');
+                questionDiv.innerHTML = `<p class="font-semibold mb-2">${q.question}</p><div class="space-y-2">${optionsHtml}</div><div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>`;
+                quizContainer.appendChild(questionDiv);
+            });
+
+            document.getElementById('check-answers-btn').addEventListener('click', () => {
+                quizData.forEach((q, index) => {
+                    const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                    const feedback = document.querySelectorAll('.feedback')[index];
+                    feedback.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+                    if (selected && selected.value === q.answer) {
+                        feedback.textContent = `Correct! ${q.explanation}`;
+                        feedback.classList.add('bg-green-100', 'text-green-800');
+                    } else {
+                        feedback.textContent = `Incorrect. The correct answer is "${q.answer}". ${q.explanation}`;
+                        feedback.classList.add('bg-red-100', 'text-red-800');
+                    }
+                });
+            });
+
+            const resources = [
+                { name: "TC Ch. 705 - Allowing Dangerous Driver to Borrow Vehicle", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.705.htm"},
+                { name: "TC Ch. 724 - Implied Consent", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm" },
+                { name: "Penal Code Ch. 49 - Intoxication and Alcoholic Beverage Offenses", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.49.htm" },
+                { name: "NHTSA DWI Detection & SFST Resources", url: "https://www.nhtsa.gov/dwi-detection-and-standardized-field-sobriety-test-sfst-resources"}
+            ];
+            const resourcesList = document.getElementById('resources-list');
+            resources.sort((a, b) => a.name.localeCompare(b.name));
+            resources.forEach(res => {
+                const link = document.createElement('a');
+                link.href = res.url;
+                link.target = '_blank';
+                link.className = 'text-red-800 hover:underline';
+                link.textContent = res.name;
+                resourcesList.appendChild(link);
+            });
+        });
+    </script>
+</body>
+</html>
+
+

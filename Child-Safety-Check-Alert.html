@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Guide: Child Safety Check Alert List (CSCAL)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --header-bg: #1f2937;
+            --bg-color: #f3f4f6;
+            --tab-active-bg: #2563eb; /* Blue for this guide */
+            --tab-active-text: #ffffff;
+            --card-bg: #ffffff;
+            --text-color: #111827;
+            --link-color: #1d4ed8;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://rsms.me/inter/inter.css');
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab.active {
+            background-color: var(--tab-active-bg);
+            color: var(--tab-active-text);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tab {
+            transition: all 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-gray-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">
+                <i class="fas fa-list-check mr-2"></i>Child Safety Check Alert List (CSCAL)
+            </h1>
+            <p class="text-sm text-gray-300">BPOC Chapter 19 | TCOLE Preparation</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-6">
+        <div class="mb-6 bg-white rounded-lg shadow-md overflow-x-auto">
+            <nav id="tabs" class="flex flex-row space-x-1 p-2">
+                <button data-tab="fundamentals" class="tab active flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-clipboard-question mr-2"></i> <span class="hidden md:inline">CSCAL Fundamentals</span>
+                </button>
+                <button data-tab="officer-response" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-user-shield mr-2"></i> <span class="hidden md:inline">Officer Response</span>
+                </button>
+                <button data-tab="possession-placement" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-child-reaching mr-2"></i> <span class="hidden md:inline">Possession & Placement</span>
+                </button>
+                <button data-tab="reporting" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-file-pen mr-2"></i> <span class="hidden md:inline">Reporting</span>
+                </button>
+                <button data-tab="knowledge-check" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-question-circle mr-2"></i> <span class="hidden md:inline">Knowledge Check</span>
+                </button>
+                <button data-tab="resources" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-link mr-2"></i> <span class="hidden md:inline">Resources</span>
+                </button>
+            </nav>
+        </div>
+
+        <div id="tab-contents">
+            <div id="fundamentals" class="tab-content active space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">What is the CSCAL? (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.261.htm#261.3022" target="_blank" class="text-blue-700 hover:underline">Family Code §261.3022</a>)</h2>
+                    <p class="text-sm">The Child Safety Check Alert List (CSCAL) is a tool used by Child Protective Services (CPS) to report the names of children and their legal guardians whom they need to locate. The report is submitted by CPS to the Texas Crime Information Center (TCIC).</p>
+                    <h4 class="font-semibold mt-4 text-sm">Purpose Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>To locate a child and guardian to investigate a report of child abuse or neglect.</li>
+                        <li>To provide protective services to a family already receiving services.</li>
+                        <li>To provide services to the family of a child who is in the state's custody (managing conservatorship).</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">CSCAL vs. Missing Person Report</h2>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="p-3 font-semibold">Feature</th>
+                                    <th class="p-3 font-semibold">Child Safety Check Alert List (CSCAL)</th>
+                                    <th class="p-3 font-semibold">Missing Person Report</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b">
+                                    <td class="p-3 font-medium">Child's Status</td>
+                                    <td class="p-3">The child is believed to be with a legal guardian.</td>
+                                    <td class="p-3">The legal guardian does not know the child's location. The legal guardian can also be DFPS (if the child is in state conservatorship).</td>
+                                </tr>
+                                <tr class="border-b">
+                                    <td class="p-3 font-medium">Database Entry</td>
+                                    <td class="p-3">Entered into **TCIC only** (Texas statewide).</td>
+                                    <td class="p-3">Entered into **NCIC** (nationwide).</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-medium">Duration</td>
+                                    <td class="p-3">Remains in TCIC for **12 months**.</td>
+                                    <td class="p-3">Remains in the system **indefinitely** until located.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">High-Priority Investigations (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.261.htm#261.301" target="_blank" class="text-blue-700 hover:underline">Family Code §261.301</a>)</h2>
+                    <p class="text-sm">This statute outlines the protocol for joint investigations between DFPS and law enforcement.</p>
+                    <h4 class="font-semibold mt-2 text-sm">Procedure Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>Applies to investigations DFPS has assigned the **highest priority**.</li>
+                        <li>If DFPS is unable to locate the child or family, they **must** notify the Department of Public Safety (DPS).</li>
+                        <li>If DPS locates the child and family, they **must** notify DFPS of the location.</li>
+                    </ul>
+                    <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example:</strong> CPS receives a severe neglect report and gives it the highest priority. After 24 hours, the caseworker still can't find the family at their last known address. Per procedure, CPS notifies DPS to assist in locating the child and family. This may lead to a CSCAL entry.</p>
+                </div>
+            </div>
+
+            <div id="officer-response" class="tab-content space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Possible Encounter Outcomes</h2>
+                    <p class="text-sm">An encounter with a person on the CSCAL can result in several different conclusions based on the circumstances and information from DFPS.</p>
+                    <h4 class="font-semibold mt-2 text-sm">Potential Conclusions Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>Release the child back to the custody of the legal guardian (most common).</li>
+                        <li>Release the child to DFPS/CPS if they respond and decide to take custody.</li>
+                        <li>Take temporary possession of the child due to an immediate danger, even for reasons unrelated to the original CSCAL alert.</li>
+                    </ul>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Initial Encounter Protocol (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.2A.htm#2A.056" target="_blank" class="text-blue-700 hover:underline">CCP Art. 2A.056</a>)</h2>
+                    <p class="text-sm">When you encounter a person listed on the CSCAL, specific steps are required.</p>
+                    <h4 class="font-semibold mt-2 text-sm">Mandatory Steps Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Immediately contact DFPS</strong> on their dedicated law enforcement telephone number.</li>
+                        <li><strong>Request information from DFPS</strong> regarding the case circumstances.</li>
+                        <li><strong>Request information from the child and person</strong> regarding the child's safety, well-being, and current residence.</li>
+                    </ul>
+                    <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example:</strong> An officer runs a license plate during a traffic stop and receives a TCIC return that the registered owner has a CSCAL entry associated with her child. The officer sees a child in the car. The officer MUST immediately call the DFPS LE-only hotline, inquire about the case, and ask the mother and child about their current residence and the child's well-being.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Authority to Temporarily Detain</h2>
+                     <p class="text-sm">CCP Art. 2A.056(d) provides specific authority related to CSCAL encounters.</p>
+                     <h4 class="font-semibold mt-2 text-sm">Detention Authority Checklist:</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                         <li>A peace officer **may temporarily detain** the child or other person.</li>
+                         <li>The purpose of the detention is **to ensure the safety and well-being of the child**.</li>
+                         <li>The CPS caseworker will be notified and will decide whether to respond to the location.</li>
+                         <li>Regardless of the CPS response, the officer should assess the child's immediate safety.</li>
+                     </ul>
+                     <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Important Note:</strong> This authority is for a *temporary* detention to assess safety and complete the required notifications. It is not an arrest. The decision to take the child into possession is a separate, more serious step governed by the Family Code.</p>
+                </div>
+            </div>
+
+            <div id="possession-placement" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Taking Possession in an Emergency (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.262.htm#262.104" target="_blank" class="text-blue-700 hover:underline">Family Code §262.104</a>)</h2>
+                    <p class="text-sm">An officer may take temporary possession of a child without a court order ONLY if there is no time to get one and specific conditions are met.</p>
+                    <h4 class="font-semibold mt-2 text-sm">Conditions Checklist (Must meet one):</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Immediate Danger:</strong> Facts (personally known or corroborated) lead a prudent person to believe there is an immediate danger to the child's physical health or safety.</li>
+                        <li><strong>Sexual Abuse / Trafficking:</strong> Facts (personally known or corroborated) lead a prudent person to believe the child has been a victim of sexual abuse or trafficking.</li>
+                        <li><strong>Parental Drug Use:</strong> Corroborated information leads a prudent person to believe the parent/guardian is using a controlled substance, and that use constitutes an immediate danger to the child.</li>
+                        <li><strong>Methamphetamine Premises:</strong> The parent/guardian has permitted the child to remain on premises used for the manufacture of methamphetamine.</li>
+                    </ul>
+                     <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example:</strong> During a CSCAL encounter, an officer observes drug paraphernalia next to the child in the car and the parent is clearly intoxicated, creating an immediate danger to the child's physical safety. The officer has grounds under this statute to take temporary possession of the child without a warrant.</p>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Legal Follow-Up After Possession (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.262.htm#262.105" target="_blank" class="text-blue-700 hover:underline">Family Code §262.105</a>)</h2>
+                    <p class="text-sm">When an officer takes temporary possession of a child under the emergency conditions of FC §262.104, there is a mandatory legal follow-up.</p>
+                    <h4 class="font-semibold mt-2 text-sm">Action Required Checklist:</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                         <li>The statute requires that a petition must be filed with the court, usually by DFPS, on the first business day after the child is taken into possession. This initiates the formal legal proceedings.</li>
+                     </ul>
+                    <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Officer's Role:</strong> While DFPS handles the filing, the officer's detailed and accurate report of the emergency conditions is critical for the petition's success. Your documentation justifies the warrantless removal.</p>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Proper Placement & Release (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.2A.htm#2A.058" target="_blank" class="text-blue-700 hover:underline">CCP Art. 2A.058</a>)</h2>
+                    <p class="text-sm">If an officer takes possession of a child under Family Code §262.104, the child may be released to an authorized person or entity.</p>
+                    <h4 class="font-semibold mt-2 text-sm">Authorized Release Locations Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>A residential child-care facility licensed by DFPS.</li>
+                        <li>A juvenile probation department.</li>
+                        <li>The Department of Family and Protective Services (DFPS/CPS).</li>
+                        <li>Any other person authorized by law.</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Database Checks Before Release to Non-Govt Person</h2>
+                    <p class="text-sm">Before releasing a child to a person (other than a government entity), an officer MUST perform several checks.</p>
+                    <h4 class="font-semibold mt-2 text-sm">Mandatory Checks Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>Verify with **NCIC** that the child is not listed as missing.</li>
+                        <li>Search NCIC databases (protection orders, warrants, sex offender registries) to verify the person does not have a disqualifying order or status.</li>
+                        <li>Call the **DFPS Texas Abuse Hotline** to check if the person is listed in the child abuse registry.</li>
+                        <li>Verify the person is at least **18 years of age**.</li>
+                        <li>Maintain a placement record, including the child's name/pseudonym and the custodian's name and address.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="reporting" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Reporting When Child is NOT Taken (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.2A.htm#2A.056" target="_blank" class="text-blue-700 hover:underline">CCP Art. 2A.056(d)</a>)</h2>
+                    <p class="text-sm">If, after an encounter, you or CPS do not take possession of the child, you still have reporting duties.</p>
+                    <h4 class="font-semibold mt-2 text-sm">DFPS Reporting Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>Obtain the child's **current address**.</li>
+                        <li>Obtain any other **relevant information**.</li>
+                        <li>Report this information to the Department of Family and Protective Services.</li>
+                    </ul>
+                     <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example:</strong> After calling the DFPS hotline during a CSCAL stop, it's determined that CPS just needs to verify the family's new address. The officer confirms the address, assesses the child is safe, and does not take possession. The officer must then report the verified address and any other relevant details (like the parent's new phone number) back to DFPS.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Reporting to TCIC to Clear the Alert (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.2A.htm#2A.056" target="_blank" class="text-blue-700 hover:underline">CCP Art. 2A.056(e)</a>)</h2>
+                     <p class="text-sm">After locating a person on the CSCAL and reporting to DFPS, the final step is to clear the TCIC entry.</p>
+                    <h4 class="font-semibold mt-2 text-sm">TCIC Reporting Checklist:</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                         <li>Report to the Texas Crime Information Center that the person **has been located**.</li>
+                         <li>Report **to whom the child was released** (e.g., back to the guardian at the scene).</li>
+                     </ul>
+                      <p class="text-sm mt-2 p-3 bg-gray-50 rounded-md"><strong>Practical Example:</strong> Continuing the previous scenario, after the officer provides the updated address to DFPS, their final action is to notify their dispatcher to send a teletype to TCIC to remove the CSCAL entry, noting the child was located and released to the legal guardian on scene.</p>
+                </div>
+            </div>
+
+            <div id="knowledge-check" class="tab-content">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Knowledge Check</h2>
+                    <p class="mb-6 text-gray-600">Test your understanding of the material.</p>
+                    <div id="quiz-container" class="space-y-8"></div>
+                    <div class="mt-8 text-center">
+                        <button id="check-answers-btn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors">Check Answers</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="resources" class="tab-content">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Statutory Resources</h2>
+                    <p class="mb-6 text-gray-600">Quick links to the Texas Codes referenced in this guide.</p>
+                    <div id="resources-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('#tabs button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                });
+            });
+
+            const quizData = [
+                { question: "1. What is the primary purpose of the Child Safety Check Alert List (CSCAL)?", options: ["To issue a statewide AMBER alert.", "For CPS to locate a child and guardian to investigate or provide services.", "To arrest legal guardians who are avoiding CPS.", "To list all children currently in foster care."], answer: "For CPS to locate a child and guardian to investigate or provide services.", explanation: "The CSCAL is an administrative tool for CPS to locate families for investigations or service delivery, not a criminal warrant or a public alert system like AMBER alert." },
+                { question: "2. A key difference between a CSCAL entry and a Missing Person report is that in a CSCAL case:", options: ["The child is believed to be in immediate danger.", "The entry is sent to NCIC for nationwide broadcast.", "The child is believed to be with their legal guardian.", "The entry remains in the system indefinitely."], answer: "The child is believed to be with their legal guardian.", explanation: "In a CSCAL situation, CPS has lost contact with the family unit, but the child is presumed to be with their guardian. In a Missing Person case, the guardian does not know the child's whereabouts." },
+                { question: "3. An officer locates a child and guardian on the CSCAL. According to CCP Art. 2A.056, what is the officer's first mandatory action?", options: ["Arrest the guardian.", "Take the child into custody.", "Immediately contact DFPS on their dedicated law enforcement line.", "Clear the alert from TCIC."], answer: "Immediately contact DFPS on their dedicated law enforcement line.", explanation: "The first step is always to contact DFPS to get case-specific information and instructions before taking any other action." },
+                { question: "4. For how long does a CSCAL entry remain active in TCIC?", options: ["24 hours", "30 days", "12 months", "Indefinitely"], answer: "12 months", explanation: "CSCAL alerts are active for 12 months in the TCIC system unless cleared sooner." },
+                { question: "5. Under CCP Art. 2A.056(d), an officer may temporarily detain a person on a CSCAL hit for what specific purpose?", options: ["To issue a citation.", "To search their vehicle for evidence of a crime.", "To ensure the safety and well-being of the child.", "To wait for a CPS caseworker to arrive, no matter how long it takes."], answer: "To ensure the safety and well-being of the child.", explanation: "The statute is clear that the specific, limited purpose of the temporary detention is to assess the child's safety while the officer makes required notifications." },
+                { question: "6. An officer takes a child into emergency possession without a court order. Which of the following is NOT an authorized placement location under CCP Art. 2A.058?", options: ["DFPS", "A licensed residential child-care facility", "The home of a relative who just arrived on scene", "A juvenile probation department"], answer: "The home of a relative who just arrived on scene", explanation: "While a relative might eventually be an option after DFPS investigation, they are not an automatic authorized placement for an officer on the street without going through the mandatory database checks." },
+                { question: "7. Which of the following scenarios provides legal grounds for an officer to take temporary possession of a child without a court order under Family Code §262.104?", options: ["The parent is rude and uncooperative.", "The house is messy and cluttered.", "The officer sees the parent has permitted the child to be on premises used for meth manufacturing.", "The parent admits they are behind on the child's vaccinations."], answer: "The officer sees the parent has permitted the child to be on premises used for meth manufacturing.", explanation: "This is a specific condition listed in the statute. The other options do not rise to the level of 'immediate danger' required for a warrantless removal." },
+                { question: "8. Before releasing a child to a non-governmental person, an officer MUST check the DFPS Texas Abuse Hotline for what reason?", options: ["To get the person's criminal history.", "To determine if the person is listed as having abused or neglected a child.", "To confirm the person's home address.", "To get permission from a supervisor."], answer: "To determine if the person is listed as having abused or neglected a child.", explanation: "This check is a mandatory step to ensure the child is not being placed with someone who has a history of child maltreatment." },
+                { question: "9. After an officer locates a child on the CSCAL list, speaks with DFPS, and determines the child is safe and will not be taken into custody, what information must be reported to DFPS?", options: ["The officer's opinion of the guardian's parenting skills.", "The child's current address and any other relevant information.", "The make and model of the guardian's vehicle.", "Nothing, the case is closed."], answer: "The child's current address and any other relevant information.", explanation: "Even if the child isn't taken, the primary goal of the CSCAL is met by locating the family. The officer must provide this location information back to DFPS." },
+                { question: "10. What is the final step an officer must ensure is completed after a CSCAL encounter where the person is located?", options: ["File a local offense report.", "Notify the child's school.", "Report to TCIC that the person has been located.", "Hand the guardian a CPS business card."], answer: "Report to TCIC that the person has been located.", explanation: "Clearing the alert from TCIC is the final step to ensure other officers don't needlessly stop the person for the same resolved issue." }
+             ];
+
+            const quizContainer = document.getElementById('quiz-container');
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'quiz-question';
+                let optionsHtml = q.options.map(option => `
+                    <label class="block"><input type="radio" name="q${index}" value="${option}" class="mr-2">${option}</label>
+                `).join('');
+                questionDiv.innerHTML = `<p class="font-semibold mb-2">${q.question}</p><div class="space-y-2">${optionsHtml}</div><div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>`;
+                quizContainer.appendChild(questionDiv);
+            });
+
+            document.getElementById('check-answers-btn').addEventListener('click', () => {
+                quizData.forEach((q, index) => {
+                    const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                    const feedback = document.querySelectorAll('.feedback')[index];
+                    feedback.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+                    if (selected && selected.value === q.answer) {
+                        feedback.textContent = `Correct! ${q.explanation}`;
+                        feedback.classList.add('bg-green-100', 'text-green-800');
+                    } else {
+                        feedback.textContent = `Incorrect. The correct answer is "${q.answer}". ${q.explanation}`;
+                        feedback.classList.add('bg-red-100', 'text-red-800');
+                    }
+                });
+            });
+
+            const resources = [
+                 { name: "Family Code §261.3022 - Child Safety Check Alert List", url: "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.261.htm#261.3022" },
+                 { name: "Family Code §261.301 - Investigation of Report", url: "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.261.htm#261.301" },
+                 { name: "CCP Art. 2A.056 - Response to Child Safety Check Alert", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.2A.htm#2A.056" },
+                 { name: "Family Code §262.104 - Taking Possession in Emergency", url: "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.262.htm#262.104" },
+                 { name: "Family Code §262.105 - Filing Petition After Taking Possession", url: "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.262.htm#262.105" },
+                 { name: "CCP Art. 2A.058 - Release of Child by Law Enforcement", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.2A.htm#2A.058" }
+            ];
+            const resourcesList = document.getElementById('resources-list');
+            resources.sort((a, b) => a.name.localeCompare(b.name));
+            resources.forEach(res => {
+                const link = document.createElement('a');
+                link.href = res.url;
+                link.target = '_blank';
+                link.className = 'text-blue-700 hover:underline';
+                link.textContent = res.name;
+                resourcesList.appendChild(link);
+            });
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCOLE Child Safety Check Alert List Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+        .answer-option {
+            transition: all 0.2s ease-in-out;
+        }
+        .answer-option:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .correct {
+            background-color: #D1FAE5 !important;
+            border-color: #10B981 !important;
+            color: #065F46 !important;
+        }
+        .incorrect {
+            background-color: #FEE2E2 !important;
+            border-color: #EF4444 !important;
+            color: #991B1B !important;
+        }
+        .progress-bar-fill {
+            transition: width 0.3s ease-in-out;
+        }
+        .review-correct {
+            color: #059669;
+        }
+        .review-incorrect {
+            color: #e11d48;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="quiz-app" class="quiz-container p-4 sm:p-8">
+        
+        <!-- Quiz Start Screen -->
+        <div id="start-screen" class="text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Child Safety Check Alert List (CSCAL)</h1>
+            <p class="text-lg text-gray-600 mb-8">An exhaustive quiz based on the "Basic Peace Officer Course | Chapter 19" handout to test your knowledge on the CSCAL.</p>
+            <button id="start-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Start Quiz</button>
+        </div>
+
+        <!-- Quiz Interface -->
+        <div id="quiz-screen" class="hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold">Question <span id="question-number"></span> of <span id="total-questions"></span></h2>
+                <div id="timer" class="text-lg font-mono bg-gray-200 px-3 py-1 rounded-md">00:00</div>
+            </div>
+            
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+                <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full progress-bar-fill" style="width: 0%"></div>
+            </div>
+
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+                <p id="question-text" class="text-xl font-medium mb-8 min-h-[6rem]"></p>
+                <div id="answer-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Answer options will be injected here by JS -->
+                </div>
+            </div>
+             <div id="rationale-box" class="hidden mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h3 class="font-bold text-blue-800">Rationale:</h3>
+                <p id="rationale-text" class="text-blue-700"></p>
+                <p class="text-sm text-blue-600 mt-2">Source: <span id="rationale-source"></span></p>
+            </div>
+            <button id="next-btn" class="hidden w-full bg-blue-600 text-white font-bold py-3 px-8 rounded-lg mt-8 hover:bg-blue-700 transition-colors shadow-md">Next Question</button>
+        </div>
+
+        <!-- Quiz Results Screen -->
+        <div id="results-screen" class="hidden text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">Quiz Complete!</h1>
+            <p class="text-lg text-gray-600 mb-6">Here's how you did:</p>
+            <div class="flex flex-col sm:flex-row justify-around items-center my-8 gap-8 sm:gap-0">
+                <div>
+                    <p id="score-percentage" class="text-5xl font-bold text-green-600">0%</p>
+                    <p class="text-gray-500">Score</p>
+                </div>
+                 <div>
+                    <p class="text-5xl font-bold text-blue-600"><span id="correct-answers">0</span>/<span id="total-answered">0</span></p>
+                    <p class="text-gray-500">Correct Answers</p>
+                </div>
+                 <div>
+                    <p id="final-time" class="text-5xl font-bold text-gray-700">00:00</p>
+                    <p class="text-gray-500">Time Taken</p>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="restart-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Try Again</button>
+                <button id="review-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md">Review Answers</button>
+            </div>
+        </div>
+        
+        <!-- Review Screen -->
+        <div id="review-screen" class="hidden bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6">Answer Review</h1>
+            <div id="review-container" class="space-y-6">
+                <!-- Review content will be injected here -->
+            </div>
+            <button id="back-to-results-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md mt-8">Back to Results</button>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            { question: "What is the primary purpose of the Child Safety Check Alert List (CSCAL)?", options: ["To report missing children to federal agencies", "To allow CPS to locate children for investigation or services", "To track juvenile criminal activity", "To issue AMBER alerts for endangered children"], answer: "To allow CPS to locate children for investigation or services", rationale: "The CSCAL is a method for Child Protective Services to report the names of children and their legal guardians who they are attempting to locate for the purpose of investigating allegations or providing services.", page: "Page 1" },
+            { question: "Who submits the CSCAL report to the Texas Crime Information Center (TCIC)?", options: ["Local police departments", "The Department of Public Safety", "The Child Protective Services (CPS) division", "The Texas Rangers"], answer: "The Child Protective Services (CPS) division", rationale: "This report is submitted to the Texas Crime Information Center by the Child Protective Services (CPS) division of the Texas Department of Family Protective Services.", page: "Page 1" },
+            { question: "Besides investigating abuse, what is another primary reason CPS uses the CSCAL?", options: ["To enforce school attendance", "To provide protective services to a family", "To collect overdue child support", "To monitor parental custody agreements"], answer: "To provide protective services to a family", rationale: "The purpose of the CSCAL is also for CPS to locate a child to provide protective services to a family receiving family-based safety services or to the family of a child in the managing conservatorship of the department.", page: "Page 1" },
+            { question: "What is a key jurisdictional difference between a CSCAL entry and a Missing Person report?", options: ["CSCAL is a federal entry, Missing Person is state only", "Both are entered into state and federal databases", "CSCAL is entered into TCIC (Texas only)", "Missing Person reports are local records only"], answer: "CSCAL is entered into TCIC (Texas only)", rationale: "A key difference is that the CSCAL is only entered into TCIC (Texas only), while a Missing Person report is entered into the national NCIC database.", page: "Page 1" },
+            { question: "For how long does a CSCAL entry remain active in the TCIC system?", options: ["Indefinitely until the child is located", "For twelve months", "For six months", "Until the child turns 18"], answer: "For twelve months", rationale: "A CSCAL entry remains in the TCIC for twelve months. In contrast, a Missing Person report remains indefinitely until the person is located.", page: "Page 1" },
+            { question: "Family Code Sec. 261.301 provides guidelines for what type of action?", options: ["How schools should report truancy", "Joint investigations between DFPS and law enforcement", "The process for issuing an AMBER Alert", "Rules for parental custody exchanges"], answer: "Joint investigations between DFPS and law enforcement", rationale: "Family Code Sec. 261.301: Investigation of Report, provides guidelines for how and when DFPS and law enforcement should jointly investigate a report of abuse/neglect of a child.", page: "Page 1" },
+            { question: "If the Department of Public Safety locates a family from a high-priority DFPS notification, what must they do?", options: ["Immediately take the child into custody", "Notify the local media", "Notify DFPS of the family's location", "Refer the case to the FBI"], answer: "Notify DFPS of the family's location", rationale: "If the Department of Public Safety locates the child and the child's family, the Department of Public Safety shall notify the department (DFPS) of the location of the child and the child's family.", page: "Page 1" },
+            { question: "Which of the following is a possible valid conclusion for an officer encountering someone on the CSCAL?", options: ["Issuing a traffic citation and leaving", "Releasing the child back to the custody of the legal guardian", "Telling the family to report to CPS the next day", "Arresting the child for truancy"], answer: "Releasing the child back to the custody of the legal guardian", rationale: "There are various conclusions that can occur, including needing to release the child back to the custody of the legal guardian after assessment and communication with CPS.", page: "Page 2" },
+            { question: "According to CCP Art. 2A.056, what is the first step an officer must take upon encountering a person on the CSCAL?", options: ["Arrest the legal guardian", "Immediately contact DFPS on their dedicated law-enforcement line", "Take the child into custody", "Transport the child to the nearest police station"], answer: "Immediately contact DFPS on their dedicated law-enforcement line", rationale: "The first step listed under Code of Criminal Procedure, Article 2A.056 is to 'Immediately contact the Department of Family and Protective Services on the department's dedicated law-enforcement telephone number for statewide intake.'", page: "Page 2" },
+            { question: "After contacting DFPS about a CSCAL hit, what information should an officer request from the department?", options: ["The guardian's criminal history", "The circumstances of the case involving the child", "The school enrollment status of the child", "The family's financial information"], answer: "The circumstances of the case involving the child", rationale: "The second step listed in CCP Art. 2A.056 is to 'Request information from the department regarding the circumstances of the case involving the child or other person.'", page: "Page 2" },
+            { question: "What authority does CCP 2A.056(d) grant a peace officer regarding a child on the CSCAL?", options: ["To permanently remove the child from the guardian", "To temporarily detain the child or other person to ensure safety", "To order a medical examination of the child", "To seize the guardian's vehicle"], answer: "To temporarily detain the child or other person to ensure safety", rationale: "Code of Criminal Procedure 2A.056 (d) provides the specific authority for a peace officer to 'temporarily detain the child or other person to ensure the safety and well-being of the child.'", page: "Page 2" },
+            { question: "If a CPS Case Worker decides not to respond to an officer's location, what is the officer's remaining duty?", options: ["The officer's duty is concluded", "To issue a warning to the guardian", "To assess the immediate safety and well-being of the child", "To transport the family to a CPS office"], answer: "To assess the immediate safety and well-being of the child", rationale: "Regardless of the response by CPS, the officer should assess the immediate safety and well-being of the child.", page: "Page 2" },
+            { question: "Under Family Code §262.104, an officer can take emergency possession based on information from another person only if that information is...", options: ["Provided under oath", "From a family member", "Corroborated by personal knowledge of facts", "Less than 24 hours old"], answer: "Corroborated by personal knowledge of facts", rationale: "The condition requires 'information furnished by another that has been corroborated by personal knowledge of facts' that indicates immediate danger.", page: "Page 3" },
+            { question: "An officer may take possession of a child if they have knowledge the parent permitted the child to be on premises used for what illegal activity?", options: ["Illegal gambling", "The manufacture of methamphetamine", "The sale of stolen goods", "An unlicensed daycare"], answer: "The manufacture of methamphetamine", rationale: "An officer may take possession of a child based on knowledge 'that the parent or person who has possession of the child has permitted the child to remain on premises used for the manufacture of methamphetamine.'", page: "Page 3" },
+            { question: "If an officer takes emergency possession under FC 262.104, they must follow FC 262.105, which pertains to what action?", options: ["Notifying the child's school", "Filing a Petition After Taking Possession", "Conducting a formal interview", "Requesting a medical evaluation"], answer: "Filing a Petition After Taking Possession", rationale: "If an officer takes temporary possession of a child under the emergency authority, they must then follow the requirements set forth in Texas Family Code § 262.105, Filing Petition After Taking Possession of Child in Emergency.", page: "Page 3" },
+            { question: "An officer can take possession of a child if a parent is using a controlled substance, but only under what specific condition?", options: ["If the parent has any history of drug use", "If the use constitutes an immediate danger to the child's health or safety", "If the parent admits to using marijuana", "If drug paraphernalia is found anywhere on the property"], answer: "If the use constitutes an immediate danger to the child's health or safety", rationale: "Possession is permitted if the parent's current use of a controlled substance 'constitutes an immediate danger to the physical health or safety of the child.'", page: "Page 3" },
+            { question: "According to CCP Art. 2A.058, which is an authorized entity an officer can release a child to after taking possession?", options: ["Any responsible adult neighbor", "A church or religious organization", "A juvenile probation department", "The child's school principal"], answer: "A juvenile probation department", rationale: "CCP Art. 2A.058 lists several authorized entities for release, including a juvenile probation department, DFPS, or a licensed residential child-care facility.", page: "Page 3" },
+            { question: "Before releasing a child to a non-governmental person, what must an officer first verify with NCIC?", options: ["The person's employment status", "That the child is not listed as a missing child", "The person's credit score", "The person's educational background"], answer: "That the child is not listed as a missing child", rationale: "The officer must 'verify with the National Crime Information Center that the child is not a missing child' before releasing them to a non-governmental person.", page: "Page 4" },
+            { question: "When checking NCIC databases before releasing a child, what must an officer verify about the person receiving the child?", options: ["That they have a valid driver's license", "That no protective order has been issued against them", "That they own their own home", "That they have no outstanding traffic tickets"], answer: "That no protective order has been issued against them", rationale: "The officer must search NCIC databases, including those pertaining to protection orders, to verify that the person to whom the child is being released 'does not have a protective order issued against the person'.", page: "Page 4" },
+            { question: "An officer must check relevant NCIC databases to ensure the person a child is being released to is NOT what?", options: ["Previously arrested for any crime", "Registered as a sex offender (unless they are the parent with no restrictions)", "Behind on child support payments", "A person with a prior eviction"], answer: "Registered as a sex offender (unless they are the parent with no restrictions)", rationale: "The officer must verify the person is not registered as a sex offender unless the person is the child's parent or guardian and there are no restrictions regarding the person's contact with the child.", page: "Page 4" },
+            { question: "What is the purpose of an officer calling the DFPS Texas Abuse Hotline before releasing a child?", options: ["To get permission for the release", "To determine if the person is listed in the child abuse/neglect registry", "To report their current location and status", "To request a CPS caseworker for the release"], answer: "To determine if the person is listed in the child abuse/neglect registry", rationale: "The officer must 'call the Department of Family and Protective Services Texas Abuse Hotline to determine whether the person to whom the child is being released is listed in the registry as a person who abused or neglected a child'.", page: "Page 4" },
+            { question: "Before releasing a child to a non-governmental person, an officer must verify the person is at least what age and also do what?", options: ["21 years old and get a signature", "25 years old and take a photo", "18 years of age and maintain a record of the placement", "18 years of age and notify a supervisor"], answer: "18 years of age and maintain a record of the placement", rationale: "The officer must verify the person is at least 18 years of age and maintain a record regarding the child's placement.", page: "Page 4" },
+            { question: "What must an officer do if they encounter a person on the CSCAL but do NOT take temporary possession of the child?", options: ["Take no further action as the child is safe", "Obtain the child's current address and report it to DFPS", "Tell the guardian to report to a CPS office within 24 hours", "Issue a citation to the legal guardian"], answer: "Obtain the child's current address and report it to DFPS", rationale: "Per CCP Art. 2A.056 (d), 'If the peace officer does not take temporary possession of the child, the officer shall obtain the child's current address and any other relevant information and report that information to the Department of Family and Protective Services'.", page: "Page 4" },
+            { question: "After locating a person on the CSCAL and reporting their address to DFPS, what is the officer's final reporting duty?", options: ["Notify the local media of the successful encounter", "File a report with the Federal Bureau of Investigation", "Report to TCIC that the person has been located", "Send a certified letter to the guardian's last known address"], answer: "Report to TCIC that the person has been located", rationale: "The officer 'shall report to the Texas Crime Information Center that the child or other person has been located and to whom the child was released, as applicable.'", page: "Page 4" },
+            { question: "What is a key difference between a CSCAL entry and a Missing Person report?", options: ["CSCAL is for adults, while Missing Person is for children", "CSCAL is entered into NCIC, while Missing Person is TCIC only", "In a CSCAL case, the child is with a legal guardian", "In a Missing Person case, the child is with a legal guardian"], answer: "In a CSCAL case, the child is with a legal guardian", rationale: "A primary difference is that in a CSCAL case, the child is with a legal guardian, whereas in a Missing Person case, the legal guardian does not know the location of the child.", page: "Page 1" },
+            { question: "Under Family Code Sec. 261.301, when is DFPS required to notify the Department of Public Safety about an unlocated child?", options: ["After 24 hours of searching", "In any investigation regardless of priority", "If they are unable to locate the child in a highest priority case", "Only when a court order is issued"], answer: "If they are unable to locate the child in a highest priority case", rationale: "In an investigation of a report of child abuse or neglect to which the department has assigned the highest priority, if the department is unable to locate the child, they shall notify the Department of Public Safety.", page: "Page 1" },
+            { question: "After an officer encounters a child on the CSCAL and notifies DFPS, who makes the final decision on whether a CPS Case Worker will respond to the location?", options: ["The responding peace officer", "The CPS Case Worker", "The police supervisor", "The local judge"], answer: "The CPS Case Worker", rationale: "The CPS Case Worker will make the decision whether to respond to the location of the officer and child/person of interest.", page: "Page 2" },
+            { question: "Under Family Code §262.104, when can an officer take temporary possession of a child without a court order?", options: ["Anytime they suspect abuse", "Only with a warrant", "Only if there is no time to get an order and immediate danger exists", "When the child requests to be removed"], answer: "Only if there is no time to get an order and immediate danger exists", rationale: "An officer can take possession of a child without a court order if there is no time to obtain one and the action is 'consistent with the health and safety of that child' due to immediate danger.", page: "Page 2" },
+            { question: "Which of these situations allows an officer to take possession of a child without a court order based on personal knowledge of facts?", options: ["The child appears unhappy or unkempt", "The child has been the victim of sexual abuse or trafficking", "The family lives in a low-income neighborhood", "The child is not enrolled in school"], answer: "The child has been the victim of sexual abuse or trafficking", rationale: "Family Code §262.104 allows taking possession based on personal knowledge of facts that would lead a person to believe the child has been a victim of sexual abuse or of trafficking under Section 20A.02 or 20A.03, Penal Code.", page: "Page 3" },
+            { question: "Which of the following is a key purpose of the CSCAL, according to the text?", options: ["To locate a child for school enrollment", "To investigate a report of child abuse or neglect", "To facilitate an adoption", "To monitor a child's academic progress"], answer: "To investigate a report of child abuse or neglect", rationale: "The purpose of the CSCAL is for CPS to locate a child and legal guardian(s) to investigate a report of child abuse or neglect, or to provide protective services.", page: "Page 1" },
+            { question: "What must be included in the record an officer maintains after releasing a child to a non-governmental person?", options: ["The officer's badge number and vehicle number", "A photograph of the person receiving the child", "The child's name or pseudonyms and the person's name and address", "The time and date of the release only"], answer: "The child's name or pseudonyms and the person's name and address", rationale: "The officer must maintain a record including identifying information about the child (name or pseudonyms) and the name and address of the person to whom the child is being released.", page: "Page 4" }
+        ];
+
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const reviewScreen = document.getElementById('review-screen');
+
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const reviewBtn = document.getElementById('review-btn');
+        const backToResultsBtn = document.getElementById('back-to-results-btn');
+        
+        const questionNumberEl = document.getElementById('question-number');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const progressBar = document.getElementById('progress-bar');
+        const questionTextEl = document.getElementById('question-text');
+        const answerOptionsEl = document.getElementById('answer-options');
+        const rationaleBox = document.getElementById('rationale-box');
+        const rationaleText = document.getElementById('rationale-text');
+        const rationaleSource = document.getElementById('rationale-source');
+        
+        const scorePercentageEl = document.getElementById('score-percentage');
+        const correctAnswersEl = document.getElementById('correct-answers');
+        const totalAnsweredEl = document.getElementById('total-answered');
+        const finalTimeEl = document.getElementById('final-time');
+        const timerEl = document.getElementById('timer');
+        const reviewContainer = document.getElementById('review-container');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timerInterval;
+        let secondsElapsed = 0;
+        let userAnswers = [];
+        
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        startBtn.addEventListener('click', startQuiz);
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', startQuiz);
+        reviewBtn.addEventListener('click', showReview);
+        backToResultsBtn.addEventListener('click', () => {
+            reviewScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+        });
+
+        function startTimer() {
+            secondsElapsed = 0;
+            timerEl.textContent = '00:00';
+            timerInterval = setInterval(() => {
+                secondsElapsed++;
+                const minutes = Math.floor(secondsElapsed / 60).toString().padStart(2, '0');
+                const seconds = (secondsElapsed % 60).toString().padStart(2, '0');
+                timerEl.textContent = `${minutes}:${seconds}`;
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function startQuiz() {
+            shuffleArray(quizData);
+            quizData.forEach(q => shuffleArray(q.options));
+
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            startScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            nextBtn.classList.add('hidden');
+            startTimer();
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            rationaleBox.classList.add('hidden');
+            answerOptionsEl.innerHTML = '';
+            const currentQuestion = quizData[currentQuestionIndex];
+            
+            questionNumberEl.textContent = currentQuestionIndex + 1;
+            totalQuestionsEl.textContent = quizData.length;
+            questionTextEl.textContent = currentQuestion.question;
+
+            const progress = ((currentQuestionIndex) / quizData.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('answer-option', 'w-full', 'p-4', 'text-left', 'bg-white', 'border-2', 'border-gray-300', 'rounded-lg', 'hover:bg-gray-50', 'hover:border-blue-500');
+                button.addEventListener('click', () => selectAnswer(button, option, currentQuestion));
+                answerOptionsEl.appendChild(button);
+            });
+        }
+
+        function selectAnswer(button, selectedOption, currentQuestion) {
+            const { answer, rationale, page } = currentQuestion;
+            userAnswers[currentQuestionIndex] = selectedOption;
+
+            const buttons = answerOptionsEl.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === answer) {
+                    btn.classList.add('correct');
+                }
+            });
+
+            if (selectedOption === answer) {
+                score++;
+                button.classList.add('correct');
+            } else {
+                button.classList.add('incorrect');
+            }
+
+            rationaleText.textContent = rationale;
+            rationaleSource.textContent = page;
+            rationaleBox.classList.remove('hidden');
+            nextBtn.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                nextBtn.classList.add('hidden');
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            stopTimer();
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            scorePercentageEl.textContent = `${percentage}%`;
+            correctAnswersEl.textContent = score;
+            totalAnsweredEl.textContent = quizData.length;
+            finalTimeEl.textContent = timerEl.textContent;
+            
+            // Ensure progress bar is full at the end
+            progressBar.style.width = `100%`;
+        }
+
+        function showReview() {
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.remove('hidden');
+            reviewContainer.innerHTML = '';
+
+            quizData.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === question.answer;
+
+                const reviewItem = document.createElement('div');
+                reviewItem.classList.add('border', 'p-4', 'rounded-lg');
+                reviewItem.classList.add(isCorrect ? 'bg-green-50/50 border-green-200' : 'bg-red-50/50 border-red-200');
+
+                let userAnswerHTML = '';
+                if (isCorrect) {
+                    userAnswerHTML = `<p>Your answer: <span class="font-semibold review-correct">${userAnswer} (Correct)</span></p>`;
+                } else {
+                    userAnswerHTML = `
+                        <p>Your answer: <span class="font-semibold review-incorrect">${userAnswer ? userAnswer : 'Not answered'} (Incorrect)</span></p>
+                        <p>Correct answer: <span class="font-semibold review-correct">${question.answer}</span></p>
+                    `;
+                }
+
+                reviewItem.innerHTML = `
+                    <p class="font-bold mb-2">${index + 1}. ${question.question}</p>
+                    ${userAnswerHTML}
+                    <p class="text-sm text-gray-600 mt-2"><em><strong>Rationale:</strong> ${question.rationale} (Source: ${question.page})</em></p>
+                `;
+                reviewContainer.appendChild(reviewItem);
+            });
+        }
+
+    </script>
+</body>
+</html>
+

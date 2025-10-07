@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Guide: Traffic Code & Crash Investigation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --header-bg: #1f2937;
+            --bg-color: #f3f4f6;
+            --tab-active-bg: #1d4ed8; /* Blue for this guide */
+            --tab-active-text: #ffffff;
+            --card-bg: #ffffff;
+            --text-color: #111827;
+            --link-color: #1e40af;
+            --punishment-felony3: #f97316;
+            --punishment-felony2: #ef4444;
+            --punishment-felony1: #dc2626;
+            --punishment-classA: #f59e0b;
+            --punishment-classB: #fbbf24;
+            --punishment-classC: #d1d5db;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://rsms.me/inter/inter.css');
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab.active {
+            background-color: var(--tab-active-bg);
+            color: var(--tab-active-text);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tab {
+            transition: all 0.3s ease-in-out;
+        }
+        .punishment-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            color: white;
+            font-size: 0.8rem;
+        }
+        .punishment-badge.text-black { color: #111827; }
+        .f1 { background-color: var(--punishment-felony1); }
+        .f2 { background-color: var(--punishment-felony2); }
+        .f3 { background-color: var(--punishment-felony3); }
+        .ma { background-color: var(--punishment-classA); }
+        .mb { background-color: var(--punishment-classB); }
+        .mc { background-color: var(--punishment-classC); }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-gray-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">
+                <i class="fas fa-traffic-light mr-2"></i>Traffic Code & Crash Investigation
+            </h1>
+            <p class="text-sm text-gray-300">BPOC Chapter 22 | TCOLE Preparation</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-6">
+        <div class="mb-6 bg-white rounded-lg shadow-md overflow-x-auto">
+            <nav id="tabs" class="flex flex-row space-x-1 p-2">
+                <button data-tab="licenses-registration" class="tab active flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-id-card-alt mr-2"></i> <span class="hidden md:inline">Licenses & Registration</span>
+                </button>
+                <button data-tab="rules-of-road" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-road mr-2"></i> <span class="hidden md:inline">Rules of the Road</span>
+                </button>
+                <button data-tab="equipment-inspection" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-car-side mr-2"></i> <span class="hidden md:inline">Equipment & Inspection</span>
+                </button>
+                <button data-tab="special-vehicles-peds" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-biking mr-2"></i> <span class="hidden md:inline">Special Vehicles & Peds</span>
+                </button>
+                <button data-tab="emergency-crash" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-car-crash mr-2"></i> <span class="hidden md:inline">Emergency Ops & Crash</span>
+                </button>
+                <button data-tab="enforcement" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-gavel mr-2"></i> <span class="hidden md:inline">Enforcement</span>
+                </button>
+                <button data-tab="knowledge-check" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-question-circle mr-2"></i> <span class="hidden md:inline">Knowledge Check</span>
+                </button>
+                <button data-tab="resources" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-link mr-2"></i> <span class="hidden md:inline">Resources</span>
+                </button>
+            </nav>
+        </div>
+
+        <div id="tab-contents">
+            <div id="licenses-registration" class="tab-content active space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">License to be Carried & Exhibited on Demand - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.521.htm#521.025" target="_blank" class="text-blue-800 hover:underline">TC §521.025</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> A person required to hold a license...shall have the license in the person's possession when operating a motor vehicle and display the license on demand of a magistrate, court officer, or peace officer.</p>
+                    <div class="mt-3"><span class="punishment-badge mc text-black">Class C Misdemeanor</span></div>
+                    <h4 class="font-semibold mt-4 text-sm">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>A person is operating a motor vehicle.</li>
+                        <li>The person is required to hold a driver's license.</li>
+                        <li>A peace officer demands to see the license.</li>
+                        <li>The person fails or refuses to display the license.</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-blue-50 rounded-md"><strong>Practical Example:</strong> An officer stops a driver for speeding. The driver states they have a valid license but left their wallet at home. The driver has committed the offense of Failure to Display Driver's License. (Note: The charge may be dismissed if the person presents a valid license for that time to the court).</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Driving While License Invalid (DWLI) - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.521.htm#521.457" target="_blank" class="text-blue-800 hover:underline">TC §521.457</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> A person commits an offense if the person operates a motor vehicle on a highway after the person's driver's license has been canceled, suspended, or revoked...</p>
+                    <div class="mt-3">
+                         <span class="punishment-badge mc text-black">Class C Misdemeanor</span>
+                         <span class="punishment-badge mb text-black ml-2">Class B Misdemeanor (w/ prior, no insurance, or DWI suspension)</span>
+                         <span class="punishment-badge ma text-black ml-2">Class A Misdemeanor (if causing SBI or death)</span>
+                    </div>
+                    <h4 class="font-semibold mt-4 text-sm">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>A person operates a motor vehicle on a public highway.</li>
+                        <li>The person's license is currently invalid (suspended, revoked, canceled).</li>
+                        <li>The person received actual notice of the suspension.</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-blue-50 rounded-md"><strong>Practical Example:</strong> An officer runs a license plate, and the return shows the owner's license is suspended. The officer confirms the driver is the owner and makes a stop. The driver is arrested for DWLI, a Class B Misdemeanor, as the suspension resulted from traffic convictions and they are operating without insurance.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Operation of Vehicle with Expired License Plate - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.502.htm#502.407" target="_blank" class="text-blue-800 hover:underline">TC §502.407</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> A person commits an offense if the person operates on a public highway a motor vehicle that has a license plate that has been expired for more than five working days.</p>
+                     <div class="mt-3"><span class="punishment-badge mc text-black">Misdemeanor (Fine up to $200)</span></div>
+                    <h4 class="font-semibold mt-4 text-sm">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>A person operates a motor vehicle on a public highway.</li>
+                        <li>The vehicle's registration (license plate sticker) is expired.</li>
+                        <li>The grace period of five working days has passed.</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-blue-50 rounded-md"><strong>Practical Example:</strong> An officer on patrol on a Wednesday notices a vehicle with a registration sticker that expired at the end of the previous month. More than five working days have passed, so the officer can stop the vehicle and issue a citation for the offense.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Operation of Vehicle without License Plate - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.504.htm#504.943" target="_blank" class="text-blue-800 hover:underline">TC §504.943</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> A person commits an offense if the person operates on a public highway a motor vehicle that is not registered in this state and does not display the license plate or plates required for the vehicle for the current registration period by the state or country in which the vehicle is registered.</p>
+                    <div class="mt-3"><span class="punishment-badge mc text-black">Misdemeanor (Fine up to $200)</span></div>
+                    <h4 class="font-semibold mt-4 text-sm">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>A person operates a motor vehicle on a public highway.</li>
+                        <li>The vehicle is required to display license plates.</li>
+                        <li>The vehicle fails to display license plates on both the front and rear of the vehicle (for most vehicles).</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-blue-50 rounded-md"><strong>Practical Example:</strong> An officer observes a passenger car driving on the highway with a valid rear license plate but no front license plate. The officer can stop the vehicle and issue a citation for failing to display two license plates.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Operation of Motor Vehicle Without Financial Responsibility - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.601.htm#601.191" target="_blank" class="text-blue-800 hover:underline">TC §601.191</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> A person commits an offense if the person operates a motor vehicle in this state in violation of Section 601.051 (Requirement of Financial Responsibility).</p>
+                     <div class="mt-3"><span class="punishment-badge mc text-black">Misdemeanor (Fine $175-$350)</span></div>
+                     <h4 class="font-semibold mt-4 text-sm">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>A person operates a motor vehicle in Texas.</li>
+                        <li>The person does not have evidence of financial responsibility (liability insurance or other approved method).</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-blue-50 rounded-md"><strong>Practical Example:</strong> An officer stops a car for an equipment violation. When the officer asks for proof of insurance, the driver cannot provide a current insurance card. A database check confirms the vehicle's insurance has lapsed. The driver is cited for No Insurance.</p>
+                </div>
+            </div>
+
+            <div id="rules-of-road" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Compliance with Traffic-Control Device - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.544.htm#544.004" target="_blank" class="text-blue-800 hover:underline">TC §544.004</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> The operator of a vehicle...shall comply with an applicable official traffic-control device...unless the person is otherwise directed by a traffic or police officer.</p>
+                    <div class="mt-3"><span class="punishment-badge mc text-black">Class C Misdemeanor</span></div>
+                    <h4 class="font-semibold mt-4 text-sm">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>An official traffic-control device is in a proper position and sufficiently legible.</li>
+                        <li>An operator of a vehicle fails to obey the instruction of the device.</li>
+                        <li>(e.g., running a red light, running a stop sign, turning from a straight-only lane).</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-blue-50 rounded-md"><strong>Practical Example:</strong> A driver approaches a red light, slows, but continues through the intersection without coming to a complete stop before making a right turn. The driver has failed to comply with the traffic-control device and can be cited.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Maximum Speed Requirement (Basic Speed Law) - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.545.htm#545.351" target="_blank" class="text-blue-800 hover:underline">TC §545.351</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> An operator may not drive at a speed greater than is reasonable and prudent under the conditions and having regard for actual and potential hazards then existing...</p>
+                     <div class="mt-3"><span class="punishment-badge mc text-black">Class C Misdemeanor</span></div>
+                    <h4 class="font-semibold mt-4 text-sm">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>An operator drives at a speed that is not reasonable and prudent for the existing conditions.</li>
+                        <li>This can be true even if driving at or below the posted speed limit (e.g., during heavy rain, fog, or icy conditions).</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-blue-50 rounded-md"><strong>Practical Example:</strong> During a thunderstorm, a driver travels at the posted 60 mph limit. Due to low visibility and wet roads, their speed is unsafe, causing them to lose control. They can be cited for violating the basic speed law.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Following Distance - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.545.htm#545.062" target="_blank" class="text-blue-800 hover:underline">TC §545.062</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> An operator shall, if following another vehicle, maintain an assured clear distance between the two vehicles so that...the operator can safely stop without colliding...</p>
+                    <div class="mt-3"><span class="punishment-badge mc text-black">Class C Misdemeanor</span></div>
+                    <h4 class="font-semibold mt-4 text-sm">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>An operator is following another vehicle.</li>
+                        <li>They fail to maintain an "assured clear distance."</li>
+                        <li>The distance is not safe enough to stop without a collision, given the current conditions.</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-blue-50 rounded-md"><strong>Practical Example:</strong> On a busy highway, an officer sees a car tailgating the vehicle in front, leaving less than one car length between them at 65 mph. The driver is violating the following distance law.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Passing a School Bus - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.545.htm#545.066" target="_blank" class="text-blue-800 hover:underline">TC §545.066</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> An operator on a highway, when approaching from either direction a school bus stopped...to receive or discharge a student, shall stop before reaching the school bus when the bus is operating a visual signal...</p>
+                    <div class="mt-3">
+                         <span class="punishment-badge mc text-black">Misdemeanor (Fine $500-$1250)</span>
+                         <span class="punishment-badge ma text-black ml-2">Class A Misdemeanor (if prior)</span>
+                         <span class="punishment-badge f3 ml-2">State Jail Felony (if causing SBI)</span>
+                    </div>
+                    <h4 class="font-semibold mt-4 text-sm">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>An operator approaches a stopped school bus from either direction.</li>
+                        <li>The bus is displaying its visual signals (flashing red lights).</li>
+                        <li>The operator fails to stop before reaching the bus.</li>
+                        <li>(Exception: Not required to stop if on a different roadway of a highway with separate roadways).</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-blue-50 rounded-md"><strong>Practical Example:</strong> A driver is on a two-lane road. A school bus in the opposite lane stops and activates its flashing red lights. The driver continues past the bus without stopping and is cited for the offense.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Passing Certain Vehicles ("Move Over / Slow Down") - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.545.htm#545.157" target="_blank" class="text-blue-800 hover:underline">TC §545.157</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> When approaching a stationary authorized emergency vehicle, tow truck, or TxDOT vehicle with its visual signals activated, an operator shall either vacate the lane closest to the vehicle...or slow down to 20 mph less than the posted speed limit...</p>
+                    <div class="mt-3">
+                         <span class="punishment-badge mc text-black">Misdemeanor (Fine up to $200)</span>
+                         <span class="punishment-badge mb text-black ml-2">Class B Misdemeanor (if bodily injury)</span>
+                    </div>
+                    <h4 class="font-semibold mt-4 text-sm">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>An operator approaches a stationary emergency, tow, or TxDOT vehicle.</li>
+                        <li>The stationary vehicle is displaying its emergency lights.</li>
+                        <li>The operator fails to either move over or slow down as required.</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-blue-50 rounded-md"><strong>Practical Example:</strong> On a three-lane highway, a driver sees a police car with lights on during a stop on the right shoulder. The driver stays in the right lane and passes at the posted 70 mph limit, committing an offense.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Reckless Driving - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.545.htm#545.401" target="_blank" class="text-blue-800 hover:underline">TC §545.401</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> A person commits an offense if the person drives a vehicle in a willful or wanton disregard for the safety of persons or property.</p>
+                    <div class="mt-3"><span class="punishment-badge mc text-black">Misdemeanor (Fine up to $200, up to 30 days jail, or both)</span></div>
+                    <h4 class="font-semibold mt-4 text-sm">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>A person drives a vehicle.</li>
+                        <li>They do so with a willful or wanton disregard for safety.</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-blue-50 rounded-md"><strong>Practical Example:</strong> An officer sees a driver weaving rapidly between lanes in heavy traffic at high speed, cutting off other drivers. This demonstrates a clear disregard for safety and constitutes Reckless Driving.</p>
+                </div>
+            </div>
+
+            <div id="equipment-inspection" class="tab-content space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">General Offense (Equipment) - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.547.htm#547.004" target="_blank" class="text-blue-800 hover:underline">TC §547.004</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> A person commits an offense...if the person operates or moves...a vehicle that is...not equipped in a manner that complies with the vehicle equipment standards and requirements of this chapter.</p>
+                    <div class="mt-3"><span class="punishment-badge mc text-black">Class C Misdemeanor</span></div>
+                    <h4 class="font-semibold mt-4 text-sm">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>A person operates a vehicle (or owner permits operation).</li>
+                        <li>The vehicle is on a public highway.</li>
+                        <li>The vehicle's equipment does not comply with Chapter 547.</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-blue-50 rounded-md"><strong>Practical Example:</strong> At night, an officer notices a vehicle with a non-functioning taillamp. The driver violates TC §547.322 (Taillamps Required) and can be cited under the general offense statute.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Child Passenger Safety Seat Systems - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.545.htm#545.412" target="_blank" class="text-blue-800 hover:underline">TC §545.412</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> A person commits an offense if the person operates a passenger vehicle, transports a child who is younger than eight years of age, unless the child is taller than four feet, nine inches, and does not keep the child secured during the operation of the vehicle in a child passenger safety seat system according to the manufacturer's instructions.</p>
+                    <div class="mt-3"><span class="punishment-badge mc text-black">Misdemeanor (Fine $25-$250)</span></div>
+                    <h4 class="font-semibold mt-4 text-sm">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>Operator transports a child in a passenger vehicle.</li>
+                        <li>The child is under 8 years old AND shorter than 4'9" (57 inches).</li>
+                        <li>The child is not secured in an appropriate child safety seat.</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-blue-50 rounded-md"><strong>Practical Example:</strong> An officer stops a vehicle and sees a 6-year-old child in the back seat secured only by an adult seat belt. The child is visibly shorter than 4'9". The driver has committed an offense because the child should be in a booster seat.</p>
+                </div>
+
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Safety Belts - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.545.htm#545.413" target="_blank" class="text-blue-800 hover:underline">TC §545.413</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> A person commits an offense if the person operates a passenger vehicle that is equipped with safety belts and allows a child who is younger than 17 years of age and who is not required to be secured in a child passenger safety seat system...to ride in the vehicle without requiring the child to be secured by a safety belt.</p>
+                    <div class="mt-3"><span class="punishment-badge mc text-black">Misdemeanor (Fine $100-$200)</span></div>
+                    <h4 class="font-semibold mt-4 text-sm">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>An operator allows a child under 17 to ride in the vehicle.</li>
+                        <li>The child is not otherwise required to be in a child safety seat.</li>
+                        <li>The child is not secured by a safety belt.</li>
+                        <li>(Note: It is also an offense for any person 15 or older in any seat to not wear a seatbelt).</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-blue-50 rounded-md"><strong>Practical Example:</strong> An officer sees a vehicle with a front seat passenger who is not wearing a seatbelt. The officer stops the car and identifies the passenger as being 19 years old. The passenger receives the citation. If the passenger had been 14, the driver would have received the citation.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Muffler Required - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.547.htm#547.604" target="_blank" class="text-blue-800 hover:underline">TC §547.604</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> A motor vehicle must be equipped with a muffler in good working condition that continually operates to prevent excessive or unusual noise...</p>
+                    <div class="mt-3"><span class="punishment-badge mc text-black">Class C Misdemeanor</span></div>
+                    <h4 class="font-semibold mt-4 text-sm">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>A person operates a motor vehicle.</li>
+                        <li>The vehicle does not have a muffler, or the muffler is defective.</li>
+                        <li>The vehicle produces excessive or unusual noise.</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-blue-50 rounded-md"><strong>Practical Example:</strong> An officer hears an extremely loud car approaching. As it passes, the officer can tell the noise is from a modified or absent exhaust system. The officer stops the vehicle and cites the driver for operating with a defective muffler.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Restrictions on Windows (Window Tint) - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.547.htm#547.613" target="_blank" class="text-blue-800 hover:underline">TC §547.613</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> A person commits an offense if the person operates a motor vehicle on which a material is attached to the windshield or a side or rear window that reduces the light transmission...below the standard...</p>
+                    <div class="mt-3"><span class="punishment-badge mc text-black">Class C Misdemeanor</span></div>
+                    <h4 class="font-semibold mt-4 text-sm">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>A person operates a motor vehicle.</li>
+                        <li>The vehicle has tint on front side windows with a light transmission value of less than 25%.</li>
+                        <li>Or, the windshield has tint below the AS-1 line, or tint that is red, amber, or blue.</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-blue-50 rounded-md"><strong>Practical Example:</strong> An officer cannot see inside a vehicle due to dark front windows. A stop and measurement with a tint meter reveals a light transmission of 15%. This is below the legal 25% limit, and the driver is cited.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Compulsory Inspection - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.548.htm#548.051" target="_blank" class="text-blue-800 hover:underline">TC Chapter 548</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> A person who operates a motor vehicle that is required to be registered in this state must have the vehicle inspected annually. The inspection must be done at an official inspection station. Operating a vehicle without a valid inspection is an offense.</p>
+                     <div class="mt-3"><span class="punishment-badge mc text-black">Misdemeanor (Fine up to $200)</span></div>
+                    <h4 class="font-semibold mt-4 text-sm">Key Concepts ("Two Steps, One Sticker"):</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>Vehicle inspection is still required annually.</li>
+                        <li>Proof of a passing inspection is required to renew vehicle registration.</li>
+                        <li>The windshield sticker is now only for registration, but it serves as proof of both valid registration and inspection.</li>
+                        <li>An officer can verify inspection status through the registration database.</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-blue-50 rounded-md"><strong>Practical Example:</strong> A vehicle's registration is expired. Since a valid inspection is required for registration, the vehicle is also, by extension, uninspected. The driver can be cited for expired registration, which covers the inspection violation.</p>
+                </div>
+            </div>
+
+            <div id="special-vehicles-peds" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Offenses for Not Wearing Protective Headgear (Motorcycle) - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.661.htm#661.003" target="_blank" class="text-blue-800 hover:underline">TC §661.003</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> An operator of a motorcycle or a passenger on a motorcycle commits an offense if the operator or passenger is not wearing protective headgear. Exceptions apply for persons over 21 who have completed a safety course or have adequate health insurance coverage.</p>
+                    <div class="mt-3"><span class="punishment-badge mc text-black">Misdemeanor (Fine $10-$50)</span></div>
+                    <h4 class="font-semibold mt-4 text-sm">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>A person operates or rides as a passenger on a motorcycle.</li>
+                        <li>The person is not wearing protective headgear (a helmet).</li>
+                        <li>The person does not meet an exception (under 21, no course, no insurance).</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-blue-50 rounded-md"><strong>Practical Example:</strong> An officer stops a motorcycle and the passenger, who appears to be about 18, is not wearing a helmet. Since the passenger is under 21, they are required to wear a helmet regardless of insurance or training. The passenger has committed an offense.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Motorcycle Operator Profiling Awareness</h2>
+                    <p class="text-sm">Peace officers should be aware of common misconceptions and stereotypes associated with motorcycle operators to ensure that enforcement actions are based on violations of the law, not appearance. "Violators" are defined by their actions, not how they look or what they ride.</p>
+                    <h4 class="font-semibold mt-4 text-sm">Common Misconceptions to Avoid:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>Assuming all sport bike riders are speeders.</li>
+                        <li>Believing all riders wearing club jackets ("colors") are "outlaw bikers" or gang members.</li>
+                        <li>Generalizing that bikers are troublemakers or have outstanding warrants.</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-blue-50 rounded-md"><strong>Best Practice:</strong> When conducting a traffic stop on a motorcycle, the reason for the stop must be a specific, identified violation of law. Use the standard 7-step violator contact, but for safety, consider having the operator remain on the motorcycle with the kickstand up. This keeps them occupied with balancing the bike and reduces the risk of sudden movements.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Rights and Duties (Bicycles) - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.551.htm#551.101" target="_blank" class="text-blue-800 hover:underline">TC §551.101</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> A person operating a bicycle has the rights and duties applicable to a driver operating a vehicle under this subtitle, unless a provision of this chapter alters a right or duty.</p>
+                    <h4 class="font-semibold mt-4 text-sm">Key Concepts:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>Bicyclists must obey all traffic laws, just like cars (e.g., stopping at stop signs, signaling turns).</li>
+                        <li>They must ride as near as practicable to the right curb or edge of the roadway.</li>
+                        <li>They may take the full lane when necessary for safety or to make a left turn.</li>
+                        <li>At night, a bicycle must have a white lamp on the front and a red reflector or red lamp on the rear.</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-blue-50 rounded-md"><strong>Practical Example:</strong> An officer observes a bicyclist ride through a red light without stopping. The officer can stop and cite the bicyclist for the traffic signal violation, just as they would a motorist.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Pedestrian Right-of-Way at Crosswalk - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.552.htm#552.003" target="_blank" class="text-blue-800 hover:underline">TC §552.003</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> An operator of a vehicle shall yield the right-of-way to a pedestrian crossing a roadway in a crosswalk if: (1) no traffic control signal is in place or in operation; and (2) the pedestrian is on the half of the roadway in which the vehicle is traveling or is approaching so closely from the other half... as to be in danger.</p>
+                    <div class="mt-3"><span class="punishment-badge mc text-black">Class C Misdemeanor</span></div>
+                    <h4 class="font-semibold mt-4 text-sm">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>A vehicle operator approaches a crosswalk with no traffic signal.</li>
+                        <li>A pedestrian is in the crosswalk on the operator's half of the road (or close to it).</li>
+                        <li>The operator fails to yield the right-of-way to the pedestrian.</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-blue-50 rounded-md"><strong>Practical Example:</strong> A driver approaching a marked crosswalk sees a pedestrian who has stepped off the curb. The driver continues without slowing, forcing the pedestrian to stop. The driver has failed to yield and can be cited.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Solicitation by Pedestrians - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.552.htm#552.007" target="_blank" class="text-blue-800 hover:underline">TC §552.007</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> A person may not stand in a roadway to solicit a ride, contribution, employment, or business from an occupant of a vehicle.</p>
+                    <div class="mt-3"><span class="punishment-badge mc text-black">Class C Misdemeanor</span></div>
+                    <h4 class="font-semibold mt-4 text-sm">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>A person is standing in the roadway.</li>
+                        <li>"Roadway" is the portion of the highway used for vehicular travel, not the shoulder.</li>
+                        <li>The person is soliciting something from someone in a car.</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-blue-50 rounded-md"><strong>Practical Example:</strong> A person walks between lanes of stopped traffic at a red light, asking for money. Because they are standing in the roadway to solicit, they are committing an offense.</p>
+                </div>
+            </div>
+
+            <div id="emergency-crash" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Permissible Conduct (Emergency Vehicles) - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.546.htm#546.001" target="_blank" class="text-blue-800 hover:underline">TC §546.001</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> When responding to an emergency call, the operator of an authorized emergency vehicle may: (1) park or stand...; (2) proceed past a red or stop signal or stop sign, after slowing as necessary for safe operation; (3) exceed a maximum speed limit...as long as the operator does not endanger life or property; and (4) disregard a regulation governing the direction of movement or turning...</p>
+                    <h4 class="font-semibold mt-4 text-sm">Key Concepts:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>This privilege applies ONLY when responding to a true emergency.</li>
+                        <li>The operator MUST use audible or visual signals (lights and siren) as required by TC §546.003.</li>
+                        <li>The operator still has a Duty of Care (TC §546.005) and can be held liable if they drive with reckless disregard for the safety of others.</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Collision Involving Personal Injury or Death (FSRA) - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.550.htm#550.021" target="_blank" class="text-blue-800 hover:underline">TC §550.021</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> The operator of a vehicle involved in a collision that results in injury to or death of a person shall immediately stop...and remain at the scene to give information and render aid.</p>
+                    <div class="mt-3">
+                         <span class="punishment-badge f2">2nd Degree Felony (if death)</span>
+                         <span class="punishment-badge f3 ml-2">3rd Degree Felony (if SBI)</span>
+                    </div>
+                    <h4 class="font-semibold mt-4 text-sm">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>An operator is involved in a vehicle collision resulting in injury or death.</li>
+                        <li>The operator fails to immediately stop and remain at the scene.</li>
+                        <li>The operator fails to render reasonable assistance.</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-blue-50 rounded-md"><strong>Practical Example:</strong> A driver strikes a pedestrian, causing serious injuries. The driver panics and speeds away without stopping to check on the victim or call for help. The driver has committed Failure to Stop and Render Aid, a 3rd Degree Felony.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Collision Involving Damage to Vehicle (FSGI) - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.550.htm#550.022" target="_blank" class="text-blue-800 hover:underline">TC §550.022</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> The operator of a vehicle involved in a collision resulting only in damage to a vehicle that is driven or attended by a person shall immediately stop...and remain to give information.</p>
+                    <div class="mt-3">
+                         <span class="punishment-badge mb text-black">Class B Misdemeanor (damage ≥ $200)</span>
+                         <span class="punishment-badge mc text-black ml-2">Class C Misdemeanor (damage < $200)</span>
+                    </div>
+                     <p class="text-sm mt-4 p-3 bg-blue-50 rounded-md"><strong>Practical Example:</strong> A driver backs into an occupied car, causing a large dent. The driver sees the other person but drives off without exchanging information. The driver has committed Failure to Stop and Give Information.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Crash Investigation & Scene Management</h2>
+                    <p class="text-sm">The primary duties of a peace officer at a crash scene are to secure the scene, render aid, and conduct an investigation. This includes managing traffic, interviewing parties, measuring the scene, collecting evidence, and completing the Texas Peace Officer's Crash Report (CR-3).</p>
+                    <h4 class="font-semibold mt-4 text-sm">The 5 Areas of a Work Zone (TIMS):</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>1. Advanced Warning Area:</strong> Alerts traffic to the incident ahead.</li>
+                        <li><strong>2. Transition Area:</strong> Moves traffic out of the path using cones/flares.</li>
+                        <li><strong>3. Buffer Area:</strong> Provides a safety space for responders.</li>
+                        <li><strong>4. Work Area:</strong> Where investigation, medical care, and recovery occur.</li>
+                        <li><strong>5. Termination Area:</strong> Allows traffic to return to normal.</li>
+                    </ul>
+                    <img src="https://i.imgur.com/v8tqJ1J.png" alt="Diagram of the 5 areas of a traffic incident work zone" class="mt-4 rounded-lg shadow-md mx-auto w-full max-w-md">
+                </div>
+            </div>
+
+            <div id="enforcement" class="tab-content space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Arrest Without Warrant Authorized - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.543.htm#543.001" target="_blank" class="text-blue-800 hover:underline">TC §543.001</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> Any peace officer may arrest without a warrant a person found committing a violation of a law regulating traffic. This grants officers the authority to make custodial arrests for any traffic violation, though departmental policy often dictates issuing citations for most minor offenses.</p>
+                     <h4 class="font-semibold mt-4 text-sm">Elements Checklist:</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>A peace officer.</li>
+                        <li>Finds a person.</li>
+                        <li>Committing a violation of the Transportation Code.</li>
+                     </ul>
+                     <p class="text-sm mt-4 p-3 bg-blue-50 rounded-md"><strong>Practical Example:</strong> An officer observes a driver run a stop sign. The officer has the authority to stop the vehicle and place the driver under arrest for the violation, even though it is a Class C misdemeanor normally resolved by citation.</p>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Promise to Appear; Release - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.543.htm#543.005" target="_blank" class="text-blue-800 hover:underline">TC §543.005</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> If an officer arrests a person for a violation of the Transportation Code punishable as a misdemeanor and does not take the person immediately before a magistrate, the person is released from custody after signing a written promise to appear in court. Refusing to sign the promise to appear can result in being taken to jail.</p>
+                     <h4 class="font-semibold mt-4 text-sm">Elements Checklist:</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>An officer arrests a person for a TC misdemeanor.</li>
+                        <li>The officer requests the person sign a citation (a promise to appear).</li>
+                        <li>If the person signs, they must be released.</li>
+                        <li>If the person refuses to sign, they can be taken into custody.</li>
+                     </ul>
+                     <p class="text-sm mt-4 p-3 bg-blue-50 rounded-md"><strong>Practical Example:</strong> After being stopped for speeding, a driver is issued a citation. The driver becomes argumentative and refuses to sign the ticket. The officer explains that signing is not an admission of guilt but a promise to appear. The driver still refuses. The officer can now lawfully take the driver into custody and transport them to jail.</p>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Implied Consent - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.011" target="_blank" class="text-blue-800 hover:underline">TC §724.011</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> If a person is arrested for an offense...while operating a motor vehicle in a public place while intoxicated, the person is deemed to have consented to submit to the taking of one or more specimens of the person's breath or blood for analysis...</p>
+                    <h4 class="font-semibold mt-4 text-sm">Key Concepts:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Consent is Implied:</strong> By driving on a public road, you have already consented to a test if lawfully arrested for DWI.</li>
+                        <li><strong>Right of Refusal:</strong> A person can still refuse to provide a specimen.</li>
+                        <li><strong>Consequences:</strong> Refusal results in an automatic driver's license suspension and can be used as evidence in court.</li>
+                        <li><strong>Mandatory Blood Draw:</strong> An officer must obtain a warrant for a blood specimen from a person who refuses, unless exigent circumstances exist. A mandatory specimen is required if the DWI arrest involves a crash with death or SBI.</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Offenses; Presumption (Privileged Parking) - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.681.htm#681.011" target="_blank" class="text-blue-800 hover:underline">TC §681.011</a></h2>
+                    <p class="text-sm"><strong>Legal Definition:</strong> A person commits an offense if the person parks a vehicle in a parking space or area designated specifically for persons with disabilities and the vehicle does not display a disabled parking placard or specialty license plates for persons with disabilities.</p>
+                     <div class="mt-3"><span class="punishment-badge mc text-black">Misdemeanor (Fine $500-$750)</span></div>
+                    <h4 class="font-semibold mt-4 text-sm">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>A person parks a vehicle in a designated disabled parking space.</li>
+                        <li>The space is properly marked with a sign.</li>
+                        <li>The vehicle does not display a valid disabled placard or license plate.</li>
+                        <li>It is also an offense to lend a placard to someone not entitled to use it.</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-blue-50 rounded-md"><strong>Practical Example:</strong> A driver pulls into a marked disabled parking spot at a grocery store to wait for a friend. The car has no disabled placard or plate. The driver has committed an offense and is subject to a significant fine and potential towing of their vehicle.</p>
+                </div>
+            </div>
+
+            <div id="knowledge-check" class="tab-content">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Knowledge Check</h2>
+                    <p class="mb-6 text-gray-600">Test your understanding of the material.</p>
+                    <div id="quiz-container" class="space-y-8"></div>
+                    <div class="mt-8 text-center">
+                        <button id="check-answers-btn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors">Check Answers</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="resources" class="tab-content">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Statutory & Organizational Resources</h2>
+                    <p class="mb-6 text-gray-600">Quick links to the laws and organizations referenced in this guide.</p>
+                    <div id="resources-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('#tabs button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                });
+            });
+
+            const quizData = [
+                { question: "1. A driver on a four-lane highway with a paved center median sees a school bus stopped on the opposite side of the highway with its red lights flashing. What must the driver do?", options: ["Stop before reaching the bus.", "Slow to 20 mph below the speed limit.", "Proceed without stopping.", "Change lanes to the far lane."], answer: "Proceed without stopping.", explanation: "Under TC §545.066, an operator on a highway with separate roadways is not required to stop for a school bus that is on a different roadway." },
+                { question: "2. An officer stops a vehicle and finds the 25-year-old driver's license is suspended. The driver has a previous conviction for DWLI and cannot provide proof of insurance. What is the most serious offense they have committed?", options: ["Class C Misdemeanor DWLI", "Class B Misdemeanor DWLI", "Class A Misdemeanor DWLI", "State Jail Felony"], answer: "Class B Misdemeanor DWLI", explanation: "Under TC §521.457, DWLI is enhanced to a Class B Misdemeanor if the person has a previous conviction for the same offense or was operating without financial responsibility at the time of the offense." },
+                { question: "3. While backing out of a parking spot, a driver hits an unoccupied, parked car, causing a small dent. The driver looks around, sees no one, and drives away. What offense has been committed?", options: ["Failure to Stop and Render Aid", "Collision Involving Damage to Vehicle (Class B)", "Duty on Striking Unattended Vehicle", "Reckless Driving"], answer: "Duty on Striking Unattended Vehicle", explanation: "TC §550.024 applies here. Since the vehicle was unattended, the driver had a duty to either locate the owner or leave a note with their information. Failing to do so is an offense." },
+                { question: "4. A driver is traveling 65 mph in the right lane of a highway. Ahead, a tow truck is on the right shoulder with its emergency lights flashing, assisting a disabled vehicle. The driver maintains speed and stays in the right lane. What should the driver have done?", options: ["Speed up to clear the area quickly.", "Honk to alert the tow truck operator.", "Vacate the lane closest to the tow truck or slow down to 45 mph.", "Stop and wait for the tow truck to finish."], answer: "Vacate the lane closest to the tow truck or slow down to 45 mph.", explanation: "The 'Move Over/Slow Down' law (TC §545.157) requires drivers to either move over a lane or slow down to 20 mph below the posted speed limit when passing stationary emergency or service vehicles with their lights on." },
+                { question: "5. A peace officer arrests a driver for DWI. The driver refuses to provide a breath specimen. This refusal results in an automatic driver's license suspension under what legal principle?", options: ["Reasonable Suspicion", "Probable Cause", "Implied Consent", "Exigent Circumstances"], answer: "Implied Consent", explanation: "Under TC §724.011 (Implied Consent), anyone who operates a motor vehicle on a public road in Texas is deemed to have consented to a breath or blood test upon a lawful DWI arrest. Refusing the test triggers an automatic administrative license suspension." },
+                { question: "6. What is the minimum light transmission (tint) percentage allowed on the front side windows of a passenger vehicle in Texas?", options: ["15%", "25%", "35%", "50%"], answer: "25%", explanation: "TC §547.613 specifies that the front side windows must have a light transmission value of at least 25%." },
+                { question: "7. Two vehicles accelerate rapidly from a stoplight, attempting to out-distance each other. What is the base-level offense?", options: ["Reckless Driving", "Speeding", "Class B Misdemeanor Racing on Highway", "Class C Misdemeanor Speed Exhibition"], answer: "Class B Misdemeanor Racing on Highway", explanation: "Under TC §545.420, participating in a race, defined as trying to outgain or outdistance another vehicle, is a Class B Misdemeanor at its base level." },
+                { question: "8. A driver involved in a crash that results in the death of another person flees the scene without stopping to help. What is the most serious offense committed?", options: ["Criminally Negligent Homicide", "Manslaughter", "2nd Degree Felony Failure to Stop and Render Aid", "3rd Degree Felony Failure to Stop and Render Aid"], answer: "2nd Degree Felony Failure to Stop and Render Aid", explanation: "TC §550.021 elevates the penalty for FSRA to a 2nd Degree Felony if the crash results in the death of a person." },
+                { question: "9. A person is walking in the middle of a street (not on the shoulder) asking drivers for money. What offense might they be committing?", options: ["Disorderly Conduct", "Obstructing Highway or Passageway", "Solicitation by Pedestrian", "No offense if traffic is stopped."], answer: "Solicitation by Pedestrian", explanation: "TC §552.007 prohibits a person from standing in a roadway to solicit a contribution from an occupant of a vehicle." },
+                { question: "10. An officer attempts to stop a vehicle for a traffic violation by turning on their lights and siren. The driver speeds up and refuses to stop. Under the Transportation Code, this is Fleeing or Attempting to Elude. What is the more serious, and more commonly charged, offense for this action under the Penal Code?", options: ["Resisting Arrest", "Interference with Public Duties", "Evading Arrest or Detention with a Vehicle", "Obstruction or Retaliation"], answer: "Evading Arrest or Detention with a Vehicle", explanation: "While TC §545.421 exists, the same conduct constitutes Evading Arrest under PC §38.04. When a vehicle is used, it is enhanced to a State Jail Felony, making it the more appropriate and serious charge." },
+                { question: "11. A driver is operating their vehicle in heavy fog at the posted speed limit of 55 mph. Visibility is less than 100 feet. Which law is the driver most likely violating?", options: ["TC 545.352 - Prima Facie Speed Limits", "TC 545.363 - Minimum Speed Regulations", "TC 545.351 - Maximum Speed Requirement (Basic Speed Law)", "No violation, they are driving the speed limit."], answer: "TC 545.351 - Maximum Speed Requirement (Basic Speed Law)", explanation: "The Basic Speed Law requires a driver to operate at a speed that is reasonable and prudent for the conditions. Driving 55 mph in heavy fog is not reasonable or prudent, even if it's the posted limit." },
+                { question: "12. A bicyclist is riding at night without a front white light. What is the legal requirement?", options: ["A white light on the front and a red reflector on the back.", "A red light on the front and a white light on the back.", "Reflectors on the pedals are sufficient.", "No lights are required if there are streetlights."], answer: "A white light on the front and a red reflector on the back.", explanation: "TC §551.104 requires a bicycle operated at nighttime to be equipped with a lamp on the front that emits a white light visible from at least 500 feet and a red reflector on the rear." },
+                { question: "13. A driver parks their car, which does not have a disabled placard, in a properly marked disabled parking space to run into a store for 'just a minute'. What is the minimum fine for this offense?", options: ["$175", "$200", "$500", "$1,250"], answer: "$500", explanation: "TC §681.011 sets the penalty for illegally parking in a disabled space with a fine of not less than $500 or more than $750 for a first offense." },
+                { question: "14. According to the TIMS model, the area of a crash scene where cones are used to guide traffic out of the path of the incident is called the:", options: ["Advanced Warning Area", "Buffer Area", "Work Area", "Transition Area"], answer: "Transition Area", explanation: "The transition area is specifically for moving traffic out of its normal path and around the incident scene." },
+                { question: "15. What is the prima facie speed limit in an urban district unless otherwise posted?", options: ["25 mph", "30 mph", "35 mph", "45 mph"], answer: "30 mph", explanation: "TC §545.352 establishes that the prima facie speed limit is 30 miles per hour in an urban district on a street other than an alley." },
+                { question: "16. A driver's vehicle has a defective muffler that makes an extremely loud noise. This violates which statute?", options: ["TC 547.603 - Windshield Wipers", "TC 547.604 - Muffler Required", "TC 547.605 - Emission System", "PC 42.01 - Disorderly Conduct"], answer: "TC 547.604 - Muffler Required", explanation: "TC §547.604 requires a vehicle to have a muffler in good working condition to prevent excessive or unusual noise." },
+                { question: "17. An officer responding to an emergency call with lights and siren active approaches a red light. According to TC Chapter 546, what must the officer do?", options: ["Stop and wait for the light to turn green.", "Proceed through without stopping.", "Slow down as necessary for safe operation, then proceed.", "Turn off the siren before entering the intersection."], answer: "Slow down as necessary for safe operation, then proceed.", explanation: "TC §546.001 allows an emergency vehicle operator to proceed past a red signal, but only after slowing as necessary for safe operation. They still have a duty of care." },
+                { question: "18. A person is cited for expired registration. The sticker on the plate expired on October 31st. Today is November 8th. Assuming no weekends or holidays, has an offense occurred?", options: ["No, there is a 30-day grace period.", "Yes, an offense occurred on November 1st.", "No, the officer must wait until November 10th.", "Yes, the five-working-day grace period has passed."], answer: "Yes, the five-working-day grace period has passed.", explanation: "TC §502.407 provides a grace period of five working days after registration expires before an offense is committed. By the 8th of the month, this period has been exceeded." },
+                { question: "19. A driver is involved in a collision that only results in damage to the other attended vehicle, estimated at $500. The driver leaves without exchanging information. What is the offense level?", options: ["Class C Misdemeanor", "Class B Misdemeanor", "Class A Misdemeanor", "No offense if nobody was hurt."], answer: "Class B Misdemeanor", explanation: "Under TC §550.022, FSGI is a Class B Misdemeanor if the damage to all vehicles is $200 or more." },
+                { question: "20. An officer arrests a person for a Class C traffic violation. The person refuses to sign the promise to appear on the citation. What can the officer do?", options: ["Let the person go with a warning.", "Mail the citation to their address.", "Take the person before a magistrate.", "Void the citation."], answer: "Take the person before a magistrate.", explanation: "Refusing to sign the promise to appear under TC §543.005 negates the condition for release. The officer's proper course of action is to take the violator into custody and present them to a magistrate." },
+                { question: "21. A 16-year-old is driving with their 14-year-old sibling in the back seat. Neither is wearing a seatbelt. Who gets the citation?", options: ["The 16-year-old driver.", "The 14-year-old passenger.", "Both the driver and the passenger.", "The vehicle's registered owner."], answer: "The 16-year-old driver.", explanation: "Under TC §545.413, the operator is responsible for ensuring all passengers younger than 17 are properly secured by a safety belt." },
+                { question: "22. An officer pulls over a vehicle that has no front license plate. The driver produces a valid temporary tag in the rear window. Is this a violation?", options: ["No, temporary tags are only required on the rear.", "Yes, a temporary tag must be displayed on both the front and rear.", "No, as long as the temporary tag is valid.", "Yes, temporary tags are not legal for highway use."], answer: "No, temporary tags are only required on the rear.", explanation: "Texas law generally only requires a single, rear-displayed temporary tag. The requirement for two plates applies to the permanent metal license plates." },
+                { question: "23. A 7-year-old child who is 4'5\" tall is riding in the back seat secured by a regular adult seatbelt. Has an offense occurred?", options: ["No, the child is over 6 years old.", "Yes, the child is under 8 and shorter than 4'9\".", "No, the adult seatbelt is sufficient.", "Yes, all children under 13 must be in a car seat."], answer: "Yes, the child is under 8 and shorter than 4'9\".", explanation: "TC §545.412 requires a child to be in a child passenger safety seat system if they are younger than 8 years of age, UNLESS they are taller than 4'9\". This child meets both criteria requiring a booster seat." },
+                { question: "24. The 'Basic Speed Law' means that you can be cited for speeding even if you are driving at or below the posted speed limit.", options: ["True", "False"], answer: "True", explanation: "True. TC §545.351 requires a speed that is reasonable and prudent for the conditions. If conditions are hazardous (rain, ice, fog), driving the speed limit may be unreasonable and thus a violation." },
+                { question: "25. A motorcyclist who is 22 years old and has completed a motorcycle safety course is not wearing a helmet. Have they committed an offense?", options: ["Yes, all riders must wear a helmet.", "No, they are exempt.", "Only if they don't have health insurance covering motorcycle injuries.", "Only if they are carrying a passenger."], answer: "Only if they don't have health insurance covering motorcycle injuries.", explanation: "TC §661.003 provides an exception for riders 21 or older who have EITHER completed a safety course OR have the required health insurance. They must meet one of these to be exempt." },
+                { question: "26. A driver at a red light is holding their phone and typing a text message. What offense has occurred?", options: ["Reckless Driving", "Distracted Driving", "Use of Wireless Communication Device for Electronic Messaging", "No offense if the vehicle is stopped."], answer: "Use of Wireless Communication Device for Electronic Messaging", explanation: "TC §545.4251 prohibits an operator from reading, writing, or sending an electronic message while operating a motor vehicle unless the vehicle is stopped. The law still applies at a stoplight." },
+                { question: "27. In the TIMS model, which area provides a safety space for victims and responders?", options: ["Transition Area", "Buffer Area", "Work Area", "Termination Area"], answer: "Buffer Area", explanation: "The buffer area is an empty space between the transition area and the work area, designed to protect responders from errant vehicles." },
+                { question: "28. An officer has the authority to arrest a violator for any traffic offense, even a Class C misdemeanor. Which statute grants this authority?", options: ["CCP 14.01", "PC 38.04", "TC 543.001", "TC 521.457"], answer: "TC 543.001", explanation: "TC §543.001 specifically authorizes a peace officer to arrest without a warrant a person found committing a violation of a law regulating traffic." },
+                { question: "29. A driver is involved in a minor crash with an occupied vehicle causing $150 of damage. They drive off without stopping. What is the offense level?", options: ["Class C Misdemeanor FSGI", "Class B Misdemeanor FSGI", "No offense, damage is under $200", "Civil matter only"], answer: "Class C Misdemeanor FSGI", explanation: "Under TC §550.022, FSGI is a Class C Misdemeanor if the damage to all vehicles is less than $200." },
+                { question: "30. A pedestrian crosses the street in the middle of the block, not at a crosswalk, forcing an approaching car to slam on its brakes. The pedestrian has violated the law by failing to...", options: ["Use the sidewalk.", "Yield the right-of-way to vehicles.", "Wait for a walk signal.", "Walk on the left side of the road."], answer: "Yield the right-of-way to vehicles.", explanation: "TC §552.005 requires a pedestrian crossing a roadway at any point other than within a marked crosswalk to yield the right-of-way to all vehicles on the roadway." }
+            ];
+
+            const quizContainer = document.getElementById('quiz-container');
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'quiz-question';
+                let optionsHtml = q.options.map(option => `
+                    <label class="block"><input type="radio" name="q${index}" value="${option}" class="mr-2">${option}</label>
+                `).join('');
+                questionDiv.innerHTML = `<p class="font-semibold mb-2">${q.question}</p><div class="space-y-2">${optionsHtml}</div><div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>`;
+                quizContainer.appendChild(questionDiv);
+            });
+
+            document.getElementById('check-answers-btn').addEventListener('click', () => {
+                quizData.forEach((q, index) => {
+                    const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                    const feedback = document.querySelectorAll('.feedback')[index];
+                    feedback.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+                    if (selected && selected.value === q.answer) {
+                        feedback.textContent = `Correct! ${q.explanation}`;
+                        feedback.classList.add('bg-green-100', 'text-green-800');
+                    } else {
+                        feedback.textContent = `Incorrect. The correct answer is "${q.answer}". ${q.explanation}`;
+                        feedback.classList.add('bg-red-100', 'text-red-800');
+                    }
+                });
+            });
+
+            const resources = [
+                { name: "TC Ch. 472 - Miscellaneous Provisions (Warning Signs)", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.472.htm"},
+                { name: "TC Ch. 502 - Registration of Vehicles", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.502.htm" },
+                { name: "TC Ch. 504 - License Plates", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.504.htm" },
+                { name: "TC Ch. 521 - Driver's Licenses", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.521.htm" },
+                { name: "TC Ch. 543 - Arrest and Charging Procedure", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.543.htm" },
+                { name: "TC Ch. 544 - Traffic Signs, Signals, and Markings", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.544.htm"},
+                { name: "TC Ch. 545 - Operation and Movement of Vehicles", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.545.htm" },
+                { name: "TC Ch. 546 - Operation of Authorized Emergency Vehicles", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.546.htm" },
+                { name: "TC Ch. 547 - Vehicle Equipment", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.547.htm" },
+                { name: "TC Ch. 548 - Compulsory Inspection", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.548.htm" },
+                { name: "TC Ch. 550 - Accidents and Reports", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.550.htm" },
+                { name: "TC Ch. 551 - Bicycles, Mopeds, and Play Vehicles", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.551.htm" },
+                { name: "TC Ch. 552 - Pedestrians", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.552.htm" },
+                { name: "TC Ch. 601 - Financial Responsibility", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.601.htm" },
+                { name: "TC Ch. 661 - Protective Headgear (Motorcycles)", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.661.htm" },
+                { name: "TC Ch. 681 - Privileged Parking", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.681.htm" },
+                { name: "TC Ch. 724 - Implied Consent", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm" },
+                { name: "Penal Code §38.04 - Evading Arrest or Detention", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.38.htm#38.04" }
+            ];
+            const resourcesList = document.getElementById('resources-list');
+            resources.sort((a, b) => a.name.localeCompare(b.name));
+            resources.forEach(res => {
+                const link = document.createElement('a');
+                link.href = res.url;
+                link.target = '_blank';
+                link.className = 'text-blue-800 hover:underline';
+                link.textContent = res.name;
+                resourcesList.appendChild(link);
+            });
+        });
+    </script>
+</body>
+</html>
+

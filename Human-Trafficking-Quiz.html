@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCOLE Human Trafficking Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+        .answer-option {
+            transition: all 0.2s ease-in-out;
+        }
+        .answer-option:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .correct {
+            background-color: #D1FAE5 !important;
+            border-color: #10B981 !important;
+            color: #065F46 !important;
+        }
+        .incorrect {
+            background-color: #FEE2E2 !important;
+            border-color: #EF4444 !important;
+            color: #991B1B !important;
+        }
+        .progress-bar-fill {
+            transition: width 0.3s ease-in-out;
+        }
+        .review-correct {
+            color: #059669;
+        }
+        .review-incorrect {
+            color: #e11d48;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="quiz-app" class="quiz-container p-4 sm:p-8">
+        
+        <!-- Quiz Start Screen -->
+        <div id="start-screen" class="text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Human Trafficking Quiz</h1>
+            <p class="text-lg text-gray-600 mb-8">An exhaustive quiz based on the "Basic Peace Officer Course | Chapter 21" handout to test your knowledge on human trafficking.</p>
+            <button id="start-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Start Quiz</button>
+        </div>
+
+        <!-- Quiz Interface -->
+        <div id="quiz-screen" class="hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold">Question <span id="question-number"></span> of <span id="total-questions"></span></h2>
+                <div id="timer" class="text-lg font-mono bg-gray-200 px-3 py-1 rounded-md">00:00</div>
+            </div>
+            
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+                <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full progress-bar-fill" style="width: 0%"></div>
+            </div>
+
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+                <p id="question-text" class="text-xl font-medium mb-8 min-h-[6rem]"></p>
+                <div id="answer-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Answer options will be injected here by JS -->
+                </div>
+            </div>
+             <div id="rationale-box" class="hidden mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h3 class="font-bold text-blue-800">Rationale:</h3>
+                <p id="rationale-text" class="text-blue-700"></p>
+                <p class="text-sm text-blue-600 mt-2">Source: <span id="rationale-source"></span></p>
+            </div>
+            <button id="next-btn" class="hidden w-full bg-blue-600 text-white font-bold py-3 px-8 rounded-lg mt-8 hover:bg-blue-700 transition-colors shadow-md">Next Question</button>
+        </div>
+
+        <!-- Quiz Results Screen -->
+        <div id="results-screen" class="hidden text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">Quiz Complete!</h1>
+            <p class="text-lg text-gray-600 mb-6">Here's how you did:</p>
+            <div class="flex flex-col sm:flex-row justify-around items-center my-8 gap-8 sm:gap-0">
+                <div>
+                    <p id="score-percentage" class="text-5xl font-bold text-green-600">0%</p>
+                    <p class="text-gray-500">Score</p>
+                </div>
+                 <div>
+                    <p class="text-5xl font-bold text-blue-600"><span id="correct-answers">0</span>/<span id="total-answered">0</span></p>
+                    <p class="text-gray-500">Correct Answers</p>
+                </div>
+                 <div>
+                    <p id="final-time" class="text-5xl font-bold text-gray-700">00:00</p>
+                    <p class="text-gray-500">Time Taken</p>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="restart-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Try Again</button>
+                <button id="review-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md">Review Answers</button>
+            </div>
+        </div>
+        
+        <!-- Review Screen -->
+        <div id="review-screen" class="hidden bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6">Answer Review</h1>
+            <div id="review-container" class="space-y-6">
+                <!-- Review content will be injected here -->
+            </div>
+            <button id="back-to-results-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md mt-8">Back to Results</button>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            { question: "Human trafficking is described as a new modern-day form of what?", options: ["Indentured servitude", "Slavery", "Contract labor", "Apprenticeship"], answer: "Slavery", rationale: "Human trafficking is essentially a form of slave labor or involuntary servitude and is described as a new modern-day form of slavery.", page: "Page 1" },
+            { question: "Why is human trafficking considered more profitable than crimes like drug or arms smuggling?", options: ["The startup costs are lower", "Humans can be sold over and over again", "The penalties are less severe", "It is legal in some countries"], answer: "Humans can be sold over and over again", rationale: "Unlike drugs and arms which are usually sold for a one-time profit, humans can be resold to different customers numerous times for an exponential amount of profit.", page: "Page 1" },
+            { question: "According to the UN Office on Drugs and Crime, human trafficking is the second most profitable international crime, behind what?", options: ["Arms trafficking", "Illicit firearms trading", "Drug trafficking", "Counterfeiting"], answer: "Drug trafficking", rationale: "Recent research suggests that trafficking has passed illicit trading of firearms and is right behind drug trafficking in profitability.", page: "Page 2" },
+            { question: "The Palermo Protocol defines trafficking as the recruitment, transportation, transfer, harboring or receipt of persons for what purpose?", options: ["Employment", "Immigration", "Exploitation", "Education"], answer: "Exploitation", rationale: "The Palermo Protocol defines trafficking with the purpose of exploitation, which includes sexual exploitation, forced labor, slavery, or removal of organs.", page: "Page 2" },
+            { question: "Besides sexual exploitation, forced labor, and slavery, the Palermo Protocol's definition of exploitation also includes what?", options: ["Illegal adoption", "Forced marriage", "The removal of organs", "Political coercion"], answer: "The removal of organs", rationale: "The definition of exploitation in the Palermo Protocol shall include, at a minimum, sexual exploitation, forced labor, slavery or similar practices, servitude, or the removal of organs.", page: "Page 2" },
+            { question: "What are the two primary components of human trafficking categorized by the TVPA of 2000?", options: ["Sex trafficking and drug trafficking", "Labor trafficking and arms trafficking", "Sex trafficking and labor trafficking", "Domestic and international trafficking"], answer: "Sex trafficking and labor trafficking", rationale: "The Victims of Trafficking and Violence Protection Act of 2000 (TVPA) categorizes human trafficking into two primary components: sex trafficking and labor trafficking.", page: "Page 2" },
+            { question: "Which term is NOT one of the three vital components of both sex and labor trafficking?", options: ["Force", "Fraud", "Coercion", "Consent"], answer: "Consent", rationale: "Both sex-trafficking and labor trafficking contain three vital components: force, fraud, and coercion.", page: "Pages 2-3" },
+            { question: "In the context of human trafficking, what does the term 'fraud' often involve?", options: ["Physical violence", "Threats of legal action", "False promises of jobs or opportunities", "Withholding documents"], answer: "False promises of jobs or opportunities", rationale: "In the context of human trafficking, fraud often involves false promises of jobs or other opportunities.", page: "Page 3" },
+            { question: "What is the key difference between human trafficking and human smuggling?", options: ["Trafficking is always international", "Smuggling involves exploitation", "Trafficking is a crime against a person, while smuggling is a crime against a country", "Smuggling always involves children"], answer: "Trafficking is a crime against a person, while smuggling is a crime against a country", rationale: "Human trafficking is a crime against a person, involving exploitation. Human smuggling is a crime against a country, involving voluntary illegal entry.", page: "Page 6" },
+            { question: "What term refers to a range of crimes involving the sexual abuse of a child for financial benefit?", options: ["Child Sex Tourism", "Commercial Sexual Exploitation of Children (CSEC)", "Familial Trafficking", "Child Labor"], answer: "Commercial Sexual Exploitation of Children (CSEC)", rationale: "The Commercial Sexual Exploitation of Children (CSEC) refers to a range of crimes and activities involving the sexual abuse or exploitation of a child for the financial benefit of any person.", page: "Page 4" },
+            { question: "Under Texas law, child sex trafficking occurs when a person knowingly traffics a child under what age?", options: ["16", "17", "18", "21"], answer: "18", rationale: "Child sex trafficking under Texas law occurs when a person knowingly traffics a child under the age of 18.", page: "Page 4" },
+            { question: "According to the Palermo Protocol, if force, fraud, or coercion has been used, what is the relevance of the victim's consent?", options: ["It is the most important factor", "It is irrelevant", "It reduces the trafficker's sentence", "It must be proven in court"], answer: "It is irrelevant", rationale: "The protocol states that 'The consent of a victim of trafficking in persons to the intended exploitation...shall be irrelevant where any of the means set forth in subparagraph (a) have been used.'", page: "Page 5" },
+            { question: "What is 'sex tourism'?", options: ["Legal prostitution in designated areas", "Traveling to a foreign location for sexual gratification due to lax laws", "Educational tours about the dangers of the sex industry", "A form of labor trafficking in the tourism sector"], answer: "Traveling to a foreign location for sexual gratification due to lax laws", rationale: "Sex tourism occurs when people travel to a foreign location for sexual gratification, usually because that country does not have the capability, or is unwilling to, enforce trafficking or prostitution laws.", page: "Page 6" },
+            { question: "What is 'familial trafficking'?", options: ["Trafficking organized by international families", "When a victim is exploited by a parent, guardian, or other family member", "A form of labor trafficking within a single family business", "When multiple family members are trafficked together"], answer: "When a victim is exploited by a parent, guardian, or other family member", rationale: "Some child sex trafficking victims are trafficked or exploited by a parent, a legal guardian, or other family member—called familial trafficking.", page: "Page 7" },
+            { question: "What is the term for the situation where a trafficker creates a fraudulent debt that a victim must work to pay off?", options: ["Involuntary Servitude", "Debt Bondage", "Peonage", "Forced Labor"], answer: "Debt Bondage", rationale: "The traffickers create a situation of debt bondage to keep the person under subjugation where the victim must perpetually perform some type of service to 'earn' their freedom.", page: "Page 7" },
+            { question: "Which region is described as being a primary origin for victims of human trafficking?", options: ["Western Europe", "North America", "Australia", "Africa"], answer: "Africa", rationale: "Africa is primarily an origin region for victims of human trafficking. Victims primarily come from Nigeria, Benin, Ghana, and Morocco.", page: "Page 8" },
+            { question: "The United States, Canada, and Australia are ranked as top ______ countries in global trafficking flows.", options: ["Origin", "Transit", "Destination", "Source"], answer: "Destination", rationale: "The United States, Canada, Australia, and New Zealand rank as top destination countries for trafficking victims.", page: "Page 9" },
+            { question: "What are 'push factors' that contribute to human trafficking in countries of origin?", options: ["Disposable income and affluence", "Strong law enforcement", "Economic and political instability", "High demand for labor"], answer: "Economic and political instability", rationale: "Economic and political instability are push factors found in countries of origin which reduces the effort required to recruit victims.", page: "Page 9" },
+            { question: "What sociological term describes the dire economic circumstances that most women face, making them suitable targets for deceptive employment ventures?", options: ["Economic marginalization", "Feminization of poverty", "Globalization", "Routine activities theory"], answer: "Feminization of poverty", rationale: "Economic marginalization also contributes to what sociologists refer to as the feminization of poverty which is the dire economic circumstances that most women face.", page: "Page 10" },
+            { question: "According to Routine Activities Theory, who are the 'capable guardians' that can help deter human trafficking?", options: ["Only police officers", "Only federal agents", "The police and the community", "The victims themselves"], answer: "The police and the community", rationale: "Felson and Cohen believe that it is essential for not only the police, but also the community, to help identify potential offenders...to act as capable guardians.", page: "Page 11" },
+            { question: "Worldwide, who are believed to be the majority of human trafficking victims?", options: ["Adult men", "Adult women and children", "Elderly individuals", "Teenage boys"], answer: "Adult women and children", rationale: "Worldwide, it is believed that most victims are adult women and children, primarily girls younger than 17 years of age.", page: "Page 11" },
+            { question: "Which is NOT listed as a significant risk factor for becoming a victim of human trafficking?", options: ["Recent migration or relocation", "High level of education", "Substance use", "Involvement with the child welfare system"], answer: "High level of education", rationale: "Significant risk factors include recent migration or relocation, substance use, mental health concerns, involvement with the child welfare system and being a runaway or homeless youth. Low level of education is a common characteristic.", page: "Page 12" },
+            { question: "According to the text, what is a principle component that predisposes individuals to trafficking schemes?", options: ["A desire for adventure", "A history of crime", "Poverty", "A high level of education"], answer: "Poverty", rationale: "Poverty has been identified to be a principle component that makes victims vulnerable to human trafficking schemes.", page: "Page 12" },
+            { question: "What is the most common manner in which victims fall prey to trafficking, as described by Farr (2005)?", options: ["Recruitment-by-force", "Recruitment-by-abduction", "Recruitment-by-persuasion", "Recruitment-by-threat"], answer: "Recruitment-by-persuasion", rationale: "Farr (2005) refers to this as recruitment-by-persuasion and it is the most common manner in which victims fall prey to this crime.", page: "Page 14" },
+            { question: "What is a primary method traffickers use to establish control over victims during the exploitation phase?", options: ["Providing regular payment", "Confiscating passports and identification documents", "Offering educational opportunities", "Allowing free contact with family"], answer: "Confiscating passports and identification documents", rationale: "Normally, it is immediately upon arrival at the destination country...that passports, identification, and travel documents are typically confiscated.", page: "Pages 14-15" },
+            { question: "Which of the following is an example of psychological manipulation used by traffickers?", options: ["Paying victims a fair wage", "Telling victims police will arrest them due to their illegal status", "Allowing victims to leave the premises unsupervised", "Helping victims contact their families"], answer: "Telling victims police will arrest them due to their illegal status", rationale: "Lying to victims or brainwashing them is another control mechanism. Victims are reminded that due to their illegal status, police authorities will not help but rather arrest them.", page: "Page 17" },
+            { question: "What is a common reason that complicates the identification of trafficking victims?", options: ["Victims always self-identify to police", "Victims are always foreign nationals", "Consent can be a debatable point for some observers", "Trafficking only occurs in other countries"], answer: "Consent can be a debatable point for some observers", rationale: "One of the most debatable points in defining situations of human trafficking is whether or not consent should be a factor in determining who should be labeled a victim as opposed to a willing participant.", page: "Page 18" },
+            { question: "Which of the following is listed by the Blue Campaign as a key indicator for identifying a trafficking victim?", options: ["Appears well-connected to their community", "Has had a sudden or dramatic change in behavior", "Regularly attends school", "Has freedom of movement"], answer: "Has had a sudden or dramatic change in behavior", rationale: "The Blue Campaign recommends considering if the person has had a sudden or dramatic change in behavior as a key indicator.", page: "Page 20" },
+            { question: "What is a potential red flag for child sexual exploitation?", options: ["Child has their own ID", "Child uses trafficking-related terms like 'The Life'", "Child is with a related adult", "Child has a single cell phone"], answer: "Child uses trafficking-related terms like 'The Life'", rationale: "Possible red flags include the child using trafficking-related terms like 'Trick,' 'The Life,' or 'The Game'.", page: "Page 20" },
+            { question: "What is kinesic interviewing?", options: ["An interview conducted under hypnosis", "An interview focused on a victim's financial history", "Analyzing observable physical behaviors to ascertain emotional state", "A questioning technique used only for traffickers"], answer: "Analyzing observable physical behaviors to ascertain emotional state", rationale: "Kinesic interviewing focuses on observable outward physical behaviors of the body in order to ascertain the person's current emotional state and the role the body plays in communicating that information.", page: "Page 23" },
+            { question: "The ability of a trafficker to carry out retributive threats to a victim's family members is a good indicator of what?", options: ["A small 'mom-and-pop' operation", "A lone offender", "Organized criminal activity", "A new trafficking scheme"], answer: "Organized criminal activity", rationale: "The ability to carry out retributive threats to family members is a good indicator of the existence of organized criminal activity.", page: "Page 25" },
+            { question: "What is a 'recruiter' in a trafficking operation?", options: ["The person who transports victims", "The person who buys the victims' services", "The person who finds and brings victims into the industry", "The person who provides security"], answer: "The person who finds and brings victims into the industry", rationale: "A Recruiter is a person who finds and brings victims into the industry; usually by deception, but sometimes by force.", page: "Page 26" },
+            { question: "Which trafficking role is responsible for creating false documentation for victims?", options: ["Transporter", "Employer", "Enforcer", "Document thief/forger"], answer: "Document thief/forger", rationale: "A document thief/forger is a person who arranges for and obtains legitimate or creates false documentation for travel to another country.", page: "Page 26" },
+            { question: "In sex trafficking terminology, what does 'The Life' or 'The Game' refer to?", options: ["A police operation", "The commercial sexual exploitation or the sex industry", "A victim's escape plan", "A trafficker's code of conduct"], answer: "The commercial sexual exploitation or the sex industry", rationale: "The Life/The Game - Commercial sexual exploitation or the sex industry.", page: "Page 27" },
+            { question: "In trafficking terminology, who is a 'Bottom Bitch/Girl'?", options: ["The newest victim in a stable", "A victim who refuses to cooperate", "A victim appointed by the trafficker to manage others", "A female trafficker"], answer: "A victim appointed by the trafficker to manage others", rationale: "Bottom Bitch/Bottom Girl - The person in a stable of victims who is appointed by the trafficker to manage, recruit, and supervise others.", page: "Page 27" },
+            { question: "What does the trafficking term 'Quota' refer to?", options: ["The number of victims a trafficker controls", "The amount a victim must earn for their trafficker", "The maximum sentence for a trafficking crime", "The number of clients a brothel can have"], answer: "The amount a victim must earn for their trafficker", rationale: "Quota - The amount a victim must earn for their trafficker each night.", page: "Page 27" },
+            { question: "What does a trafficker use 'Branding' for?", options: ["To pay the victim", "To identify a victim's home country", "To show ownership of a victim", "To track a victim's earnings"], answer: "To show ownership of a victim", rationale: "Branded - When a trafficker tattoos a victim to show ownership.", page: "Page 27" },
+            { question: "What is the term for a street location for commercial sex?", options: ["The Stable", "The Track/Stroll", "The Turnout", "The Trappin'"], answer: "The Track/Stroll", rationale: "Track/Stroll - A street location for commercial sex.", page: "Page 27" },
+            { question: "What is a key best practice when conducting investigations of human trafficking?", options: ["Working in isolation", "Being reactive instead of proactive", "Collaborating with other law enforcement agencies", "Ignoring victim service providers"], answer: "Collaborating with other law enforcement agencies", rationale: "Some of the best practices in conducting investigations of human trafficking are based on several elements, including collaboration with other law enforcement agencies.", page: "Page 27" },
+            { question: "Which federal agency's critical investigative arm, HSI, is a vital asset in combating human trafficking?", options: ["Department of Justice (DOJ)", "Department of Labor (DOL)", "Department of Homeland Security (DHS)", "Federal Bureau of Investigation (FBI)"], answer: "Department of Homeland Security (DHS)", rationale: "Homeland Security Investigations (HSI), the critical investigative arm of DHS is a vital asset in combating criminal organizations illegally exploiting America's travel, trade, financial and immigration systems.", page: "Page 28" },
+            { question: "Which federal agency's Wage and Hour Division (WHD) enforces laws regarding minimum wage and child labor in trafficking cases?", options: ["Department of Justice", "Department of Homeland Security", "U.S. Department of Labor", "Department of State"], answer: "U.S. Department of Labor", rationale: "The U.S. Department of Labor's Wage and Hour Division (WHD) may have to be contacted to administer and enforce U.S. labor laws or the Fair Labor Standards Act (FLSA).", page: "Page 29" },
+            { question: "What did the Trafficking Victims Protection Act of 2000 (TVPA) create to allow victims to remain in the U.S.?", options: ["U-Visas", "Green Cards", "T-Visas", "Asylum status"], answer: "T-Visas", rationale: "The Trafficking Victims Protection Act of 2000 created a new class of visas, known as T-visas, that allows trafficking victims to remain in the United States.", page: "Page 29" },
+            { question: "What should a memorandum of understanding (MOU) between agencies responding to trafficking accomplish?", options: ["Duplicate existing victim services", "Ensure a clear understanding of roles and responsibilities", "Limit collaboration to federal agencies only", "Focus solely on prosecution, not victim services"], answer: "Ensure a clear understanding of roles and responsibilities", rationale: "The MOU should: Ensure a clear understanding of roles, responsibilities, processes, and protocols for identifying and serving victims of human trafficking.", page: "Page 29" },
+            { question: "According to Maslow's hierarchy of needs, an individual who feels physically safe and comfortable is more likely to do what?", options: ["Become aggressive", "Disclose much more information", "Refuse to cooperate", "Feel threatened"], answer: "Disclose much more information", rationale: "An individual who feels physically safe and comfortable may disclose much more information than an individual who feels threatened.", page: "Page 31" },
+            { question: "What is the primary goal of the first interview with a trafficking victim?", options: ["To get all the details for prosecution", "To get a second interview", "To have the victim sign a confession", "To record a video statement"], answer: "To get a second interview", rationale: "The goal of the first interview is to get a second interview. As the interviews progress, they can get more and more detailed, always allowing the victim to control the progress.", page: "Page 32" },
+            { question: "What is Stockholm syndrome in the context of human trafficking?", options: ["A physical illness contracted by victims", "A legal defense for traffickers", "A false emotional or psychological attachment to their trafficker", "A desire to return to their home country"], answer: "A false emotional or psychological attachment to their trafficker", rationale: "Some victims may develop Stockholm syndrome feeling a false emotional or psychological attachment to their trafficker and do not believe they are victims.", page: "Page 32" },
+            { question: "What is a Children's Advocacy Center (CAC)?", options: ["A long-term shelter for child victims", "A school for at-risk youth", "A place for a multi-disciplinary team to coordinate child abuse investigations", "A prosecution office specifically for crimes against children"], answer: "A place for a multi-disciplinary team to coordinate child abuse investigations", rationale: "A CAC provides a safe environment where law enforcement, child protective services, prosecution, medical and mental health professionals may share information and develop effective, coordinated strategies.", page: "Pages 33-34" },
+            { question: "The TVPA of 2000 is described as a three-level approach to combat trafficking. What are the three levels?", options: ["Investigation, Prosecution, Incarceration", "Prevention, Protection, Prosecution", "Rescue, Rehabilitation, Reintegration", "Identification, Intervention, Isolation"], answer: "Prevention, Protection, Prosecution", rationale: "The TVPA is a three-level approach to combat trafficking: Prevention, Protection, and Prosecution.", page: "Pages 36-37" },
+            { question: "In the annual Trafficking in Persons Report, what does a 'Tier 1' designation mean for a country?", options: ["It does not comply with minimum standards", "It is on a watch list for special scrutiny", "It fully complies with the TVPA minimum standards", "It is making significant efforts to comply"], answer: "It fully complies with the TVPA minimum standards", rationale: "Tier 1 Countries are those that fully comply with the TVPA minimum standards for the elimination of trafficking.", page: "Page 37" },
+            { question: "Under the TVPA, for a minor (under 18) involved in a commercial sex act, what does NOT need to be proven?", options: ["The minor's age", "Force, fraud, or coercion", "The trafficker's identity", "Financial benefit"], answer: "Force, fraud, or coercion", rationale: "When a minor is trafficked for a commercial sex act, there is no need to prove force, fraud, or coercion.", page: "Page 38" },
+            { question: "The TVPRA added human trafficking to the list of offenses covered under which federal statute?", options: ["The Fair Labor Standards Act (FLSA)", "The Victim and Witness Protection Act", "The Federal Racketeer Influenced and Corrupt Organizations Act (RICO)", "The Immigration and Nationality Act"], answer: "The Federal Racketeer Influenced and Corrupt Organizations Act (RICO)", rationale: "The TVPRA adds human trafficking to the list of racketeering offenses covered under the Federal Racketeer Influenced and Corrupt Organizations Act (RICO Statute).", page: "Page 39" },
+            { question: "A key provision of the 2003 TVPA reauthorization was creating a federal civil cause of action for what purpose?", options: ["For law enforcement to sue traffickers", "For victims to sue their traffickers", "For states to recover investigation costs", "For traffickers to sue each other"], answer: "For victims to sue their traffickers", rationale: "The 2003 Reauthorization creates a federal civil cause of action for trafficking victims to sue their traffickers.", page: "Page 43" },
+            { question: "The 2008 TVPA reauthorization expanded criminal jurisdiction to U.S. citizens who do what?", options: ["Knowingly purchase goods made with forced labor", "Fail to report suspected trafficking", "Travel abroad to commit trafficking crimes", "Employ undocumented workers"], answer: "Travel abroad to commit trafficking crimes", rationale: "The 2008 reauthorization expands federal criminal jurisdiction to U.S. citizens and permanent residents who travel abroad to commit, attempt to commit, or conspire to commit human trafficking crimes.", page: "Page 44" },
+            { question: "What Texas Penal Code chapter deals specifically with Trafficking of Persons?", options: ["Chapter 20A", "Chapter 43", "Chapter 56A", "Chapter 261"], answer: "Chapter 20A", rationale: "The Texas Statute on Human Trafficking is Title 5, Offenses Against the Person, Chapter 20A. Trafficking of Persons.", page: "Page 45" },
+            { question: "Why is it important for law enforcement to establish cooperative relations with victim service providers?", options: ["Providers can make arrests", "Providers are indispensable for establishing rapport and providing necessary services", "Providers can fund the investigation", "Providers are required to testify in court"], answer: "Providers are indispensable for establishing rapport and providing necessary services", rationale: "Human trafficking cases...must be handled in association with victim service providers...they are indispensable to the success of an investigation and prosecution because they are usually the first to establish rapport with victims.", page: "Page 46" },
+            { question: "What is a 'safe house' in the context of victim services?", options: ["A standard homeless shelter", "A temporary holding cell at a police station", "A preferable housing option in a confidential location", "A victim's original home with added security"], answer: "A preferable housing option in a confidential location", rationale: "A safe house is a preferable housing option because they are operated by service providers and located in a confidential or secret location.", page: "Page 47" },
+            { question: "What is the purpose of the Form I-914, Supplement B, in the T-visa application process?", options: ["It is the victim's personal narrative", "It is a request for financial aid", "A declaration by a law enforcement officer that the applicant is a victim", "A request to deport the trafficker"], answer: "A declaration by a law enforcement officer that the applicant is a victim", rationale: "This supplemental form is a written declaration (or certification) by a federal officer that victims have indeed suffered a severe form of trafficking and that statements made in the personal narrative are factual.", page: "Page 41" },
+            { question: "According to the text, a Public Information Officer (PIO) misinforms the public by equating what with fighting human trafficking?", options: ["Conducting awareness campaigns", "Arresting prostitutes", "Collaborating with NGOs", "Prosecuting traffickers"], answer: "Arresting prostitutes", rationale: "If a Public Information Officer (PIO) tells the public that they have arrested 50 prostitutes and are therefore fighting human trafficking, the public is misinformed that prostitution is human trafficking.", page: "Page 49" },
+            { question: "What is a major challenge in human trafficking investigations identified by the National Institute of Justice?", options: ["Lack of willing prosecutors", "Too much media attention", "Difficulty gaining the victim's trust", "Traffickers confessing too easily"], answer: "Difficulty gaining the victim's trust", rationale: "Officers, from local, state, and federal agencies, were asked to identify their greatest challenge. The first listed was 'Difficulty gaining the victim's trust'.", page: "Page 51" },
+            { question: "In the 'Blush Club' case study, how did TABC penalize the club for the trafficking incident?", options: ["The club was fined heavily", "The club's owner was arrested", "It cancelled the club's liquor license", "The club was forced to close for a week"], answer: "It cancelled the club's liquor license", rationale: "According to BCSO, the club lost its liquor license due to the human trafficking charges. This marked the first permit to be cancelled by TABC regarding human trafficking.", page: "Page 53" }
+        ];
+
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const reviewScreen = document.getElementById('review-screen');
+
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const reviewBtn = document.getElementById('review-btn');
+        const backToResultsBtn = document.getElementById('back-to-results-btn');
+        
+        const questionNumberEl = document.getElementById('question-number');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const progressBar = document.getElementById('progress-bar');
+        const questionTextEl = document.getElementById('question-text');
+        const answerOptionsEl = document.getElementById('answer-options');
+        const rationaleBox = document.getElementById('rationale-box');
+        const rationaleText = document.getElementById('rationale-text');
+        const rationaleSource = document.getElementById('rationale-source');
+        
+        const scorePercentageEl = document.getElementById('score-percentage');
+        const correctAnswersEl = document.getElementById('correct-answers');
+        const totalAnsweredEl = document.getElementById('total-answered');
+        const finalTimeEl = document.getElementById('final-time');
+        const timerEl = document.getElementById('timer');
+        const reviewContainer = document.getElementById('review-container');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timerInterval;
+        let secondsElapsed = 0;
+        let userAnswers = [];
+        
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        startBtn.addEventListener('click', startQuiz);
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', startQuiz);
+        reviewBtn.addEventListener('click', showReview);
+        backToResultsBtn.addEventListener('click', () => {
+            reviewScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+        });
+
+        function startTimer() {
+            secondsElapsed = 0;
+            timerEl.textContent = '00:00';
+            timerInterval = setInterval(() => {
+                secondsElapsed++;
+                const minutes = Math.floor(secondsElapsed / 60).toString().padStart(2, '0');
+                const seconds = (secondsElapsed % 60).toString().padStart(2, '0');
+                timerEl.textContent = `${minutes}:${seconds}`;
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function startQuiz() {
+            shuffleArray(quizData);
+            quizData.forEach(q => shuffleArray(q.options));
+
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            startScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            nextBtn.classList.add('hidden');
+            startTimer();
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            rationaleBox.classList.add('hidden');
+            answerOptionsEl.innerHTML = '';
+            const currentQuestion = quizData[currentQuestionIndex];
+            
+            questionNumberEl.textContent = currentQuestionIndex + 1;
+            totalQuestionsEl.textContent = quizData.length;
+            questionTextEl.textContent = currentQuestion.question;
+
+            const progress = ((currentQuestionIndex) / quizData.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('answer-option', 'w-full', 'p-4', 'text-left', 'bg-white', 'border-2', 'border-gray-300', 'rounded-lg', 'hover:bg-gray-50', 'hover:border-blue-500');
+                button.addEventListener('click', () => selectAnswer(button, option, currentQuestion));
+                answerOptionsEl.appendChild(button);
+            });
+        }
+
+        function selectAnswer(button, selectedOption, currentQuestion) {
+            const { answer, rationale, page } = currentQuestion;
+            userAnswers[currentQuestionIndex] = selectedOption;
+
+            const buttons = answerOptionsEl.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === answer) {
+                    btn.classList.add('correct');
+                }
+            });
+
+            if (selectedOption === answer) {
+                score++;
+                button.classList.add('correct');
+            } else {
+                button.classList.add('incorrect');
+            }
+
+            rationaleText.textContent = rationale;
+            rationaleSource.textContent = page;
+            rationaleBox.classList.remove('hidden');
+            nextBtn.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                nextBtn.classList.add('hidden');
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            stopTimer();
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            scorePercentageEl.textContent = `${percentage}%`;
+            correctAnswersEl.textContent = score;
+            totalAnsweredEl.textContent = quizData.length;
+            finalTimeEl.textContent = timerEl.textContent;
+            
+            // Ensure progress bar is full at the end
+            progressBar.style.width = `100%`;
+        }
+
+        function showReview() {
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.remove('hidden');
+            reviewContainer.innerHTML = '';
+
+            quizData.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === question.answer;
+
+                const reviewItem = document.createElement('div');
+                reviewItem.classList.add('border', 'p-4', 'rounded-lg');
+                reviewItem.classList.add(isCorrect ? 'bg-green-50/50 border-green-200' : 'bg-red-50/50 border-red-200');
+
+                let userAnswerHTML = '';
+                if (isCorrect) {
+                    userAnswerHTML = `<p>Your answer: <span class="font-semibold review-correct">${userAnswer} (Correct)</span></p>`;
+                } else {
+                    userAnswerHTML = `
+                        <p>Your answer: <span class="font-semibold review-incorrect">${userAnswer ? userAnswer : 'Not answered'} (Incorrect)</span></p>
+                        <p>Correct answer: <span class="font-semibold review-correct">${question.answer}</span></p>
+                    `;
+                }
+
+                reviewItem.innerHTML = `
+                    <p class="font-bold mb-2">${index + 1}. ${question.question}</p>
+                    ${userAnswerHTML}
+                    <p class="text-sm text-gray-600 mt-2"><em><strong>Rationale:</strong> ${question.rationale} (Source: ${question.page})</em></p>
+                `;
+                reviewContainer.appendChild(reviewItem);
+            });
+        }
+
+    </script>
+</body>
+</html>
+

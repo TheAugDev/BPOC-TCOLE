@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Guide: Victims of Crime</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --header-bg: #1f2937;
+            --bg-color: #f3f4f6;
+            --tab-active-bg: #4f46e5; /* Indigo for this guide */
+            --tab-active-text: #ffffff;
+            --card-bg: #ffffff;
+            --text-color: #111827;
+            --link-color: #3730a3;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://rsms.me/inter/inter.css');
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab.active {
+            background-color: var(--tab-active-bg);
+            color: var(--tab-active-text);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tab {
+            transition: all 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-gray-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">
+                <i class="fas fa-hand-holding-hand mr-2"></i>Victims of Crime
+            </h1>
+            <p class="text-sm text-gray-300">BPOC Chapter 20 | TCOLE Preparation</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-6">
+        <div class="mb-6 bg-white rounded-lg shadow-md overflow-x-auto">
+            <nav id="tabs" class="flex flex-row space-x-1 p-2">
+                <button data-tab="crisis-reaction" class="tab active flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-indigo-100">
+                    <i class="fas fa-heart-pulse mr-2"></i> <span class="hidden md:inline">Crisis Reaction</span>
+                </button>
+                <button data-tab="trauma-recovery" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-indigo-100">
+                    <i class="fas fa-person-running mr-2"></i> <span class="hidden md:inline">Trauma & Recovery</span>
+                </button>
+                <button data-tab="officer-response" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-indigo-100">
+                    <i class="fas fa-user-shield mr-2"></i> <span class="hidden md:inline">Officer Response</span>
+                </button>
+                <button data-tab="death-notification" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-indigo-100">
+                    <i class="fas fa-person-circle-exclamation mr-2"></i> <span class="hidden md:inline">Death Notification</span>
+                </button>
+                 <button data-tab="victims-rights" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-indigo-100">
+                    <i class="fas fa-gavel mr-2"></i> <span class="hidden md:inline">Victims' Rights</span>
+                </button>
+                <button data-tab="knowledge-check" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-indigo-100">
+                    <i class="fas fa-question-circle mr-2"></i> <span class="hidden md:inline">Knowledge Check</span>
+                </button>
+                <button data-tab="resources" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-indigo-100">
+                    <i class="fas fa-link mr-2"></i> <span class="hidden md:inline">Resources</span>
+                </button>
+            </nav>
+        </div>
+
+        <div id="tab-contents">
+            <div id="crisis-reaction" class="tab-content active space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Elements of a Crisis Reaction</h2>
+                    <p class="text-sm"><strong>Trauma</strong> is a disordered psychic or behavioral state resulting from severe mental or emotional stress or physical injury. The <strong>crisis reaction</strong> is the normal human response to trauma. It follows a predictable pattern and includes physical and psychological components.</p>
+                    <p class="text-sm mt-4 p-3 bg-indigo-50 rounded-md"><strong>Practical Example:</strong> An officer responds to a violent aggravated assault on a public street. The victim may be experiencing physical shock ("frozen fright"), a racing heart from the "fight-or-flight" response, and be in the psychological stage of Shock, Disbelief, and Denial as officers arrive. Understanding these reactions helps the officer interact effectively.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Physical Response</h2>
+                    <p class="text-sm mb-2">Based on animal instincts, the physical response includes physical shock, disorientation, and numbness, often called "frozen fright."</p>
+                    <h4 class="font-semibold mt-2 text-sm">"Fight-or-Flight" Reaction Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>Adrenaline pumps through the body.</li>
+                        <li>Body may relieve itself of excess materials (e.g., ingested food).</li>
+                        <li>Physical senses may become very acute while others "shut down."</li>
+                        <li>Heart rate increases.</li>
+                        <li>Hyperventilation, sweating, etc.</li>
+                        <li>Physical arousal leads to eventual <strong>exhaustion</strong>.</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Psychological Response Stages</h2>
+                    <h4 class="font-semibold text-sm">Stage 1: Shock, Disbelief, and Denial</h4>
+                    <p class="text-sm text-gray-700 mb-2">A defense mechanism to protect from the full impact of the event. The person truly believes it didn't happen or wasn't as bad as it was.</p>
+                    <h4 class="font-semibold text-sm">Stage 2: Cataclysm of Emotions</h4>
+                    <p class="text-sm text-gray-700 mb-2">An emotional roller coaster including anger/rage, fear/terror, grief/sorrow, confusion/frustration, guilt/self-blame, violation/vulnerability, and shame/humiliation.</p>
+                    <h4 class="font-semibold text-sm">Stage 3: Reconstruction of Equilibrium</h4>
+                    <p class="text-sm text-gray-700">Emotions eventually become balanced as the person integrates the experience.</p>
+                    <h4 class="font-semibold mt-4 text-sm">Additional Psychological Responses Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700 grid grid-cols-1 md:grid-cols-2 gap-x-4">
+                        <li>Slowed thinking</li>
+                        <li>Fearful thoughts</li>
+                        <li>Memory problems</li>
+                        <li>Distressing dreams</li>
+                        <li>Blaming</li>
+                        <li>Illogical thinking</li>
+                        <li>Flashbacks of previous trauma</li>
+                        <li>Intrusive thoughts</li>
+                        <li>Poor judgment</li>
+                        <li>Difficulty making decisions</li>
+                    </ul>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Behavioral Response</h2>
+                    <h4 class="font-semibold mt-2 text-sm">Behavioral Response Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700 grid grid-cols-1 md:grid-cols-2 gap-x-4">
+                        <li>Crying spells</li>
+                        <li>Extreme hyperactivity</li>
+                        <li>Change in activity level</li>
+                        <li>Withdrawal</li>
+                        <li>Increase/decrease in appetite, sleep, or sex drive</li>
+                        <li>Increased smoking, drug, and/or alcohol use</li>
+                        <li>Startles easily</li>
+                        <li>Conflicts with others</li>
+                        <li>Change in hygiene and/or self-care</li>
+                        <li>Change in social patterns/communication</li>
+                        <li>Significant increase/decrease in productivity</li>
+                        <li>Avoiding reminders of the event</li>
+                        <li>Inability to stop focusing on what occurred</li>
+                        <li>Getting immersed in recovery-related tasks</li>
+                    </ul>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">The Range of the Crisis Reaction</h2>
+                    <p class="text-sm">A victim's response can encompass a wide range of feelings and symptoms.</p>
+                    <h4 class="font-semibold mt-2 text-sm">Full Range Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700 grid grid-cols-1 md:grid-cols-2 gap-x-4">
+                        <li>Shock</li>
+                        <li>Depression and loneliness</li>
+                        <li>Panic</li>
+                        <li>Hostility and resentment</li>
+                        <li>Hope</li>
+                        <li>Emotion</li>
+                        <li>Physical symptoms of distress</li>
+                        <li>Guilt</li>
+                        <li>Inability to resume normal activities</li>
+                        <li>Affirming reality</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="trauma-recovery" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">The Ripple Effect of Victimization</h2>
+                    <p class="text-sm">The impact of crime spreads beyond the immediate victim.</p>
+                    <h4 class="font-semibold mt-2 text-sm">Progression Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Immediate Victim:</strong> The person the crime was committed against.</li>
+                        <li><strong>Secondary Victims:</strong> Family and friends of the immediate victim.</li>
+                        <li><strong>Service Providers:</strong> EMS, police, and other responders who are affected.</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Trauma and Associated Losses</h2>
+                    <p class="text-sm">Trauma is accompanied by a multitude of losses, leading to grief and bereavement.</p>
+                    <h4 class="font-semibold mt-2 text-sm">Common Losses Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>Control over one's life</li>
+                        <li>Sense of fairness or justice</li>
+                        <li>A sense of immortality and invulnerability</li>
+                        <li>Trust in God or in other people</li>
+                        <li>Personally significant property, self, or loved ones</li>
+                        <li>Future</li>
+                    </ul>
+                    <h4 class="font-semibold mt-4 text-sm">Trauma and Regression</h4>
+                    <p class="text-sm">Trauma can be so overwhelming it causes a person to revert to childlike behaviors, both mentally and physically. For example: feeling "little" or weak, wanting "mommy" or "daddy," singing nursery rhymes, assuming a fetal position, or calling an officer "mommy" or "daddy."</p>
+                     <p class="text-sm mt-4 p-3 bg-indigo-50 rounded-md"><strong>Practical Example:</strong> A detective interviews a victim of an aggravated robbery 48 hours after the event. The victim is emotional and may express feelings of great loss (e.g., loss of safety, trust). They may display signs of hostility or resentment (part of the crisis reaction range) and feel that their entire outlook on the world has changed.</p>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Recovery from Immediate Trauma</h2>
+                     <p class="text-sm">Recovery is often affected by several factors. While many can recover with informal support from friends and peers, outside intervention can be useful.</p>
+                    <h4 class="font-semibold mt-2 text-sm">Factors Affecting Recovery Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>Severity of crisis reaction</li>
+                        <li>Ability to understand what happened in retrospect</li>
+                        <li>Stability of victim/survivor equilibrium after the event</li>
+                        <li>Supportive environment</li>
+                        <li>Validation of the experience (e.g., acknowledging their feelings are natural and understandable)</li>
+                    </ul>
+                    <p class="text-sm mt-2"><strong>Intensity Continuum:</strong> The intensity of the reaction varies based on crime-specific details, victim-specific factors, and cultural differences.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Recovery Issues and Long-Term Reactions</h2>
+                    <p class="text-sm">Recovery involves working through several key issues. Many victims continue to experience reactions in response to "trigger events," though the intensity usually decreases over time.</p>
+                    <h4 class="font-semibold mt-2 text-sm">Recovery Issues Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>Getting control of the event in the victim's mind</li>
+                        <li>Working out an understanding of the event and, as needed, a redefinition of values</li>
+                        <li>Re-establishing a new equilibrium/life</li>
+                        <li>Re-establishing trust</li>
+                        <li>Re-establishing a future</li>
+                        <li>Re-establishing meaning</li>
+                    </ul>
+                    <h4 class="font-semibold mt-4 text-sm">Common "Trigger Events" Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>Identification of the assailant</li>
+                        <li>Sensing something similar to the trauma (sight, sound, smell, taste, touch)</li>
+                        <li>"Anniversaries" of the event</li>
+                        <li>Proximity of holidays or significant life events</li>
+                        <li>Hearings, trials, appeals or other critical phases of the criminal justice proceeding</li>
+                        <li>Media articles about a similar event</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Post-Traumatic Stress Disorder (PTSD)</h2>
+                     <p class="text-sm">A disorder experienced by many survivors of severely traumatic events like combat, rape, or disasters. It involves re-living the event, avoiding reminders, and symptoms of physiological hyper-arousal. About half of patients recover within a few months, while others face years of incapacity.</p>
+                    <h4 class="font-semibold mt-2 text-sm">Key Criteria for Diagnosis (DSM-V) Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>The Event:</strong> Exposure to an event involving actual or threatened death/serious injury with a response of intense fear, horror, or helplessness.</li>
+                        <li><strong>Re-experiencing (1+):</strong> Intrusive thoughts/images, distressing dreams, flashbacks, or intense psychological/physiological reactions to cues.</li>
+                        <li><strong>Avoidance/Numbing (3+):</strong> Avoiding thoughts/feelings/places related to the trauma, inability to recall an important feature of the event, loss of interest, feeling detached, restricted emotions, or feeling one's life will be brief.</li>
+                        <li><strong>Hyper-arousal (2+):</strong> Insomnia, irritability/angry outbursts, poor concentration, excessive vigilance, or increased startle response.</li>
+                        <li><strong>Duration/Impairment:</strong> Symptoms last longer than one month and cause clinically important distress or impairment in work, social, or personal functioning.</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-indigo-50 rounded-md"><strong>Practical Example:</strong> The symptoms of PTSD can help explain the behavior of a battered person. Their "persistent avoidance of stimuli" can be seen as an advanced form of denial—a survival mechanism focused on getting through each day. Hysterical reactions can be related to "persistent symptoms of increased arousal," such as hypervigilance or an exaggerated startle response.</p>
+                </div>
+            </div>
+
+            <div id="officer-response" class="tab-content space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Phases of a Victim's Reaction</h2>
+                    <h4 class="font-semibold text-sm">1. Impact</h4>
+                    <p class="text-sm text-gray-700 mb-2">Occurs immediately after the crime. Victims feel shock, disbelief, vulnerability, and helplessness. They may not be able to eat or sleep.</p>
+                    <h4 class="font-semibold text-sm">2. Recoil</h4>
+                    <p class="text-sm text-gray-700 mb-2">Victims attempt to adapt and reintegrate. They experience a wide variety of emotions like guilt, fear, anger, self-pity, and sadness. Some deny these feelings.</p>
+                    <h4 class="font-semibold text-sm">3. Reorganization</h4>
+                    <p class="text-sm text-gray-700">After a period of time, feelings of fear and rage diminish. The victim becomes more normalized and puts the experience in perspective, committing energy to living in the present.</p>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Trauma-Informed Investigations</h2>
+                    <p class="text-sm">A victim-centered, collaborative approach to understand the impact of trauma, reduce re-traumatization, and enhance healing. It's based on the "4 R's" and six key principles.</p>
+                    <h4 class="font-semibold mt-2 text-sm">The "4 R's" Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Realize</strong> the prevalence of trauma and understand its effects.</li>
+                        <li><strong>Recognize</strong> the signs and symptoms (e.g., exhaustion, confusion, numbness, dissociation, inappropriate laughter, hysteria, blunt affect).</li>
+                        <li><strong>Respond</strong> by applying trauma-informed principles in language, behaviors, and policies.</li>
+                        <li><strong>Resist re-traumatization</strong> during interactions.</li>
+                    </ul>
+                     <h4 class="font-semibold mt-4 text-sm">Six Key Principles Checklist:</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Safety:</strong> Victim feels physically, emotionally, and psychologically safe.</li>
+                        <li><strong>Trustworthiness and Transparency:</strong> Develop trust and be open.</li>
+                        <li><strong>Peer support:</strong> Support victims to aid in recovery.</li>
+                        <li><strong>Collaboration and mutuality:</strong> Partner with victims and share power.</li>
+                        <li><strong>Empowerment, voice, and choice:</strong> Allow victims to share in decision-making.</li>
+                        <li><strong>Cultural, historical, and gender issues:</strong> Be responsive to cultural needs and free of bias/stereotypes.</li>
+                    </ul>
+                     <p class="text-sm mt-4 p-3 bg-indigo-50 rounded-md"><strong>Practical Example:</strong> A detective interviews a victim of an acquaintance/date rape sexual assault. The officer must remain professional and sensitive, understanding that the victim's calm demeanor may be a trauma response (e.g., numbness, dissociation). Using a trauma-informed approach—like asking open-ended questions and giving the victim control over the interview pace—is crucial for building trust and gathering information effectively.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">How to Help Victims: Effective Response</h2>
+                     <h4 class="font-semibold mt-2 text-sm">Officer Actions Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                         <li>Assure victims their reactions are natural and understandable.</li>
+                         <li>Recognize "frozen fright" or disassociation.</li>
+                         <li>Understand victims may deny or minimize the impact of the assault.</li>
+                         <li>Be aware that victims may experience physical pains (fatigue, muscle tension, illness) as a result of the trauma.</li>
+                         <li>Note that victims may become overly fearful and/or hypervigilant.</li>
+                         <li>Contact a local victim advocate.</li>
+                         <li>Communicate empathy and allow victims to vent to build rapport and cooperation.</li>
+                         <li>Help victims regain a sense of control (e.g., ask if they need you to call someone).</li>
+                         <li>Establish a team effort ("we are going to review this information together").</li>
+                         <li>Consider cultural issues (e.g., lack of eye contact may not be disrespect).</li>
+                         <li>Make appropriate notifications and arrangements for victims with specific physical or mental disabilities.</li>
+                     </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Effective Interviewing Techniques</h2>
+                    <p class="text-sm">Use a victim-centered, trauma-informed approach for initial interviews.</p>
+                    <h4 class="font-semibold mt-2 text-sm">Interviewing Guidelines Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Reassure:</strong> State that it's okay not to know all the answers and that they can provide details later. This alleviates the urge to fill in memory gaps.</li>
+                        <li><strong>Use Categorical Interviewing:</strong> Allow victims to share fragmented memories as they remember them, rather than forcing a strict chronological timeline.</li>
+                        <li><strong>Ask Open-Ended Questions:</strong> e.g., "What are you able to tell me about your experience?" or "What can't you forget?"</li>
+                        <li><strong>Ask Non-Leading Questions:</strong> e.g., "You mentioned a gun. Tell me more about what you can remember about that."</li>
+                        <li><strong>Avoid "Why" Questions:</strong> Instead of "Why didn't you leave?", say "Tell me about the conditions that prohibited you from leaving." Explain why you need information (e.g., "There could be evidence on your clothes. Are those the clothes you had on?").</li>
+                        <li><strong>Don't Interrupt:</strong> Let the victim finish speaking. Take notes and ask for clarification after.</li>
+                        <li><strong>Focus on What They Remember:</strong> Build on the details they are able to recall.</li>
+                        <li><strong>Give Control and Choice:</strong> Allow the victim to take breaks and decide where to begin.</li>
+                        <li><strong>Use Active Listening:</strong> Give undivided attention without judgment. Do not fill in memory gaps for the victim.</li>
+                        <li><strong>Be Patient:</strong> Give the victim time to process the trauma during the interview.</li>
+                    </ul>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Avoiding Secondary Victimization</h2>
+                    <p class="text-sm">Long-term stress reactions can be worsened by the negative actions of others, known as a "secondary assault" or "secondary injury."</p>
+                    <h4 class="font-semibold mt-2 text-sm">Potential Sources of Secondary Victimization Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700 grid grid-cols-1 md:grid-cols-2 gap-x-4">
+                        <li>The criminal justice system</li>
+                        <li>The media</li>
+                        <li>Family, friends, or acquaintances</li>
+                        <li>Clergy</li>
+                        <li>Hospital and emergency-room personnel</li>
+                        <li>Health and mental health professionals</li>
+                        <li>Social service workers</li>
+                        <li>Victim service workers</li>
+                        <li>Schools or educators</li>
+                    </ul>
+                    <h4 class="font-semibold mt-4 text-sm">Economic Impact Checklist:</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>Medical care</li>
+                        <li>Lost earnings</li>
+                        <li>Property loss/damage</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="death-notification" class="tab-content">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Recommended Procedures for Death Notification</h2>
+                    <p class="text-sm">Properly notifying next-of-kin is a critical and sensitive law enforcement duty.</p>
+                    <h4 class="font-semibold mt-2 text-sm">Notification Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700 grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
+                        <li>Notify as soon as the deceased's identity has been established.</li>
+                        <li>Get all the medical information possible about the person(s) to be informed.</li>
+                        <li><strong>Go in person. Do not call.</strong></li>
+                        <li>Have at least one officer in uniform.</li>
+                        <li>Talk about your feelings with your partner beforehand.</li>
+                        <li>If a child answers the door, request to speak to their parents.</li>
+                        <li>Present your credentials and ask to come inside.</li>
+                        <li>Sit down. Don't be stiff and formal.</li>
+                        <li>Convey the information simply and directly.</li>
+                        <li>Ask parents if they want to tell the children or if they want you to.</li>
+                        <li>Don't discount their feelings or yours.</li>
+                        <li>Be prepared for the bereaved to go into shock.</li>
+                        <li>Empathize with the survivors in their grief.</li>
+                        <li>Answer questions honestly.</li>
+                        <li>Provide information without jeopardizing a criminal investigation.</li>
+                        <li>Offer to make calls for them.</li>
+                        <li>Inform survivors it might be necessary for them to identify the deceased.</li>
+                        <li>Explain why an autopsy is necessary and how to obtain a copy of the report.</li>
+                        <li>Tell hospital personnel what information the family has been given.</li>
+                        <li>Inform survivors that law enforcement might need to question them later.</li>
+                        <li><strong>Do not leave the survivor(s) alone.</strong></li>
+                        <li>Stay with the survivor(s) if they wish and help with decisions.</li>
+                        <li>Provide the survivor(s) with the officers' names and telephone numbers.</li>
+                        <li>Contact appropriate agencies in other jurisdictions to notify additional surviving family members.</li>
+                        <li>Preserve and label the package containing the deceased's clothing and personal effects.</li>
+                        <li>Allow hospitals adequate time to prepare the body for identification/viewing.</li>
+                        <li>Provide survivors with sufficient time with the deceased.</li>
+                        <li>Talk to the media only if the family has given permission.</li>
+                        <li>Give the survivor(s) an information sheet with pertinent information.</li>
+                        <li>Make a follow-up call the next day.</li>
+                        <li>Let the survivors know you care.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="victims-rights" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Legal Basis for Victims' Rights</h2>
+                    <p class="text-sm">Several Texas laws outline the rights of crime victims and the responsibilities of law enforcement.</p>
+                    <h4 class="font-semibold mt-2 text-sm">Key Statutes Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Rights of Crime Victims:</strong> <a href="https://statutes.capitol.texas.gov/Docs/CN/htm/CN.1.htm#1.30" target="_blank" class="text-indigo-700 hover:underline">Texas Constitution Article 1, Section 30</a></li>
+                        <li><strong>General Rights:</strong> <a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.56A.htm#56A.051" target="_blank" class="text-indigo-700 hover:underline">Code of Criminal Procedure Art. 56A.051</a></li>
+                        <li><strong>Duties re: Victims of Sexual Assault:</strong> <a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.56A.htm#56A.403" target="_blank" class="text-indigo-700 hover:underline">Code of Criminal Procedure Art. 56A.403</a></li>
+                        <li><strong>Victim's Rights (Juvenile):</strong> <a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.57.htm#57.002" target="_blank" class="text-indigo-700 hover:underline">Family Code Sec. 57.002</a></li>
+                        <li><strong>Victim's Right to Privacy:</strong> <a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.56A.htm#56A.101" target="_blank" class="text-indigo-700 hover:underline">Code of Criminal Procedure Art. 56A.101</a></li>
+                        <li><strong>Confidentiality of Sex Offense Victims' Info:</strong> <a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.58.htm" target="_blank" class="text-indigo-700 hover:underline">Code of Criminal Procedure Art. 58</a></li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Victim Liaisons & Advocates</h2>
+                    <p class="text-sm">The law provides for specific roles to assist victims through the criminal justice process.</p>
+                     <h4 class="font-semibold mt-2 text-sm">Key Roles Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Victim Assistance Coordinator:</strong> A person designated by a prosecutor's office to ensure victims receive their rights. (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.56A.htm#56A.201" target="_blank" class="text-indigo-700 hover:underline">CCP Art. 56A.201</a>)</li>
+                        <li><strong>Presence of Advocate during Exam:</strong> A victim of sexual assault has the right to have an advocate present during a forensic medical exam. (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.56A.htm#56A.351" target="_blank" class="text-indigo-700 hover:underline">CCP Art. 56A.351</a>)</li>
+                        <li><strong>Presence of Advocate during Interview:</strong> A victim of sexual assault also has the right to have an advocate present during law enforcement interviews. (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.56A.htm#56A.3515" target="_blank" class="text-indigo-700 hover:underline">CCP Art. 56A.3515</a>)</li>
+                    </ul>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Written Notice Requirements</h2>
+                    <p class="text-sm">Law enforcement has a duty to provide written notice of rights and other key information to victims.</p>
+                     <h4 class="font-semibold mt-2 text-sm">Key Notification Statutes Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                         <li><strong>Definitions:</strong> Key terms used in victims' rights statutes are defined in <a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.56A.htm#56A.001" target="_blank" class="text-indigo-700 hover:underline">CCP Art. 56A.001</a> and <a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.56B.htm#56B.003" target="_blank" class="text-indigo-700 hover:underline">CCP Art. 56B.003</a>.</li>
+                         <li><strong>Notification of Rights:</strong> Law enforcement must provide victims of sexual assault with a written notice of their rights. (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.56A.htm#56A.401" target="_blank" class="text-indigo-700 hover:underline">CCP Art. 56A.401</a>)</li>
+                        <li><strong>Notice of Release of Family Violence Offenders:</strong> An agency must make a reasonable attempt to notify a victim when a family violence offender is released from custody. (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.42.htm#42.21" target="_blank" class="text-indigo-700 hover:underline">CCP Art. 42.21</a>)</li>
+                         <li><strong>Notice by Local Law Enforcement Agency:</strong> Local agencies must provide victims with information about the Crime Victims' Compensation program. (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.56B.htm#56B.007" target="_blank" class="text-indigo-700 hover:underline">CCP Art. 56B.007</a>)</li>
+                    </ul>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Outcomes of Effective Victim Assistance</h2>
+                     <h4 class="font-semibold mt-2 text-sm">Positive Outcomes Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>Strengthens faith and confidence in the justice system.</li>
+                        <li>Improves relationships and partnerships between law enforcement and the community.</li>
+                        <li>Increases knowledge of what works in order to improve public safety and reduce disparities within the justice system.</li>
+                        <li>Leads to comprehensive justice system improvements and protections based upon science-informed policy and practice development.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="knowledge-check" class="tab-content">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Knowledge Check</h2>
+                    <p class="mb-6 text-gray-600">Test your understanding of the material.</p>
+                    <div id="quiz-container" class="space-y-8"></div>
+                    <div class="mt-8 text-center">
+                        <button id="check-answers-btn" class="bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-indigo-700 transition-colors">Check Answers</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="resources" class="tab-content">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Statutory Resources</h2>
+                    <p class="mb-6 text-gray-600">Quick links to the Texas Codes referenced in this guide.</p>
+                    <div id="resources-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('#tabs button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                });
+            });
+
+            const quizData = [
+                { question: "1. The normal human response to trauma, which includes physical and psychological stages, is called:", options: ["The fight-or-flight reaction", "Post-Traumatic Stress Disorder", "The crisis reaction", "Secondary victimization"], answer: "The crisis reaction", explanation: "The crisis reaction is the overall pattern of response to trauma, encompassing both physical elements like 'fight-or-flight' and psychological stages." },
+                { question: "2. The psychological stage of a crisis reaction characterized by a victim truly believing an event did not happen or was not as bad as it was is known as:", options: ["Cataclysm of emotions", "Shock, Disbelief, and Denial", "Reconstruction of equilibrium", "Frozen fright"], answer: "Shock, Disbelief, and Denial", explanation: "This is Stage One of the psychological response, a defense mechanism to protect the person from the full impact of the trauma." },
+                { question: "3. Which of the following is NOT a common behavioral response to trauma?", options: ["Increased smoking or alcohol use", "A consistent, unchanging level of activity", "Withdrawal from social patterns", "Getting immersed in recovery-related tasks"], answer: "A consistent, unchanging level of activity", explanation: "A change in activity level, either an increase or a decrease, is a common behavioral response. A lack of change would be atypical." },
+                { question: "4. The concept that the impact of a crime can spread beyond the immediate victim to their family, friends, and even service providers is called:", options: ["The trigger effect", "The crisis reaction", "Secondary victimization", "The ripple effect"], answer: "The ripple effect", explanation: "The ripple effect describes how trauma and victimization can expand outward, affecting a widening circle of people." },
+                { question: "5. A victim experiencing a crisis reaction is reminded of the traumatic event by the anniversary of the event. This anniversary is an example of a:", options: ["Regression", "Trigger event", "Secondary assault", "Flashback"], answer: "Trigger event", explanation: "Trigger events are external cues that remind a victim of the trauma, often causing them to re-experience the crisis reaction. Anniversaries are a common trigger." },
+                { question: "6. All of the following are key criteria for a PTSD diagnosis according to the DSM-V EXCEPT:", options: ["Exposure to a traumatic event", "Re-experiencing the event", "Symptoms lasting for longer than one month", "A feeling of guilt or self-blame"], answer: "A feeling of guilt or self-blame", explanation: "While guilt is a very common feeling for trauma survivors, it is not one of the required diagnostic criteria for PTSD, which focuses on re-experiencing, avoidance, and hyper-arousal." },
+                { question: "7. The phase of a victim's reaction that occurs immediately after the crime, characterized by shock, disbelief, and helplessness, is the ________ phase.", options: ["Impact", "Recoil", "Reorganization", "Denial"], answer: "Impact", explanation: "The Impact phase is the initial, immediate reaction to the violence of the crime." },
+                { question: "8. The '4 R's' of a trauma-informed approach are Realize, Recognize, Respond, and:", options: ["React", "Report", "Resist re-traumatization", "Reorganize"], answer: "Resist re-traumatization", explanation: "The fourth 'R' is to actively Resist re-traumatizing the victim during interactions." },
+                { question: "9. An officer who allows a victim to share memories as they come, rather than forcing a strict timeline, is using which interviewing technique?", options: ["Chronological Interviewing", "Leading Questioning", "Categorical Interviewing", "Systematic Desensitization"], answer: "Categorical Interviewing", explanation: "Categorical interviewing allows victims to share fragmented memories as they remember them, which is consistent with how trauma affects memory." },
+                { question: "10. When law enforcement actions, media coverage, or family responses cause additional stress or trauma to a victim, it is known as:", options: ["The ripple effect", "A trigger event", "Secondary victimization", "PTSD"], answer: "Secondary victimization", explanation: "Secondary victimization (or a 'secondary assault') refers to negative reactions from the justice system or others that worsen the victim's trauma." },
+                { question: "11. According to the recommended procedures, what is the most appropriate first step when making a death notification?", options: ["Call the family to prepare them for your visit.", "Go in person, in uniform, as soon as identity is confirmed.", "Wait 24 hours to allow the family to grieve privately.", "Send a chaplain to the residence alone."], answer: "Go in person, in uniform, as soon as identity is confirmed.", explanation: "Notifications should be done promptly and in person. Calling ahead is not recommended." },
+                { question: "12. Which action is NOT recommended during a death notification?", options: ["Leaving the survivor(s) alone to give them space.", "Offering to make calls on their behalf.", "Conveying information simply and directly.", "Providing the officers' names and contact numbers."], answer: "Leaving the survivor(s) alone to give them space.", explanation: "The procedure explicitly states, 'Do not leave the survivor(s) alone.' It is crucial to stay with them or ensure someone else is there for support." },
+                { question: "13. According to the Texas Code of Criminal Procedure, a victim of sexual assault has the right to:", options: ["Refuse to speak with law enforcement.", "Have an advocate present during a forensic exam and interviews.", "Receive financial compensation from the suspect immediately.", "Access the suspect's criminal history."], answer: "Have an advocate present during a forensic exam and interviews.", explanation: "CCP Arts. 56A.351 and 56A.3515 explicitly grant victims the right to have an advocate present during these procedures." },
+                { question: "14. A person designated by a prosecutor's office to ensure victims are afforded their rights is known as the:", options: ["Responding Officer", "Victim Advocate", "Victim Assistance Coordinator", "Lead Detective"], answer: "Victim Assistance Coordinator", explanation: "CCP Art. 56A.201 establishes the role of the Victim Assistance Coordinator within the prosecutor's office." },
+                { question: "15. Which of the following is an outcome of effective victim assistance?", options: ["Increased distrust in law enforcement.", "Fewer crimes being reported.", "Strengthened faith and confidence in the justice system.", "Higher conviction rates in all cases."], answer: "Strengthened faith and confidence in the justice system.", explanation: "Effective assistance improves community relations and builds trust in the justice system as a whole." }
+            ];
+
+            const quizContainer = document.getElementById('quiz-container');
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'quiz-question';
+                let optionsHtml = q.options.map(option => `
+                    <label class="block"><input type="radio" name="q${index}" value="${option}" class="mr-2">${option}</label>
+                `).join('');
+                questionDiv.innerHTML = `<p class="font-semibold mb-2">${q.question}</p><div class="space-y-2">${optionsHtml}</div><div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>`;
+                quizContainer.appendChild(questionDiv);
+            });
+
+            document.getElementById('check-answers-btn').addEventListener('click', () => {
+                quizData.forEach((q, index) => {
+                    const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                    const feedback = document.querySelectorAll('.feedback')[index];
+                    feedback.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+                    if (selected && selected.value === q.answer) {
+                        feedback.textContent = `Correct! ${q.explanation}`;
+                        feedback.classList.add('bg-green-100', 'text-green-800');
+                    } else {
+                        feedback.textContent = `Incorrect. The correct answer is "${q.answer}". ${q.explanation}`;
+                        feedback.classList.add('bg-red-100', 'text-red-800');
+                    }
+                });
+            });
+
+            const resources = [
+                 { name: "TX Constitution Art. 1, Sec. 30 - Rights of Crime Victims", url: "https://statutes.capitol.texas.gov/Docs/CN/htm/CN.1.htm#1.30" },
+                 { name: "CCP Art. 42.21 - Notice of Release of Family Violence Offenders", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.42.htm#42.21" },
+                 { name: "CCP Art. 56A.001 - Definitions", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.56A.htm#56A.001"},
+                 { name: "CCP Art. 56A.051 - General Rights", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.56A.htm#56A.051" },
+                 { name: "CCP Art. 56A.101 - Victim's Right to Privacy", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.56A.htm#56A.101" },
+                 { name: "CCP Art. 56A.201 - Victim Assistance Coordinator", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.56A.htm#56A.201" },
+                 { name: "CCP Art. 56A.351 - Presence of Advocate During Exam", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.56A.htm#56A.351" },
+                 { name: "CCP Art. 56A.3515 - Presence of Advocate During Interview", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.56A.htm#56A.3515" },
+                 { name: "CCP Art. 56A.401 - Notification of Rights", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.56A.htm#56A.401" },
+                 { name: "CCP Art. 56A.403 - Duties Regarding Victims of Sexual Assault", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.56A.htm#56A.403"},
+                 { name: "CCP Art. 56B.003 - Definitions", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.56B.htm#56B.003"},
+                 { name: "CCP Art. 56B.007 - Notice by Local Law Enforcement", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.56B.htm#56B.007" },
+                 { name: "CCP Art. 58 - Confidentiality of Sex Offense Victims", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.58.htm" },
+                 { name: "Family Code Sec. 57.002 - Victim's Rights (Juvenile)", url: "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.57.htm#57.002" }
+            ];
+            const resourcesList = document.getElementById('resources-list');
+            resources.sort((a, b) => a.name.localeCompare(b.name));
+            resources.forEach(res => {
+                const link = document.createElement('a');
+                link.href = res.url;
+                link.target = '_blank';
+                link.className = 'text-indigo-700 hover:underline';
+                link.textContent = res.name;
+                resourcesList.appendChild(link);
+            });
+        });
+    </script>
+</body>
+</html>
+

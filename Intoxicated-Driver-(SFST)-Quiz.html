@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCOLE Intoxicated Driver (SFST) Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+        .answer-option {
+            transition: all 0.2s ease-in-out;
+        }
+        .answer-option:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .correct {
+            background-color: #D1FAE5 !important;
+            border-color: #10B981 !important;
+            color: #065F46 !important;
+        }
+        .incorrect {
+            background-color: #FEE2E2 !important;
+            border-color: #EF4444 !important;
+            color: #991B1B !important;
+        }
+        .progress-bar-fill {
+            transition: width 0.3s ease-in-out;
+        }
+        .review-correct {
+            color: #059669;
+        }
+        .review-incorrect {
+            color: #e11d48;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="quiz-app" class="quiz-container p-4 sm:p-8">
+        
+        <!-- Quiz Start Screen -->
+        <div id="start-screen" class="text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Intoxicated Driver (SFST) Quiz</h1>
+            <p class="text-lg text-gray-600 mb-8">A quiz to test your knowledge on the detection, apprehension, and arrest of intoxicated drivers, based on the "Basic Peace Officer Course | Chapter 23" handout.</p>
+            <button id="start-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Start Quiz</button>
+        </div>
+
+        <!-- Quiz Interface -->
+        <div id="quiz-screen" class="hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold">Question <span id="question-number"></span> of <span id="total-questions"></span></h2>
+                <div id="timer" class="text-lg font-mono bg-gray-200 px-3 py-1 rounded-md">00:00</div>
+            </div>
+            
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+                <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full progress-bar-fill" style="width: 0%"></div>
+            </div>
+
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+                <p id="question-text" class="text-xl font-medium mb-8 min-h-[6rem]"></p>
+                <div id="answer-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Answer options will be injected here by JS -->
+                </div>
+            </div>
+             <div id="rationale-box" class="hidden mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h3 class="font-bold text-blue-800">Rationale:</h3>
+                <p id="rationale-text" class="text-blue-700"></p>
+                <p class="text-sm text-blue-600 mt-2">Source: <span id="rationale-source"></span></p>
+            </div>
+            <button id="next-btn" class="hidden w-full bg-blue-600 text-white font-bold py-3 px-8 rounded-lg mt-8 hover:bg-blue-700 transition-colors shadow-md">Next Question</button>
+        </div>
+
+        <!-- Quiz Results Screen -->
+        <div id="results-screen" class="hidden text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">Quiz Complete!</h1>
+            <p class="text-lg text-gray-600 mb-6">Here's how you did:</p>
+            <div class="flex flex-col sm:flex-row justify-around items-center my-8 gap-8 sm:gap-0">
+                <div>
+                    <p id="score-percentage" class="text-5xl font-bold text-green-600">0%</p>
+                    <p class="text-gray-500">Score</p>
+                </div>
+                 <div>
+                    <p class="text-5xl font-bold text-blue-600"><span id="correct-answers">0</span>/<span id="total-answered">0</span></p>
+                    <p class="text-gray-500">Correct Answers</p>
+                </div>
+                 <div>
+                    <p id="final-time" class="text-5xl font-bold text-gray-700">00:00</p>
+                    <p class="text-gray-500">Time Taken</p>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="restart-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Try Again</button>
+                <button id="review-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md">Review Answers</button>
+            </div>
+        </div>
+        
+        <!-- Review Screen -->
+        <div id="review-screen" class="hidden bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6">Answer Review</h1>
+            <div id="review-container" class="space-y-6">
+                <!-- Review content will be injected here -->
+            </div>
+            <button id="back-to-results-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md mt-8">Back to Results</button>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            { question: "Under TC 724.011, a person arrested for DWI in a public place is deemed to have consented to what?", options: ["A vehicle search", "Taking a specimen of breath or blood", "A polygraph examination", "Waiver of their right to an attorney"], answer: "Taking a specimen of breath or blood", rationale: "TC 724.011, 'Consent to Taking of Specimen,' establishes the principle of implied consent, meaning that by operating a motor vehicle in a public place, a person consents to provide a breath or blood specimen upon a lawful DWI arrest.", page: "Page 1" },
+            { question: "When can an officer require the taking of a blood specimen from a person who refuses to provide one voluntarily, according to TC 724.012?", options: ["Anytime the person is uncooperative", "If the person has a prior DWI conviction", "If the arrest is for an offense involving serious bodily injury or death to another", "Only with the driver's signed permission"], answer: "If the arrest is for an offense involving serious bodily injury or death to another", rationale: "TC 724.012(b) provides for mandatory blood draws in certain felony DWI circumstances, such as those resulting in serious bodily injury or death to another person.", page: "Page 1" },
+            { question: "What action is prohibited under TC 724.013 if a person refuses an officer's request for a specimen?", options: ["The officer cannot obtain a search warrant for blood", "The officer cannot arrest the person for DWI", "The specimen may not be taken, with some exceptions", "The officer must release the person immediately"], answer: "The specimen may not be taken, with some exceptions", rationale: "TC 724.013 generally prohibits taking a specimen if a person refuses. However, it notes exceptions where a mandatory specimen may be authorized under other laws, such as TC 724.012(b) or with a search warrant.", page: "Page 1" },
+            { question: "If a person is unconscious or otherwise incapable of refusal, they are considered to have done what regarding the taking of a specimen?", options: ["Refused the specimen", "Not withdrawn the consent provided by law", "Consented only to a breath test", "Required a court order for a specimen"], answer: "Not withdrawn the consent provided by law", rationale: "TC 724.014 states that a person who is dead, unconscious, or otherwise incapable of refusal is considered not to have withdrawn the consent provided under the implied consent law.", page: "Page 1" },
+            { question: "What information must an officer provide to a person before requesting a specimen, as required by TC 724.015?", options: ["The officer's badge number and years of service", "The statutory warnings about the consequences of refusing or failing a test", "The location of the nearest hospital", "The estimated cost of the chemical test"], answer: "The statutory warnings about the consequences of refusing or failing a test", rationale: "TC 724.015 requires the officer to orally and in writing provide the 'Statutory Warning' (DIC-24), which explains the driver's license suspension consequences for refusal or failure (0.08 BAC or greater).", page: "Page 1" },
+            { question: "Who is authorized to take a blood specimen from a person at the request of a peace officer under TC 724.017?", options: ["Any on-duty peace officer", "A qualified technician, chemist, or professional nurse", "The arresting officer's partner", "An emergency medical technician (EMT)"], answer: "A qualified technician, chemist, or professional nurse", rationale: "TC 724.017 specifies that only certain qualified medical personnel, such as a physician, qualified technician, chemist, registered professional nurse, or licensed vocational nurse, may take a blood specimen.", page: "Page 1" },
+            { question: "According to TC 724.018, upon the request of the individual who provided a specimen, what must be done with the test results?", options: ["Published in a public record", "Sealed until the court date", "The results must be furnished to the individual or their attorney", "Sent directly to their insurance company"], answer: "The results must be furnished to the individual or their attorney", rationale: "TC 724.018 requires that, on request, the results of the analysis be made available to the person who gave the specimen or to the person's attorney.", page: "Page 1"},
+            { question: "A person who submits to a chemical test has the right to what, according to TC 724.019?", options: ["Have the results immediately", "Refuse to answer any more questions", "Have a physician of their own choosing perform an additional analysis", "Demand a retest by the same officer"], answer: "Have a physician of their own choosing perform an additional analysis", rationale: "TC 724.019 grants the person the right, on request and at their own expense, to have a physician, qualified technician, chemist, or registered professional nurse of their own choosing take an additional specimen for analysis.", page: "Page 1" },
+            { question: "If a person refuses to submit a specimen, the officer must request that they sign a statement confirming their refusal. What happens if they decline to sign?", options: ["The refusal is considered invalid", "The officer must let them go", "The officer notes the refusal to sign on the form", "The person is charged with an additional offense"], answer: "The officer notes the refusal to sign on the form", rationale: "TC 724.031 requires the officer to request a signed statement. If the person refuses to sign, the officer is required to make a written notation of that refusal.", page: "Page 1" },
+            { question: "After a person refuses to provide a specimen, what is the officer's primary duty regarding the person's driver's license suspension under TC 724.032?", options: ["Immediately shred the person's license", "Submit a written report of the refusal to the Department of Public Safety", "Personally notify the person's employer", "Hold the license at the station for 30 days"], answer: "Submit a written report of the refusal to the Department of Public Safety", rationale: "TC 724.032 outlines the officer's duties, which include preparing and submitting a sworn written report of the refusal to DPS, which initiates the administrative license suspension process.", page: "Page 1"},
+            { question: "What form serves as the 'Peace Officer's Sworn Report' used in DWI arrests?", options: ["DIC-24", "DIC-25", "DIC-23", "THP-51"], answer: "DIC-23", rationale: "The DIC-23, 'Peace Officer's Sworn Report,' is the official affidavit where the officer details the probable cause for the arrest and the circumstances surrounding the request and refusal/failure of a chemical test.", page: "Page 1" },
+            { question: "The 'Statutory Warning' that an officer reads to a DWI suspect is documented on which form?", options: ["DIC-23", "DIC-24", "DIC-25", "D.W.I. Case Report"], answer: "DIC-24", rationale: "The DIC-24 is the 'Statutory Warning' form. The officer must read this to the suspect and document that they have done so before requesting a specimen.", page: "Page 1" },
+            { question: "Which form serves as both a notice of driver's license suspension and a temporary driving permit?", options: ["DIC-23", "DIC-24", "DIC-25", "THP-51"], answer: "DIC-25", rationale: "The DIC-25, 'Notice of Suspension/Temporary Driving Permit,' is served on individuals who refuse a chemical test or provide a specimen with a BAC of 0.08 or greater.", page: "Page 1" },
+            { question: "Which form is specifically mentioned for documenting a mandatory blood specimen?", options: ["DIC-23", "DIC-24", "THP-51", "D.W.I. Case Report"], answer: "THP-51", rationale: "The handout lists the 'Mandatory Blood Draws Form - THP-51' as a key piece of paperwork for intoxicated driver cases involving a mandatory specimen.", page: "Page 1"},
+            { question: "The case of Curtis v. State from the Texas Court of Criminal Appeals is significant for what reason in DWI enforcement?", options: ["It established the legal limit for BAC at 0.08", "It validated the use of mandatory blood draws", "It affirmed that a vehicle weaving can provide reasonable suspicion for a traffic stop", "It required all SFSTs to be video recorded"], answer: "It affirmed that a vehicle weaving can provide reasonable suspicion for a traffic stop", rationale: "The handout references Curtis v. State, noting that the court held a stop for 'fail to maintain a single marked lane' was reasonable based on the officer's training and experience, especially in DWI enforcement, when observing a vehicle weaving.", page: "Page 1" },
+            { question: "A person commits an offense under TC 705.001 if they knowingly permit another person to operate their motor vehicle and that person...", options: ["Does not have a valid driver's license or is intoxicated", "Is under the age of 21", "Has never driven that type of vehicle before", "Plans to drive out of state"], answer: "Does not have a valid driver's license or is intoxicated", rationale: "TC 705.001, 'Allowing Dangerous Driver to Borrow Motor Vehicle,' makes it an offense for a vehicle owner to knowingly permit their vehicle to be operated by a person who is unlicensed or intoxicated.", page: "Page 1" }
+        ];
+
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const reviewScreen = document.getElementById('review-screen');
+
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const reviewBtn = document.getElementById('review-btn');
+        const backToResultsBtn = document.getElementById('back-to-results-btn');
+        
+        const questionNumberEl = document.getElementById('question-number');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const progressBar = document.getElementById('progress-bar');
+        const questionTextEl = document.getElementById('question-text');
+        const answerOptionsEl = document.getElementById('answer-options');
+        const rationaleBox = document.getElementById('rationale-box');
+        const rationaleText = document.getElementById('rationale-text');
+        const rationaleSource = document.getElementById('rationale-source');
+        
+        const scorePercentageEl = document.getElementById('score-percentage');
+        const correctAnswersEl = document.getElementById('correct-answers');
+        const totalAnsweredEl = document.getElementById('total-answered');
+        const finalTimeEl = document.getElementById('final-time');
+        const timerEl = document.getElementById('timer');
+        const reviewContainer = document.getElementById('review-container');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timerInterval;
+        let secondsElapsed = 0;
+        let userAnswers = [];
+        let questionsToAsk = [];
+        
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        startBtn.addEventListener('click', startQuiz);
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', startQuiz);
+        reviewBtn.addEventListener('click', showReview);
+        backToResultsBtn.addEventListener('click', () => {
+            reviewScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+        });
+
+        function startTimer() {
+            secondsElapsed = 0;
+            timerEl.textContent = '00:00';
+            timerInterval = setInterval(() => {
+                secondsElapsed++;
+                const minutes = Math.floor(secondsElapsed / 60).toString().padStart(2, '0');
+                const seconds = (secondsElapsed % 60).toString().padStart(2, '0');
+                timerEl.textContent = `${minutes}:${seconds}`;
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function startQuiz() {
+            questionsToAsk = shuffleArray([...quizData]);
+            questionsToAsk.forEach(q => shuffleArray(q.options));
+
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            startScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            nextBtn.classList.add('hidden');
+            startTimer();
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            rationaleBox.classList.add('hidden');
+            answerOptionsEl.innerHTML = '';
+            const currentQuestion = questionsToAsk[currentQuestionIndex];
+            
+            questionNumberEl.textContent = currentQuestionIndex + 1;
+            totalQuestionsEl.textContent = questionsToAsk.length;
+            questionTextEl.textContent = currentQuestion.question;
+
+            const progress = ((currentQuestionIndex) / questionsToAsk.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('answer-option', 'w-full', 'p-4', 'text-left', 'bg-white', 'border-2', 'border-gray-300', 'rounded-lg', 'hover:bg-gray-50', 'hover:border-blue-500');
+                button.addEventListener('click', () => selectAnswer(button, option, currentQuestion));
+                answerOptionsEl.appendChild(button);
+            });
+        }
+
+        function selectAnswer(button, selectedOption, currentQuestion) {
+            const { answer, rationale, page } = currentQuestion;
+            userAnswers[currentQuestionIndex] = selectedOption;
+
+            const buttons = answerOptionsEl.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === answer) {
+                    btn.classList.add('correct');
+                }
+            });
+
+            if (selectedOption === answer) {
+                score++;
+                button.classList.add('correct');
+            } else {
+                button.classList.add('incorrect');
+            }
+
+            rationaleText.textContent = rationale;
+            rationaleSource.textContent = page;
+            rationaleBox.classList.remove('hidden');
+            nextBtn.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questionsToAsk.length) {
+                nextBtn.classList.add('hidden');
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            stopTimer();
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+
+            const percentage = Math.round((score / questionsToAsk.length) * 100);
+            scorePercentageEl.textContent = `${percentage}%`;
+            correctAnswersEl.textContent = score;
+            totalAnsweredEl.textContent = questionsToAsk.length;
+            finalTimeEl.textContent = timerEl.textContent;
+            
+            progressBar.style.width = `100%`;
+        }
+
+        function showReview() {
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.remove('hidden');
+            reviewContainer.innerHTML = '';
+
+            questionsToAsk.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === question.answer;
+
+                const reviewItem = document.createElement('div');
+                reviewItem.classList.add('border', 'p-4', 'rounded-lg');
+                reviewItem.classList.add(isCorrect ? 'bg-green-50/50' : 'bg-red-50/50', isCorrect ? 'border-green-200' : 'border-red-200');
+
+                let userAnswerHTML = '';
+                if (isCorrect) {
+                    userAnswerHTML = `<p>Your answer: <span class="font-semibold review-correct">${userAnswer} (Correct)</span></p>`;
+                } else {
+                    userAnswerHTML = `
+                        <p>Your answer: <span class="font-semibold review-incorrect">${userAnswer ? userAnswer : 'Not answered'} (Incorrect)</span></p>
+                        <p>Correct answer: <span class="font-semibold review-correct">${question.answer}</span></p>
+                    `;
+                }
+
+                reviewItem.innerHTML = `
+                    <p class="font-bold mb-2">${index + 1}. ${question.question}</p>
+                    ${userAnswerHTML}
+                    <p class="text-sm text-gray-600 mt-2"><em><strong>Rationale:</strong> ${question.rationale} (Source: ${question.page})</em></p>
+                `;
+                reviewContainer.appendChild(reviewItem);
+            });
+        }
+
+    </script>
+</body>
+</html>
+

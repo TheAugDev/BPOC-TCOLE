@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCOLE Traffic Code & Crash Investigation Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+        .answer-option {
+            transition: all 0.2s ease-in-out;
+        }
+        .answer-option:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .correct {
+            background-color: #D1FAE5 !important;
+            border-color: #10B981 !important;
+            color: #065F46 !important;
+        }
+        .incorrect {
+            background-color: #FEE2E2 !important;
+            border-color: #EF4444 !important;
+            color: #991B1B !important;
+        }
+        .progress-bar-fill {
+            transition: width 0.3s ease-in-out;
+        }
+        .review-correct {
+            color: #059669;
+        }
+        .review-incorrect {
+            color: #e11d48;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="quiz-app" class="quiz-container p-4 sm:p-8">
+        
+        <!-- Quiz Start Screen -->
+        <div id="start-screen" class="text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Traffic Code & Crash Investigation Quiz</h1>
+            <p class="text-lg text-gray-600 mb-8">An exhaustive quiz based on the "Basic Peace Officer Course | Chapter 22" handout to test your knowledge on Texas traffic laws.</p>
+            <button id="start-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Start Quiz</button>
+        </div>
+
+        <!-- Quiz Interface -->
+        <div id="quiz-screen" class="hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold">Question <span id="question-number"></span> of <span id="total-questions"></span></h2>
+                <div id="timer" class="text-lg font-mono bg-gray-200 px-3 py-1 rounded-md">00:00</div>
+            </div>
+            
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+                <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full progress-bar-fill" style="width: 0%"></div>
+            </div>
+
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+                <p id="question-text" class="text-xl font-medium mb-8 min-h-[6rem]"></p>
+                <div id="answer-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Answer options will be injected here by JS -->
+                </div>
+            </div>
+             <div id="rationale-box" class="hidden mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h3 class="font-bold text-blue-800">Rationale:</h3>
+                <p id="rationale-text" class="text-blue-700"></p>
+                <p class="text-sm text-blue-600 mt-2">Source: <span id="rationale-source"></span></p>
+            </div>
+            <button id="next-btn" class="hidden w-full bg-blue-600 text-white font-bold py-3 px-8 rounded-lg mt-8 hover:bg-blue-700 transition-colors shadow-md">Next Question</button>
+        </div>
+
+        <!-- Quiz Results Screen -->
+        <div id="results-screen" class="hidden text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">Quiz Complete!</h1>
+            <p class="text-lg text-gray-600 mb-6">Here's how you did:</p>
+            <div class="flex flex-col sm:flex-row justify-around items-center my-8 gap-8 sm:gap-0">
+                <div>
+                    <p id="score-percentage" class="text-5xl font-bold text-green-600">0%</p>
+                    <p class="text-gray-500">Score</p>
+                </div>
+                 <div>
+                    <p class="text-5xl font-bold text-blue-600"><span id="correct-answers">0</span>/<span id="total-answered">0</span></p>
+                    <p class="text-gray-500">Correct Answers</p>
+                </div>
+                 <div>
+                    <p id="final-time" class="text-5xl font-bold text-gray-700">00:00</p>
+                    <p class="text-gray-500">Time Taken</p>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="restart-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Try Again</button>
+                <button id="review-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md">Review Answers</button>
+            </div>
+        </div>
+        
+        <!-- Review Screen -->
+        <div id="review-screen" class="hidden bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6">Answer Review</h1>
+            <div id="review-container" class="space-y-6">
+                <!-- Review content will be injected here -->
+            </div>
+            <button id="back-to-results-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md mt-8">Back to Results</button>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            { question: "Under TC Sec. 541.201, which of the following is defined as a 'Vehicle'?", options: ["Implement of Husbandry", "Construction Crane", "Railroad Train", "Motorized Wheelchair"], answer: "Implement of Husbandry", rationale: "Transportation Code Sec. 541.201 provides a specific list of vehicle definitions, which includes 'Implement of Husbandry' (e.g., a farm vehicle).", page: "Page 1" },
+            { question: "According to TC Sec. 541.302, a roadway that is not open to the public for vehicular use is defined as a:", options: ["Private Road or Driveway", "Shoulder", "Alley", "Ramp"], answer: "Private Road or Driveway", rationale: "A 'Private Road or Driveway' is defined as a privately owned way or place used for vehicular travel and used only by the owner and the persons who have the owner's express or implied permission.", page: "Page 2" },
+            { question: "What is the definition of 'Right-of-Way' under TC Sec. 541.401?", options: ["The absolute right of one vehicle to proceed", "The right of one vehicle or pedestrian to proceed in a lawful manner in preference to another", "The right to drive in any lane", "The right to exceed the speed limit in an emergency"], answer: "The right of one vehicle or pedestrian to proceed in a lawful manner in preference to another", rationale: "TC Sec. 541.401 defines right-of-way as the right of one vehicle or pedestrian to proceed in a lawful manner in preference to another vehicle or pedestrian that is approaching from a direction, at a speed, and within a proximity that could cause a collision unless one grants precedence to the other.", page: "Page 3" },
+            { question: "Under Health and Safety Code Sec. 365.012, discarding a lighted cigarette on a public highway is considered what offense?", options: ["Littering", "Illegal Dumping", "Reckless Damage", "A public nuisance"], answer: "Illegal Dumping", rationale: "Health and Safety Code Sec. 365.012 specifically covers 'Illegal Dumping' and includes discarding lighted materials on a public highway as part of the offense.", page: "Page 3" },
+            { question: "Under TC Sec. 542.404, what is a potential consequence for a traffic offense committed in a construction or maintenance work zone when workers are present?", options: ["The fine is automatically waived", "The fine is the same as a regular offense", "The minimum and maximum fine is doubled", "The driver's license is suspended for 30 days"], answer: "The minimum and maximum fine is doubled", rationale: "TC Sec. 542.404 states that if an offense is committed in a construction or maintenance work zone with workers present, the regular minimum and maximum fine is doubled.", page: "Page 3" },
+            { question: "Which class of driver's license is required to operate a vehicle with a GVWR of 26,001 pounds or more, towing a vehicle with a GVWR of 10,000 pounds or more?", options: ["Class A", "Class B", "Class C", "Class M"], answer: "Class A", rationale: "TC Sec. 521.081 defines a Class A license as authorizing the holder to operate a vehicle or combination of vehicles with these specified weight ratings.", page: "Page 4" },
+            { question: "What does TC Sec. 521.025 require a motor vehicle operator to do with their driver's license?", options: ["Mail a copy to the officer", "Have it available within 24 hours", "Carry it and exhibit it on demand to a peace officer", "Only carry it when driving outside their city of residence"], answer: "Carry it and exhibit it on demand to a peace officer", rationale: "TC Sec. 521.025, 'License to Be Carried and Exhibited on Demand', requires an operator to have their license in their possession and show it to an officer upon request.", page: "Page 4" },
+            { question: "What type of driver's license may be issued by a court to an individual whose license is suspended, for the purpose of driving to work or school?", options: ["Learner License", "Hardship License", "Occupational License", "Commercial Driver's License"], answer: "Occupational License", rationale: "TC Sec. 521.241 defines an 'Occupational License' as a license issued by a court to a person whose license is suspended, authorizing operation of a motor vehicle for an essential need, such as work or school.", page: "Page 4" },
+            { question: "According to TC Sec. 521.457, a person commits an offense if they operate a motor vehicle on a highway after their driver's license has been...", options: ["Expired for less than a week", "Canceled, suspended, or revoked", "Lost or stolen", "Downgraded to a lower class"], answer: "Canceled, suspended, or revoked", rationale: "The offense of Driving While License Invalid (DWLI) under TC Sec. 521.457 occurs when a person drives while their license is canceled, suspended, revoked, or has been denied renewal.", page: "Page 5" },
+            { question: "Displaying a sign that attempts to direct the movement of traffic and hides from view an official traffic-control device is a violation of which statute?", options: ["TC Sec. 544.004", "TC Sec. 544.006", "TC Sec. 544.007", "TC Sec. 544.010"], answer: "TC Sec. 544.006", rationale: "TC Sec. 544.006, 'Display of Unauthorized Signs, Signals, or Markings', prohibits placing or maintaining any unauthorized sign that interferes with, imitates, or hides an official traffic-control device.", page: "Page 6" },
+            { question: "An operator commits an offense under TC Sec. 544.004 if they fail to comply with a...", options: ["Request from a passenger", "Suggestion from a GPS device", "Lawful order or direction of a police officer", "Posted advertisement sign"], answer: "Lawful order or direction of a police officer", rationale: "TC Sec. 544.004 requires operators to comply with applicable official traffic-control devices and lawful orders from police officers.", page: "Page 5" },
+            { question: "Under TC Sec. 545.051, an operator on a roadway of sufficient width shall drive on which side of the roadway?", options: ["The left half", "The right half", "The center of the roadway", "Whichever side has less traffic"], answer: "The right half", rationale: "TC Sec. 545.051, 'Driving on Right Side of Roadway', generally requires an operator to drive on the right half of the roadway, with some exceptions.", page: "Page 6" },
+            { question: "What is the general rule for following distance between vehicles, according to TC Sec. 545.062?", options: ["Maintain a distance of at least three car lengths", "Maintain an assured clear distance", "Stay within one car length of the vehicle ahead", "Follow as closely as possible to improve traffic flow"], answer: "Maintain an assured clear distance", rationale: "TC Sec. 545.062 states an operator shall maintain an assured clear distance between the two vehicles so that the operator can safely stop without colliding with the preceding vehicle.", page: "Page 6" },
+            { question: "An operator passing a stopped school bus with its visual signals activated may be charged with an offense under which statute?", options: ["TC Sec. 545.062", "TC Sec. 545.066", "TC Sec. 545.156", "TC Sec. 545.401"], answer: "TC Sec. 545.066", rationale: "TC Sec. 545.066, 'Passing a School Bus; Offense', makes it an offense for an operator to pass a stopped school bus that is loading or unloading children and operating its visual signals.", page: "Page 6" },
+            { question: "Under TC Sec. 545.104, a signal of intent to turn must be given continuously for not less than how many feet before the turn?", options: ["25 feet", "50 feet", "100 feet", "200 feet"], answer: "100 feet", rationale: "An operator intending to turn shall signal continuously for not less than the last 100 feet of movement of the vehicle before the turn.", page: "Page 7" },
+            { question: "What is required of a driver emerging from an alley, driveway, or building under TC Sec. 545.256?", options: ["Proceed without stopping if the way is clear", "Honk their horn before entering the sidewalk", "Stop before moving on a sidewalk and yield to pedestrians", "Yield only to vehicular traffic on the roadway"], answer: "Stop before moving on a sidewalk and yield to pedestrians", rationale: "TC Sec. 545.256 requires an operator emerging from an alley, driveway, or building to stop the vehicle before moving on a sidewalk or the sidewalk area and yield the right-of-way to a pedestrian.", page: "Page 7" },
+            { question: "According to TC Sec. 545.152, an operator intending to turn left at an intersection must yield the right-of-way to...", options: ["Any vehicle approaching from the opposite direction", "Any vehicle turning right", "Any vehicle behind them", "Any pedestrian on the sidewalk"], answer: "Any vehicle approaching from the opposite direction", rationale: "An operator turning left must yield the right-of-way to a vehicle approaching from the opposite direction that is in the intersection or so close as to be an immediate hazard.", page: "Page 7" },
+            { question: "What action is required of a driver when approached by an authorized emergency vehicle using its signals under TC Sec. 545.156?", options: ["Speed up to clear the way", "Maintain speed and lane position", "Yield, pull over to the right-hand edge, and stop", "Turn onto the nearest side street"], answer: "Yield, pull over to the right-hand edge, and stop", rationale: "On the immediate approach of an authorized emergency vehicle, an operator shall yield the right-of-way, move to the right-hand edge or curb of the roadway, and stop clear of any intersection.", page: "Page 7" },
+            { question: "The 'Move Over' law, TC Sec. 545.157, requires drivers to vacate the lane closest to or slow down for which vehicles?", options: ["Any vehicle with its hazard lights on", "Authorized emergency vehicles, tow trucks, and highway maintenance vehicles", "Any vehicle that is moving slower than the speed limit", "Only marked police units"], answer: "Authorized emergency vehicles, tow trucks, and highway maintenance vehicles", rationale: "TC Sec. 545.157 requires drivers to move out of the lane closest to certain stationary vehicles (including police, fire, EMS, tow trucks, and TxDOT vehicles) or slow to a specified speed.", page: "Page 7" },
+            { question: "Stopping, standing, or parking is prohibited within how many feet of a fire hydrant under TC Sec. 545.302?", options: ["5 feet", "10 feet", "15 feet", "20 feet"], answer: "15 feet", rationale: "TC Sec. 545.302 prohibits parking a vehicle within 15 feet of a fire hydrant.", page: "Page 7" },
+            { question: "A speed limit of 30 mph in an urban district is an example of what kind of speed limit under TC Sec. 545.352?", options: ["Maximum Speed Limit", "Absolute Speed Limit", "Special Speed Limitation", "Prima Facie Speed Limit"], answer: "Prima Facie Speed Limit", rationale: "TC Sec. 545.352 establishes prima facie (meaning 'at first sight') speed limits for certain areas, such as 30 mph in an urban district, which are considered lawful unless special hazards exist.", page: "Page 8" },
+            { question: "Leaving a vehicle without stopping the engine, locking the ignition, and removing the key is a violation of which statute?", options: ["TC Sec. 545.401 (Reckless Driving)", "TC Sec. 545.301 (Parking Outside a Business District)", "TC Sec. 545.404 (Unattended Motor Vehicle)", "TC Sec. 545.402 (Moving a Parked Vehicle)"], answer: "TC Sec. 545.404 (Unattended Motor Vehicle)", rationale: "TC Sec. 545.404 specifies the actions an operator must take when leaving a vehicle unattended, including stopping the engine and removing the key.", page: "Page 8" },
+            { question: "The offense of 'Reckless Driving' under TC Sec. 545.401 is defined as driving a vehicle in...", options: ["A manner that is simply careless", "Excess of the posted speed limit", "Willful or wanton disregard for the safety of persons or property", "A way that impedes the flow of traffic"], answer: "Willful or wanton disregard for the safety of persons or property", rationale: "Reckless Driving is committed when a person drives with a willful or wanton disregard for safety, which is a higher standard than simple negligence.", page: "Page 8" },
+            { question: "What is the minimum distance an operator must maintain when following a fire apparatus responding to a call, according to TC Sec. 545.407?", options: ["100 feet", "250 feet", "500 feet", "1000 feet"], answer: "500 feet", rationale: "An operator may not follow closer than 500 feet to a fire apparatus responding to a fire alarm or drive into the block where the fire apparatus has stopped.", page: "Page 8" },
+            { question: "It is an offense under TC Sec. 545.413 for a person to operate a passenger vehicle unless...", options: ["The vehicle has airbags", "The person and all front seat passengers are secured by a safety belt", "All passengers are over the age of 18", "The person has passed a defensive driving course"], answer: "The person and all front seat passengers are secured by a safety belt", rationale: "TC Sec. 545.413 requires the operator and any passenger in the front seat of a passenger vehicle to wear a safety belt.", page: "Page 8" },
+            { question: "According to TC Sec. 545.414, it is an offense for a person to operate an open-bed pickup truck when a child younger than what age is occupying the bed?", options: ["12 years", "14 years", "16 years", "18 years"], answer: "18 years", rationale: "TC Sec. 545.414 prohibits operating an open-bed pickup truck or an open flatbed trailer when a person younger than 18 years of age is occupying the bed of the truck or trailer.", page: "Page 8" },
+            { question: "Under TC Sec. 545.412, a child must be secured in a child passenger safety seat system if they are younger than what age, unless they meet a certain height requirement?", options: ["5 years of age", "8 years of age", "10 years of age", "12 years of age"], answer: "8 years of age", rationale: "TC Sec. 545.412 requires a child younger than 8 years of age to be in a child safety seat unless they are at least 4 feet, 9 inches in height.", page: "Page 8" },
+            { question: "Two or more vehicles accelerating in a competitive attempt to outdistance each other is defined as what offense under TC Sec. 545.420?", options: ["Reckless Driving", "Speeding", "Exhibition of Acceleration", "Racing on Highway"], answer: "Racing on Highway", rationale: "TC Sec. 545.420 defines racing to include a speed competition or contest, a drag race or acceleration contest, and a test of the physical endurance of an operator over a long-distance course.", page: "Page 9" },
+            { question: "An operator commits an offense under TC Sec. 545.421 if they intentionally flee from a person they know is...", options: ["A security guard", "A private investigator", "A concerned citizen", "A peace officer attempting to lawfully arrest or detain them"], answer: "A peace officer attempting to lawfully arrest or detain them", rationale: "The offense of Fleeing or Attempting to Elude a Police Officer involves intentionally fleeing from a known peace officer trying to make a lawful arrest or detention.", page: "Page 9" },
+            { question: "TC Sec. 545.4251 generally prohibits the use of a portable wireless communication device for what activity while operating a motor vehicle?", options: ["Making a phone call", "Using a GPS application", "Reading, writing, or sending an electronic message", "Streaming music"], answer: "Reading, writing, or sending an electronic message", rationale: "This statute, commonly known as the texting-while-driving ban, specifically makes it an offense to use a device to read, write, or send an electronic message unless the vehicle is stopped.", page: "Page 9" },
+            { question: "What is a key requirement for an emergency vehicle operator to disregard certain traffic laws under TC Sec. 546.001?", options: ["The officer must be in a personal vehicle", "They must be responding to an emergency call", "It must be during daylight hours", "They must have another officer present"], answer: "They must be responding to an emergency call", rationale: "The permissible conduct for an authorized emergency vehicle, such as exceeding speed limits or proceeding past stop signs, applies only when the operator is responding to an emergency call or pursuing a violator.", page: "Page 9" },
+            { question: "The operator of an authorized emergency vehicle exercising their privileges under the law still has what responsibility under TC Sec. 546.005?", options: ["A duty to drive with due regard for the safety of all persons", "A duty to notify dispatch of their actions", "A duty to use all available lights and sirens at all times", "A duty to only violate minor traffic laws"], answer: "A duty to drive with due regard for the safety of all persons", rationale: "TC Sec. 546.005 clarifies that the privileges granted to emergency vehicle operators do not relieve them from the duty to drive with due regard for the safety of all persons.", page: "Page 9" },
+            { question: "According to TC Sec. 547.302, when are vehicle lights required to be displayed?", options: ["Only between sunset and sunrise", "At nighttime and when visibility is less than 1,000 feet", "Whenever the windshield wipers are in use", "Only when driving on a highway"], answer: "At nighttime and when visibility is less than 1,000 feet", rationale: "Lights must be used at nighttime (defined as one-half hour after sunset to one-half hour before sunrise) and at any other time when light is insufficient to see a person or vehicle for a distance of 1,000 feet.", page: "Page 10" },
+            { question: "Flashing red lights are permitted on which of the following vehicles under TC Sec. 547.305?", options: ["Any private vehicle for decoration", "School buses and authorized emergency vehicles", "Slow-moving farm equipment", "All commercial trucks"], answer: "School buses and authorized emergency vehicles", rationale: "TC Sec. 547.305 restricts the use of certain colored lights. Flashing red lights are generally reserved for authorized emergency vehicles, school buses, and certain other specific vehicles.", page: "Page 10" },
+            { question: "How many headlamps are required on a motor vehicle other than a motorcycle or moped, per TC Sec. 547.321?", options: ["One", "Two", "Three", "Four"], answer: "Two", rationale: "A motor vehicle is required to be equipped with at least two headlamps, one on each side of the front of the vehicle.", page: "Page 11" },
+            { question: "Under TC Sec. 547.333, an operator must dim their high-beam headlamps when an approaching vehicle is within how many feet?", options: ["200 feet", "300 feet", "500 feet", "1000 feet"], answer: "500 feet", rationale: "An operator shall use a distribution of light or composite beam that is directed so that a glaring light is not projected into the eyes of an operator of an approaching vehicle within 500 feet.", page: "Page 11" },
+            { question: "A motor vehicle's horn must be audible under normal conditions from a distance of at least...", options: ["100 feet", "200 feet", "300 feet", "500 feet"], answer: "200 feet", rationale: "TC Sec. 547.501 requires a motor vehicle to be equipped with a horn in good working order that is capable of emitting a sound audible under normal conditions from a distance of at least 200 feet.", page: "Page 12" },
+            { question: "What piece of equipment is required by TC Sec. 547.604 to prevent excessive or unusual noise?", options: ["A catalytic converter", "An emission system", "A muffler", "A resonator"], answer: "A muffler", rationale: "TC Sec. 547.604 requires a vehicle to be equipped with a muffler in good working condition to prevent excessive or unusual noise.", page: "Page 12" },
+            { question: "A vehicle must be equipped with what system to help reduce air pollution, according to TC Sec. 547.605?", options: ["A fuel injection system", "An emission system", "A turbocharger", "A muffler"], answer: "An emission system", rationale: "TC Sec. 547.605 requires a motor vehicle to be equipped with an emission system in good working condition that meets the standards for that vehicle's model year.", page: "Page 12" },
+            { question: "An offense is committed under TC Sec. 547.616 if a person uses a device on a motor vehicle that is designed to interfere with a...", options: ["Radio broadcast", "Cell phone signal", "Radar or laser that is used to measure vehicle speed", "GPS navigation system"], answer: "Radar or laser that is used to measure vehicle speed", rationale: "This statute specifically prohibits the use of 'radar interference devices' designed to jam, scramble, or otherwise interfere with a radar, laser, or other electronic device used to measure the speed of a motor vehicle.", page: "Page 12" },
+            { question: "Which of the following is a general rule for bicycle operation on a roadway, according to TC Sec. 551.102?", options: ["Bicyclists must always ride on the sidewalk", "Bicyclists must ride on the left side of the road, facing traffic", "A person may not use a bicycle to carry more persons than it is designed for", "Helmets are required for all bicycle operators, regardless of age"], answer: "A person may not use a bicycle to carry more persons than it is designed for", rationale: "TC Sec. 551.102 states that a bicycle cannot be used to carry more persons than it is designed or equipped to carry, which typically means a single rider unless it's a tandem bicycle.", page: "Page 13" },
+            { question: "Under TC Sec. 552.003, who has the right-of-way when a pedestrian is in a crosswalk and there is no traffic control signal?", options: ["The vehicle operator", "The pedestrian", "The vehicle on the right", "Whoever entered the intersection first"], answer: "The pedestrian", rationale: "An operator of a vehicle shall yield the right-of-way to a pedestrian in a crosswalk if there is no traffic control signal in place or in operation.", page: "Page 14" },
+            { question: "A pedestrian commits an offense under TC Sec. 552.007 if they stand on a highway to...", options: ["Wait for a bus", "Solicit a ride, contribution, or business", "Cross the street", "Talk to another pedestrian"], answer: "Solicit a ride, contribution, or business", rationale: "TC Sec. 552.007 prohibits a person from standing on a highway to solicit a ride, contribution, employment, or business from an occupant of a vehicle, with some exceptions for charitable organizations.", page: "Page 14" },
+            { question: "When is a peace officer authorized to arrest a person without a warrant for a violation of the Transportation Code, according to TC Sec. 543.001?", options: ["Only for felony offenses", "Only if the person is a non-resident", "For any offense under this title committed in the officer's presence", "Only after obtaining a supervisor's approval"], answer: "For any offense under this title committed in the officer's presence", rationale: "TC Sec. 543.001 gives a peace officer the authority to arrest without a warrant a person found committing a violation of any provision of the Transportation Code.", page: "Page 14" },
+            { question: "Instead of taking a person to a magistrate for a traffic violation, an officer may issue a written notice to appear, which includes the person's...", options: ["Signature as an admission of guilt", "Promise to appear in court", "Request for a trial by jury", "Waiver of their right to counsel"], answer: "Promise to appear in court", rationale: "TC Sec. 543.005 states that to secure release, the person arrested must make a written promise to appear in court by signing the notice to appear prepared by the arresting officer.", page: "Page 14" },
+            { question: "A person is exempt from wearing protective headgear on a motorcycle under TC Sec. 661.003 if they are at least 21 years old and have...", options: ["A special permit from DPS", "Successfully completed a motorcycle safety course or have medical insurance", "Been riding for over 10 years", "An out-of-state license"], answer: "Successfully completed a motorcycle safety course or have medical insurance", rationale: "The law allows an exception for riders 21 or older who have either completed a DPS-approved safety course or are covered by a qualifying health insurance plan.", page: "Page 15" },
+            { question: "An officer has authority to take an abandoned motor vehicle into custody under what circumstance, per TC Sec. 683.011?", options: ["If it is legally parked but has not moved in 24 hours", "If it is left on public property for more than 48 hours", "If it is parked in a restricted zone", "If the owner requests its removal"], answer: "If it is left on public property for more than 48 hours", rationale: "TC Sec. 683.011 provides the authority to take into custody an abandoned motor vehicle that has been left unattended on public property for more than 48 hours.", page: "Page 16" },
+            { question: "Operating a vehicle on a public highway without displaying the required temporary tag or license plates is a violation of which statute?", options: ["TC Sec. 502.407", "TC Sec. 502.473", "TC Sec. 503.068", "TC Sec. 504.943"], answer: "TC Sec. 504.943", rationale: "TC Sec. 504.943 'Operation of Vehicle without License Plate' makes it an offense to operate a vehicle that has not been issued license plates or does not display the two required plates at the front and rear.", page: "Page 18" },
+            { question: "What is the penalty for operating a vehicle with an expired license plate, per TC Sec. 502.407?", options: ["A warning for the first offense", "A felony charge", "A misdemeanor offense", "A civil penalty only"], answer: "A misdemeanor offense", rationale: "Operating a motor vehicle on a public highway with an expired license plate is a misdemeanor offense, though there is a five-day grace period for which the charge may be dismissed upon remedy.", page: "Page 17" },
+            { question: "According to TC Sec. 504.945, it is an offense to operate a vehicle with a license plate that is...", options: ["Slightly dirty", "From another state", "Altered, fictitious, or obscured", "More than 5 years old"], answer: "Altered, fictitious, or obscured", rationale: "This statute makes it illegal to attach or display a license plate that is altered, has a fictitious number, has been deliberately obscured, or belongs to another vehicle.", page: "Page 18" },
+            { question: "The Texas law that requires drivers to have motor vehicle liability insurance is known as:", options: ["The Driver Responsibility Program", "The Financial Responsibility Law", "The Implied Consent Law", "The Move Over Law"], answer: "The Financial Responsibility Law", rationale: "Chapter 601 of the Transportation Code, often called the Financial Responsibility Law, requires operators to maintain liability insurance or another form of financial responsibility.", page: "Page 18" },
+            { question: "What document is typically used as standard proof of motor vehicle liability insurance?", options: ["The vehicle's title", "A letter from a lawyer", "An insurance policy or a standard proof of liability insurance form (Texas Liability Card)", "The vehicle's registration receipt"], answer: "An insurance policy or a standard proof of liability insurance form (Texas Liability Card)", rationale: "TC Sec. 601.081 specifies that the Texas Department of Insurance prescribes the standard form for proving liability coverage, which is the familiar insurance card.", page: "Page 18" },
+            { question: "What is the maximum legal width for most vehicles operating on a public highway in Texas under TC Sec. 621.201?", options: ["96 inches (8 feet)", "102 inches (8.5 feet)", "108 inches (9 feet)", "120 inches (10 feet)"], answer: "102 inches (8.5 feet)", rationale: "TC Sec. 621.201 sets the maximum width of a vehicle at 102 inches, which is 8 feet and 6 inches.", page: "Page 19" },
+            { question: "A person commits an offense under TC Sec. 472.021 if they knowingly...", options: ["Drive around a warning sign", "Tamper with, damage, or remove a barricade or warning device", "Report a downed warning sign to authorities", "Place their own warning sign for a hazard"], answer: "Tamper with, damage, or remove a barricade or warning device", rationale: "TC Sec. 472.021, 'Tampering with Warning Devices', makes it a criminal offense to tamper with, damage, or remove a traffic warning device placed by the state or a contractor.", page: "Page 19" },
+            { question: "Under the Implied Consent law (TC Sec. 724.011), a person arrested for DWI is deemed to have consented to...", options: ["A search of their vehicle", "Taking a specimen of their breath or blood", "A field sobriety test", "Having their vehicle towed"], answer: "Taking a specimen of their breath or blood", rationale: "TC Sec. 724.011 states that if a person is arrested for an offense arising out of acts alleged to have been committed while operating a motor vehicle in a public place while intoxicated, the person is deemed to have consented to submit to the taking of one or more specimens of the person's breath or blood for analysis.", page: "Page 19" },
+            { question: "What is the primary duty of an operator involved in a collision that results in only damage to another vehicle, under TC Sec. 550.022?", options: ["Leave a note with their information and depart", "Wait for the other driver to return, or leave a note and notify police", "Immediately call their insurance company", "Move their vehicle and leave the scene"], answer: "Wait for the other driver to return, or leave a note and notify police", rationale: "TC Sec. 550.024 'Duty on Striking Unattended Vehicle' requires the operator to immediately stop and either locate the operator or owner of the unattended vehicle and give them the operator's name and address, or leave a written notice in a conspicuous place.", page: "Page 20" },
+            { question: "What is the primary duty of an operator involved in a collision that results in injury or death to a person, under TC Sec. 550.021?", options: ["To immediately leave the scene to call for help", "To stop, render aid, and provide information", "To move the vehicles out of the roadway immediately", "To only provide their name to the other party"], answer: "To stop, render aid, and provide information", rationale: "This offense, commonly known as Failure to Stop and Render Aid (FSGI), requires an operator to immediately stop at the scene, determine if anyone requires aid and provide reasonable assistance, and provide their personal and vehicle information.", page: "Page 20" },
+            { question: "An operator of a vehicle involved in a crash not investigated by a peace officer must make a report of the crash if it resulted in injury, death, or damage over $1,000. This is known as:", options: ["Officer's Collision Report", "Driver's Confidential Crash Report (CR-2)", "Immediate Report of Collision", "Proof of Financial Responsibility"], answer: "Driver's Confidential Crash Report (CR-2)", rationale: "While TC Sec. 550.026 requires an immediate report, the actual form used by a driver to self-report a crash is the CR-2, also known as the 'Blue Form'.", page: "Page 21" },
+            { question: "An officer investigating a crash is required to submit a written report to TxDOT if the crash resulted in injury, death, or what other circumstance?", options: ["Any amount of property damage", "Damage to a government vehicle", "Damage to a vehicle to the extent it cannot be normally driven", "The involvement of an out-of-state driver"], answer: "Damage to a vehicle to the extent it cannot be normally driven", rationale: "Under TC Sec. 550.062, an officer's crash report is required for crashes resulting in injury, death, or property damage of $1,000 or more (which is generally interpreted as disabling damage).", page: "Page 21" },
+            { question: "Which of the following is NOT listed as essential equipment for a traffic crash investigator?", options: ["Tape measure (100 ft)", "Flares or warning cones", "A drug-sniffing K9 unit", "A flashlight"], answer: "A drug-sniffing K9 unit", rationale: "While a K9 unit may be useful in some situations, the core equipment for a crash investigator includes measuring devices, warning markers, a flashlight, sketch paper, and a traffic vest.", page: "Page 21" },
+            { question: "In crash scene management, what is the primary reason for positioning a patrol unit to protect the scene?", options: ["To make the scene look more official", "To prevent further damage or injury", "To provide a place for officers to sit", "To block the view of the media"], answer: "To prevent further damage or injury", rationale: "Proper vehicle positioning creates a safety barrier, protecting responders and victims from approaching traffic and preventing secondary collisions.", page: "Page 21" },
+            { question: "According to TC Sec. 600.001, who is responsible for removing glass or other injurious material dropped on a highway?", options: ["The local fire department", "The person who dropped it or the operator of the vehicle from which it was dropped", "The Texas Department of Transportation", "The first responding peace officer"], answer: "The person who dropped it or the operator of the vehicle from which it was dropped", rationale: "TC Sec. 600.001 places the responsibility for removing injurious material from the highway directly on the person who dropped or permitted it to be dropped.", page: "Page 23" },
+            { question: "When interviewing individuals at a crash scene, what is a recommended procedure?", options: ["Interview all parties together to get one consistent story", "Only interview the person who was not at fault", "Separate the parties and interview each one individually", "Allow witnesses to leave without getting their information"], answer: "Separate the parties and interview each one individually", rationale: "Separating the parties helps the investigator get individual, unbiased accounts of the incident without the drivers influencing each other's statements.", page: "Page 23" },
+            { question: "Tire tread patterns, gouge marks on the roadway, and paint flakes are all examples of what?", options: ["Driver behaviors", "Environmental conditions", "Physical evidence at a crash scene", "Vehicle equipment failures"], answer: "Physical evidence at a crash scene", rationale: "The manual lists these items under 'Collecting Physical Evidence,' which are crucial for reconstructing the events of a crash.", page: "Page 24" },
+            { question: "What is a nomograph used for in crash investigation?", options: ["To determine the color of a vehicle from paint flakes", "To graph scales to find a corresponding value, like speed from skid marks", "To record audio statements from witnesses", "To diagram the final resting positions of vehicles"], answer: "To graph scales to find a corresponding value, like speed from skid marks", rationale: "A nomograph is a graphical calculating device, a two-dimensional diagram designed to allow the approximate graphical computation of a function. In crash investigation, it can be used to estimate speed based on skid mark length and road surface friction.", page: "Page 24" },
+            { question: "What is the official name of the crash report form used by Texas Peace Officers?", options: ["Form 10-50", "The Accident Information Sheet", "Texas Peace Officer's Crash Report (Form CR-3)", "State of Texas Vehicle Incident Form"], answer: "Texas Peace Officer's Crash Report (Form CR-3)", rationale: "The official form designated for law enforcement crash reporting in Texas is the CR-3, 'Texas Peace Officer's Crash Report'.", page: "Page 25" },
+            { question: "For the purposes of traffic incident management, a 'non-recurring event that causes a reduction of roadway capacity' is defined as:", options: ["A traffic jam", "An incident", "A congestion point", "A detour"], answer: "An incident", rationale: "An 'incident' is defined as any non-recurring event, such as a crash or disabled vehicle, that causes a reduction of roadway capacity or an abnormal increase in demand and requires a law enforcement response.", page: "Page 25" },
+            { question: "When directing traffic, how should an officer start traffic movement using hand signals?", options: ["Point at the driver and then wave them forward", "Turn their back to the traffic they want to start", "Use a two-handed 'come here' motion", "Attract the driver's attention by pointing and then bringing the hand up and over toward them"], answer: "Attract the driver's attention by pointing and then bringing the hand up and over toward them", rationale: "The correct procedure is to attract the driver's attention by extending your arm and pointing, then turning your palm inward and bringing the hand up and over to the driver, bending the arm at the elbow.", page: "Page 27" },
+            { question: "Which of the following is NOT one of the five designated areas of a work zone?", options: ["Advanced warning area", "Transition area", "Rest area", "Termination area"], answer: "Rest area", rationale: "The five areas of a work zone are the advanced warning area, transition area, buffer area, work area, and termination area.", page: "Page 28" },
+            { question: "When directing traffic, what does one long blast of a police whistle typically signify?", options: ["To get drivers' attention to start", "A warning of a hazard", "To get drivers' attention to stop", "To signal pedestrians to cross"], answer: "To get drivers' attention to stop", rationale: "One long blast is the standard whistle command to signal drivers to stop, which should be used in conjunction with a hand signal.", page: "Page 28" },
+            { question: "What do two short blasts of a police whistle generally indicate when directing traffic?", options: ["Emergency, clear the intersection", "Get ready to stop", "To get drivers' attention to start moving", "All traffic should reverse direction"], answer: "To get drivers' attention to start moving", rationale: "Two short blasts are used to signal drivers that it is time to start, accompanied by the appropriate hand signal.", page: "Page 28" }
+        ];
+
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const reviewScreen = document.getElementById('review-screen');
+
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const reviewBtn = document.getElementById('review-btn');
+        const backToResultsBtn = document.getElementById('back-to-results-btn');
+        
+        const questionNumberEl = document.getElementById('question-number');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const progressBar = document.getElementById('progress-bar');
+        const questionTextEl = document.getElementById('question-text');
+        const answerOptionsEl = document.getElementById('answer-options');
+        const rationaleBox = document.getElementById('rationale-box');
+        const rationaleText = document.getElementById('rationale-text');
+        const rationaleSource = document.getElementById('rationale-source');
+        
+        const scorePercentageEl = document.getElementById('score-percentage');
+        const correctAnswersEl = document.getElementById('correct-answers');
+        const totalAnsweredEl = document.getElementById('total-answered');
+        const finalTimeEl = document.getElementById('final-time');
+        const timerEl = document.getElementById('timer');
+        const reviewContainer = document.getElementById('review-container');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timerInterval;
+        let secondsElapsed = 0;
+        let userAnswers = [];
+        let questionsToAsk = [];
+        
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        startBtn.addEventListener('click', startQuiz);
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', startQuiz);
+        reviewBtn.addEventListener('click', showReview);
+        backToResultsBtn.addEventListener('click', () => {
+            reviewScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+        });
+
+        function startTimer() {
+            secondsElapsed = 0;
+            timerEl.textContent = '00:00';
+            timerInterval = setInterval(() => {
+                secondsElapsed++;
+                const minutes = Math.floor(secondsElapsed / 60).toString().padStart(2, '0');
+                const seconds = (secondsElapsed % 60).toString().padStart(2, '0');
+                timerEl.textContent = `${minutes}:${seconds}`;
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function startQuiz() {
+            questionsToAsk = shuffleArray([...quizData]);
+            questionsToAsk.forEach(q => shuffleArray(q.options));
+
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            startScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            nextBtn.classList.add('hidden');
+            startTimer();
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            rationaleBox.classList.add('hidden');
+            answerOptionsEl.innerHTML = '';
+            const currentQuestion = questionsToAsk[currentQuestionIndex];
+            
+            questionNumberEl.textContent = currentQuestionIndex + 1;
+            totalQuestionsEl.textContent = questionsToAsk.length;
+            questionTextEl.textContent = currentQuestion.question;
+
+            const progress = ((currentQuestionIndex) / questionsToAsk.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('answer-option', 'w-full', 'p-4', 'text-left', 'bg-white', 'border-2', 'border-gray-300', 'rounded-lg', 'hover:bg-gray-50', 'hover:border-blue-500');
+                button.addEventListener('click', () => selectAnswer(button, option, currentQuestion));
+                answerOptionsEl.appendChild(button);
+            });
+        }
+
+        function selectAnswer(button, selectedOption, currentQuestion) {
+            const { answer, rationale, page } = currentQuestion;
+            userAnswers[currentQuestionIndex] = selectedOption;
+
+            const buttons = answerOptionsEl.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === answer) {
+                    btn.classList.add('correct');
+                }
+            });
+
+            if (selectedOption === answer) {
+                score++;
+                button.classList.add('correct');
+            } else {
+                button.classList.add('incorrect');
+            }
+
+            rationaleText.textContent = rationale;
+            rationaleSource.textContent = page;
+            rationaleBox.classList.remove('hidden');
+            nextBtn.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questionsToAsk.length) {
+                nextBtn.classList.add('hidden');
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            stopTimer();
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+
+            const percentage = Math.round((score / questionsToAsk.length) * 100);
+            scorePercentageEl.textContent = `${percentage}%`;
+            correctAnswersEl.textContent = score;
+            totalAnsweredEl.textContent = questionsToAsk.length;
+            finalTimeEl.textContent = timerEl.textContent;
+            
+            progressBar.style.width = `100%`;
+        }
+
+        function showReview() {
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.remove('hidden');
+            reviewContainer.innerHTML = '';
+
+            questionsToAsk.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === question.answer;
+
+                const reviewItem = document.createElement('div');
+                reviewItem.classList.add('border', 'p-4', 'rounded-lg');
+                reviewItem.classList.add(isCorrect ? 'bg-green-50/50' : 'bg-red-50/50', isCorrect ? 'border-green-200' : 'border-red-200');
+
+                let userAnswerHTML = '';
+                if (isCorrect) {
+                    userAnswerHTML = `<p>Your answer: <span class="font-semibold review-correct">${userAnswer} (Correct)</span></p>`;
+                } else {
+                    userAnswerHTML = `
+                        <p>Your answer: <span class="font-semibold review-incorrect">${userAnswer ? userAnswer : 'Not answered'} (Incorrect)</span></p>
+                        <p>Correct answer: <span class="font-semibold review-correct">${question.answer}</span></p>
+                    `;
+                }
+
+                reviewItem.innerHTML = `
+                    <p class="font-bold mb-2">${index + 1}. ${question.question}</p>
+                    ${userAnswerHTML}
+                    <p class="text-sm text-gray-600 mt-2"><em><strong>Rationale:</strong> ${question.rationale} (Source: ${question.page})</em></p>
+                `;
+                reviewContainer.appendChild(reviewItem);
+            });
+        }
+
+    </script>
+</body>
+</html>
+

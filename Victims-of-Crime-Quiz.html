@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCOLE Victims of Crime Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+        .answer-option {
+            transition: all 0.2s ease-in-out;
+        }
+        .answer-option:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .correct {
+            background-color: #D1FAE5 !important;
+            border-color: #10B981 !important;
+            color: #065F46 !important;
+        }
+        .incorrect {
+            background-color: #FEE2E2 !important;
+            border-color: #EF4444 !important;
+            color: #991B1B !important;
+        }
+        .progress-bar-fill {
+            transition: width 0.3s ease-in-out;
+        }
+        .review-correct {
+            color: #059669;
+        }
+        .review-incorrect {
+            color: #e11d48;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="quiz-app" class="quiz-container p-4 sm:p-8">
+        
+        <!-- Quiz Start Screen -->
+        <div id="start-screen" class="text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Victims of Crime Quiz</h1>
+            <p class="text-lg text-gray-600 mb-8">An exhaustive quiz based on the "Basic Peace Officer Course | Chapter 20" handout to test your knowledge on victim response and rights.</p>
+            <button id="start-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Start Quiz</button>
+        </div>
+
+        <!-- Quiz Interface -->
+        <div id="quiz-screen" class="hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold">Question <span id="question-number"></span> of <span id="total-questions"></span></h2>
+                <div id="timer" class="text-lg font-mono bg-gray-200 px-3 py-1 rounded-md">00:00</div>
+            </div>
+            
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+                <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full progress-bar-fill" style="width: 0%"></div>
+            </div>
+
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+                <p id="question-text" class="text-xl font-medium mb-8 min-h-[6rem]"></p>
+                <div id="answer-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Answer options will be injected here by JS -->
+                </div>
+            </div>
+             <div id="rationale-box" class="hidden mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h3 class="font-bold text-blue-800">Rationale:</h3>
+                <p id="rationale-text" class="text-blue-700"></p>
+                <p class="text-sm text-blue-600 mt-2">Source: <span id="rationale-source"></span></p>
+            </div>
+            <button id="next-btn" class="hidden w-full bg-blue-600 text-white font-bold py-3 px-8 rounded-lg mt-8 hover:bg-blue-700 transition-colors shadow-md">Next Question</button>
+        </div>
+
+        <!-- Quiz Results Screen -->
+        <div id="results-screen" class="hidden text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">Quiz Complete!</h1>
+            <p class="text-lg text-gray-600 mb-6">Here's how you did:</p>
+            <div class="flex flex-col sm:flex-row justify-around items-center my-8 gap-8 sm:gap-0">
+                <div>
+                    <p id="score-percentage" class="text-5xl font-bold text-green-600">0%</p>
+                    <p class="text-gray-500">Score</p>
+                </div>
+                 <div>
+                    <p class="text-5xl font-bold text-blue-600"><span id="correct-answers">0</span>/<span id="total-answered">0</span></p>
+                    <p class="text-gray-500">Correct Answers</p>
+                </div>
+                 <div>
+                    <p id="final-time" class="text-5xl font-bold text-gray-700">00:00</p>
+                    <p class="text-gray-500">Time Taken</p>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="restart-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Try Again</button>
+                <button id="review-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md">Review Answers</button>
+            </div>
+        </div>
+        
+        <!-- Review Screen -->
+        <div id="review-screen" class="hidden bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6">Answer Review</h1>
+            <div id="review-container" class="space-y-6">
+                <!-- Review content will be injected here -->
+            </div>
+            <button id="back-to-results-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md mt-8">Back to Results</button>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            { question: "What is the normal human response to trauma called?", options: ["Fight-or-flight", "Crisis Reaction", "Physical Shock", "Psychological Denial"], answer: "Crisis Reaction", rationale: "The normal human response to trauma follows a similar pattern called the crisis reaction. It occurs in all of us.", page: "Page 1" },
+            { question: "The physical response to trauma is based on what?", options: ["Learned behaviors", "Emotional state", "Animal instincts", "Cognitive processing"], answer: "Animal instincts", rationale: "The physical response to trauma is based on our animal instincts. It includes physical shock, disorientation, and numbness: 'frozen fright.'", page: "Page 1" },
+            { question: "What physiological event eventually results from the prolonged physical arousal of the 'fight-or-flight' response?", options: ["Hyperactivity", "Exhaustion", "Numbness", "Denial"], answer: "Exhaustion", rationale: "Physical arousal associated with fight or flight cannot be prolonged indefinitely. Eventually, it will result in exhaustion.", page: "Page 1" },
+            { question: "Which of the following is NOT part of the 'fight-or-flight' reaction?", options: ["Adrenaline pumping through the body", "Increased heart rate", "Decreased physical senses", "Hyperventilation and sweating"], answer: "Decreased physical senses", rationale: "In a 'fight-or-flight' reaction, physical senses, one or more, may become very acute while others 'shut down.'", page: "Page 1" },
+            { question: "What is the first stage of the psychological response to trauma?", options: ["Cataclysm of emotions", "Reconstruction of equilibrium", "Shock, Disbelief, and Denial", "Anger and rage"], answer: "Shock, Disbelief, and Denial", rationale: "Stage one of the mind's response to trauma is Shock, Disbelief, and Denial. This is a psychological defense mechanism.", page: "Page 1" },
+            { question: "Which emotion is characteristic of the second stage of psychological response, the 'Cataclysm of emotions'?", options: ["Balance", "Hope", "Denial", "Guilt/self-blame"], answer: "Guilt/self-blame", rationale: "Stage two, 'Cataclysm of emotions,' includes anger/rage, fear/terror, grief/sorrow, confusion/frustration, guilt/self-blame, and more.", page: "Page 1" },
+            { question: "A victim experiencing illogical thinking, memory problems, and distressing dreams is exhibiting what kind of response?", options: ["Physical Response", "Behavioral Response", "Additional Psychological Responses", "Long-term crisis reaction"], answer: "Additional Psychological Responses", rationale: "Slowed thinking, memory problems, distressing dreams, and illogical thinking are listed under Additional Psychological Responses.", page: "Pages 1-2" },
+            { question: "Avoiding reminders of a traumatic event is considered what type of response?", options: ["Psychological Response", "Physical Response", "Behavioral Response", "Crisis Reaction"], answer: "Behavioral Response", rationale: "Avoiding reminders of the event is listed as a Behavioral Response to trauma.", page: "Page 2" },
+            { question: "An extreme change in appetite, sleep, or activity level is considered what type of response to trauma?", options: ["Psychological Response", "Physical Response", "Behavioral Response", "Crisis Reaction"], answer: "Behavioral Response", rationale: "Changes in appetite, sleep, or activity level are listed as Behavioral Responses to trauma.", page: "Page 2" },
+            { question: "According to the 'Range of the Crisis Reaction', which of the following is NOT typically part of the range?", options: ["Depression and loneliness", "Hope", "Physical symptoms of distress", "Complete emotional stability"], answer: "Complete emotional stability", rationale: "The range of crisis reaction includes shock, depression, panic, hostility, hope, emotion, physical symptoms, guilt, and inability to resume normal activities.", page: "Page 2" },
+            { question: "Trauma is often accompanied by a multitude of losses. Which of these is a described loss?", options: ["A sense of immortality and invulnerability", "Increased trust in others", "A feeling of enhanced control", "Loss of negative emotions"], answer: "A sense of immortality and invulnerability", rationale: "Trauma is accompanied by losses, including the loss of a sense of fairness or justice and a sense of immortality and invulnerability.", page: "Page 2" },
+            { question: "A traumatized person assuming a fetal position or calling an officer 'mommy' is an example of what phenomenon?", options: ["Regression", "Reconstruction", "Recoil", "Reorganization"], answer: "Regression", rationale: "Trauma can cause a person to regress to childhood, mentally and physically, exhibiting childlike behaviors like assuming a fetal position or calling an authority figure 'mommy' or 'daddy'.", page: "Page 3" },
+            { question: "What is it called when trauma causes a person to revert to childhood, mentally and physically?", options: ["Regression", "Reconstruction", "Recoil", "Reorganization"], answer: "Regression", rationale: "Trauma can be so overwhelming that it causes a person to revert or regress to childhood, mentally and physically.", page: "Pages 2-3" },
+            { question: "Which factor is listed as affecting recovery from immediate trauma?", options: ["Severity of crisis reaction", "Lack of a supportive environment", "Ignoring the validation of the experience", "Inability to understand what happened"], answer: "Severity of crisis reaction", rationale: "Recovery from immediate trauma is often affected by the severity of the crisis reaction, ability to understand what happened, stability of equilibrium, and a supportive environment.", page: "Page 3" },
+            { question: "Which of the following is a key recovery issue for survivors of trauma?", options: ["Forgetting the event completely", "Re-establishing trust", "Avoiding all reminders of the event", "Maintaining the same life equilibrium as before"], answer: "Re-establishing trust", rationale: "Recovery issues for survivors include getting control of the event in their mind, redefining values, and re-establishing trust, a future, and meaning.", page: "Page 4" },
+            { question: "What is a 'trigger event' in the context of long-term crisis reactions?", options: ["An event that erases the memory of the trauma", "An event that immediately leads to PTSD", "An event that reminds the victim of the trauma", "A therapeutic session to resolve trauma"], answer: "An event that reminds the victim of the trauma", rationale: "'Trigger events' are events that remind the victim of the trauma, causing them to re-experience crisis reactions. Examples include anniversaries of the event or sensing something similar to the trauma.", page: "Page 4" },
+            { question: "Which of the following would be considered a 'trigger event' for a victim?", options: ["Receiving a promotion at work", "Media articles about a similar event", "A successful therapy session", "Forgetting the anniversary of the event"], answer: "Media articles about a similar event", rationale: "Trigger events can include the identification of an assailant, anniversaries, holidays, court proceedings, and media articles about a similar event.", page: "Page 4" },
+            { question: "According to DSM-V, PTSD can be diagnosed even in those who have...", options: ["Only read about trauma in a book", "Learned about severe trauma suffered by someone close to them", "Experienced ordinary life events like divorce", "Witnessed a minor argument"], answer: "Learned about severe trauma suffered by someone close to them", rationale: "PTSD can be diagnosed even in those who have learned about severe trauma (or its threat) suffered by someone to whom they are close - children, spouses, other close relatives.", page: "Page 5" },
+            { question: "Which of the following is a criterion for PTSD diagnosis regarding the traumatic event?", options: ["The event involved only a threat to property", "The patient felt intense fear, horror, or helplessness", "The patient witnessed the event on television", "The event was an ordinary life experience like a divorce"], answer: "The patient felt intense fear, horror, or helplessness", rationale: "A criterion for PTSD is that the traumatic event involved actual or threatened death or serious injury, and the patient felt intense fear, horror, or helplessness.", page: "Page 5" },
+            { question: "A PTSD patient feeling or acting as if a traumatic event were recurring is known as what?", options: ["An intrusive recollection", "A distressing dream", "A flashback", "A physiological reaction"], answer: "A flashback", rationale: "One way a PTSD patient re-lives an event is through flashbacks, hallucinations, or illusions, feeling or acting as if the event were recurring.", page: "Page 5" },
+            { question: "For a PTSD diagnosis, a patient's symptoms of avoidance and numbing must have been...", options: ["Present throughout their entire life", "Absent before the traumatic event", "Diagnosed by a non-medical professional", "Lasting for only a few days"], answer: "Absent before the traumatic event", rationale: "A criterion for PTSD is that the patient has numbing of general responsiveness that was absent before the traumatic event.", page: "Page 5" },
+            { question: "Which of the following is a criterion for PTSD diagnosis?", options: ["The patient felt intense joy or relief during the event", "The patient avoids trauma-related stimuli", "The symptoms have lasted for less than one week", "The patient has no symptoms of hyper-arousal"], answer: "The patient avoids trauma-related stimuli", rationale: "One of the criteria for PTSD is that the patient repeatedly avoids trauma-related stimuli and has a numbing of general responsiveness.", page: "Page 5" },
+            { question: "For a PTSD diagnosis, a patient must have at least how many symptoms of hyper-arousal that were not present before the event?", options: ["One", "Two", "Three", "Four"], answer: "Two", rationale: "The patient must have at least two of the listed symptoms of hyper-arousal, such as insomnia or an increased startle response, that were not present before the event.", page: "Page 6" },
+            { question: "For a PTSD diagnosis, the symptoms must last longer than what period of time?", options: ["One week", "Two weeks", "One month", "One year"], answer: "One month", rationale: "The symptoms must have lasted longer than one month to meet the criteria for a PTSD diagnosis.", page: "Page 6" },
+            { question: "What is the first phase of a victim's reaction to crime, occurring immediately after the violence?", options: ["Recoil", "Reorganization", "Impact", "Regression"], answer: "Impact", rationale: "The 'Impact' phase occurs immediately after the violence of the crime. Victims feel as if they are in shock.", page: "Page 6" },
+            { question: "During which phase of reaction to crime do victims attempt to accept or adapt to the violence and begin to reintegrate their personalities?", options: ["Impact", "Recoil", "Reorganization", "Reconstruction"], answer: "Recoil", rationale: "In the 'Recoil' phase, victims attempt to accept or adapt to the violence and begin to reintegrate their personalities, often experiencing a wide variety of emotions.", page: "Page 6" },
+            { question: "In the 'Reorganization' phase, what happens to the victim's feelings of fear and rage?", options: ["They increase in intensity", "They remain constant", "They diminish in intensity", "They are replaced by denial"], answer: "They diminish in intensity", rationale: "During the 'Reorganization' phase, the victim becomes more normal as feelings of fear and rage diminish in intensity.", page: "Page 6" },
+            { question: "What term describes how the impact of crime can spread beyond the immediate victim?", options: ["The Domino Effect", "The Ripple Effect", "Secondary Victimization", "The Trauma Wave"], answer: "The Ripple Effect", rationale: "A 'ripple effect' describes how the impact of crime can spread beyond the immediate victim to secondary victims (family, friends) and service providers.", page: "Page 7" },
+            { question: "Who are considered 'secondary victims' in the ripple effect of crime?", options: ["The perpetrators", "The immediate victim only", "Family and friends", "The criminal justice system"], answer: "Family and friends", rationale: "The ripple effect progresses from the immediate victim to secondary victims, which include family and friends.", page: "Page 7" },
+            { question: "What is a 'trauma-informed approach'?", options: ["An approach that ignores trauma to focus on facts", "A suspect-centered investigation technique", "A victim-centered collaborative approach using trauma principles", "A method used only for child victims"], answer: "A victim-centered collaborative approach using trauma principles", rationale: "A trauma-informed approach is a victim-centered collaborative approach using trauma specific principles to understand the impact of trauma and respond to the victim to reduce re-traumatization.", page: "Page 7" },
+            { question: "Which of the '4R's' of a trauma-informed approach involves understanding that a victim's behaviors are coping strategies?", options: ["Recognize", "Respond", "Resist", "Realize"], answer: "Realize", rationale: "'Realize' involves understanding the prevalence of trauma and that the victim's experiences and behaviors are understood in the context of coping strategies used to survive.", page: "Page 7" },
+            { question: "Recognizing symptoms like confusion, numbness, or inappropriate laughter in a victim relates to which of the '4R's'?", options: ["Realize", "Recognize", "Respond", "Resist"], answer: "Recognize", rationale: "'Recognize' means to recognize the signs and symptoms of someone that has experienced trauma, such as confusion, numbness, or inappropriate laughter.", page: "Page 7" },
+            { question: "Applying trauma principles to language and behaviors when interacting with a victim is part of which of the '4R's'?", options: ["Realize", "Recognize", "Respond", "Resist"], answer: "Respond", rationale: "'Respond' means to respond by applying the principles of a trauma-informed approach to victims using language, behaviors, and policies that consider the experience of trauma.", page: "Page 7" },
+            { question: "Which is one of the six key principles of a trauma-informed approach?", options: ["Safety", "Secrecy and Confidentiality", "Detachment and Objectivity", "Judgment and Evaluation"], answer: "Safety", rationale: "The six key principles include Safety, Trustworthiness and Transparency, Peer support, Collaboration and mutuality, Empowerment and voice and choice, and Cultural historical and gender issues.", page: "Pages 7-8" },
+            { question: "Allowing victims to have a voice and share in decision-making aligns with which principle of the trauma-informed approach?", options: ["Safety", "Peer support", "Trustworthiness and Transparency", "Empowerment and voice and choice"], answer: "Empowerment and voice and choice", rationale: "This principle involves allowing victims to share in decision-making, having a choice, and a voice in the process.", page: "Page 8" },
+            { question: "What is an effective intervention technique for helping victims?", options: ["Telling victims their reactions are abnormal", "Minimizing the impact of the crime", "Assuring victims that their reactions are natural and understandable", "Ignoring 'frozen fright'"], answer: "Assuring victims that their reactions are natural and understandable", rationale: "One of the elements of effective victim intervention is to assure victims that their reactions are natural and understandable.", page: "Page 8" },
+            { question: "Helping a victim regain a sense of control is an important part of victim intervention. Which action best demonstrates this?", options: ["Telling the victim what they must do next", "Making all decisions on the victim's behalf", "Asking the victim if there is anyone they would like called", "Completing all paperwork without the victim's input"], answer: "Asking the victim if there is anyone they would like called", rationale: "An officer can help victims regain a sense of control by asking if there is anyone they would like called on their behalf or a responsibility the officer can help address.", page: "Page 8" },
+            { question: "What type of interviewing allows victims to share fragmented memories as they remember them, rather than in a strict timeline?", options: ["Chronological interviewing", "Leading interviewing", "Categorical interviewing", "Judgmental interviewing"], answer: "Categorical interviewing", rationale: "Categorical interviewing allows victims to share fragmented memories as they remember them, as trauma affects the way memories are encoded and they may not be recalled chronologically.", page: "Page 9" },
+            { question: "Which is an example of an open-ended question to ask a victim?", options: ["'Did the suspect have a gun?'", "'Why were you there so late?'", "'What are you able to tell me about your experience?'", "'You must have been terrified, right?'"], answer: "'What are you able to tell me about your experience?'", rationale: "Open-ended questions like 'What are you able to tell me about your experience?' are recommended to allow the victim to share information as they remember it.", page: "Page 9" },
+            { question: "Why should officers avoid asking victims 'why' questions?", options: ["It is against agency policy", "It can question the victim's credibility or believability", "The victim will not know the answer", "It wastes valuable interview time"], answer: "It can question the victim's credibility or believability", rationale: "Officers should not ask victims 'why' questions as not to question the victim's credibility or believability. Instead, they should explain why a question is being asked.", page: "Page 9" },
+            { question: "What is it called when the actions of others, such as the criminal justice system or media, cause negative feelings for a victim?", options: ["Primary Injury", "Ripple Effect", "Secondary Victimization", "Trigger Event"], answer: "Secondary Victimization", rationale: "When the reactions of others are sensed to be negative, the actions are called the 'secondary assault' and the feelings are described as a 'secondary injury'. This is also known as 'secondary victimization'.", page: "Page 10" },
+            { question: "Which of the following is NOT listed as a source of 'secondary victimization'?", options: ["The criminal justice system", "A trained victim service worker providing support", "Family, friends, or acquaintances", "Hospital and emergency-room personnel"], answer: "A trained victim service worker providing support", rationale: "Sources of 'secondary victimization' include the justice system, media, family, friends, clergy, and various health and social service professionals. A supportive victim service worker would mitigate this.", page: "Page 10" },
+            { question: "Which of the following is a potential economic impact on crime victims?", options: ["Increased community support", "Lost earnings", "Improved property value", "Free government services"], answer: "Lost earnings", rationale: "Potential economic impacts to victims include medical care, lost earnings, and property loss/damage.", page: "Page 10" },
+            { question: "According to the recommended procedures for death notification, what should an officer do?", options: ["Call the family immediately over the phone", "Go in person, and do not call", "Send a single, plain-clothes officer", "Wait several days to allow the family time to prepare"], answer: "Go in person, and do not call", rationale: "One of the first and most important procedures is 'Go. Do not call.'", page: "Page 10" },
+            { question: "When should a death notification occur?", options: ["After the investigation is complete", "As soon as the deceased's identity has been established", "Within 48 hours of the death", "After the media has been notified"], answer: "As soon as the deceased's identity has been established", rationale: "Notification should occur as soon as the deceased's identity has been established.", page: "Page 10" },
+            { question: "When making a death notification, what is the recommendation regarding officer presence?", options: ["At least one person should be in uniform", "All officers should be in plain clothes to be less intimidating", "Only one officer should go to the residence", "The notification should be done by a civilian"], answer: "At least one person should be in uniform", rationale: "The recommended procedures state that 'At least one person should be in uniform.'", page: "Page 10" },
+            { question: "If a child answers the door during a death notification, what should the officer do?", options: ["Give the information to the child", "Request to speak to their parents", "Leave and come back later", "Ask the child if their parents are home"], answer: "Request to speak to their parents", rationale: "The procedure is: 'If a child answers the door, request to speak to their parents.'", page: "Page 10" },
+            { question: "How should the information about the death be conveyed?", options: ["Gradually and indirectly", "Through a series of questions", "Simply and directly", "With complex medical terminology"], answer: "Simply and directly", rationale: "The recommendation is to 'Convey the information simply and directly.'", page: "Page 11" },
+            { question: "What should an officer do after delivering a death notification?", options: ["Leave the survivor(s) alone to grieve", "Immediately start asking investigative questions", "Discount the survivor's feelings to maintain professionalism", "Offer to make calls and stay with them if they wish"], answer: "Offer to make calls and stay with them if they wish", rationale: "Officers should offer to make calls and should not leave the survivor(s) alone. They should stay if the survivors wish.", page: "Page 11" },
+            { question: "What information should an officer provide to the survivor(s) before leaving?", options: ["The officer's personal opinion on the case", "The officer's names and telephone numbers", "Graphic details about the death", "The names of potential suspects"], answer: "The officer's names and telephone numbers", rationale: "The procedures state to 'Provide the survivor(s) with the officer's names and telephone numbers.'", page: "Page 11" },
+            { question: "What should an officer do with the deceased's clothing and personal effects?", options: ["Discard them to avoid upsetting the family", "Give them directly to the family at the scene", "Preserve and label the package containing them", "Keep them as evidence indefinitely"], answer: "Preserve and label the package containing them", rationale: "The procedure is to 'Preserve and label the package containing the deceased's clothing and personal effects.'", page: "Page 11" },
+            { question: "When is it appropriate for law enforcement to talk to the media after a death?", options: ["Immediately to get information out quickly", "Never, it is the family's responsibility", "Only if the family has given permission", "After the case has gone to trial"], answer: "Only if the family has given permission", rationale: "Officers should talk to the media 'only if the family has given permission.'", page: "Page 11" },
+            { question: "What is one of the four listed outcomes of effective assistance to victims?", options: ["Increased crime rates", "Decreased faith in the justice system", "Improved relationship and partnerships between law enforcement and the community", "Reduced need for victim services"], answer: "Improved relationship and partnerships between law enforcement and the community", rationale: "One of the four outcomes is an 'Improved relationship and partnerships between law enforcement and the community.'", page: "Page 12" },
+            { question: "Which article in the Code of Criminal Procedure outlines the general rights of crime victims?", options: ["Art. 56A.201", "Art. 42.21", "Art. 56A.051", "Art. 58"], answer: "Art. 56A.051", rationale: "Crime Victims' Rights are outlined in the Code of Criminal Procedure Art. 56A.051.", page: "Page 11" },
+            { question: "Who is designated by the Code of Criminal Procedure Art. 56A.201 to handle victim services?", options: ["The lead detective", "The Victim Assistance Coordinator", "The police chief", "The district attorney"], answer: "The Victim Assistance Coordinator", rationale: "Code of Criminal Procedure Art. 56A.201 establishes the role of the Victim Assistance Coordinator.", page: "Page 11" },
+            { question: "According to CCP Art. 42.21, victims must receive what specific notice?", options: ["Notice of trial dates", "Notice of Release of Family Violence Offenders", "Notice of appeal proceedings", "Notice of the suspect's employment status"], answer: "Notice of Release of Family Violence Offenders", rationale: "Code of Criminal Procedure Art. 42.21 pertains to the 'Notice of Release of Family Violence Offenders.'", page: "Page 12" },
+            { question: "Which section of the Texas Constitution outlines the Rights of Crime Victims?", options: ["Article 1, Section 30", "Article 5, Section 12", "The Bill of Rights", "The Preamble"], answer: "Article 1, Section 30", rationale: "The Rights of Crime Victims are found in the Texas Constitution Article 1, Section 30.", page: "Page 12" }
+        ];
+
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const reviewScreen = document.getElementById('review-screen');
+
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const reviewBtn = document.getElementById('review-btn');
+        const backToResultsBtn = document.getElementById('back-to-results-btn');
+        
+        const questionNumberEl = document.getElementById('question-number');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const progressBar = document.getElementById('progress-bar');
+        const questionTextEl = document.getElementById('question-text');
+        const answerOptionsEl = document.getElementById('answer-options');
+        const rationaleBox = document.getElementById('rationale-box');
+        const rationaleText = document.getElementById('rationale-text');
+        const rationaleSource = document.getElementById('rationale-source');
+        
+        const scorePercentageEl = document.getElementById('score-percentage');
+        const correctAnswersEl = document.getElementById('correct-answers');
+        const totalAnsweredEl = document.getElementById('total-answered');
+        const finalTimeEl = document.getElementById('final-time');
+        const timerEl = document.getElementById('timer');
+        const reviewContainer = document.getElementById('review-container');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timerInterval;
+        let secondsElapsed = 0;
+        let userAnswers = [];
+        
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        startBtn.addEventListener('click', startQuiz);
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', startQuiz);
+        reviewBtn.addEventListener('click', showReview);
+        backToResultsBtn.addEventListener('click', () => {
+            reviewScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+        });
+
+        function startTimer() {
+            secondsElapsed = 0;
+            timerEl.textContent = '00:00';
+            timerInterval = setInterval(() => {
+                secondsElapsed++;
+                const minutes = Math.floor(secondsElapsed / 60).toString().padStart(2, '0');
+                const seconds = (secondsElapsed % 60).toString().padStart(2, '0');
+                timerEl.textContent = `${minutes}:${seconds}`;
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function startQuiz() {
+            shuffleArray(quizData);
+            quizData.forEach(q => shuffleArray(q.options));
+
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            startScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            nextBtn.classList.add('hidden');
+            startTimer();
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            rationaleBox.classList.add('hidden');
+            answerOptionsEl.innerHTML = '';
+            const currentQuestion = quizData[currentQuestionIndex];
+            
+            questionNumberEl.textContent = currentQuestionIndex + 1;
+            totalQuestionsEl.textContent = quizData.length;
+            questionTextEl.textContent = currentQuestion.question;
+
+            const progress = ((currentQuestionIndex) / quizData.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('answer-option', 'w-full', 'p-4', 'text-left', 'bg-white', 'border-2', 'border-gray-300', 'rounded-lg', 'hover:bg-gray-50', 'hover:border-blue-500');
+                button.addEventListener('click', () => selectAnswer(button, option, currentQuestion));
+                answerOptionsEl.appendChild(button);
+            });
+        }
+
+        function selectAnswer(button, selectedOption, currentQuestion) {
+            const { answer, rationale, page } = currentQuestion;
+            userAnswers[currentQuestionIndex] = selectedOption;
+
+            const buttons = answerOptionsEl.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === answer) {
+                    btn.classList.add('correct');
+                }
+            });
+
+            if (selectedOption === answer) {
+                score++;
+                button.classList.add('correct');
+            } else {
+                button.classList.add('incorrect');
+            }
+
+            rationaleText.textContent = rationale;
+            rationaleSource.textContent = page;
+            rationaleBox.classList.remove('hidden');
+            nextBtn.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                nextBtn.classList.add('hidden');
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            stopTimer();
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            scorePercentageEl.textContent = `${percentage}%`;
+            correctAnswersEl.textContent = score;
+            totalAnsweredEl.textContent = quizData.length;
+            finalTimeEl.textContent = timerEl.textContent;
+            
+            // Ensure progress bar is full at the end
+            progressBar.style.width = `100%`;
+        }
+
+        function showReview() {
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.remove('hidden');
+            reviewContainer.innerHTML = '';
+
+            quizData.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === question.answer;
+
+                const reviewItem = document.createElement('div');
+                reviewItem.classList.add('border', 'p-4', 'rounded-lg');
+                reviewItem.classList.add(isCorrect ? 'bg-green-50/50 border-green-200' : 'bg-red-50/50 border-red-200');
+
+                let userAnswerHTML = '';
+                if (isCorrect) {
+                    userAnswerHTML = `<p>Your answer: <span class="font-semibold review-correct">${userAnswer} (Correct)</span></p>`;
+                } else {
+                    userAnswerHTML = `
+                        <p>Your answer: <span class="font-semibold review-incorrect">${userAnswer ? userAnswer : 'Not answered'} (Incorrect)</span></p>
+                        <p>Correct answer: <span class="font-semibold review-correct">${question.answer}</span></p>
+                    `;
+                }
+
+                reviewItem.innerHTML = `
+                    <p class="font-bold mb-2">${index + 1}. ${question.question}</p>
+                    ${userAnswerHTML}
+                    <p class="text-sm text-gray-600 mt-2"><em><strong>Rationale:</strong> ${question.rationale} (Source: ${question.page})</em></p>
+                `;
+                reviewContainer.appendChild(reviewItem);
+            });
+        }
+
+    </script>
+</body>
+</html>
+
