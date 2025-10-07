@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Guide: Identity Crimes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --header-bg: #1f2937;
+            --bg-color: #f3f4f6;
+            --tab-active-bg: #3b82f6;
+            --tab-active-text: #ffffff;
+            --card-bg: #ffffff;
+            --text-color: #111827;
+            --link-color: #2563eb;
+            --punishment-sjf: #fef08a; /* Yellow */
+            --punishment-3rd: #fed7aa; /* Orange */
+            --punishment-2nd: #fca5a5; /* Red */
+            --punishment-1st: #ef4444; /* Darker Red */
+            --punishment-a: #dbeafe;   /* Light Blue */
+            --punishment-b: #bfdbfe;   /* Blue */
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://rsms.me/inter/inter.css');
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab.active {
+            background-color: var(--tab-active-bg);
+            color: var(--tab-active-text);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tab {
+            transition: all 0.3s ease-in-out;
+        }
+        .punishment-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .punishment-1st { background-color: var(--punishment-1st); color: white; }
+        .punishment-2nd { background-color: var(--punishment-2nd); }
+        .punishment-3rd { background-color: var(--punishment-3rd); }
+        .punishment-sjf { background-color: var(--punishment-sjf); }
+        .punishment-a { background-color: var(--punishment-a); }
+        .punishment-b { background-color: var(--punishment-b); }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="bg-gray-800 text-white p-4 shadow-md sticky top-0 z-10">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">
+                <i class="fas fa-id-card mr-2"></i>Identity Crimes
+            </h1>
+            <p class="text-sm text-gray-300">BPOC Chapter 12 | TCOLE Preparation</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-4 md:p-6">
+        <!-- Tab Navigation -->
+        <div class="mb-6 bg-white rounded-lg shadow-md overflow-x-auto">
+            <nav id="tabs" class="flex flex-row space-x-1 p-2">
+                <button data-tab="concepts" class="tab active flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-info-circle mr-2"></i> <span class="hidden md:inline">Key Concepts</span>
+                </button>
+                <button data-tab="offenses-state" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-gavel mr-2"></i> <span class="hidden md:inline">State Offenses</span>
+                </button>
+                <button data-tab="offenses-federal" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-flag-usa mr-2"></i> <span class="hidden md:inline">Federal Offenses</span>
+                </button>
+                 <button data-tab="investigation" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-search mr-2"></i> <span class="hidden md:inline">Investigation</span>
+                </button>
+                 <button data-tab="prevention" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-shield-alt mr-2"></i> <span class="hidden md:inline">Prevention & Victim Aid</span>
+                </button>
+                <button data-tab="legal-procedures" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-balance-scale mr-2"></i> <span class="hidden md:inline">Legal Procedures</span>
+                </button>
+                <button data-tab="knowledge-check" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-question-circle mr-2"></i> <span class="hidden md:inline">Knowledge Check</span>
+                </button>
+                <button data-tab="resources" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-link mr-2"></i> <span class="hidden md:inline">Resources</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Tab Content -->
+        <div id="tab-contents">
+            <!-- Key Concepts Tab -->
+            <div id="concepts" class="tab-content active space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Defining Identity Theft & Crime</h2>
+                    <p class="mb-2"><strong>Identity Theft:</strong> The theft of your personal information (name, SSN, etc.) to commit fraud, such as opening new accounts, using existing accounts, or obtaining medical services without your permission.</p>
+                    <p class="mb-2"><strong>Identity Crime:</strong> The theft or misuse of personal or financial identifiers to gain something of value and/or facilitate other criminal activity.</p>
+                    <div class="mt-4 p-4 bg-red-50 border-l-4 border-red-400 rounded-r-lg">
+                        <h4 class="font-semibold text-red-800">Consequences for Victims</h4>
+                        <p class="text-sm text-red-700">Identity theft can have serious consequences, including negatively affecting a victim's credit, resulting in them being sued for debts that are not theirs, adding incorrect and potentially harmful information to their medical records, and even leading to their wrongful arrest.</p>
+                    </div>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Statistical Overview (2019)</h2>
+                    <p class="mb-2 text-sm">According to the Federal Trade Commission (FTC), Texas ranked <strong>4th in the nation</strong> for identity theft reports, with 73,553 cases reported.</p>
+                    <h4 class="font-semibold mt-4">Top 5 Types of Identity Theft:</h4>
+                    <ol class="list-decimal list-inside text-gray-700 text-sm">
+                        <li>Credit card fraud (new accounts)</li>
+                        <li>Miscellaneous identity theft (online shopping, social media fraud, etc.)</li>
+                        <li>Mobile telephone (new account)</li>
+                        <li>Business and personal loans</li>
+                        <li>Auto loan or lease</li>
+                    </ol>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Associated Crimes</h2>
+                    <p class="mb-4 text-sm">Identity crime is often a facilitator for other criminal activities, providing financing or anonymity. These can include:</p>
+                     <div class="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm text-gray-700">
+                         <span class="p-2 bg-gray-100 rounded-md"><i class="fas fa-envelope-open-text mr-2 text-gray-500"></i>Mail Theft/Fraud</span>
+                         <span class="p-2 bg-gray-100 rounded-md"><i class="fas fa-pills mr-2 text-gray-500"></i>Narcotics/Drugs</span>
+                         <span class="p-2 bg-gray-100 rounded-md"><i class="fas fa-users mr-2 text-gray-500"></i>Organized Crime</span>
+                         <span class="p-2 bg-gray-100 rounded-md"><i class="fas fa-money-laundering mr-2 text-gray-500"></i>Money Laundering</span>
+                         <span class="p-2 bg-gray-100 rounded-md"><i class="fas fa-home mr-2 text-gray-500"></i>Mortgage Fraud</span>
+                         <span class="p-2 bg-gray-100 rounded-md"><i class="fas fa-crosshairs mr-2 text-gray-500"></i>Weapons Trafficking</span>
+                         <span class="p-2 bg-gray-100 rounded-md"><i class="fas fa-skull-crossbones mr-2 text-gray-500"></i>Homicide</span>
+                         <span class="p-2 bg-gray-100 rounded-md"><i class="fas fa-bomb mr-2 text-gray-500"></i>Terrorism</span>
+                         <span class="p-2 bg-gray-100 rounded-md"><i class="fas fa-laptop-code mr-2 text-gray-500"></i>Computer Crime</span>
+                    </div>
+                     <p class="mt-4 text-sm">Special forms also include: <strong>Tax Identity Theft</strong>, <strong>Child Identity Theft</strong>, and <strong>Medical Identity Theft</strong>.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Key Terminology</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold">Identifying Information</h4>
+                            <p class="text-sm text-gray-700">Information that alone, or in conjunction with other information, identifies a person. This includes a person's name and DOB, unique biometric data (fingerprint, voice print), unique electronic ID number or financial account number, SSN or government ID number, and telecommunication identifying information or access device.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Telecommunication Access Device</h4>
+                            <p class="text-sm text-gray-700">A card, plate, code, account number, PIN, or other means of account access that can be used to obtain money, goods, services, or to initiate a transfer of funds.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- State Offenses Tab -->
+            <div id="offenses-state" class="tab-content space-y-6">
+                <!-- TPC 32.51 -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-2">Fraudulent Use or Possession of Identifying Information</h2>
+                    <p class="text-sm text-gray-500 mb-4"><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.32.htm#32.51" target="_blank" class="text-blue-600 hover:underline">Texas Penal Code § 32.51</a></p>
+
+                    <div class="mb-4">
+                        <h4 class="font-semibold text-gray-800">Legal Definition</h4>
+                        <p class="text-sm text-gray-600">A person commits an offense if the person, with the intent to harm or defraud another, obtains, possesses, transfers, or uses an item of identifying information of another person without the other person's consent; information concerning a deceased person; or identifying information of a child younger than 18.</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <h4 class="font-semibold text-gray-800 mb-2">Punishment Level</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+                            <div class="flex items-center"><span class="punishment-tag punishment-sjf mr-3">State Jail Felony</span><span>If the number of items is less than 5.</span></div>
+                            <div class="flex items-center"><span class="punishment-tag punishment-3rd mr-3">3rd Degree Felony</span><span>If the number of items is 5 to 9.</span></div>
+                            <div class="flex items-center"><span class="punishment-tag punishment-2nd mr-3">2nd Degree Felony</span><span>If the number of items is 10 to 49.</span></div>
+                            <div class="flex items-center"><span class="punishment-tag punishment-1st mr-3">1st Degree Felony</span><span>If the number of items is 50 or more.</span></div>
+                        </div>
+                        <p class="text-xs text-gray-600 mt-2"><i class="fas fa-arrow-up mr-1"></i> Increased to next higher category if committed against an elderly individual or to facilitate a sex offender registration offense.</p>
+                        <p class="text-xs text-gray-600 mt-1"><i class="fas fa-balance-scale mr-1"></i> A person is presumed to have intent to harm/defraud if they possess identifying information of 3 or more people.</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <h4 class="font-semibold text-gray-800">Elements Checklist</h4>
+                        <ul class="list-disc list-inside text-sm text-gray-700">
+                            <li>A person</li>
+                            <li>With intent to harm or defraud another</li>
+                            <li>Obtains, possesses, transfers, OR uses</li>
+                            <li>An item of identifying information of another person, a deceased person, or a child < 18</li>
+                            <li>Without the other person's consent/legal authorization</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="font-semibold text-gray-800">Practical Example</h4>
+                        <p class="text-sm text-gray-600">An officer stops a vehicle and finds a wallet containing four different driver's licenses and four corresponding credit cards, none of which belong to the driver. The driver has no legitimate reason for possessing these items. Since the driver possesses identifying information for four people, intent to harm or defraud is presumed, and they can be charged with a State Jail Felony.</p>
+                    </div>
+                </div>
+                
+                 <!-- TPC 31.20 -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-2">Mail Theft</h2>
+                    <p class="text-sm text-gray-500 mb-4"><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.31.htm#31.20" target="_blank" class="text-blue-600 hover:underline">Texas Penal Code § 31.20</a></p>
+
+                    <div class="mb-4">
+                        <h4 class="font-semibold text-gray-800">Legal Definition</h4>
+                        <p class="text-sm text-gray-600">A person commits an offense if the person intentionally appropriates mail from another person's mailbox or premises without the effective consent of the addressee and with the intent to deprive that addressee of the mail.</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <h4 class="font-semibold text-gray-800 mb-2">Punishment Level</h4>
+                        <div class="space-y-4">
+                            <div>
+                                <h5 class="font-medium text-gray-700">Base Offense</h5>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 text-sm mt-2">
+                                    <div class="flex items-center"><span class="punishment-tag punishment-a mr-3">Class A Misdemeanor</span><span>If mail is from less than 10 addressees.</span></div>
+                                    <div class="flex items-center"><span class="punishment-tag punishment-sjf mr-3">State Jail Felony</span><span>If mail is from 10 to 29 addressees.</span></div>
+                                    <div class="flex items-center"><span class="punishment-tag punishment-3rd mr-3">3rd Degree Felony</span><span>If mail is from 30 or more addressees.</span></div>
+                                </div>
+                            </div>
+                            <div>
+                                <h5 class="font-medium text-gray-700 text-red-600"><i class="fas fa-exclamation-triangle mr-1"></i> Enhanced Offense (if mail contains ID info)</h5>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 text-sm mt-2">
+                                    <div class="flex items-center"><span class="punishment-tag punishment-sjf mr-3">State Jail Felony</span><span>If mail is from less than 10 addressees.</span></div>
+                                    <div class="flex items-center"><span class="punishment-tag punishment-3rd mr-3">3rd Degree Felony</span><span>If mail is from 10 to 19 addressees.</span></div>
+                                    <div class="flex items-center"><span class="punishment-tag punishment-2nd mr-3">2nd Degree Felony</span><span>If mail is from 20 to 49 addressees.</span></div>
+                                    <div class="flex items-center"><span class="punishment-tag punishment-1st mr-3">1st Degree Felony</span><span>If mail is from 50 or more addressees.</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <h4 class="font-semibold text-gray-800">Elements Checklist</h4>
+                        <ul class="list-disc list-inside text-sm text-gray-700">
+                             <li>A person</li>
+                             <li>Intentionally appropriates mail</li>
+                             <li>From another person's mailbox or premises</li>
+                             <li>Without the addressee's effective consent</li>
+                             <li>With intent to deprive the addressee of the mail</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="font-semibold text-gray-800">Practical Example</h4>
+                        <p class="text-sm text-gray-600">A resident reports seeing someone walking down the street, opening mailboxes and taking letters. An officer locates the suspect, who has a bag containing mail addressed to 15 different people on that street. Among the stolen items are several pre-approved credit card offers. The suspect can be charged with a State Jail Felony for the base offense, which is enhanced to a 3rd Degree Felony because the stolen mail contained identifying information intended for identity fraud.</p>
+                    </div>
+                </div>
+
+                <!-- TPC 32.315 -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-2">Fraudulent Use or Possession of Credit Card or Debit Card Information</h2>
+                    <p class="text-sm text-gray-500 mb-4"><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.32.htm#32.315" target="_blank" class="text-blue-600 hover:underline">Texas Penal Code § 32.315</a></p>
+
+                    <div class="mb-4">
+                        <h4 class="font-semibold text-gray-800">Legal Definition</h4>
+                        <p class="text-sm text-gray-600">A person commits an offense if the person, with the intent to harm or defraud another, obtains, possesses, transfers, or uses: a counterfeit credit card or debit card; the number and expiration date of a card without consent; or the data stored on the digital imprint of a card without consent.</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <h4 class="font-semibold text-gray-800 mb-2">Punishment Level</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+                            <div class="flex items-center"><span class="punishment-tag punishment-sjf mr-3">State Jail Felony</span><span>If the number of items is less than 5.</span></div>
+                            <div class="flex items-center"><span class="punishment-tag punishment-3rd mr-3">3rd Degree Felony</span><span>If the number of items is 5 to 9.</span></div>
+                            <div class="flex items-center"><span class="punishment-tag punishment-2nd mr-3">2nd Degree Felony</span><span>If the number of items is 10 to 49.</span></div>
+                            <div class="flex items-center"><span class="punishment-tag punishment-1st mr-3">1st Degree Felony</span><span>If the number of items is 50 or more.</span></div>
+                        </div>
+                        <p class="text-xs text-gray-600 mt-1"><i class="fas fa-balance-scale mr-1"></i> A person is presumed to possess items without consent if they possess 5 or more.</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <h4 class="font-semibold text-gray-800">Elements Checklist</h4>
+                        <ul class="list-disc list-inside text-sm text-gray-700">
+                             <li>A person</li>
+                             <li>With intent to harm or defraud another</li>
+                             <li>Obtains, possesses, transfers, OR uses</li>
+                             <li>(1) A counterfeit card, (2) Card number/exp. date without consent, OR (3) Digital imprint data without consent</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="font-semibold text-gray-800">Practical Example</h4>
+                        <p class="text-sm text-gray-600">During a search, an officer finds a credit card skimmer device on a suspect. A forensic analysis reveals the device contains the stored digital imprint data from 12 different credit cards. The suspect can be charged with a 2nd Degree Felony under this statute.</p>
+                    </div>
+                </div>
+
+                <!-- TX Bus & Com Code 607.103 -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-2">Disposing of a Payment Card Skimmer</h2>
+                    <p class="text-sm text-gray-500 mb-4"><a href="https://statutes.capitol.texas.gov/Docs/BC/htm/BC.607.htm#607.103" target="_blank" class="text-blue-600 hover:underline">Texas Business & Commerce Code § 607.103</a></p>
+
+                    <div class="mb-4">
+                        <h4 class="font-semibold text-gray-800">Legal Definition</h4>
+                        <p class="text-sm text-gray-600">A person commits an offense if the person negligently or recklessly disposes of a skimmer installed by another person. A person commits a higher offense if they dispose of a skimmer knowing an investigation or criminal proceeding is ongoing.</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <h4 class="font-semibold text-gray-800 mb-2">Punishment Level</h4>
+                         <div class="space-y-3 text-sm">
+                            <div class="flex items-center"><span class="punishment-tag punishment-b mr-3">Class B Misdemeanor</span><span>For negligent or reckless disposal.</span></div>
+                            <div class="flex items-center"><span class="punishment-tag punishment-3rd mr-3">3rd Degree Felony</span><span>For disposal while knowing an investigation is ongoing.</span></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <h4 class="font-semibold text-gray-800">Elements Checklist</h4>
+                        <ul class="list-disc list-inside text-sm text-gray-700">
+                             <li>A person</li>
+                             <li>(1) Negligently or recklessly disposes of a skimmer, OR</li>
+                             <li>(2) Disposes of a skimmer knowing an investigation is ongoing</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="font-semibold text-gray-800">Practical Example</h4>
+                        <p class="text-sm text-gray-600">A gas station owner finds a skimmer on a pump. Fearing bad publicity, he throws it in a dumpster. An investigation later identifies him. He could be charged with a Class B Misdemeanor. If he was already notified by police of an investigation and then threw it away, the charge would be a 3rd Degree Felony.</p>
+                    </div>
+                </div>
+
+            </div>
+
+             <!-- Federal Offenses Tab -->
+            <div id="offenses-federal" class="tab-content space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Key Federal Statutes</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold">Identity Theft and Assumption Deterrence Act of 1998</h4>
+                            <p class="text-sm text-gray-700">This act made it a federal crime to "knowingly transfer or use, without lawful authority, a means of identification of another person with the intent to commit... any unlawful activity that constitutes a violation of federal law, or that constitutes a felony under any applicable state or local law." (<a href="https://www.govinfo.gov/content/pkg/PLAW-105publ318/html/PLAW-105publ318.htm" target="_blank" class="text-blue-600 hover:underline">18 U.S.C. § 1028</a>)</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Identity Theft Penalty Enhancement Act of 2004</h4>
+                            <p class="text-sm text-gray-700">Established penalties for "aggravated" identity theft. This requires the court to add a mandatory sentence of <strong>two additional years</strong> for a general offense and <strong>five additional years</strong> for a terrorism-related offense on top of the sentence for the underlying felony.</p>
+                        </div>
+                         <div>
+                            <h4 class="font-semibold">Identity Theft Enforcement and Restitution Act of 2008</h4>
+                            <p class="text-sm text-gray-700">Clarified that restitution for victims can include reimbursement for time spent remediating the harm. It also allowed federal courts to prosecute cases where the criminal and victim live in the same state, removing a previous jurisdictional hurdle.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Investigation Tab -->
+            <div id="investigation" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">How Identity Crime is Perpetrated</h2>
+                    <p class="text-sm mb-4">Thieves use a variety of low-tech and high-tech methods to obtain personal information:</p>
+                    <div class="grid md:grid-cols-2 gap-x-8 gap-y-4 text-sm">
+                        <div class="flex items-start"><i class="fas fa-wallet fa-fw mr-3 text-blue-500 mt-1"></i><span><strong>Stealing Wallets/Purses:</strong> Direct theft of physical items containing IDs, credit cards, and checkbooks.</span></div>
+                        <div class="flex items-start"><i class="fas fa-envelope fa-fw mr-3 text-blue-500 mt-1"></i><span><strong>Stealing Mail:</strong> Intercepting bank statements, credit card offers, or tax information.</span></div>
+                        <div class="flex items-start"><i class="fas fa-house-user fa-fw mr-3 text-blue-500 mt-1"></i><span><strong>Filing a Change of Address:</strong> Diverting a victim's mail to another location controlled by the thief.</span></div>
+                        <div class="flex items-start"><i class="fas fa-dumpster fa-fw mr-3 text-blue-500 mt-1"></i><span><strong>Dumpster Diving:</strong> Rummaging through personal or business trash for discarded documents.</span></div>
+                        <div class="flex items-start"><i class="fas fa-file-invoice fa-fw mr-3 text-blue-500 mt-1"></i><span><strong>Fraudulently Obtaining Credit Reports:</strong> Posing as a landlord or employer to get a copy of a victim's credit report.</span></div>
+                        <div class="flex items-start"><i class="fas fa-home fa-fw mr-3 text-blue-500 mt-1"></i><span><strong>Theft from Homes:</strong> Finding personal information inside a victim's residence.</span></div>
+                        <div class="flex items-start"><i class="fas fa-briefcase fa-fw mr-3 text-blue-500 mt-1"></i><span><strong>Business Record Theft:</strong> Stealing files from offices, bribing employees, or hacking into company databases.</span></div>
+                        <div class="flex items-start"><i class="fas fa-eye fa-fw mr-3 text-blue-500 mt-1"></i><span><strong>Shoulder Surfing:</strong> Watching someone enter a PIN at an ATM, sometimes using hidden cameras.</span></div>
+                        <div class="flex items-start"><i class="fas fa-fish fa-fw mr-3 text-blue-500 mt-1"></i><span><strong>Spoofing/Phishing:</strong> Creating fake emails and websites that look legitimate to trick users into entering personal data.</span></div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Current Trends & Techniques</h2>
+                     <p class="text-sm mb-4">Criminals constantly evolve their methods. Current trends often involve technology, such as listening to conversations on cellular phones, hacking computers, and conducting sophisticated telephone and email scams. A wide variety of sources, including bookstores and internet retailers, also provide step-by-step instructions on producing false documents.</p>
+                     <p class="text-sm">For the latest information on new trends, scams, and consumer alerts, a valuable resource is the <strong>Identity Theft Resource Center</strong> at <a href="https://www.idtheftcenter.org" target="_blank" class="text-blue-600 hover:underline">www.idtheftcenter.org</a>.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Writing the Offense Report</h2>
+                     <p class="text-sm mb-4">A police report is crucial for victims. Credit bureaus and financial institutions often require it to block fraudulent activity and begin the credit repair process. The report should contain:</p>
+                    <ul class="list-disc list-inside text-sm text-gray-700 space-y-2">
+                        <li><strong>Detailed Information:</strong> Use a specific form like the Identity Crime Incident Detail Form to capture all relevant data. This helps organize the investigation.</li>
+                        <li><strong>Distinguish the Crime:</strong> Determine if it's true identity theft (a new account was opened) or credit/debit card abuse (an existing account was used).</li>
+                        <li><strong>Establish Jurisdiction:</strong> Under <a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.13A.htm#13A.260" target="_blank" class="text-blue-600 hover:underline">CCP Art. 13A.260</a>, the offense can be prosecuted in the county where it was committed OR in the victim's county of residence. This allows the victim's local agency to take the report.</li>
+                        <li><strong>Gather Documentation:</strong> Ask the victim to gather bank statements, letters from creditors, and credit reports. This evidence is vital for the investigation.</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Governmental & Business Entities to Notify</h2>
+                    <p class="text-sm mb-4">Depending on the crime, various entities should be notified:</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <h4 class="font-bold">Federal Agencies</h4>
+                            <ul class="list-disc list-inside mt-2 space-y-1">
+                                <li><strong>FBI:</strong> For bank fraud, government fraud, or schemes with losses > $100,000.</li>
+                                <li><strong>U.S. Secret Service:</strong> For any custody arrest involving identity crime devices (skimmers, counterfeit docs).</li>
+                                <li><strong>U.S. Postal Service:</strong> For financial crimes involving U.S. Mail.</li>
+                                <li><strong>Social Security Administration:</strong> For misuse of an SSN involving program fraud or significant loss.</li>
+                                <li><strong>Federal Trade Commission (FTC):</strong> Victims MUST file a report at <a href="https://www.identitytheft.gov/" target="_blank" class="text-blue-600 hover:underline">IdentityTheft.gov</a> to get a recovery plan.</li>
+                            </ul>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                             <h4 class="font-bold">State & Business Entities</h4>
+                            <ul class="list-disc list-inside mt-2 space-y-1">
+                                <li><strong>Texas DPS:</strong> Responsible for driver's licenses and criminal records.</li>
+                                <li><strong>Credit Reporting Agencies (Equifax, Experian, TransUnion):</strong> Victims must place a "fraud alert" on their files.</li>
+                                <li><strong>Financial Institutions:</strong> Victims should contact their banks and credit card companies immediately.</li>
+                                <li><strong>Utility Companies:</strong> Victims should check for unusual account activity.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Prevention & Victim Aid Tab -->
+            <div id="prevention" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Personal Protection Guidelines</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Offline -->
+                        <div class="p-4 border rounded-lg">
+                             <h4 class="font-bold text-lg"><i class="fas fa-lock mr-2"></i>Offline Security</h4>
+                             <ul class="list-disc list-inside text-sm mt-2 space-y-2 text-gray-700">
+                                <li>Don't give out personal info over the phone unless you initiated the call.</li>
+                                <li>Limit what you carry; leave your Social Security card at home.</li>
+                                <li>Do not print your SSN or DL# on checks.</li>
+                                <li>Pay attention to billing cycles; a missing bill could be a red flag.</li>
+                                <li>Read statements from your health insurance plan to check for fraudulent claims.</li>
+                                <li>Destroy labels on prescription bottles before discarding them.</li>
+                                <li>Shred all documents with personal information before discarding.</li>
+                                <li>Secure your SSN; only give it out when absolutely necessary.</li>
+                             </ul>
+                        </div>
+                        <!-- Online -->
+                         <div class="p-4 border rounded-lg">
+                             <h4 class="font-bold text-lg"><i class="fas fa-globe mr-2"></i>Online Security</h4>
+                             <ul class="list-disc list-inside text-sm mt-2 space-y-2 text-gray-700">
+                                 <li>Create complex, unique passwords for different accounts.</li>
+                                 <li>Be alert for imposters (phishing emails, texts, and calls).</li>
+                                 <li>Safely wipe personal information from electronics before disposing of them.</li>
+                                 <li>Use encryption (look for the "lock" icon) before sending financial information.</li>
+                                 <li>Don't overshare on social media; thieves can use details to answer security questions.</li>
+                             </ul>
+                        </div>
+                        <!-- Device -->
+                         <div class="p-4 border rounded-lg">
+                             <h4 class="font-bold text-lg"><i class="fas fa-mobile-alt mr-2"></i>Device Security</h4>
+                             <ul class="list-disc list-inside text-sm mt-2 space-y-2 text-gray-700">
+                                 <li>Use security software (anti-virus, firewall) and keep it updated.</li>
+                                 <li>Avoid phishing emails and suspicious links/downloads.</li>
+                                 <li>Be cautious on public Wi-Fi; use a secure network or VPN for sensitive transactions.</li>
+                                 <li>Do not store financial info or enable auto-login on laptops or mobile devices.</li>
+                             </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Steps for Victims of Identity Crime</h2>
+                    <p class="text-sm mb-4">If an identity crime occurs, victims should take these steps immediately:</p>
+                    <ol class="list-decimal list-inside text-sm space-y-3">
+                        <li><strong>File a Police Report:</strong> Contact the local police or sheriff's office to file a report. Get a copy of the report number and the report itself, as it's essential for the next steps.</li>
+                        <li><strong>Report to the FTC:</strong> Go to <a href="https://www.identitytheft.gov/" target="_blank" class="text-blue-600 hover:underline">IdentityTheft.gov</a> to create an Identity Theft Report and get a personalized recovery plan. This is a critical step.</li>
+                        <li><strong>Place a Fraud Alert:</strong> Contact one of the three major credit bureaus (Equifax, Experian, or TransUnion). That one bureau is required to notify the other two. This will make it harder for someone to open new accounts in the victim's name.</li>
+                        <li><strong>Contact Financial Institutions:</strong> Notify banks and credit card companies of the fraud. Close any compromised accounts and get new cards/account numbers. Dispute any fraudulent charges.</li>
+                        <li><strong>Notify the Social Security Administration:</strong> Report the unauthorized use of a Social Security number to the SSA's Office of the Inspector General.</li>
+                        <li><strong>Contact DPS:</strong> Contact a driver license office for assistance. The victim may need to complete a Forgery Affidavit.</li>
+                        <li><strong>Establish a Stolen Identity File:</strong> Contact the local Sheriff's Office to establish a Stolen Identity File, which is reported to a statewide DPS database to help prevent wrongful arrests.</li>
+                        <li><strong>Notify the U.S. Passport Agency:</strong> If a passport was lost or stolen, or if there is reason to believe one could be fraudulently obtained, notify the agency to be on alert.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Legal Procedures Tab -->
+            <div id="legal-procedures" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Security Alert vs. Security Freeze</h2>
+                    <p class="text-sm mb-4">These are two tools consumers can use to protect their credit files, as defined in the <a href="https://statutes.capitol.texas.gov/Docs/BC/htm/BC.20.htm" target="_blank" class="text-blue-600 hover:underline">Texas Business and Commerce Code, Chapter 20</a>.</p>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <!-- Security Alert -->
+                        <div class="p-4 border rounded-lg">
+                            <h4 class="font-bold text-lg">Security Alert</h4>
+                            <p class="text-sm text-gray-600 mb-2">A notice on a consumer file that alerts a potential creditor that the consumer's identity may have been used fraudulently.</p>
+                            <ul class="text-sm space-y-1">
+                                <li><strong>How to Request:</strong> By writing or telephone to a credit reporting agency.</li>
+                                <li><strong>Timeline:</strong> Must be placed within 24 hours.</li>
+                                <li><strong>Duration:</strong> Remains in effect for at least 45 days.</li>
+                                <li><strong>Cost:</strong> Free.</li>
+                                <li><strong>Special Note:</strong> An "active-duty alert" provides extra protection for deployed service members.</li>
+                            </ul>
+                        </div>
+                        <!-- Security Freeze -->
+                        <div class="p-4 border rounded-lg">
+                            <h4 class="font-bold text-lg">Security Freeze</h4>
+                            <p class="text-sm text-gray-600 mb-2">A notice that prohibits a credit reporting agency from releasing a consumer's credit report without express authorization from the consumer.</p>
+                            <ul class="text-sm space-y-1">
+                                <li><strong>How to Request:</strong> By written request via certified mail.</li>
+                                <li><strong>Timeline:</strong> Must be placed within 5 business days.</li>
+                                <li><strong>Duration:</strong> Remains until the consumer requests it be lifted.</li>
+                                <li><strong>Cost:</strong> May involve fees for placing or lifting.</li>
+                                <li><strong>Special Note:</strong> The agency provides a unique PIN or password for the consumer to use when authorizing access.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Venue for Prosecution</h2>
+                    <p class="text-sm mb-4">Venue determines the county (or counties) where a criminal case can be legally tried.</p>
+                    <div class="grid md:grid-cols-2 gap-6 text-sm">
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <h4 class="font-semibold"><a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.13A.htm#13A.260" target="_blank" class="text-blue-600 hover:underline">CCP Art. 13A.260</a> - Fraudulent Use of ID Info</h4>
+                            <p class="mt-2 text-gray-700">An offense under TPC §32.51 may be prosecuted in:</p>
+                            <ul class="list-disc list-inside ml-4 mt-1">
+                                <li>Any county where the offense was committed; OR</li>
+                                <li>The county of residence of the victim.</li>
+                            </ul>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                             <h4 class="font-semibold"><a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.13A.htm#13A.255" target="_blank" class="text-blue-600 hover:underline">CCP Art. 13A.255</a> - Credit/Debit Card Abuse</h4>
+                            <p class="mt-2 text-gray-700">An offense under TPC §32.31 may be prosecuted in:</p>
+                            <ul class="list-disc list-inside ml-4 mt-1">
+                                <li>Any county where the offense was committed; OR</li>
+                                <li>The county of residence of the cardholder.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Procedure for Expunction</h2>
+                    <p class="text-sm mb-4">Under <a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.55A.htm#55A.256" target="_blank" class="text-blue-600 hover:underline">CCP Art. 55A.256</a>, a person who was arrested solely because an identity thief used their information can apply to have the arrest records expunged (destroyed).</p>
+                     <h4 class="font-semibold">Application Process:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>The person entitled to expunction files an application with the prosecuting attorney in their county of residence.</li>
+                        <li>The application must be verified and include fingerprints.</li>
+                        <li>It must include key details of the wrongful arrest (date, offense, agency).</li>
+                        <li>It must include a statement that the applicant is not the person who was actually arrested and did not give consent for their identity to be used.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Knowledge Check Tab -->
+            <div id="knowledge-check" class="tab-content">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Knowledge Check</h2>
+                    <p class="mb-6 text-gray-600">Test your understanding of the material.</p>
+                    <div id="quiz-container" class="space-y-8">
+                        <!-- Questions will be dynamically inserted here -->
+                    </div>
+                    <div class="mt-8 text-center">
+                        <button id="check-answers-btn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors">Check Answers</button>
+                         <button id="reset-quiz-btn" class="bg-gray-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-gray-600 transition-colors ml-4 hidden">Reset Quiz</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resources Tab -->
+            <div id="resources" class="tab-content">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Resource & Link Directory</h2>
+                    <p class="mb-6 text-gray-600">A centralized list of statutory and informational links used throughout this guide.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h3 class="font-semibold text-lg text-gray-800 border-b pb-2 mb-2">Texas Statutes</h3>
+                             <ul class="list-disc list-inside ml-4 space-y-1 text-blue-600">
+                                <li><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.32.htm#32.51" target="_blank" class="hover:underline">TPC § 32.51 - Fraudulent Use or Possession of Identifying Information</a></li>
+                                <li><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.31.htm#31.20" target="_blank" class="hover:underline">TPC § 31.20 - Mail Theft</a></li>
+                                <li><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.32.htm#32.315" target="_blank" class="hover:underline">TPC § 32.315 - Fraudulent Use or Possession of Credit Card... Info</a></li>
+                                <li><a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.13A.htm#13A.255" target="_blank" class="hover:underline">CCP Art. 13A.255 - Venue for Credit/Debit Card Abuse</a></li>
+                                <li><a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.13A.htm#13A.260" target="_blank" class="hover:underline">CCP Art. 13A.260 - Venue for Fraudulent Use... of Identifying Info</a></li>
+                                <li><a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.55A.htm#55A.256" target="_blank" class="hover:underline">CCP Art. 55A.256 - Procedures for Expunction</a></li>
+                                <li><a href="https://statutes.capitol.texas.gov/Docs/BC/htm/BC.20.htm" target="_blank" class="hover:underline">TX Bus. & Com. Code Ch. 20 - Consumer Credit Reporting</a></li>
+                                <li><a href="https://statutes.capitol.texas.gov/Docs/BC/htm/BC.501.htm" target="_blank" class="hover:underline">TX Bus. & Com. Code Ch. 501 - Protection of DL and SSN</a></li>
+                                <li><a href="https://statutes.capitol.texas.gov/Docs/BC/htm/BC.607.htm" target="_blank" class="hover:underline">TX Bus. & Com. Code Ch. 607 - Payment Card Skimmers</a></li>
+                            </ul>
+                        </div>
+                         <div>
+                            <h3 class="font-semibold text-lg text-gray-800 border-b pb-2 mb-2">Federal & Informational Resources</h3>
+                             <ul class="list-disc list-inside ml-4 space-y-1 text-blue-600">
+                                <li><a href="https://www.identitytheft.gov/" target="_blank" class="hover:underline">IdentityTheft.gov (FTC) - Report Theft & Get Recovery Plan</a></li>
+                                <li><a href="https://consumer.ftc.gov/identity-theft-online-security" target="_blank" class="hover:underline">FTC Consumer Advice on Identity Theft</a></li>
+                                <li><a href="https://www.idtheftcenter.org" target="_blank" class="text-blue-600 hover:underline">Identity Theft Resource Center</a></li>
+                                <li><a href="https://www.justice.gov/criminal-fraud/identity-theft/identity-theft-and-identity-fraud" target="_blank" class="hover:underline">Department of Justice - Identity Theft Information</a></li>
+                                <li><a href="https://www.experian.com/" target="_blank" class="hover:underline">Experian Credit Bureau</a></li>
+                                <li><a href="https://www.transunion.com/" target="_blank" class="hover:underline">TransUnion Credit Bureau</a></li>
+                                <li><a href="https://www.equifax.com/" target="_blank" class="hover:underline">Equifax Credit Bureau</a></li>
+                                <li><a href="https://www.ssa.gov/fraud/" target="_blank" class="hover:underline">Social Security Administration - Fraud Reporting</a></li>
+                                <li><a href="https://travel.state.gov/content/travel/en/passports.html" target="_blank" class="hover:underline">U.S. Passport Agency</a></li>
+                             </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('#tabs button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                });
+            });
+
+            // Quiz Data
+            const quizData = [
+                {
+                    question: "Under TPC §32.51, possessing the identifying information of how many other people creates a presumption of intent to harm or defraud?",
+                    options: ["1 or more", "2 or more", "3 or more", "5 or more"],
+                    answer: "c",
+                    explanation: "Correct! TPC §32.51(b-1) establishes a presumption of intent to harm or defraud if the actor possesses the identifying information of three or more other persons."
+                },
+                {
+                    question: "A suspect steals mail from 15 different mailboxes. The mail includes several credit card offers. Under TPC §31.20, what is the highest offense level the suspect can be charged with?",
+                    options: ["Class A Misdemeanor", "State Jail Felony", "3rd Degree Felony", "2nd Degree Felony"],
+                    answer: "c",
+                    explanation: "Correct! Stealing from 10 to less than 30 addressees is a State Jail Felony, but because it contained identifying info with intent to commit fraud, it's enhanced. For 10 to less than 20 addressees with identifying info, the charge is a 3rd Degree Felony."
+                },
+                {
+                    question: "Which federal law established mandatory additional prison sentences for using another's identity to commit other felony crimes?",
+                    options: ["Identity Theft and Assumption Deterrence Act of 1998", "Identity Theft Penalty Enhancement Act of 2004", "Identity Theft Enforcement and Restitution Act of 2008", "The PATRIOT Act"],
+                    answer: "b",
+                    explanation: "Correct! The Identity Theft Penalty Enhancement Act of 2004 added mandatory sentences (2 years for general felonies, 5 for terrorism) on top of the penalty for the underlying crime."
+                },
+                {
+                    question: "A victim of identity theft lives in Travis County, but the fraudulent account was opened by a suspect in Dallas County. Where can the offense be prosecuted?",
+                    options: ["Only in Dallas County", "Only in Travis County", "In either Travis County or Dallas County", "Only in federal court"],
+                    answer: "c",
+                    explanation: "Correct! CCP Art. 13A.260 allows the offense to be prosecuted in the county where it was committed (Dallas) or in the county of the victim's residence (Travis)."
+                },
+                {
+                    question: "The creation of fake emails and websites that appear to be from legitimate businesses to trick consumers into revealing personal data is known as:",
+                    options: ["Shoulder Surfing", "Dumpster Diving", "Spoofing/Phishing", "Business Record Theft"],
+                    answer: "c",
+                    explanation: "Correct! Spoofing or phishing involves criminals creating deceptive communications and web pages to steal personal information online."
+                },
+                {
+                    question: "A consumer wants to prevent any access to their credit report without their express authorization, requiring a unique PIN to release it. Which tool should they use?",
+                    options: ["Security Alert", "Security Freeze", "Fraud Alert", "Active-Duty Alert"],
+                    answer: "b",
+                    explanation: "Correct! A Security Freeze prohibits a credit agency from releasing a consumer's report without their express authorization, typically provided via a PIN."
+                },
+                {
+                    question: "An officer finds a suspect with 6 gift cards that have been altered to contain the digital imprints of different credit cards. Under TPC §32.315, what is the level of this offense?",
+                    options: ["State Jail Felony", "3rd Degree Felony", "2nd Degree Felony", "1st Degree Felony"],
+                    answer: "b",
+                    explanation: "Correct! Possessing 5 or more but less than 10 counterfeit credit/debit card items is a 3rd Degree Felony."
+                },
+                {
+                    question: "What is the single most important first step a victim of identity theft should be advised to do to start their recovery process?",
+                    options: ["Call all their credit card companies", "File a report at IdentityTheft.gov", "Shred all their old documents", "Change their email password"],
+                    answer: "b",
+                    explanation: "Correct! The Federal Trade Commission (FTC) is the central agency for identity theft. Filing a report at IdentityTheft.gov creates an official Identity Theft Report and provides the victim with a personalized recovery plan, which is a critical first step."
+                },
+                {
+                    question: "What is the key difference between 'Identity Theft' and 'Credit Card Abuse'?",
+                    options: ["The amount of money stolen", "Whether a new account was opened vs. an existing account was used", "Whether the crime happened online or in person", "There is no difference, they are the same crime"],
+                    answer: "b",
+                    explanation: "Correct! Generally, if a suspect uses a victim's existing credit card, it's Credit Card Abuse. If the suspect uses the victim's information to open a brand new account, it's Identity Theft (Fraudulent Use/Possession of Identifying Information)."
+                },
+                {
+                    question: "A business owner discovers a credit card skimmer on a gas pump. Fearing negative publicity, he throws it in a nearby dumpster before police arrive. Under the Business & Commerce Code, what offense has he committed?",
+                    options: ["No offense", "Tampering with Evidence", "Class B Misdemeanor", "3rd Degree Felony"],
+                    answer: "c",
+                    explanation: "Correct! Under TX Bus. & Com. Code § 607.103, negligently or recklessly disposing of a skimmer installed by another person is a Class B Misdemeanor."
+                },
+                {
+                    question: "Which of the following is NOT a potential consequence of identity theft for a victim?",
+                    options: ["Negative impact on credit score", "Being wrongfully arrested", "Receiving incorrect medical treatment", "Receiving a tax credit for their trouble"],
+                    answer: "d",
+                    explanation: "Correct! Identity theft can lead to severe negative consequences, including financial hardship, legal trouble, and health risks, but it does not result in any form of financial compensation or credit from the government."
+                },
+                {
+                    question: "According to the course material, which federal agency should be notified if a custody arrest is made involving identity crime devices like skimmers or counterfeit documents?",
+                    options: ["Federal Bureau of Investigation (FBI)", "U.S. Secret Service (USSS)", "U.S. Postal Service (USPS)", "Social Security Administration (SSA)"],
+                    answer: "b",
+                    explanation: "Correct! The U.S. Secret Service should be notified of any custody arrest of individuals associated with identity crime or the seizure of identity crime devices or products."
+                },
+                {
+                    question: "A person whose identity was stolen and used by an arrested person can clear their name and criminal record through a legal process called:",
+                    options: ["Plea Bargain", "Restitution", "Expunction", "Sealing"],
+                    answer: "c",
+                    explanation: "Correct! Under CCP Art. 55A.256, a victim of identity theft can file for an expunction to have the wrongful arrest records destroyed."
+                }
+            ];
+
+            const quizContainer = document.getElementById('quiz-container');
+            const checkAnswersBtn = document.getElementById('check-answers-btn');
+            const resetQuizBtn = document.getElementById('reset-quiz-btn');
+
+            function loadQuiz() {
+                quizContainer.innerHTML = '';
+                // Shuffle quiz data for variety
+                const shuffledQuiz = [...quizData].sort(() => Math.random() - 0.5);
+
+                shuffledQuiz.forEach((item, index) => {
+                    const questionDiv = document.createElement('div');
+                    questionDiv.className = 'quiz-question';
+                    
+                    let optionsHTML = '';
+                    item.options.forEach((option, i) => {
+                        const optionValue = String.fromCharCode(97 + i); // a, b, c, d
+                        optionsHTML += `
+                            <label class="block cursor-pointer p-2 rounded-md hover:bg-gray-100">
+                                <input type="radio" name="q${index}" value="${optionValue}" class="mr-2">${optionValue}) ${option}
+                            </label>`;
+                    });
+
+                    questionDiv.innerHTML = `
+                        <p class="font-semibold mb-2">${index + 1}. ${item.question}</p>
+                        <div class="space-y-2" data-answer="${item.answer}">${optionsHTML}</div>
+                        <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                    `;
+                    quizContainer.appendChild(questionDiv);
+                });
+            }
+            
+            checkAnswersBtn.addEventListener('click', () => {
+                const questions = document.querySelectorAll('.quiz-question');
+                let allAnswered = true;
+                questions.forEach((question) => {
+                    const selected = question.querySelector(`input[type="radio"]:checked`);
+                    const feedback = question.querySelector('.feedback');
+                    const optionsContainer = question.querySelector('.space-y-2');
+                    const correctAnswer = optionsContainer.dataset.answer;
+
+                    feedback.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800', 'bg-yellow-100', 'text-yellow-800');
+                    
+                    if (selected) {
+                        question.querySelectorAll('input[type="radio"]').forEach(rb => rb.disabled = true);
+                        const originalQuestionData = quizData.find(q => q.answer === correctAnswer && q.question === question.querySelector('p').textContent.substring(question.querySelector('p').textContent.indexOf(' ') + 1));
+
+                        if (selected.value === correctAnswer) {
+                            feedback.innerHTML = `<i class="fas fa-check-circle mr-2"></i>${originalQuestionData.explanation}`;
+                            feedback.classList.add('bg-green-100', 'text-green-800');
+                        } else {
+                            feedback.innerHTML = `<i class="fas fa-times-circle mr-2"></i>Incorrect. ${originalQuestionData.explanation}`;
+                            feedback.classList.add('bg-red-100', 'text-red-800');
+                        }
+                    } else {
+                        feedback.textContent = 'Please select an answer.';
+                        feedback.classList.add('bg-yellow-100', 'text-yellow-800');
+                        allAnswered = false;
+                    }
+                    feedback.classList.remove('hidden');
+                });
+                if (allAnswered) {
+                    checkAnswersBtn.classList.add('hidden');
+                    resetQuizBtn.classList.remove('hidden');
+                }
+            });
+
+            resetQuizBtn.addEventListener('click', () => {
+                loadQuiz();
+                checkAnswersBtn.classList.remove('hidden');
+                resetQuizBtn.classList.add('hidden');
+            });
+            
+            // Initial load
+            loadQuiz();
+        });
+    </script>
+</body>
+</html>
+
+
