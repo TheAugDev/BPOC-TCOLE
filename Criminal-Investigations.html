@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Guide: Criminal Investigation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --header-bg: #1f2937;
+            --bg-color: #f3f4f6;
+            --tab-active-bg: #3b82f6;
+            --tab-active-text: #ffffff;
+            --card-bg: #ffffff;
+            --text-color: #111827;
+            --link-color: #2563eb;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://rsms.me/inter/inter.css');
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab.active {
+            background-color: var(--tab-active-bg);
+            color: var(--tab-active-text);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tab {
+            transition: all 0.3s ease-in-out;
+        }
+        .offense-card {
+            border-left: 4px solid;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+        .offense-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .elements-checklist li::before {
+            content: '✓';
+            color: #22c55e; /* green-500 */
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-gray-800 text-white p-4 shadow-md sticky top-0 z-10">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">
+                <i class="fas fa-search mr-2"></i>Criminal Investigation
+            </h1>
+            <p class="text-sm text-gray-300">BPOC Chapter 32 | TCOLE Preparation</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-6">
+        <div class="mb-6 bg-white rounded-lg shadow-md overflow-x-auto">
+            <nav id="tabs" class="flex flex-row space-x-1 p-2">
+                <button data-tab="intro" class="tab active flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-book-open mr-2"></i> <span class="hidden md:inline">Intro & Terms</span>
+                </button>
+                <button data-tab="investigator" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-user-secret mr-2"></i> <span class="hidden md:inline">The Investigator</span>
+                </button>
+                <button data-tab="property-crimes" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-building mr-2"></i> <span class="hidden md:inline">Property Crimes</span>
+                </button>
+                 <button data-tab="person-crimes" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-user-shield mr-2"></i> <span class="hidden md:inline">Crimes Against Persons</span>
+                </button>
+                 <button data-tab="forensics" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-dna mr-2"></i> <span class="hidden md:inline">Forensics</span>
+                </button>
+                <button data-tab="procedures" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-clipboard-list mr-2"></i> <span class="hidden md:inline">Procedures</span>
+                </button>
+                <button data-tab="booking-court" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-gavel mr-2"></i> <span class="hidden md:inline">Booking & Court</span>
+                </button>
+                <button data-tab="knowledge-check" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-question-circle mr-2"></i> <span class="hidden md:inline">Knowledge Check</span>
+                </button>
+                <button data-tab="resources" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-link mr-2"></i> <span class="hidden md:inline">Resources</span>
+                </button>
+            </nav>
+        </div>
+
+        <div id="tab-contents">
+            <div id="intro" class="tab-content active space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">What is Criminal Investigation?</h2>
+                    <p class="text-gray-700">A criminal investigation is the process of legally gathering evidence of a crime that has been or is being committed.</p>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Legal Significance of Evidence</h2>
+                     <div class="space-y-4">
+                        <div>
+                             <h4 class="font-semibold">Influence on the Court</h4>
+                            <p class="text-sm text-gray-700">The legal significance of evidence rests in its influence on the judge or juror.</p>
+                        </div>
+                        <div>
+                             <h4 class="font-semibold">Proof Beyond a Reasonable Doubt</h4>
+                            <p class="text-sm text-gray-700">The level of certainty a juror must have to find a defendant guilty of a crime. It is a real doubt, based upon reason and common sense after careful and impartial consideration of all the evidence, or lack of evidence, in a case. An investigator must collect corroborating evidence to negate the defense's claims.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Key Terms & Definitions</h2>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+                        <div class="p-4 bg-gray-50 rounded-lg"><strong>Bias:</strong> A highly personal and unreasoned distortion of judgment.</div>
+                        <div class="p-4 bg-gray-50 rounded-lg"><strong>Crime:</strong> An act or omission forbidden by law and punishable by a fine, imprisonment, or even death.</div>
+                        <div class="p-4 bg-gray-50 rounded-lg"><strong>Circumstantial Evidence:</strong> Not based on actual personal knowledge or observation, but of other facts from which deductions are drawn.</div>
+                        <div class="p-4 bg-gray-50 rounded-lg"><strong>Complainant:</strong> Person requesting an investigation or that action is taken; often the victim.</div>
+                        <div class="p-4 bg-gray-50 rounded-lg"><strong>Corpus delicti:</strong> "The body of the crime"; proof establishing that a crime has occurred.</div>
+                        <div class="p-4 bg-gray-50 rounded-lg"><strong>Elements of a crime:</strong> Conditions that must occur for an act to be called a specific kind of crime.</div>
+                        <div class="p-4 bg-gray-50 rounded-lg"><strong>Evidence:</strong> Anything offered in court to prove the truth or falsity of a fact in issue.</div>
+                        <div class="p-4 bg-gray-50 rounded-lg"><strong>Fact:</strong> Something known to be true.</div>
+                        <div class="p-4 bg-gray-50 rounded-lg"><strong>Fence:</strong> One who receives and disposes of stolen property on a regular basis.</div>
+                        <div class="p-4 bg-gray-50 rounded-lg"><strong>Field Identification:</strong> On-the-scene identification of a suspect by a victim or witness within minutes of the crime.</div>
+                        <div class="p-4 bg-gray-50 rounded-lg"><strong>Prejudice:</strong> An opinion or leaning adverse to anything without just grounds or before obtaining sufficient knowledge.</div>
+                        <div class="p-4 bg-gray-50 rounded-lg"><strong>Modus Operandi (MO):</strong> A criminal's characteristic method of operation.</div>
+                        <div class="p-4 bg-gray-50 rounded-lg"><strong>Proof beyond a reasonable doubt:</strong> Level of proof required to obtain a conviction in a criminal trial.</div>
+                        <div class="p-4 bg-gray-50 rounded-lg"><strong>Probable Cause:</strong> Credible information that would cause a reasonable person to believe a suspect committed a crime or that evidence will be found in a particular place.</div>
+                        <div class="p-4 bg-gray-50 rounded-lg"><strong>Rapport:</strong> A feeling of ease and harmony in a contact or relationship between people.</div>
+                        <div class="p-4 bg-gray-50 rounded-lg"><strong>Reasonable Doubt:</strong> The level of certainty a juror must have to acquit a defendant.</div>
+                        <div class="p-4 bg-gray-50 rounded-lg"><strong>Reasonable Suspicion:</strong> Specific articulable facts that would reasonably warrant the detention of a person.</div>
+                        <div class="p-4 bg-gray-50 rounded-lg"><strong>Statement:</strong> A legal narrative description of events related to a crime.</div>
+                        <div class="p-4 bg-gray-50 rounded-lg"><strong>Suspect:</strong> A person considered to be directly or indirectly connected with a crime.</div>
+                        <div class="p-4 bg-gray-50 rounded-lg"><strong>Witness:</strong> A person who saw a crime or has relevant information.</div>
+                        <div class="p-4 bg-gray-50 rounded-lg"><strong>Victim:</strong> The person injured by a crime.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="investigator" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Goals of a Criminal Investigator</h2>
+                     <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li>To determine if a crime has been committed.</li>
+                        <li>To legally obtain information and evidence to identify the person(s) responsible.</li>
+                        <li>To legally arrest the suspect(s).</li>
+                        <li>To recover all stolen property.</li>
+                        <li>To present the best case possible to the prosecutor.</li>
+                        <li>To determine the TRUTH by gathering all information that proves or disproves a person's involvement.</li>
+                    </ul>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Investigator's Tools</h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="font-semibold text-lg mb-2"><i class="fas fa-info-circle text-blue-500 mr-2"></i>Information</h3>
+                            <p class="text-sm text-gray-700">Knowledge gathered from victims, witnesses, suspects, records, reports, and other legitimate sources.</p>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg mb-2"><i class="fas fa-microscope text-blue-500 mr-2"></i>Instrumentation/Forensic Science</h3>
+                            <p class="text-sm text-gray-700">Techniques that help in the solution of the crime, such as fingerprints, serology, ballistics, and DNA analysis.</p>
+                        </div>
+                         <div>
+                            <h3 class="font-semibold text-lg mb-2"><i class="fas fa-comments text-blue-500 mr-2"></i>Interviewing</h3>
+                            <p class="text-sm text-gray-700">The questioning of victims, witnesses, or suspects in a criminal investigation.</p>
+                        </div>
+                         <div>
+                            <h3 class="font-semibold text-lg mb-2"><i class="fas fa-balance-scale-right text-blue-500 mr-2"></i>Laws of Arrest, Search, and Seizure</h3>
+                            <p class="text-sm text-gray-700">Provides guidance on what investigative techniques are acceptable and can withstand court challenges.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Characteristics of an Investigator</h2>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+                        <div class="p-4 bg-gray-50 rounded-lg"><strong>Suspicious:</strong> Takes nothing for granted and verifies credibility.</div>
+                        <div class="p-4 bg-gray-50 rounded-lg"><strong>Curious:</strong> Desires to investigate and learn facts and truth.</div>
+                        <div class="p-4 bg-gray-50 rounded-lg"><strong>Observant:</strong> Trained to take accurate notice using all five senses.</div>
+                        <div class="p-4 bg-gray-50 rounded-lg"><strong>Unbiased & Unprejudiced:</strong> Avoids letting personal attitudes lead to sloppy work and incorrect conclusions.</div>
+                        <div class="p-4 bg-gray-50 rounded-lg"><strong>Develops Rapport:</strong> Uses interpersonal skills; is patient, courteous, and sympathetic.</div>
+                        <div class="p-4 bg-gray-50 rounded-lg"><strong>Logical Thinking:</strong> Applies logic when comparing behavior to statements and evidence.</div>
+                        <div class="p-4 bg-gray-50 rounded-lg"><strong>Creative Problem Solving:</strong> Thinks of other ways to accomplish tasks or secure information.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="property-crimes" class="tab-content space-y-6">
+                <!-- Content for this tab is dynamically generated -->
+            </div>
+            
+            <div id="person-crimes" class="tab-content space-y-6">
+                <!-- Content for this tab is dynamically generated -->
+            </div>
+
+            <div id="forensics" class="tab-content space-y-6">
+                 <!-- Content for this tab is dynamically generated -->
+            </div>
+            
+            <div id="procedures" class="tab-content space-y-6">
+                <!-- Content for this tab is dynamically generated -->
+            </div>
+
+            <div id="booking-court" class="tab-content space-y-6">
+                <!-- Content for this tab is dynamically generated -->
+            </div>
+
+            <div id="knowledge-check" class="tab-content">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Knowledge Check</h2>
+                    <p class="mb-6 text-gray-600">Test your understanding of the material.</p>
+                    <div id="quiz-container" class="space-y-8"></div>
+                    <div class="mt-8 text-center">
+                        <button id="check-answers-btn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors">Check Answers</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="resources" class="tab-content">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Statutory Resources</h2>
+                    <p class="mb-6 text-gray-600">Quick links to the Texas Codes referenced in this guide.</p>
+                    <div id="resources-list" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-sm"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('#tabs button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                });
+            });
+            
+            // --- DYNAMIC CONTENT GENERATION ---
+
+            function createCard(title, content, color = 'gray-500') {
+                const card = document.createElement('div');
+                card.className = `offense-card bg-white p-6 rounded-lg shadow-md border-l-4 border-${color}`;
+                card.innerHTML = `<h2 class="text-xl font-bold mb-4 border-b pb-2">${title}</h2>` + content;
+                return card;
+            }
+            
+            function createList(items, className = 'list-disc list-inside text-sm text-gray-700 space-y-1') {
+                return `<ul class="${className}">${items.map(item => `<li>${item}</li>`).join('')}</ul>`;
+            }
+
+            // Property Crimes
+            const propertyCrimesContainer = document.getElementById('property-crimes');
+            const propertyCrimesData = [
+                {
+                    title: 'Theft & Burglary',
+                    content: `
+                        <h3 class="font-bold text-lg mb-2">Professional Thief / Burglar</h3>
+                        <p class="text-sm text-gray-600 mb-2"><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.31.htm#31.03" target="_blank" class="text-blue-600 hover:underline">TPC 31.03 - Theft</a></p>
+                        <h4 class="font-semibold text-sm mt-2">Elements Checklist:</h4>
+                        ${createList([
+                            'Profit motive.',
+                            'Operates to minimize chances of observation (lack of eyewitnesses).',
+                            'Requires planning, direction, and operating skills.',
+                            'Has business sense to distinguish valuable items.',
+                            'Often works with criminal receivers (fences).',
+                            'Connections to dispose of stolen property.'
+                        ], 'elements-checklist list-inside text-sm text-gray-700 space-y-1')}
+                        <h4 class="font-semibold text-sm mt-4">Practical Example:</h4>
+                        <p class="text-sm text-gray-700">A crew meticulously cases a jewelry store for weeks, disabling the alarm system and entering by stealth at night. They steal only high-value, easily transportable gems and sell them to a known fence, leaving minimal evidence behind.</p>
+                    `,
+                    color: 'blue-500'
+                },
+                {
+                    title: 'Semi-professional (Unskilled) Thief',
+                    content: `
+                        <h4 class="font-semibold text-sm mt-2">Elements Checklist:</h4>
+                        ${createList([
+                            'Profit is a motive, often to get money for drugs.',
+                            'Targets determined by opportunity (cruising robber).',
+                            'Less planning or preparation involved.',
+                            'More likely to resort to violence against the victim.',
+                            'Presents a special danger when interrupted and cornered.'
+                        ], 'elements-checklist list-inside text-sm text-gray-700 space-y-1')}
+                        <h4 class="font-semibold text-sm mt-4">Practical Example:</h4>
+                        <p class="text-sm text-gray-700">An individual impulsively breaks a car window to steal a laptop left on the passenger seat. When confronted by the car owner, the thief panics, shoves the owner, and flees.</p>
+                    `,
+                    color: 'blue-500'
+                },
+                {
+                    title: 'Robbery',
+                    content: `
+                        <p class="text-sm text-gray-600 mb-2"><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.29.htm#29.02" target="_blank" class="text-blue-600 hover:underline">TPC 29.02 - Robbery</a> | <a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.29.htm#29.03" target="_blank" class="text-blue-600 hover:underline">TPC 29.03 - Aggravated Robbery</a></p>
+                         <h4 class="font-semibold text-sm mt-2">Elements Checklist:</h4>
+                        ${createList([
+                            'Indicates a tendency to use violence on a stranger.',
+                            'Bolder personality; sacrifices secrecy through confrontation.',
+                            'Classed by style: Ambush (least planned) or Planned Operation (carefully structured).',
+                            'May specialize in specific targets (banks, home invasions).',
+                            'Signature aspects (MO) can link a person or group to a series of robberies.'
+                        ], 'elements-checklist list-inside text-sm text-gray-700 space-y-1')}
+                        <h4 class="font-semibold text-sm mt-4">Practical Example:</h4>
+                        <p class="text-sm text-gray-700">A group plans a bank robbery, casing the location, planning escape routes, and assigning roles. During the robbery, they use firearms to control employees and customers, demonstrating a clear threat of violence.</p>
+                    `,
+                    color: 'red-500'
+                },
+                 {
+                    title: 'Forgery & Credit Card Abuse',
+                    content: `
+                        <p class="text-sm text-gray-600 mb-2"><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.32.htm#32.21" target="_blank" class="text-blue-600 hover:underline">TPC 32.21 - Forgery</a> | <a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.32.htm#32.31" target="_blank" class="text-blue-600 hover:underline">TPC 32.31 - Credit Card or Debit Card Abuse</a></p>
+                         <h4 class="font-semibold text-sm mt-2">Elements Checklist:</h4>
+                        ${createList([
+                            'Least violent of offenders.',
+                            'Check fraud involves: forging, using false ID, a convincing presentation, and a con artist\'s sense of timing.',
+                            'Contemporary computer software allows for creation of checks, credit cards, and currency.'
+                        ], 'elements-checklist list-inside text-sm text-gray-700 space-y-1')}
+                        <h4 class="font-semibold text-sm mt-4">Practical Example:</h4>
+                        <p class="text-sm text-gray-700">An individual uses a high-quality printer and software to create a fraudulent payroll check from a real company. They then use a fake ID to cash the check at a grocery store during a busy time to overwhelm the cashier.</p>
+                    `,
+                    color: 'yellow-500'
+                },
+                {
+                    title: 'Auto Theft & Related Issues',
+                    content: `
+                        <p class="text-sm text-gray-600 mb-2"><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.31.htm#31.07" target="_blank" class="text-blue-600 hover:underline">TPC 31.07 - Unauthorized Use of a Vehicle</a> | <a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.31.htm#31.11" target="_blank" class="text-blue-600 hover:underline">TPC 31.11 - Tampering with Identification Numbers</a></p>
+                        <h4 class="font-semibold text-sm mt-2">Categories of Auto Thieves:</h4>
+                        ${createList([
+                            '<strong>Unauthorized Use/Joy-rider:</strong> "Borrows" car for transportation or fun, then abandons it.',
+                            '<strong>Use-in-crime thief:</strong> Steals a car solely to use in another crime.',
+                            '<strong>Insurance fraud swindler:</strong> Owner arranges for their own car to be "stolen" or destroyed for an insurance payout.',
+                            '<strong>Strippers and dismantlers:</strong> Remove parts from parked vehicles or take cars to a "chop shop".',
+                            '<strong>Professional auto thief:</strong> Steals late-model vehicles to resell, often with altered VINs or shipping them out of the country.',
+                            '<strong>Street Thieves:</strong> Most dangerous type. Often armed, reckless, and stealing for narcotics or alcohol.'
+                        ])}
+                        <h4 class="font-semibold text-sm mt-4">What is a Salvage Switch?</h4>
+                        <p class="text-sm text-gray-700">The altering of a vehicle's identity by placing the VIN of a "total loss" (wrecked) car onto a stolen car. This allows the thief to sell the stolen car with what appears to be a legal title.</p>
+                        <h4 class="font-semibold text-sm mt-4">Indicators of a Stolen Vehicle:</h4>
+                        ${createList([
+                            'Broken glass or window down on a cold day.',
+                            'One license plate in a two-plate state.',
+                            'License plate doesn\'t match the VIN registration.',
+                            'Clean vehicle with dirty plates, or vice-versa.',
+                            'Plates held on by wire or magnets.',
+                            'Steering column broken or covered.',
+                            'Ignition key in an odd position while running.'
+                        ])}
+                         <h4 class="font-semibold text-sm mt-4">Rental Car & Dealership Issues:</h4>
+                         <p class="text-sm text-gray-700">Rental cars overdue are often a civil matter unless the company prosecutes. Large dealerships may have poor inventory control, and a car might not be reported stolen for months.</p>
+                    `,
+                    color: 'green-500'
+                }
+            ];
+            propertyCrimesData.forEach(data => propertyCrimesContainer.appendChild(createCard(data.title, data.content, data.color)));
+
+            // Crimes Against Persons
+            const personCrimesContainer = document.getElementById('person-crimes');
+            const personCrimesData = [
+                {
+                    title: 'Homicide',
+                    content: `
+                        <p class="text-sm text-gray-600 mb-2"><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.19.htm#19.02" target="_blank" class="text-blue-600 hover:underline">TPC 19.02 - Murder</a> | <a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.19.htm#19.03" target="_blank" class="text-blue-600 hover:underline">TPC 19.03 - Capital Murder</a> | <a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.19.htm#19.04" target="_blank" class="text-blue-600 hover:underline">TPC 19.04 - Manslaughter</a></p>
+                        <h4 class="font-semibold text-sm mt-2">Common Categories:</h4>
+                        ${createList([
+                            '<strong>Anger killing:</strong> Extension of assault; dispute-anger-attack-death.',
+                            '<strong>Revenge or jealousy killing:</strong> History between perpetrator and victim.',
+                            '<strong>Triangle killing:</strong> Spouse kills partner involved with another lover.',
+                            '<strong>Killing for profit:</strong> Elimination of another for financial gain.',
+                            '<strong>Random killing:</strong> Seemingly motive-less; most difficult to solve.',
+                            '<strong>Felony murder:</strong> Death results from injuries received during another felony.'
+                        ])}
+                         <h4 class="font-semibold text-sm mt-4">Investigator Note:</h4>
+                        <p class="text-sm text-gray-700">All suspicious deaths should be treated as homicide until proven otherwise. In most cases, the victim knows the perpetrator.</p>
+                    `,
+                    color: 'red-600'
+                },
+                 {
+                    title: 'Sexual Assault',
+                    content: `
+                        <p class="text-sm text-gray-600 mb-2"><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.22.htm#22.011" target="_blank" class="text-blue-600 hover:underline">TPC 22.011 - Sexual Assault</a> | <a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.22.htm#22.021" target="_blank" class="text-blue-600 hover:underline">TPC 22.021 - Aggravated Sexual Assault</a></p>
+                        <h4 class="font-semibold text-sm mt-2">Elements Checklist:</h4>
+                        ${createList([
+                            'These are acts of violence, not crimes of sexual desire.',
+                            'The perpetrator\'s purpose is to exercise power over the victim.',
+                            'Means of control is key: force/threats, administering drugs, or victim\'s incapacity to consent.'
+                        ], 'elements-checklist list-inside text-sm text-gray-700 space-y-1')}
+                        <h4 class="font-semibold text-sm mt-4">Investigator Note:</h4>
+                        <p class="text-sm text-gray-700">It is often difficult to achieve full cooperation from the victim due to psychological trauma. The officer's professional and supportive attitude is critical.</p>
+                    `,
+                    color: 'purple-500'
+                },
+                 {
+                    title: 'Assault',
+                    content: `
+                        <p class="text-sm text-gray-600 mb-2"><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.22.htm#22.01" target="_blank" class="text-blue-600 hover:underline">TPC 22.01 - Assault</a> | <a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.22.htm#22.02" target="_blank" class="text-blue-600 hover:underline">TPC 22.02 - Aggravated Assault</a></p>
+                         <h4 class="font-semibold text-sm mt-2">Investigator Notes:</h4>
+                        ${createList([
+                            'In many cases, the victim knows the assailant.',
+                            'Aggravated assaults are often failed murder attempts.',
+                            'The victim often changes their mind about prosecution.',
+                            'Assaults where the victim does not know the perpetrator are investigated more like homicides.'
+                        ])}
+                    `,
+                    color: 'orange-500'
+                },
+                {
+                    title: 'Elder Abuse',
+                    content: `
+                        <p class="text-sm text-gray-600 mb-2"><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.22.htm#22.04" target="_blank" class="text-blue-600 hover:underline">TPC 22.04 - Injury to a Child, Elderly Individual, or Disabled Individual</a></p>
+                        <h4 class="font-semibold text-sm mt-2">Three Major Types:</h4>
+                        ${createList(['<strong>Neglect:</strong> Failure to provide necessary goods/services.', '<strong>Abuse:</strong> Willful infliction of injury, confinement, intimidation.', '<strong>Exploitation:</strong> Illegally taking, misusing, or concealing funds, property, or assets.'])}
+                         <h4 class="font-semibold text-sm mt-4">Investigator Notes:</h4>
+                         <p class="text-sm text-gray-700">These cases are often difficult due to the diminished capacity of many victims. Over half the cases involve self-neglect. Many cases involve caretaker neglect or financial exploitation by family members.</p>
+                    `,
+                    color: 'teal-500'
+                },
+                {
+                    title: 'Hate Crime',
+                    content: `
+                        <p class="text-sm text-gray-600 mb-2"><a href="https://statutes.capitol.texas.gov/Docs/CC/htm/CC.42.htm#42.014" target="_blank" class="text-blue-600 hover:underline">CCP 42.014(a) - Finding of Bias or Prejudice</a> | <a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.12.htm#12.47" target="_blank" class="text-blue-600 hover:underline">TPC 12.47 - Penalty Enhancement</a></p>
+                        <h4 class="font-semibold text-sm mt-2">Legal Definition:</h4>
+                        <p class="text-sm text-gray-700 mb-2">A criminal offense against a person or property motivated, in whole or in part, by the offender's bias against a race, religion, ethnic/national origin, or sexual orientation group. <strong>Note:</strong> Hate crime is a penalty enhancement, not a specific offense.</p>
+                        <h4 class="font-semibold text-sm mt-2">Elements Checklist (Considerations):</h4>
+                        ${createList([
+                            'Is the motivation of the offender known?',
+                            'Does the victim perceive the action was motivated by bias?',
+                            'Were any biased remarks made by the offender?',
+                            'Were there any offensive symbols, words, or acts used?',
+                            'Did the incident occur on a holiday or day of significance to a particular group?'
+                        ], 'elements-checklist list-inside text-sm text-gray-700 space-y-1')}
+                    `,
+                    color: 'pink-500'
+                },
+                 {
+                    title: 'Special Victim Categories',
+                    content: `
+                        <h4 class="font-semibold text-sm mt-2">Child Fatalities</h4>
+                        <p class="text-sm text-gray-700 mb-2">Responding officers must not use medical diagnosis terms like SIDS (Sudden Infant Death Syndrome) or SUID (Sudden Unexpected Infant Death). The cause of death can only be determined after a complete and thorough investigation. The integrity of the scene is paramount.</p>
+                        <h4 class="font-semibold text-sm mt-4">Sex Offender Registration</h4>
+                         <p class="text-sm text-gray-600 mb-2"><a href="https://statutes.capitol.texas.gov/Docs/CC/htm/CC.62.htm" target="_blank" class="text-blue-600 hover:underline">CCP Chapter 62 - Sex Offender Registration Program</a></p>
+                        <p class="text-sm text-gray-700">A person required to register must do so with local law enforcement not later than the 7th day after arrival in the municipality or county.</p>
+                    `,
+                    color: 'gray-500'
+                }
+            ];
+            personCrimesData.forEach(data => personCrimesContainer.appendChild(createCard(data.title, data.content, data.color)));
+            
+            // Forensics Tab
+            const forensicsContainer = document.getElementById('forensics');
+            const forensicsData = [
+                {
+                    title: 'Autopsy in Homicide Investigations',
+                    content: `
+                        <p class="text-sm text-gray-600 mb-2"><a href="https://statutes.capitol.texas.gov/Docs/CC/htm/CC.49.htm#49.01" target="_blank" class="text-blue-600 hover:underline">CCP 49.01(1)</a></p>
+                        <h4 class="font-semibold text-sm mt-2">Definition:</h4>
+                        <p class="text-sm text-gray-700 mb-2">A postmortem examination of the body of a person, including X-rays and examination of the internal organs and structures after dissection, to determine the cause of death or nature of any pathological changes that may have contributed to the death.</p>
+                        <h4 class="font-semibold text-sm mt-2">Information Provided by Autopsy Report:</h4>
+                        ${createList([
+                            'Time of death',
+                            'Nature of injuries resulting in death',
+                            'Weapon or substance causing death',
+                            'Whether the body was moved after death',
+                            'Blood alcohol content',
+                            'Contents of the stomach (indicates time of last meal)',
+                            'Evidence of seminal fluids, pregnancy, or other trace evidence not from the victim.'
+                        ])}
+                    `,
+                    color: 'cyan-500'
+                },
+                {
+                    title: 'Postmortem Forensic Indicators',
+                    content: `
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-semibold">Postmortem Lividity (Livor Mortis)</h4>
+                                <p class="text-sm text-gray-700">A purplish discoloration on parts of the body nearest the ground. Appears 1-2 hours after death and can indicate if the body was moved.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Rigor Mortis</h4>
+                                <p class="text-sm text-gray-700">The stiffening of muscles after death. Starts in the neck/jaw and spreads downward. Generally starts 5-6 hours after death, affects the whole body within 18 hours, and disappears within 36 hours. Can help establish time of death.</p>
+                            </div>
+                             <div>
+                                <h4 class="font-semibold">Body Temperature (Algor Mortis)</h4>
+                                <p class="text-sm text-gray-700">The body cools from its normal 98.6°F. The rate of cooling depends on air temperature, clothing, and body size. Can help determine time of death.</p>
+                            </div>
+                             <div>
+                                <h4 class="font-semibold">Putrefaction</h4>
+                                <p class="text-sm text-gray-700">Decomposition of body tissues. Involves bloating, skin discoloration, and blisters. The rate is influenced by environmental temperature and can help approximate time of death.</p>
+                            </div>
+                             <div>
+                                <h4 class="font-semibold">Cadaveric Spasm</h4>
+                                <p class="text-sm text-gray-700">Immediate stiffening of small muscles (face/hands) at the time of death, often due to severe injury to the central nervous system or great tension. Strong presumptive evidence of suicide if a hand is clutching the weapon.</p>
+                            </div>
+                        </div>
+                    `,
+                    color: 'cyan-500'
+                }
+            ];
+            forensicsData.forEach(data => forensicsContainer.appendChild(createCard(data.title, data.content, data.color)));
+
+            // Procedures
+            const proceduresContainer = document.getElementById('procedures');
+            const proceduresData = [
+                {
+                    title: 'On-Scene Arrival & Preliminary Investigation',
+                    content: `
+                        <h3 class="font-semibold text-lg mb-2">Initial Officer Duties:</h3>
+                        <ol class="list-decimal list-inside text-sm text-gray-700 space-y-1">
+                            <li><strong>Determine if suspects are present:</strong> Observe unusual activity, persons, vehicles.</li>
+                            <li><strong>Care for injured persons.</strong></li>
+                            <li><strong>Broadcast information:</strong> Transmit descriptions of perpetrators, vehicles, and direction of flight.</li>
+                            <li><strong>Protect the crime scene:</strong> Establish perimeters and prevent contamination.</li>
+                            <li><strong>Locate and separate victims and witnesses.</strong></li>
+                            <li><strong>Record and collect evidence:</strong> Mark for identification and maintain integrity.</li>
+                            <li><strong>Determine nature of crime:</strong> Note how it was committed, extent of injuries, and value of property taken.</li>
+                            <li><strong>Record all data in field notes.</strong></li>
+                        </ol>
+                         <h4 class="font-semibold text-sm mt-4">Summoning Assistance:</h4>
+                         <p class="text-sm text-gray-700">Call for specialized units (EMS, ME, Bomb Squad, Detectives, Techs) when physical characteristics, amount of evidence, or required expertise exceed the capabilities of those present.</p>
+                    `,
+                    color: 'indigo-500'
+                },
+                 {
+                    title: 'Continuing Investigation & Identification',
+                    content: `
+                        <h3 class="font-semibold text-lg mb-2">Follow-Up Investigation:</h3>
+                        ${createList([
+                            'Continue inquiries and follow basic investigative leads.',
+                            'Develop and revise the scheme of the crime.',
+                            'Continue the search for and interviews with new witnesses.',
+                            'Prepare appropriate lineups.'
+                        ])}
+                         <h4 class="font-semibold text-sm mt-4">Field Identification (Show-Up) Procedures:</h4>
+                        ${createList([
+                            'Document the witness\'s description of the perpetrator BEFORE the show-up.',
+                            'Transport the witness to the suspect\'s location.',
+                            'Separate multiple witnesses.',
+                            'Caution the witness that the person may or may not be the perpetrator.',
+                            'Obtain and document a statement of certainty from the witness in their own words.'
+                        ])}
+                         <h4 class="font-semibold text-sm mt-4">Lineups (Live or Photo):</h4>
+                        ${createList([
+                            'Use sequential (one at a time) rather than simultaneous (all at once) procedures when possible.',
+                            'Instruct the witness that it is just as important to clear innocent persons.',
+                            'Instruct the witness that the person may or may not be present in the lineup.'
+                        ])}
+                    `,
+                    color: 'indigo-500'
+                },
+                 {
+                    title: 'Crime Scene Search & Methods',
+                    content: `
+                        <h3 class="font-semibold text-lg mb-2">Objectives of a Search:</h3>
+                        ${createList([
+                            'Establish that a crime has been committed.',
+                            'Place the suspect at the scene.',
+                            'Eliminate persons as suspects.',
+                            'Help establish how, why, and when the crime was committed.'
+                        ])}
+                        <h4 class="font-semibold text-sm mt-4">Search Methods:</h4>
+                        ${createList([
+                            '<strong>Point-to-point:</strong> Disorganized, moves from one item of evidence to the next.',
+                            '<strong>Strip search (thorough):</strong> Effective for outside searches, searching in lanes.',
+                            '<strong>Grid search:</strong> A variation of the strip search using two directions, providing two views of the same area.',
+                            '<strong>Circular (Spiral):</strong> Useful when an item is missing from the center; starts inside and spirals out, or vice-versa.',
+                            '<strong>Quadrant/Zone Search:</strong> Effective for indoor/outdoor scenes with defined borders (e.g., a house is divided into rooms/zones).',
+                            '<strong>Area Search:</strong> Used for small, specific areas like bushes or pathways.'
+                        ])}
+                    `,
+                    color: 'indigo-500'
+                },
+                {
+                    title: 'Crime Scene Documentation: Photography',
+                    content: `
+                         <h3 class="font-semibold text-lg mb-2">Procedures:</h3>
+                         ${createList([
+                             'Maintain a photo log.',
+                             'Do not delete out-of-focus photos.',
+                             'Take first photo of a card identifying photographer, date, location, and case number.',
+                             'Work from exterior to interior, or from a landmark to the evidence.'
+                         ])}
+                         <h4 class="font-semibold text-sm mt-4">Three Major Vantage Points:</h4>
+                        <ol class="list-decimal list-inside text-sm text-gray-700 space-y-1">
+                             <li><strong>Overall / Long-range:</strong> An overview of the scene to establish location.</li>
+                             <li><strong>Mid-range:</strong> Taken from 10-20 feet away to show the relationship between evidence and the scene.</li>
+                             <li><strong>Close-up:</strong> Taken 5 feet or less from the subject for detailed views of evidence, victims, weapons, etc.</li>
+                        </ol>
+                        <h4 class="font-semibold text-sm mt-4">Photographing Injuries:</h4>
+                        <p class="text-sm text-gray-700">First take an overall photo of the person (front and back). Then take an intermediate photo that includes a joint (elbow, knee) to orient the injury. Finally, take close-ups as needed.</p>
+                    `,
+                    color: 'gray-500'
+                },
+                {
+                    title: 'Crime Scene Documentation: Sketching',
+                    content: `
+                         <h3 class="font-semibold text-lg mb-2">Purpose of a Sketch:</h3>
+                         <p class="text-sm text-gray-700 mb-2">To supplement photography by providing a permanent record of conditions, reconstructing the scene, and recording the location and spatial relationships between pieces of evidence.</p>
+                         <h4 class="font-semibold text-sm mt-4">Methods of Measurement:</h4>
+                        ${createList([
+                            '<strong>Triangulation:</strong> Measurements from two fixed permanent objects (e.g., corners of a room) to the evidence item, creating a triangle.',
+                            '<strong>Rectangular Coordinates:</strong> Measuring an object\'s distance from two mutually perpendicular lines (like walls).',
+                            '<strong>Transecting Base Line:</strong> A tape is run across the scene, and objects are measured by their perpendicular distance from the tape. Useful in large, irregular outdoor areas.'
+                        ])}
+                         <h4 class="font-semibold text-sm mt-4">Sketch Requirements:</h4>
+                         <p class="text-sm text-gray-700">Make a rough, not-to-scale sketch at the scene. The final sketch should include: investigator's name/rank, date/time/case #, address, scale (or "not to scale"), location of evidence measured from fixed points, and a key/legend.</p>
+                    `,
+                    color: 'gray-500'
+                },
+                {
+                    title: 'Evidence & Chain of Custody',
+                    content: `
+                        <h3 class="font-semibold text-lg mb-2">Chain of Custody</h3>
+                        <p class="text-sm text-gray-700 mb-2">The process which records transactions of evidence from person to person since its acquisition. It maintains what happened to evidence from discovery until court presentation.</p>
+                        <h4 class="font-semibold text-sm mt-2">Types of Evidence:</h4>
+                         ${createList(['<strong>Fruits of the crime</strong>', '<strong>Tools of the crime</strong>', '<strong>Contraband</strong>', '<strong>Mere evidence</strong>'])}
+                        <h4 class="font-semibold text-sm mt-2">Preservation Procedures:</h4>
+                        ${createList([
+                            'Limit the number of people handling evidence.',
+                            'Record in notes to whom evidence was given, date, time, and reason.',
+                            'Anyone who handles evidence should affix their name, identifier, and date to the package.',
+                            'Obtain a signed receipt from the person accepting the evidence.',
+                            'Package each item separately, using paper for biological evidence to prevent rotting.',
+                            'Allow wet evidence to dry before packaging.',
+                            'When collecting firearms, note the position of the cylinder, slide, hammer, and safety before unloading. Never place an object inside the barrel.'
+                        ])}
+                    `,
+                    color: 'gray-500'
+                },
+                 {
+                    title: 'Interview Techniques',
+                    content: `
+                        <h3 class="font-semibold text-lg mb-2">Legal Requirements</h3>
+                        <p class="text-sm text-gray-700 mb-2">Suspects in custody must be warned of their rights (Miranda v. Arizona) prior to questioning.</p>
+                        <h4 class="font-semibold text-sm mt-2">Best Practices:</h4>
+                        ${createList([
+                            '<strong>Separate:</strong> Interview persons individually and outside the presence of others.',
+                            '<strong>Control Environment:</strong> Use a small, private room with no distractions.',
+                            '<strong>Establish Rapport:</strong> This is the most important phase. Be patient, courteous, and sincere.',
+                            '<strong>Let Them Talk:</strong> Allow the person to tell their whole story at least once before confronting discrepancies.',
+                            '<strong>Ask Open-Ended Questions:</strong> Avoid questions that can be answered with "yes" or "no".',
+                            '<strong>Stay in Control:</strong> Remain calm and professional. Do not show anger or judgment.'
+                        ])}
+                    `,
+                    color: 'green-500'
+                }
+            ];
+            proceduresData.forEach(data => proceduresContainer.appendChild(createCard(data.title, data.content, data.color)));
+
+             // Booking & Court
+            const bookingCourtContainer = document.getElementById('booking-court');
+            const bookingCourtData = [
+                {
+                    title: 'Booking Procedures',
+                    content: `
+                        <h3 class="font-semibold text-lg mb-2">Reasons for Search During Booking:</h3>
+                        ${createList([
+                            '<strong>Safety:</strong> For officers and jail staff.',
+                            '<strong>Eliminate Suicide Risk:</strong> And prevent death in custody.',
+                            '<strong>Security of Facility:</strong> Prevent contraband from entering.',
+                            '<strong>Safeguard Prisoner\'s Property:</strong> Through proper inventory.'
+                        ])}
+                        <h4 class="font-semibold text-sm mt-4">Search Procedures:</h4>
+                        <p class="text-sm text-gray-700">A detailed, systematic physical search of the prisoner and their clothing is required. This includes emptying pockets; checking collars, cuffs, and waistbands; running fingers through hair; and inspecting shoes, belts, and headgear for hidden contraband. A male officer searches a male prisoner, and a female officer searches a female prisoner, out of view of the opposite sex.</p>
+                        <h4 class="font-semibold text-sm mt-4">Property Recording:</h4>
+                        <p class="text-sm text-gray-700">Verbally describe all property in the prisoner's presence. Describe items specifically (color, shape, serial numbers, damage), using neutral terms like "yellow in color" instead of "gold." List all clothing and other articles. Have the prisoner sign the inventory form to acknowledge it is correct.</p>
+                    `,
+                    color: 'gray-700'
+                },
+                 {
+                    title: 'Case Management',
+                    content: `
+                        <h3 class="font-semibold text-lg mb-2">Reasons for Case Management:</h3>
+                        ${createList([
+                            'To have an organized, easily understood, factual, and thorough account of the investigation.',
+                            'To identify serious weaknesses in the case.',
+                            'To help assure failure to prosecute is not due to lack of preparation or mistakes on the officer\'s behalf.'
+                        ])}
+                        <h4 class="font-semibold text-sm mt-4">Case Folder Contents:</h4>
+                        ${createList([
+                            'Offense and supplemental reports',
+                            'Witness and victim statements',
+                            'Voluntary confessions',
+                            'Fingerprint cards and expert comparison reports',
+                            'Other pertinent reports (lab results, autopsy, etc.)'
+                        ])}
+                        <h4 class="font-semibold text-sm mt-4">Prosecution Summary Contents:</h4>
+                        ${createList([
+                            'Case facts',
+                            'Legality of arrest and seizure of evidence',
+                            'Names of witnesses and nature of their testimony'
+                        ])}
+                    `,
+                    color: 'gray-700'
+                },
+                {
+                    title: 'Courtroom Testimony',
+                    content: `
+                        <h3 class="font-semibold text-lg mb-2">Preparation & Demeanor</h3>
+                        ${createList([
+                            '<strong>Refresh Memory:</strong> Carefully study all reports, notes, photos, and evidence before court.',
+                            '<strong>First Impressions:</strong> Wear a proper uniform or professional business attire. Approach the stand confidently.',
+                            '<strong>Taking the Oath:</strong> Look at the person administering it. Do not look at the accused, jury, or judge.',
+                            '<strong>Direct Testimony:</strong> Direct your answers to the jury (or judge). Remain silent if an objection is made until the judge rules.'
+                        ])}
+                        <h4 class="font-semibold text-sm mt-4">Principles of Witnessmanship:</h4>
+                        ${createList(['<strong>Honesty</strong>', '<strong>Brevity</strong> (be brief, don\'t volunteer info)', '<strong>Clarity</strong>', '<strong>Objectivity</strong>', '<strong>Emotional Control</strong> (ignore insults and badgering)'])}
+                        <h4 class="font-semibold text-sm mt-4">Defense Tactics:</h4>
+                         <p class="text-sm text-gray-700">Be prepared for offensive (rapid-fire), condescending, friendly, or badgering questions intended to confuse you or provoke an emotional reaction. Remain calm, take your time, and stick to the facts.</p>
+                         <h4 class="font-semibold text-sm mt-4">Exclusion of Witnesses ("The Rule"):</h4>
+                         <p class="text-sm text-gray-700">If the rule is invoked, you must leave the courtroom, stay close by, and not discuss the case with other witnesses or jurors. After testifying, you must leave again. Violating the rule may make you ineligible to testify.</p>
+                    `,
+                    color: 'gray-700'
+                }
+            ];
+            bookingCourtData.forEach(data => bookingCourtContainer.appendChild(createCard(data.title, data.content, data.color)));
+
+
+            // --- QUIZ DATA ---
+            const quizData = [
+                { question: "1. The process of legally gathering evidence of a crime that has been or is being committed is the definition of:", options: ["Corpus Delicti", "Criminal Investigation", "Field Identification", "Reasonable Suspicion"], answer: "Criminal Investigation", explanation: "This is the core definition of a criminal investigation as per section 32.1.A." },
+                { question: "2. Which of the following is NOT one of the primary goals of a criminal investigator?", options: ["To determine if a crime has been committed", "To secure a conviction by any means necessary", "To legally arrest the suspect(s)", "To recover all stolen property"], answer: "To secure a conviction by any means necessary", explanation: "The goal is to determine the TRUTH and present the best case possible to the prosecutor, not just secure a conviction. The investigation must be legal and objective." },
+                { question: "3. A criminal's characteristic method of operation is known as:", options: ["Corpus Delicti", "Modus Operandi (MO)", "Rapport", "Bias"], answer: "Modus Operandi (MO)", explanation: "Modus Operandi (MO) is the term for a criminal's specific, repeatable method of operation." },
+                { question: "4. An investigator who is patient, courteous, and sympathetic to build a feeling of ease with a witness is demonstrating which characteristic?", options: ["Observant", "Logical Thinking", "Developing Rapport", "Suspicious"], answer: "Developing Rapport", explanation: "Developing rapport through interpersonal communication skills is a key characteristic of an effective investigator." },
+                { question: "5. A thief who is motivated by profit, plans their crimes meticulously, and works with a fence is best described as a:", options: ["Semi-professional thief", "Street thief", "Professional thief", "Joy-rider"], answer: "Professional thief", explanation: "Professional thieves are characterized by planning, skill, profit motive, and connections to dispose of stolen goods." },
+                { question: "6. A person who steals a car simply to get from one point to another and then abandons it is known as a:", options: ["Professional auto thief", "Stripper and dismantler", "Insurance fraud swindler", "Transportation thief"], answer: "Transportation thief", explanation: "This category of auto theft involves 'borrowing' a car for transportation and then abandoning it." },
+                { question: "7. Altering a vehicle's identity by placing the serial number of a total loss car onto a stolen car is called a:", options: ["VIN Clone", "Salvage Switch", "Chop Shop", "Title Wash"], answer: "Salvage Switch", explanation: "A salvage switch is the specific term for using a VIN from a wrecked vehicle to legitimize a stolen one." },
+                { question: "8. According to the handout, which type of auto thieves are considered the most dangerous?", options: ["Professional auto thieves", "Insurance fraud swindlers", "Street thieves", "Joy-riders"], answer: "Street thieves", explanation: "Street thieves are often armed, take reckless chances, and are stealing for narcotics or alcohol, making them the most dangerous." },
+                { question: "9. All suspicious deaths should be treated as ________ until proven otherwise.", options: ["An accident", "A suicide", "A natural death", "Homicide"], answer: "Homicide", explanation: "This is a fundamental principle of death investigation to ensure evidence is not overlooked." },
+                { question: "10. Sexual assaults are primarily considered crimes of:", options: ["Sexual desire", "Financial gain", "Opportunity", "Violence and power"], answer: "Violence and power", explanation: "The perpetrator's purpose is to exercise power over the victim; it is an act of violence, not desire." },
+                { question: "11. An offense motivated by an offender's bias against a person's race, religion, or sexual orientation is known as a:", options: ["Bias Crime", "Hate Crime", "Prejudice Offense", "Targeted Assault"], answer: "Hate Crime", explanation: "A hate crime is a criminal offense where the motivation is bias against a protected group. In Texas law, it acts as a penalty enhancement." },
+                { question: "12. What is the primary purpose of a 'show-up' or field identification?", options: ["To guarantee a conviction", "To provide investigative information at an early stage", "To replace the need for a photo array", "To allow witnesses to collaborate on a description"], answer: "To provide investigative information at an early stage", explanation: "A show-up is used for prompt identification, which can either confirm the suspect's involvement or clear an innocent party, helping to refocus the investigation." },
+                { question: "13. The search method that involves setting up lanes and is most effective for outside searches is the:", options: ["Point-to-point search", "Circular search", "Strip search", "Quadrant search"], answer: "Strip search", explanation: "The strip (or line) search is highly effective for covering large outdoor areas in a systematic way." },
+                { question: "14. What is the purpose of the 'chain of custody'?", options: ["To list all potential suspects", "To record transactions of evidence from person to person", "To determine the value of stolen property", "To create a timeline of the crime"], answer: "To record transactions of evidence from person to person", explanation: "The chain of custody documents everyone who has handled a piece of evidence, ensuring its integrity from collection to courtroom." },
+                { question: "15. Wet evidence, such as bloody clothing, must be ________ before packaging.", options: ["Frozen", "Sealed in a plastic bag", "Allowed to dry", "Cleaned"], answer: "Allowed to dry", explanation: "Wet evidence must be air-dried before being packaged in paper to prevent rotting and contamination." },
+                { question: "16. Before questioning a suspect who is in custody, an officer must:", options: ["Offer them a phone call", "Establish rapport", "Warn them of their rights (Miranda warning)", "Get a written confession"], answer: "Warn them of their rights (Miranda warning)", explanation: "Miranda v. Arizona requires that suspects in custody be informed of their rights before any interrogation can take place." },
+                { question: "17. What is the most important phase of an interview, according to the handout?", options: ["Confronting discrepancies", "Getting a confession", "Establishing rapport", "Taking written notes"], answer: "Establishing rapport", explanation: "The handout repeatedly emphasizes that establishing rapport is the most crucial phase, as it builds trust and encourages the subject to share information." },
+                { question: "18. If a defense attorney's questioning becomes badgering or belligerent, the officer should:", options: ["Argue back to show strength", "Refuse to answer any more questions", "Ignore the actions, stay calm, and speak deliberately", "Ask the judge to hold the attorney in contempt"], answer: "Ignore the actions, stay calm, and speak deliberately", explanation: "The goal is to maintain emotional control and professionalism, which undermines the attorney's tactic and preserves the officer's credibility." },
+                { question: "19. When the 'Rule' is invoked (Exclusion of Witnesses), what must an officer who has testified do?", options: ["Stay in the courtroom to hear other testimony", "Discuss the case with the prosecutor in the hallway", "Leave the courtroom again and not discuss the case with others", "Wait outside and compare notes with other witnesses"], answer: "Leave the courtroom again and not discuss the case with others", explanation: "Violating 'The Rule' can render an officer ineligible to testify. After testifying, the officer must leave the courtroom again." },
+                { question: "20. What is a primary value of a properly prepared case folder?", options: ["To ensure the officer gets a promotion", "To impress the defense attorney into a plea agreement", "To serve as a public record of the investigation", "To have an organized, factual, and thorough account of the investigation"], answer: "To have an organized, factual, and thorough account of the investigation", explanation: "A well-managed case file ensures the investigation is easily understood, identifies weaknesses, and helps prevent failure to prosecute due to disorganization." },
+                { question: "21. The purplish discoloration on parts of a body nearest the ground, which appears 1-2 hours after death, is known as:", options: ["Rigor Mortis", "Postmortem Lividity", "Cadaveric Spasm", "Putrefaction"], answer: "Postmortem Lividity", explanation: "Postmortem lividity (livor mortis) is the settling of blood and can indicate if a body has been moved." },
+                { question: "22. Which measurement method is particularly useful in large, irregularly shaped outdoor areas where no satisfactory natural base line exists?", options: ["Triangulation", "Rectangular Coordinates", "Transecting Base Line", "Spiral Measurement"], answer: "Transecting Base Line", explanation: "A transecting base line involves running a tape across the scene and measuring objects' perpendicular distance from it." },
+                { question: "23. When photographing injuries, an intermediate photo should be taken that includes what feature to help orient the injury?", options: ["A measuring scale", "The officer's badge", "A joint of the body", "A color wheel"], answer: "A joint of the body", explanation: "Including a joint (like an elbow or knee) helps identify left vs. right, arm vs. leg, etc., providing critical context for the injury." },
+                { question: "24. A key component of a 'follow-up' investigation is to:", options: ["Make the initial broadcast of suspect information", "Develop and revise a scheme of the crime", "Perform the preliminary survey of the scene", "Take overall photos of the crime scene"], answer: "Develop and revise a scheme of the crime", explanation: "Developing and revising the theory of the crime is a critical part of the continuing or follow-up investigation phase." },
+                { question: "25. Strong presumptive evidence of suicide may be indicated by ________ if the deceased's hand is clutching the weapon.", options: ["Putrefaction", "Rigor Mortis", "Postmortem Lividity", "Cadaveric Spasm"], answer: "Cadaveric Spasm", explanation: "Cadaveric spasm is an immediate stiffening of muscles at the time of death and is strong evidence of suicide if the hand is locked around a weapon." }
+            ];
+
+            const quizContainer = document.getElementById('quiz-container');
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'quiz-question';
+                let optionsHtml = q.options.map(option => `
+                    <label class="block"><input type="radio" name="q${index}" value="${option}" class="mr-2">${option}</label>
+                `).join('');
+                questionDiv.innerHTML = `
+                    <p class="font-semibold mb-2">${q.question}</p>
+                    <div class="space-y-2">${optionsHtml}</div>
+                    <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                `;
+                quizContainer.appendChild(questionDiv);
+            });
+
+            document.getElementById('check-answers-btn').addEventListener('click', () => {
+                quizData.forEach((q, index) => {
+                    const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                    const feedback = document.querySelectorAll('.feedback')[index];
+                    feedback.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+                    if (selected && selected.value === q.answer) {
+                        feedback.textContent = `Correct! ${q.explanation}`;
+                        feedback.classList.add('bg-green-100', 'text-green-800');
+                    } else {
+                        feedback.textContent = `Incorrect. The correct answer is "${q.answer}". ${q.explanation}`;
+                        feedback.classList.add('bg-red-100', 'text-red-800');
+                    }
+                });
+            });
+
+            // --- RESOURCES LIST ---
+            const resources = [
+                { name: "PC 9.53", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.9.htm#9.53" },
+                { name: "PC 12.47", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.12.htm#12.47" },
+                { name: "PC 19.02", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.19.htm#19.02" },
+                { name: "PC 19.03", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.19.htm#19.03" },
+                { name: "PC 19.04", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.19.htm#19.04" },
+                { name: "PC 19.05", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.19.htm#19.05" },
+                { name: "PC 22.01", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.22.htm#22.01" },
+                { name: "PC 22.011", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.22.htm#22.011" },
+                { name: "PC 22.02", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.22.htm#22.02" },
+                { name: "PC 22.021", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.22.htm#22.021" },
+                { name: "PC 22.04", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.22.htm#22.04" },
+                { name: "PC 29.02", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.29.htm#29.02" },
+                { name: "PC 29.03", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.29.htm#29.03" },
+                { name: "PC 30.05", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.30.htm#30.05" },
+                { name: "PC 31.03", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.31.htm#31.03" },
+                { name: "PC 31.07", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.31.htm#31.07" },
+                { name: "PC 31.11", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.31.htm#31.11" },
+                { name: "PC 32.21", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.32.htm#32.21" },
+                { name: "PC 32.31", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.32.htm#32.31" },
+                { name: "PC 37.09", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.37.htm#37.09" },
+                { name: "PC 38.15", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.38.htm#38.15" },
+                { name: "CCP 6.06", url: "https://statutes.capitol.texas.gov/Docs/CC/htm/CC.6.htm#6.06" },
+                { name: "CCP 6.07", url: "https://statutes.capitol.texas.gov/Docs/CC/htm/CC.6.htm#6.07" },
+                { name: "CCP 15.17", url: "https://statutes.capitol.texas.gov/Docs/CC/htm/CC.15.htm#15.17" },
+                { name: "CCP 36.03", url: "https://statutes.capitol.texas.gov/Docs/CC/htm/CC.36.htm#36.03" },
+                { name: "CCP 36.05", url: "https://statutes.capitol.texas.gov/Docs/CC/htm/CC.36.htm#36.05" },
+                { name: "CCP 36.06", url: "https://statutes.capitol.texas.gov/Docs/CC/htm/CC.36.htm#36.06" },
+                { name: "CCP 38.21", url: "https://statutes.capitol.texas.gov/Docs/CC/htm/CC.38.htm#38.21" },
+                { name: "CCP 38.22", url: "https://statutes.capitol.texas.gov/Docs/CC/htm/CC.38.htm#38.22" },
+                { name: "CCP 38.23", url: "https://statutes.capitol.texas.gov/Docs/CC/htm/CC.38.htm#38.23" },
+                { name: "CCP 42.014", url: "https://statutes.capitol.texas.gov/Docs/CC/htm/CC.42.htm#42.014" },
+                { name: "CCP 49.01", url: "https://statutes.capitol.texas.gov/Docs/CC/htm/CC.49.htm#49.01" },
+                { name: "CCP 49.04", url: "https://statutes.capitol.texas.gov/Docs/CC/htm/CC.49.htm#49.04" },
+                { name: "CCP 49.05", url: "https://statutes.capitol.texas.gov/Docs/CC/htm/CC.49.htm#49.05" },
+                { name: "CCP 49.06", url: "https://statutes.capitol.texas.gov/Docs/CC/htm/CC.49.htm#49.06" },
+                { name: "CCP 49.18", url: "https://statutes.capitol.texas.gov/Docs/CC/htm/CC.49.htm#49.18" },
+                { name: "CCP 49.22", url: "https://statutes.capitol.texas.gov/Docs/CC/htm/CC.49.htm#49.22" },
+                { name: "CCP 49.25", url: "https://statutes.capitol.texas.gov/Docs/CC/htm/CC.49.htm#49.25" },
+                { name: "CCP 62", url: "https://statutes.capitol.texas.gov/Docs/CC/htm/CC.62.htm" },
+                { name: "TRE 611", url: "https://www.txcourts.gov/media/1457814/texas-rules-of-evidence-updated-with-amendments-effective-612023.pdf" },
+                { name: "TRE 614", url: "https://www.txcourts.gov/media/1457814/texas-rules-of-evidence-updated-with-amendments-effective-612023.pdf" }
+            ];
+            const resourcesList = document.getElementById('resources-list');
+            resources.sort((a, b) => {
+                const aCode = a.name.split(' ')[0];
+                const bCode = b.name.split(' ')[0];
+                if (aCode !== bCode) {
+                    return aCode.localeCompare(bCode);
+                }
+                const aNum = a.name.split(' ')[1] ? parseFloat(a.name.split(' ')[1]) : 0;
+                const bNum = b.name.split(' ')[1] ? parseFloat(b.name.split(' ')[1]) : 0;
+                return aNum - bNum;
+            });
+            resources.forEach(res => {
+                const link = document.createElement('a');
+                link.href = res.url;
+                link.target = '_blank';
+                link.className = 'text-blue-600 hover:underline';
+                link.textContent = res.name;
+                resourcesList.appendChild(link);
+            });
+        });
+    </script>
+</body>
+</html>
+

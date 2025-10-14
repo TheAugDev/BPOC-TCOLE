@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crisis Intervention Training (CIT) Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+        .answer-option {
+            transition: all 0.2s ease-in-out;
+        }
+        .answer-option:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .correct {
+            background-color: #D1FAE5 !important;
+            border-color: #10B981 !important;
+            color: #065F46 !important;
+        }
+        .incorrect {
+            background-color: #FEE2E2 !important;
+            border-color: #EF4444 !important;
+            color: #991B1B !important;
+        }
+        .progress-bar-fill {
+            transition: width 0.3s ease-in-out;
+        }
+        .review-correct {
+            color: #059669;
+        }
+        .review-incorrect {
+            color: #e11d48;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="quiz-app" class="quiz-container p-4 sm:p-8">
+        
+        <!-- Quiz Start Screen -->
+        <div id="start-screen" class="text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Crisis Intervention Training (CIT) Quiz</h1>
+            <p class="text-lg text-gray-600 mb-8">An exhaustive quiz based on the "Basic Peace Officer Course | Chapter 29" handout to test your knowledge on crisis intervention and de-escalation techniques.</p>
+            <button id="start-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Start Quiz</button>
+        </div>
+
+        <!-- Quiz Interface -->
+        <div id="quiz-screen" class="hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold">Question <span id="question-number"></span> of <span id="total-questions"></span></h2>
+                <div id="timer" class="text-lg font-mono bg-gray-200 px-3 py-1 rounded-md">00:00</div>
+            </div>
+            
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+                <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full progress-bar-fill" style="width: 0%"></div>
+            </div>
+
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+                <p id="question-text" class="text-xl font-medium mb-8 min-h-[6rem]"></p>
+                <div id="answer-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Answer options will be injected here by JS -->
+                </div>
+            </div>
+             <div id="rationale-box" class="hidden mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h3 class="font-bold text-blue-800">Rationale:</h3>
+                <p id="rationale-text" class="text-blue-700"></p>
+                <p class="text-sm text-blue-600 mt-2">Source: <span id="rationale-source"></span></p>
+            </div>
+            <button id="next-btn" class="hidden w-full bg-blue-600 text-white font-bold py-3 px-8 rounded-lg mt-8 hover:bg-blue-700 transition-colors shadow-md">Next Question</button>
+        </div>
+
+        <!-- Quiz Results Screen -->
+        <div id="results-screen" class="hidden text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">Quiz Complete!</h1>
+            <p class="text-lg text-gray-600 mb-6">Here's how you did:</p>
+            <div class="flex flex-col sm:flex-row justify-around items-center my-8 gap-8 sm:gap-0">
+                <div>
+                    <p id="score-percentage" class="text-5xl font-bold text-green-600">0%</p>
+                    <p class="text-gray-500">Score</p>
+                </div>
+                 <div>
+                    <p class="text-5xl font-bold text-blue-600"><span id="correct-answers">0</span>/<span id="total-answered">0</span></p>
+                    <p class="text-gray-500">Correct Answers</p>
+                </div>
+                 <div>
+                    <p id="final-time" class="text-5xl font-bold text-gray-700">00:00</p>
+                    <p class="text-gray-500">Time Taken</p>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="restart-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Try Again</button>
+                <button id="review-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md">Review Answers</button>
+            </div>
+        </div>
+        
+        <!-- Review Screen -->
+        <div id="review-screen" class="hidden bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6">Answer Review</h1>
+            <div id="review-container" class="space-y-6">
+                <!-- Review content will be injected here -->
+            </div>
+            <button id="back-to-results-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md mt-8">Back to Results</button>
+        </div>
+
+    </div>
+
+    <script>
+        const quizData = [
+            // Original Questions
+            { question: "What is the primary goal of Crisis Intervention Training (CIT)?", options: ["To ensure every person in crisis is incarcerated", "To calm persons in crisis and refer them to mental health care services", "To teach officers advanced firearm techniques for crisis situations", "To replace traditional policing with social workers"], answer: "To calm persons in crisis and refer them to mental health care services", rationale: "The primary goal of CIT involves calming persons with mental illness who are in crisis and referring them to mental health care services, rather than incarcerating them.", page: "Page 2" },
+            { question: "According to a 2015 Washington Post investigation, what percentage of fatal officer-involved shootings involved a subject displaying signs of mental illness?", options: ["5%", "10%", "25%", "50%"], answer: "25%", rationale: "Washington Post investigative reporters found that in 2015, in 25% of the 990 fatal officer-involved shootings, the subject displayed signs of mental illness.", page: "Page 1" },
+            { question: "Texas SB 1849 requires law enforcement agencies to make a good faith effort to divert persons suffering from a mental health crisis or substance abuse to what?", options: ["The nearest available jail", "Proper treatment", "A family member's care", "Community service"], answer: "Proper treatment", rationale: "SB 1849 mandates that 'Each law enforcement agency shall make a good faith effort to divert person suffering from mental health crisis or substance abuse to proper treatment.'", page: "Page 2" },
+            { question: "Which of the following is NOT a state that has a CIT program?", options: ["Texas", "California", "Florida", "Alabama"], answer: "Alabama", rationale: "46 of the 50 states have CIT programs. Arkansas, Alabama, West Virginia, and Rhode Island are the only states that do not.", page: "Page 3" },
+            { question: "The term 'insanity' is primarily a:", options: ["Psychological term", "Medical diagnosis", "Societal label", "Legal term"], answer: "Legal term", rationale: "The term 'insanity' is not a psychological term, but is a legal term used as a defense to avoid criminal consequences for certain acts.", page: "Page 5" },
+            { question: "According to the Texas Penal Code, insanity is an affirmative defense if, as a result of severe mental disease or defect, the actor did not know what?", options: ["Their own name", "That their conduct was wrong", "The identity of the victim", "The time of day"], answer: "That their conduct was wrong", rationale: "Texas Penal Code, Section 8.01, defines insanity as an affirmative defense where 'the actor, as a result of severe mental disease or defect, did not know that his conduct was wrong.'", page: "Page 5" },
+            { question: "In 2015, what percentage of U.S. adults (1 out of 5) were estimated to have a mental illness in the past year?", options: ["5.2%", "10.1%", "17.9%", "25.5%"], answer: "17.9%", rationale: "In 2015, an estimated 43.4 million adults aged 18 or older in the United States had a mental illness, representing 17.9% of all U.S. adults, or 1 out of every 5 people.", page: "Page 6" },
+            { question: "What is a 'stigma' in the context of mental illness?", options: ["A legal document", "A mark of disgrace or shame", "A type of medication", "A form of therapy"], answer: "A mark of disgrace or shame", rationale: "Stigma is defined as a mark of disgrace or shame. It is made up of various components, including labeling, stereotyping, creating divisions, and discrimination.", page: "Page 7" },
+            { question: "What percentage of violent acts can be attributed to individuals living with a serious mental illness?", options: ["3% - 5%", "15% - 20%", "25% - 30%", "40% - 50%"], answer: "3% - 5%", rationale: "The clear majority of people with mental health problems are not more likely to be violent than anyone else. Only 3% - 5% of violent acts can be attributed to individuals living with a serious mental illness.", page: "Page 7" },
+            { question: "A personality disorder is an enduring pattern of thinking, feeling, and behaving that deviates markedly from the person's:", options: ["Family's expectations", "Culture", "IQ level", "Physical appearance"], answer: "Culture", rationale: "A personality disorder is an enduring pattern of thinking, feeling, and behaving that is relatively stable over time, and that deviates markedly from the person's culture.", page: "Page 10" },
+            { question: "A person with which personality disorder might exhibit a pervasive pattern of disregard for and violation of the rights of others?", options: ["Narcissistic Personality Disorder", "Paranoid Personality Disorder", "Antisocial Personality Disorder", "Borderline Personality Disorder"], answer: "Antisocial Personality Disorder", rationale: "Antisocial Personality Disorder is characterized by a pervasive pattern of disregard for and violation of the rights of others, occurring since age 15.", page: "Page 10" },
+            { question: "Frantic efforts to avoid abandonment, a pattern of unstable relationships, and self-damaging impulsivity are characteristic of which personality disorder?", options: ["Borderline Personality Disorder", "Antisocial Personality Disorder", "Paranoid Personality Disorder", "Narcissistic Personality Disorder"], answer: "Borderline Personality Disorder", rationale: "These are key characteristics of Borderline Personality Disorder, along with poor impulse control and emotional over-reactivity.", page: "Page 11" },
+            { question: "An intense level of depression that persists for at least two weeks is known as:", options: ["Dysthymia", "Bipolar Disorder", "Major Depressive Disorder (MDD)", "Psychosis"], answer: "Major Depressive Disorder (MDD)", rationale: "Major depressive disorder (MDD) is defined as an intense level of depression that persists for at least two weeks, distinct from just feeling sad or 'blue'.", page: "Page 12" },
+            { question: "Bipolar disorder involves cycles between which two states?", options: ["Anxiety and Calmness", "Mania and Depression", "Psychosis and Lucidity", "Sociability and Introversion"], answer: "Mania and Depression", rationale: "Bipolar disorder is a mental illness involving cycles between extreme activity and emotional highs (mania) and depression.", page: "Page 12" },
+            { question: "Fixed false beliefs that are maintained despite overwhelming evidence to the contrary are called:", options: ["Hallucinations", "Delusions", "Flashbacks", "Compulsions"], answer: "Delusions", rationale: "A delusion is defined as a fixed false belief that is maintained despite overwhelming evidence to the contrary.", page: "Page 14" },
+            { question: "What is the most common type of hallucination?", options: ["Visual", "Tactile (touch)", "Olfactory (smell)", "Auditory (hearing)"], answer: "Auditory (hearing)", rationale: "Auditory hallucinations are the most common type of hallucination, followed by visual hallucinations.", page: "Page 14" },
+            { question: "Which category of drugs slows down the operations of the brain and body?", options: ["CNS Stimulants", "Hallucinogens", "CNS Depressants", "Narcotic Analgesics"], answer: "CNS Depressants", rationale: "Central Nervous System (CNS) Depressants, such as alcohol and Valium, slow down the operations of the brain and the body.", page: "Page 15" },
+            { question: "Grinding teeth (bruxism), anxiety, and euphoria are signs of ingestion of which drug category?", options: ["CNS Depressants", "Inhalants", "Cannabis", "CNS Stimulants"], answer: "CNS Stimulants", rationale: "Indications of stimulant ingestion include anxiety, body tremors, grinding teeth (bruxism), euphoria, increased alertness, and being talkative.", page: "Page 16" },
+            { question: "Traumatic Brain Injury (TBI) is caused by:", options: ["Genetic predisposition", "Chemical imbalance in the brain", "Impact to the head or other mechanisms of rapid brain movement", "Progressive neurological disease"], answer: "Impact to the head or other mechanisms of rapid brain movement", rationale: "TBI is 'Caused by impact to the head, or other mechanisms of rapid movement or displacement of the brain within the skull, as can happen with blast injuries'.", page: "Page 18" },
+            { question: "What percentage of people with Alzheimer's will wander, posing a risk of serious injury or death if not found within 24 hours?", options: ["2 out of 10 (20%)", "4 out of 10 (40%)", "6 out of 10 (60%)", "8 out of 10 (80%)"], answer: "6 out of 10 (60%)", rationale: "'Six out of 10 people with Alzheimer's will wander,' and 'if not found within 24 hours, up to half of those who wander risk serious injury or death'.", page: "Page 19" },
+            { question: "An individual who has had a condition since birth or childhood that prevents full social or vocational independence is considered to have a:", options: ["Personality Disorder", "Mood Disorder", "Developmental Disorder", "Thought Disorder"], answer: "Developmental Disorder", rationale: "A developmental disorder is 'A condition that an individual may have had since birth or childhood which has prevented them from full social or vocational independence in adulthood, and which continues throughout their lifespan'.", page: "Page 21" },
+            { question: "A fixed mental condition, diagnosable by age 18, that includes deficits in intellectual and adaptive functioning is called:", options: ["Autism Spectrum Disorder", "Intellectual Disability", "Traumatic Brain Injury", "Schizophrenia"], answer: "Intellectual Disability", rationale: "Intellectual Disability includes deficits in intellectual and adaptive functioning, is detectable in infancy or early childhood, and must be diagnosed by the age of 18.", page: "Page 22" },
+            { question: "A person with an IQ of 60 would fall into which degree of intellectual disability?", options: ["Borderline Intellectual Functioning (70-79)", "Mild Intellectual Disability (50-69)", "Moderate Intellectual Disability (35-50)", "Severe Intellectual Disability (20-50)"], answer: "Mild Intellectual Disability (50-69)", rationale: "The degrees of Intellectual Disability are categorized by IQ ranges. An IQ of 50-69 is classified as Mild Intellectual Disability.", page: "Page 22" },
+            { question: "What percentage of women will develop PTSD in their lifetime, compared to 4% of men?", options: ["5%", "10%", "15%", "20%"], answer: "10%", rationale: "10% of all women will develop PTSD during a lifetime, compared to only 4% of men.", page: "Page 23" },
+            { question: "What is a 'moral injury'?", options: ["A physical injury sustained in combat", "The damage done to one's conscience when violating one's own morals", "A legal term for self-harm", "A side effect of psychotropic medication"], answer: "The damage done to one's conscience when violating one's own morals", rationale: "A moral injury is the damage done to one's conscience when the person perpetrates, witnesses, or fails to prevent acts that violate that person's morals, ethics, or codes of conduct.", page: "Page 25" },
+            { question: "Which of the following is the most common reason Veterans become involved in the criminal justice system?", options: ["Violent crime", "Property crime", "Substance abuse-related issues", "Domestic disputes"], answer: "Substance abuse-related issues", rationale: "Substance abuse-related issues are the most common reason Veterans become involved in the criminal justice system.", page: "Page 27" },
+            { question: "In Texas, what was the 9th leading cause of death in 2010?", options: ["Homicide", "Traffic Accidents", "Heart Disease", "Suicide"], answer: "Suicide", rationale: "In 2010, suicide was the 9th leading cause of death in Texas.", page: "Page 28" },
+            { question: "What is the most common method for suicide deaths in the U.S. as of 2015?", options: ["Poisoning", "Suffocation", "Firearms", "Jumping"], answer: "Firearms", rationale: "In 2015 firearms accounted for 49.8% of suicide deaths, followed by suffocation (26.8%) and poisoning (15.4%).", page: "Page 28" },
+            { question: "Which demographic accounted for 7 out of 10 suicides in 2015?", options: ["White males", "Hispanic females", "Black males", "Asian females"], answer: "White males", rationale: "White males accounted for 7 out of 10 suicides in 2015.", page: "Page 28" },
+            { question: "What is the first step in the suicide risk assessment model discussed?", options: ["Means", "Intent", "Plan", "Method"], answer: "Plan", rationale: "The suicide risk assessment starts with 'PLAN - Determine whether the subject has a specific plan.'", page: "Page 29" },
+            { question: "According to Badge of Life, what is the average number of law enforcement suicides every year?", options: ["50", "90", "130", "200"], answer: "130", rationale: "Badge of Life has collected data between 2008 and 2017 and found that there is an average of 130 law enforcement suicides every year.", page: "Page 30" },
+            { question: "What is the first step in the three-phase process for verbally defusing a crisis situation?", options: ["Problem Solving", "Stability", "Safety", "Communication"], answer: "Safety", rationale: "The three-phase process is: 1. Safety of the public, the subject, and the police; 2. Stability; 3. Problem solving.", page: "Page 31" },
+            { question: "Which of these is NOT one of the 5 Universal Truths of Human Interaction?", options: ["All people want to know why they are asked to do something.", "All people would rather have options than threats.", "All people respond best to displays of authority.", "All people want a second chance to make matters right."], answer: "All people respond best to displays of authority.", rationale: "The 5 Universal Truths include being treated with dignity, being asked rather than told, knowing why, having options, and getting a second chance. Responding to authority is not one of them.", page: "Page 32" },
+            { question: "The 80/20 rule in crisis communication suggests you should:", options: ["Talk 80% of the time and listen 20%", "Talk for 80 seconds then listen for 20", "Listen 80% of the time and talk 20%", "Give 80% facts and 20% opinions"], answer: "Listen 80% of the time and talk 20%", rationale: "The 80/20 rule is: listen for 80% of the time and talk for 20%, this will enable you to gather more information and make an ongoing situational assessment.", page: "Page 34" },
+            { question: "What does the 'E' in the LEAPS model of communication stand for?", options: ["Evaluate", "Engage", "Empathize", "Execute"], answer: "Empathize", rationale: "The components of the LEAPS model are Listen, Empathize, Ask More Questions, Paraphrase, and Summarize.", page: "Page 34" },
+            { question: "Which of the following is an example of an 'I' statement?", options: ["'You are not listening.'", "'You need to calm down.'", "'I feel nervous when you raise your voice.'", "'Why are you acting this way?'"], answer: "'I feel nervous when you raise your voice.'", rationale: "'I' statements give the speaker responsibility for their portion of the interaction and do not imply blame, which helps build rapport. 'I feel nervous...' is a classic example.", page: "Page 36" },
+            { question: "Explaining an action before initiating it, so the person knows what to expect, is called:", options: ["Tactical Transparency", "Strategic Ambiguity", "Command Presence", "Verbal Judo"], answer: "Tactical Transparency", rationale: "Tactical Transparency refers to explaining an action before initiating it, so the person with whom you are interacting knows what to expect. This can reduce reactivity.", page: "Page 36" },
+            { question: "The policy of relocating people with severe mental illness out of residential facilities, which began in 1955, is known as:", options: ["Institutionalization", "Deinstitutionalization", "Community integration", "Rehabilitation"], answer: "Deinstitutionalization", rationale: "Deinstitutionalization is the term used to describe the policy of relocating people experiencing severe mental illness out of residential mental health facilities and the subsequent closure of many of those facilities.", page: "Page 37" },
+            { question: "A 2014 analysis reported that the lifetime victimization rate for homeless individuals with serious mental illness was as high as:", options: ["25%", "45%", "65%", "87%"], answer: "87%", rationale: "A 2014 analysis of six American studies reported lifetime rates of victimization from 74% to 87% among homeless individuals with serious mental illness.", page: "Page 39" },
+            { question: "Under Texas Health and Safety Code, an officer may take a person into custody without a warrant if they believe the person has a mental illness AND:", options: ["The person is being disruptive.", "A family member requests it.", "There is a substantial risk of serious harm to the person or others.", "The person refuses to take their medication."], answer: "There is a substantial risk of serious harm to the person or others.", rationale: "An officer may take a person into custody if they have reason to believe the person has a mental illness AND because of that illness there is substantial risk of serious harm to the person or others unless immediately restrained.", page: "Page 40" },
+            { question: "The legal protection for officers acting in good faith, reasonably, and without negligence during a mental health detention is called:", options: ["Qualified Immunity", "Absolute Immunity", "Limitation of Liability", "Good Samaritan Law"], answer: "Limitation of Liability", rationale: "Texas Health and Safety Code, Sec. 571.019(a) provides a Limitation of Liability, stating that people acting in good faith, reasonably and without negligence are not civilly or criminally liable.", page: "Page 40" },
+            { question: "Diverting someone from the criminal justice system *before* an arrest or charges are made is called:", options: ["Post-arrest Diversion", "Sentencing Alternative", "Pre-arrest Diversion", "Deferred Adjudication"], answer: "Pre-arrest Diversion", rationale: "Pre-arrest Diversion involves diverting someone from the criminal justice system (no arrest or charges made), and guiding them toward a different form of intervention, like a mental health facility.", page: "Page 41" },
+            { question: "A court that combines judicial supervision with community mental health treatment to reduce recidivism is known as a:", options: ["Traffic Court", "Family Court", "Mental Health Court", "Drug Court"], answer: "Mental Health Court", rationale: "A Mental Health Court is a type of court that combines judicial supervision with community mental health treatment and support services in an effort to reduce criminal recidivism.", page: "Page 41" },
+            { question: "What is the risk of being killed when approached by law enforcement for individuals with untreated serious mental illness compared to other civilians?", options: ["2 times higher", "8 times higher", "16 times higher", "The same risk"], answer: "16 times higher", rationale: "The Treatment Advocacy Center reports that the 'risk of being killed when approached or stopped by law enforcement in the community is 16 times higher for individuals with untreated serious mental illness than for other civilians'.", page: "Page 1" },
+            { question: "What is a 'crisis' as defined in the context of CIT?", options: ["Any illegal activity", "A planned confrontation with law enforcement", "An emotionally significant event or radical change of status in a person's life", "A mild disagreement between two people"], answer: "An emotionally significant event or radical change of status in a person's life", rationale: "A crisis is defined as 'an emotionally significant event or radical change of status in a person's life'. It may result in feeling confused, overwhelmed, desperate, or terrified.", page: "Page 4" },
+            { question: "An officer's Three-Point Assessment of a person in crisis should evaluate their Level of Comprehension, Behavior, and what else?", options: ["Criminal History", "Emotion", "Physical Strength", "Financial Status"], answer: "Emotion", rationale: "The quick Three-Point Assessment determines a subject's mental health status by looking at: 1. Level of comprehension, 2. Behavior, and 3. Emotion.", page: "Page 31" },
+            { question: "Which term describes a sensory stimuli (sight, sound, smell) that causes a person with PTSD to recall a traumatic memory?", options: ["A flashback", "A trigger", "An intrusion", "A delusion"], answer: "A trigger", rationale: "The term 'trigger' refers to sensory stimuli that cause one to recall a previous traumatic memory and subsequently have a physiological reaction to a (real or imagined) threat.", page: "Page 24" },
+            { question: "Which of the following is an example of a CNS Depressant?", options: ["Cocaine", "LSD", "Methamphetamine", "Xanax"], answer: "Xanax", rationale: "Examples of CNS depressants include alcohol, barbiturates, and various benzodiazepines like Valium and Xanax.", page: "Page 15" },
+            { question: "What is the active ingredient in cannabis?", options: ["Psilocybin", "THC (delta-9-tetrahydrocannabinol)", "MDMA", "Nicotine"], answer: "THC (delta-9-tetrahydrocannabinol)", rationale: "The active ingredient in cannabis is delta-9-tetrahydrocannabinol, or THC.", page: "Page 17" },
+            { question: "In the LEAPS model, what is the purpose of paraphrasing?", options: ["To give orders to the person", "To prove the person is wrong", "To reiterate what was said in your own words to ensure understanding", "To end the conversation quickly"], answer: "To reiterate what was said in your own words to ensure understanding", rationale: "Paraphrasing requires you to reiterate what has been said to you in your own words. It either provides confirmation that you understand correctly or allows the person to correct your perception, building rapport in either case.", page: "Page 34" },
+            { question: "Which of the following is considered an 'Anti-LEAPS' phrase to be avoided?", options: ["'What can I do to help?'", "'I want to help you.'", "'Calm down.'", "'I am Officer Smith.'"], answer: "'Calm down.'", rationale: "Anti-LEAPS phrases like 'Calm down' or 'What's your problem?' can escalate a situation. Pro-LEAPS phrases are helpful and non-confrontational.", page: "Page 35" },
+            { question: "Which statement about people with mental illness and victimization is true?", options: ["They are less likely to be victims of crime than the general population.", "They are over 10 times more likely to be victims of violent crime.", "They are only victims of property crime.", "Their reports of crime are always considered reliable."], answer: "They are over 10 times more likely to be victims of violent crime.", rationale: "People with severe mental illnesses are over 10 times more likely to be victims of violent crime than the general population.", page: "Page 39" },
+            { question: "When an officer transports someone for an emergency detention, they must file what document with the receiving facility?", options: ["An arrest warrant", "A personal letter", "A notification of detention", "A medical history form"], answer: "A notification of detention", rationale: "When an officer transports someone due to mental health concerns, the officer must file a notification of detention with the receiving facility, which serves as a magistrate's order.", page: "Page 40" },
+            { question: "How many suicides were there per day in the U.S. in 2016?", options: ["54", "88", "121", "152"], answer: "121", rationale: "There were 121 suicides per day in 2016, at a rate higher than the rate of homicide.", page: "Page 28" },
+            { question: "Which of these is a PROTECTIVE factor against suicide?", options: ["Recent loss of a job", "Substance intoxication", "Connection to a spiritual faith", "Previous suicide attempts"], answer: "Connection to a spiritual faith", rationale: "Protective factors include a healthy support system, not using drugs/alcohol, connection to a spiritual faith, employment, and access to health services.", page: "Page 29" },
+            { question: "According to NAMI, what fraction of police officers has had thoughts of suicide?", options: ["Almost 1 in 100", "Almost 1 in 20", "Almost 1 in 10", "Almost 1 in 4"], answer: "Almost 1 in 4", rationale: "According to NAMI, almost 1 in 4 police officers has thoughts of suicide at some point in their life.", page: "Page 30" },
+            { question: "Which of the following is NOT a component of stigma?", options: ["Labeling", "Stereotyping", "Discriminating", "Empathizing"], answer: "Empathizing", rationale: "Stigma is made up of various components, including: Labeling, Stereotyping, Creating a division, and Discriminating. Empathizing is a communication skill used to counter stigma.", page: "Page 7" },
+            { question: "A person with a TBI may experience cognitive decline in all of the following areas EXCEPT:", options: ["Attention", "Executive function", "Hair growth", "Language"], answer: "Hair growth", rationale: "Cognitive disorders like TBI cause decline in areas such as attention, executive function, learning and memory, language, perceptual-motor skills, and social awareness.", page: "Page 18" },
+            { question: "Nearly two-thirds of all people with a diagnosable mental illness do what?", options: ["Seek treatment immediately", "Live in a hospital setting", "Do not seek treatment", "Are career criminals"], answer: "Do not seek treatment", rationale: "Nearly two-thirds of all people with a diagnosable mental illness do not seek treatment, often due to stigma, cost, or lack of access.", page: "Page 6" },
+            { question: "In crisis communication, 'reflecting statements' are used to:", options: ["Challenge the person's beliefs", "Encourage the person to continue talking", "End the conversation quickly", "Give a direct order"], answer: "Encourage the person to continue talking", rationale: "Reflecting statements are neutral responses (verbal or non-verbal) made by the subject to encourage them to continue talking and to show you are listening.", page: "Page 36" },
+            // Newly Added Questions
+            { question: "The underlying element behind behavior related to mental illness is typically:", options: ["Criminal and malicious", "Intentional and defiant", "Not criminal or malicious", "Always predictable"], answer: "Not criminal or malicious", rationale: "Generally, the underlying element behind mental illness-related behavior is usually not criminal or malicious.", page: "Page 1" },
+            { question: "Individuals with mental illness generate approximately what portion of calls for police service?", options: ["1 in 50", "1 in 25", "1 in 10", "1 in 5"], answer: "1 in 10", rationale: "Individuals with mental illness generate no less than 1 in 10 calls for police service.", page: "Page 1" },
+            { question: "The CIT program was conceived in Memphis, TN, after what event?", options: ["A successful de-escalation by an officer", "A police shooting of a 26-year-old man with mental illness", "The opening of a new mental health facility", "A legislative mandate from the state"], answer: "A police shooting of a 26-year-old man with mental illness", rationale: "The program was conceived in Memphis TN., after police shot a 26-year-old man with mental illness. This death was the catalyst for the creation of CIT.", page: "Page 2" },
+            { question: "A study of the Houston Police Department found that officers responding to CIT-related calls were how much less likely to use their guns?", options: ["22%", "42%", "62%", "82%"], answer: "82%", rationale: "A study of the Houston Police Department's officer involved shootings found that those officers responding to calls designated as CIT-related calls were 82% less likely to use their guns.", page: "Page 3" },
+            { question: "Which is an example of an external factor that can contribute to a situation escalating into a crisis?", options: ["High intelligence", "Strong coping skills", "Expectations the person cannot meet", "Having a stable job"], answer: "Expectations the person cannot meet", rationale: "External factors that can contribute to a situation escalating into a crisis include: Expectations the person cannot meet, lacking a sufficient support system, and substance abuse.", page: "Page 4" },
+            { question: "Mental illnesses are more common than which of the following?", options: ["The common cold", "Seasonal allergies", "Cancer, diabetes, and heart disease", "Headaches"], answer: "Cancer, diabetes, and heart disease", rationale: "Mental illnesses are more common than cancer, diabetes, heart disease or AIDS.", page: "Page 6" },
+            { question: "What is a primary cause of crisis incidents related to psychiatric medication?", options: ["Taking medication with food", "Abrupt medication cessation", "Switching brands of the same medication", "Requesting a lower dose"], answer: "Abrupt medication cessation", rationale: "Medication non-compliance is a continuous problem for law enforcement because abrupt medication cessation is a primary cause of crisis incidents.", page: "Page 8" },
+            { question: "What does the 'DSM-V' stand for?", options: ["Drug and Statistical Manual for Veterans", "Diagnostic and Statistical Manual of Mental Disorders", "Deviant and Societal Misconduct Manual", "Department of Social and Mental Health"], answer: "Diagnostic and Statistical Manual of Mental Disorders", rationale: "Mental illness is diagnosed using a tool known as the Diagnostic and Statistical Manual of Mental Disorders, Fifth Edition, DSM-V.", page: "Page 5" },
+            { question: "A person who believes (without basis) that others are exploiting, harming, or deceiving them may have which personality disorder?", options: ["Narcissistic", "Antisocial", "Borderline", "Paranoid"], answer: "Paranoid", rationale: "Paranoid Personality Disorder includes a pervasive distrust and suspiciousness of others and a belief (without basis) that others are exploiting, harming, or deceiving him/her.", page: "Page 10" },
+            { question: "What is the suicide risk for an individual with Bipolar Disorder compared to the general population?", options: ["5 times higher", "10 times higher", "15 times higher", "20 times higher"], answer: "15 times higher", rationale: "For individuals with Bipolar Disorder, the suicide risk is 15 times higher than the general population.", page: "Page 12" },
+            { question: "What is 'word salad' in the context of a thought disorder?", options: ["A healthy dietary choice", "A specific type of delusion", "Nonsense speech or rambling narratives", "A form of written therapy"], answer: "Nonsense speech or rambling narratives", rationale: "Additional symptoms of a thought disorder can include nonsense speech or rambling narratives, often referred to as 'word salad.'", page: "Page 14" },
+            { question: "Droopy eyelids as a sign of drug ingestion is also known as:", options: ["Bruxism", "Ptosis", "Synesthesia", "HGN"], answer: "Ptosis", rationale: "Some indications of Narcotic Analgesics include drowsiness and droopy eyelids (also known as ptosis).", page: "Page 16" },
+            { question: "The state known as 'excited delirium' can often be created by which class of drugs?", options: ["CNS Depressants", "Narcotic Analgesics", "Dissociative Anesthetics", "Cannabis"], answer: "Dissociative Anesthetics", rationale: "Often the state known as 'excited delirium' is created by Dissociative Anesthetics, a combination of drugs, or synergy between drugs and mental health problems.", page: "Page 16" },
+            { question: "What percentage of TBIs are considered 'mild'?", options: ["25%", "50%", "75%", "90%"], answer: "75%", rationale: "Mild TBI accounts for 75% of TBIs.", page: "Page 18" },
+            { question: "When interacting with a person with Autism Spectrum Disorder, an officer should:", options: ["Insist on direct eye contact", "Use complex and detailed questions", "Avoid physical contact or limiting personal space", "Speak loudly to ensure they are heard"], answer: "Avoid physical contact or limiting personal space", rationale: "When interacting with a person on the Autism spectrum, an officer should avoid physical contact or limiting personal space, which may result in an unintended use of force situation.", page: "Page 21" },
+            { question: "A key difference between an Intellectual Disability (ID) and many mental illnesses is that ID:", options: ["Only affects adults", "Is always temporary", "Is a fixed condition that cannot be 'cured'", "Can be managed solely with medication"], answer: "Is a fixed condition that cannot be 'cured'", rationale: "ID is a fixed mental condition that, unlike many mental illnesses, cannot be 'cured.'", page: "Page 22" },
+            { question: "The unique aspect of Military Sexual Trauma (MST) is that it is perpetrated by:", options: ["An enemy combatant", "A civilian contractor", "A trusted brother or sister-in-arms", "A foreign national"], answer: "A trusted brother or sister-in-arms", rationale: "MST is unique in that it is perpetrated by a trusted brother or sister-in-arms.", page: "Page 25" },
+            { question: "The concept of 'survivor's guilt' was first introduced after which historical event?", options: ["The Vietnam War", "World War I", "The Holocaust", "The Civil War"], answer: "The Holocaust", rationale: "The concept was first introduced after the Holocaust, arising when someone survives an event that others did not.", page: "Page 26" },
+            { question: "Interpersonal Violence (IPV) is the leading cause of female homicides and injury-related deaths during:", options: ["Adolescence", "Pregnancy", "Old age", "Military service"], answer: "Pregnancy", rationale: "Interpersonal violence is the leading cause of female homicides and injury-related deaths during pregnancy.", page: "Page 27" },
+            { question: "When evaluating suicide risk, which type of stressor indicates a greater risk?", options: ["A recent, acute stressor", "A chronic stressor", "A financial stressor", "An unknown stressor"], answer: "A chronic stressor", rationale: "When evaluating the nature of a current stressor, a chronic stressor (such as a terminal illness) is a greater risk for suicide.", page: "Page 29" },
+            { question: "What is the average age for a police suicide, according to Badge of Life?", options: ["28 years", "35 years", "42 years", "50 years"], answer: "42 years", rationale: "Based on available figures, the average age for a police suicide was 42 years. Time on the job averaged 16 years.", page: "Page 30" },
+            { question: "How can 'fractured rapport' be repaired during an interaction?", options: ["By asserting authority", "By ignoring the issue", "By acknowledging what went wrong and apologizing", "By ending the conversation"], answer: "By acknowledging what went wrong and apologizing", rationale: "Fractured rapport can be repaired by acknowledging what went wrong, taking responsibility for one's part, apologizing, expressing sincerity, and taking corrective action.", page: "Page 33" },
+            { question: "Behavior that is open to interpretation and can have a wide range of meanings to an individual in crisis is described as:", options: ["Friendly and helpful", "Aggressive and hostile", "Ambiguous", "Assertive and direct"], answer: "Ambiguous", rationale: "Ambiguous behaviors are open to interpretation. Often if a posture is not overtly friendly, a person in crisis will interpret it as dangerous.", page: "Page 33" },
+            { question: "Between 1980 and 1995, the number of incarcerated individuals in America increased by:", options: ["56%", "116%", "216%", "316%"], answer: "216%", rationale: "Between 1980 and 1995, the total number of individuals incarcerated in American jails and prisons increased 216 percent, largely due to deinstitutionalization.", page: "Page 37" },
+            { question: "What percentage of news stories about mental illness connect it to violent behavior, perpetuating a false belief?", options: ["Nearly 10%", "Nearly 20%", "Nearly 40%", "Nearly 60%"], answer: "Nearly 40%", rationale: "'Only about 4% of interpersonal violence...can be attributed to mental illness...yet nearly 40% of news stories about mental illness connect it to violent behavior'.", page: "Page 39" },
+            { question: "Diversion programs that are voluntary for offenders and provide an alternative to criminal case processing are known as:", options: ["Pre-arrest Diversion", "Post-arrest Diversion", "Community Service", "Judicial Injunctions"], answer: "Post-arrest Diversion", rationale: "Post-arrest Diversion (Pretrial Diversion Programs) are voluntary for offenders and provide an alternative criminal case processing. Successful completion typically results in lessening or dismissal of the charge(s).", page: "Page 41" },
+            { question: "The number of Mental Health Courts in the U.S. grew from 4 in 1997 to over how many in 2017?", options: ["50", "100", "200", "300"], answer: "300", rationale: "Mental health courts have grown from 4 in 1997 to over 300 in 2017.", page: "Page 42" },
+            { question: "What is a common myth about people with mental illness that CIT seeks to dispel?", options: ["That they can live productive lives", "That they are also intellectually challenged", "That they can benefit from therapy", "That they can be law-abiding citizens"], answer: "That they are also intellectually challenged", rationale: "A common myth is that a person with a mental illness is also intellectually challenged. The reality is that while some have a dual diagnosis, the conditions are fundamentally different.", page: "Page 9" },
+            { question: "According to research, which factor is NOT listed as a variable playing into why some people develop PTSD from trauma exposure?", options: ["Intensity of duration of the trauma", "Gender of the person", "How much control the person felt", "Level and quality of support received"], answer: "Gender of the person", rationale: "Variables include the intensity and duration of trauma, frequency of exposure, lasting injury, control felt during the event, emotional reaction, and quality of support. Gender is mentioned as a risk factor in general population stats, but not in the list of exposure variables.", page: "Page 23" },
+            { question: "The third phase in the three-phase process for verbally defusing a situation is:", options: ["Safety", "Stability", "Problem Solving", "Apprehension"], answer: "Problem Solving", rationale: "The three-phase process is Safety, Stability, and Problem Solving. The goal of problem solving is to get the person into a rational frame of mind.", page: "Page 31" }
+        ];
+
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const reviewScreen = document.getElementById('review-screen');
+
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const reviewBtn = document.getElementById('review-btn');
+        const backToResultsBtn = document.getElementById('back-to-results-btn');
+        
+        const questionNumberEl = document.getElementById('question-number');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const progressBar = document.getElementById('progress-bar');
+        const questionTextEl = document.getElementById('question-text');
+        const answerOptionsEl = document.getElementById('answer-options');
+        const rationaleBox = document.getElementById('rationale-box');
+        const rationaleText = document.getElementById('rationale-text');
+        const rationaleSource = document.getElementById('rationale-source');
+        
+        const scorePercentageEl = document.getElementById('score-percentage');
+        const correctAnswersEl = document.getElementById('correct-answers');
+        const totalAnsweredEl = document.getElementById('total-answered');
+        const finalTimeEl = document.getElementById('final-time');
+        const timerEl = document.getElementById('timer');
+        const reviewContainer = document.getElementById('review-container');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timerInterval;
+        let secondsElapsed = 0;
+        let userAnswers = [];
+        let shuffledQuizData = [];
+        
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        startBtn.addEventListener('click', startQuiz);
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', startQuiz);
+        reviewBtn.addEventListener('click', showReview);
+        backToResultsBtn.addEventListener('click', () => {
+            reviewScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+        });
+
+        function startTimer() {
+            secondsElapsed = 0;
+            timerEl.textContent = '00:00';
+            timerInterval = setInterval(() => {
+                secondsElapsed++;
+                const minutes = Math.floor(secondsElapsed / 60).toString().padStart(2, '0');
+                const seconds = (secondsElapsed % 60).toString().padStart(2, '0');
+                timerEl.textContent = `${minutes}:${seconds}`;
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function startQuiz() {
+            shuffledQuizData = [...quizData];
+            shuffleArray(shuffledQuizData);
+            shuffledQuizData.forEach(q => shuffleArray(q.options));
+
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            startScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            nextBtn.classList.add('hidden');
+            startTimer();
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            rationaleBox.classList.add('hidden');
+            answerOptionsEl.innerHTML = '';
+            const currentQuestion = shuffledQuizData[currentQuestionIndex];
+            
+            questionNumberEl.textContent = currentQuestionIndex + 1;
+            totalQuestionsEl.textContent = shuffledQuizData.length;
+            questionTextEl.textContent = currentQuestion.question;
+
+            const progress = ((currentQuestionIndex) / shuffledQuizData.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('answer-option', 'w-full', 'p-4', 'text-left', 'bg-white', 'border-2', 'border-gray-300', 'rounded-lg', 'hover:bg-gray-50', 'hover:border-blue-500');
+                button.addEventListener('click', () => selectAnswer(button, option, currentQuestion));
+                answerOptionsEl.appendChild(button);
+            });
+        }
+
+        function selectAnswer(button, selectedOption, currentQuestion) {
+            const { answer, rationale, page } = currentQuestion;
+            userAnswers[currentQuestionIndex] = selectedOption;
+
+            const buttons = answerOptionsEl.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === answer) {
+                    btn.classList.add('correct');
+                }
+            });
+
+            if (selectedOption === answer) {
+                score++;
+                button.classList.add('correct');
+            } else {
+                button.classList.add('incorrect');
+            }
+
+            rationaleText.textContent = rationale;
+            rationaleSource.textContent = page;
+            rationaleBox.classList.remove('hidden');
+            nextBtn.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < shuffledQuizData.length) {
+                nextBtn.classList.add('hidden');
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            stopTimer();
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+
+            const percentage = Math.round((score / shuffledQuizData.length) * 100);
+            scorePercentageEl.textContent = percentage + '%';
+            correctAnswersEl.textContent = score;
+            totalAnsweredEl.textContent = shuffledQuizData.length;
+            finalTimeEl.textContent = timerEl.textContent;
+            
+            progressBar.style.width = `100%`;
+        }
+
+        function showReview() {
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.remove('hidden');
+            reviewContainer.innerHTML = '';
+
+            shuffledQuizData.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === question.answer;
+
+                const reviewItem = document.createElement('div');
+                reviewItem.classList.add('border', 'p-4', 'rounded-lg');
+                if (isCorrect) {
+                    reviewItem.classList.add('border-green-200', 'bg-green-50');
+                } else {
+                    reviewItem.classList.add('border-red-200', 'bg-red-50');
+                }
+
+                let userAnswerHTML = '';
+                if (isCorrect) {
+                    userAnswerHTML = `<p>Your answer: <span class="font-semibold review-correct">${userAnswer} (Correct)</span></p>`;
+                } else {
+                    userAnswerHTML = `
+                        <p>Your answer: <span class="font-semibold review-incorrect">${userAnswer || 'Not answered'}</span></p>
+                        <p>Correct answer: <span class="font-semibold review-correct">${question.answer}</span></p>
+                    `;
+                }
+
+                reviewItem.innerHTML = `
+                    <p class="font-bold mb-2">${index + 1}. ${question.question}</p>
+                    ${userAnswerHTML}
+                    <p class="text-sm text-gray-600 mt-2"><em><span class="font-semibold">Rationale:</span> ${question.rationale} (Source: ${question.page})</em></p>
+                `;
+                reviewContainer.appendChild(reviewItem);
+            });
+        }
+
+    </script>
+</body>
+</html>
+

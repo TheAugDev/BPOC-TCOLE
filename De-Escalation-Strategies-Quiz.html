@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCOLE De-Escalation Strategies Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+        .answer-option {
+            transition: all 0.2s ease-in-out;
+        }
+        .answer-option:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .correct {
+            background-color: #D1FAE5 !important;
+            border-color: #10B981 !important;
+            color: #065F46 !important;
+        }
+        .incorrect {
+            background-color: #FEE2E2 !important;
+            border-color: #EF4444 !important;
+            color: #991B1B !important;
+        }
+        .progress-bar-fill {
+            transition: width 0.3s ease-in-out;
+        }
+        .review-correct {
+            color: #059669;
+        }
+        .review-incorrect {
+            color: #e11d48;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="quiz-app" class="quiz-container p-4 sm:p-8">
+        
+        <!-- Quiz Start Screen -->
+        <div id="start-screen" class="text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">De-Escalation Strategies Quiz</h1>
+            <p class="text-lg text-gray-600 mb-8">A comprehensive quiz based on the "Basic Peace Officer Course | Chapter 27" handout to test your knowledge on de-escalation strategies and the Critical Decision-Making Model.</p>
+            <button id="start-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Start Quiz</button>
+        </div>
+
+        <!-- Quiz Interface -->
+        <div id="quiz-screen" class="hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold">Question <span id="question-number"></span> of <span id="total-questions"></span></h2>
+                <div id="timer" class="text-lg font-mono bg-gray-200 px-3 py-1 rounded-md">00:00</div>
+            </div>
+            
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+                <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full progress-bar-fill" style="width: 0%"></div>
+            </div>
+
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+                <p id="question-text" class="text-xl font-medium mb-8 min-h-[6rem]"></p>
+                <div id="answer-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Answer options will be injected here by JS -->
+                </div>
+            </div>
+             <div id="rationale-box" class="hidden mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h3 class="font-bold text-blue-800">Rationale:</h3>
+                <p id="rationale-text" class="text-blue-700"></p>
+                <p class="text-sm text-blue-600 mt-2">Source: <span id="rationale-source"></span></p>
+            </div>
+            <button id="next-btn" class="hidden w-full bg-blue-600 text-white font-bold py-3 px-8 rounded-lg mt-8 hover:bg-blue-700 transition-colors shadow-md">Next Question</button>
+        </div>
+
+        <!-- Quiz Results Screen -->
+        <div id="results-screen" class="hidden text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">Quiz Complete!</h1>
+            <p class="text-lg text-gray-600 mb-6">Here's how you did:</p>
+            <div class="flex flex-col sm:flex-row justify-around items-center my-8 gap-8 sm:gap-0">
+                <div>
+                    <p id="score-percentage" class="text-5xl font-bold text-green-600">0%</p>
+                    <p class="text-gray-500">Score</p>
+                </div>
+                 <div>
+                    <p class="text-5xl font-bold text-blue-600"><span id="correct-answers">0</span>/<span id="total-answered">0</span></p>
+                    <p class="text-gray-500">Correct Answers</p>
+                </div>
+                 <div>
+                    <p id="final-time" class="text-5xl font-bold text-gray-700">00:00</p>
+                    <p class="text-gray-500">Time Taken</p>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="restart-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Try Again</button>
+                <button id="review-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md">Review Answers</button>
+            </div>
+        </div>
+        
+        <!-- Review Screen -->
+        <div id="review-screen" class="hidden bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6">Answer Review</h1>
+            <div id="review-container" class="space-y-6">
+                <!-- Review content will be injected here -->
+            </div>
+            <button id="back-to-results-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md mt-8">Back to Results</button>
+        </div>
+
+    </div>
+
+    <script>
+        const quizData = [
+            { question: "Which of the following is a key principle of the Critical Decision-Making Model (CDM)?", options: ["The sanctity of human life", "Officer discretion", "Zero tolerance", "Absolute certainty"], answer: "The sanctity of human life", rationale: "The CDM is guided by four key principles: Police ethics, the values of the police agency, proportionality, and the sanctity of human life.", page: "Page 1" },
+            { question: "What is the first step in the five-step Critical Decision-Making Model (CDM)?", options: ["Collect information", "Assess situation, threats, and risks", "Consider police powers", "Act, review, and re-assess"], answer: "Collect information", rationale: "Step 1 of the CDM is to collect information. This is the foundation for all subsequent steps in the decision-making process.", page: "Page 1" },
+            { question: "Step 3 of the CDM, 'Consider police powers and agency policy,' involves an officer thinking about what?", options: ["Their legal authority to act", "The fastest way to resolve the call", "How their actions will appear on video", "What a supervisor would do"], answer: "Their legal authority to act", rationale: "Step 3 requires officers to consider their legal powers and the boundaries set by agency policy, ensuring their actions are lawful and within guidelines.", page: "Page 1" },
+            { question: "What is the final step in the five-step CDM process?", options: ["Act, review, and re-assess", "Identify options", "Collect information", "File the report"], answer: "Act, review, and re-assess", rationale: "Step 5, the final step, is to Act, review, and re-assess. This highlights the cyclical nature of the model, where officers must continuously evaluate the results of their actions.", page: "Page 1" },
+            { question: "Which of the following is a stated benefit of using the CDM?", options: ["It helps officers explain their actions after an incident", "It guarantees a successful outcome in every situation", "It eliminates the need for agency policy", "It speeds up decision-making under pressure"], answer: "It helps officers explain their actions after an incident", rationale: "The CDM assists officers in explaining their actions by providing a structured, rational explanation, which increases their credibility.", page: "Page 1" },
+            { question: "Besides explaining actions and making better decisions, the CDM also helps to:", options: ["Organize the decision-making process", "Replace the need for field training", "Justify any level of force", "Ensure a conviction in court"], answer: "Organize the decision-making process", rationale: "A key benefit of the CDM is that it provides officers with an organized way of making decisions in any situation.", page: "Page 1" },
+            { question: "All of the following are key principles of the CDM EXCEPT:", options: ["Immediate compliance", "Police ethics", "Proportionality", "The values of the police agency"], answer: "Immediate compliance", rationale: "While desirable, immediate compliance is not a guiding principle of the CDM. The principles are Police ethics, agency values, proportionality, and the sanctity of human life.", page: "Page 1" },
+            { question: "'Assess situation, threats, and risks' corresponds to which step of the CDM?", options: ["Step 2", "Step 1", "Step 3", "Step 4"], answer: "Step 2", rationale: "Step 2 of the CDM involves assessing the information collected in Step 1 to understand the specific threats and risks of the situation.", page: "Page 1" },
+            { question: "'Identify options and determine best course of action' is which step in the CDM?", options: ["Step 4", "Step 2", "Step 3", "Step 5"], answer: "Step 4", rationale: "After collecting information, assessing the situation, and considering powers, Step 4 is to identify all available options and choose the best one.", page: "Page 1" },
+            { question: "A common behavior for a person in crisis is not responding to verbal commands. What is another listed indicator?", options: ["Talking to themselves", "Making direct eye contact", "Standing perfectly still", "Requesting a lawyer"], answer: "Talking to themselves", rationale: "Behaviors listed for a person in crisis include not responding to commands, lack of coherence, being agitated, talking to themselves, and poor hygiene.", page: "Page 1-2" },
+            { question: "Which behavior is associated with a person experiencing a behavioral crisis?", options: ["Lack of coherence", "Following all verbal commands precisely", "Excellent personal hygiene", "Speaking in a calm, steady voice"], answer: "Lack of coherence", rationale: "Behaviors listed for a person in crisis include not responding to commands, lack of coherence, being agitated, talking to themselves, and poor hygiene.", page: "Page 2" },
+            { question: "When responding to a person in behavioral crisis, what is a stated best practice regarding the officer's mission?", options: ["Your mission is not to diagnose or treat issues", "Your mission is to get a confession", "Your mission is to provide a medical diagnosis", "Your mission is to solve their personal problems"], answer: "Your mission is not to diagnose or treat issues", rationale: "The training clearly states that an officer's mission is not to diagnose, treat, or solve the underlying issues, but to defuse and stabilize the immediate situation.", page: "Page 2" },
+            { question: "What is the top priority for an officer when responding to a person in behavioral crisis?", options: ["Verbally defuse and stabilize the situation", "Diagnose the person's mental condition", "Solve the person's underlying problems", "Make an immediate arrest to ensure safety"], answer: "Verbally defuse and stabilize the situation", rationale: "The primary mission is not to diagnose or solve issues but to verbally defuse the situation and stabilize it to a point where voluntary compliance can be achieved.", page: "Page 2" },
+            { question: "One common tip for engaging a person in crisis is to not rush the situation. What is another recommended technique?", options: ["Always be respectful, never dismissive", "Assert authority immediately with a loud voice", "Stand as close as possible to the person", "Insist on immediate, absolute compliance"], answer: "Always be respectful, never dismissive", rationale: "Being respectful is a key technique for making a connection and de-escalating a situation. Being dismissive can escalate emotions.", page: "Page 2" },
+            { question: "Which is a recommended technique for engaging a person in behavioral crisis?", options: ["Don't rush the situation", "Rush to a resolution", "Avoid requesting backup", "Focus only on verbal commands"], answer: "Don't rush the situation", rationale: "Unless immediate action is required for safety, officers should not rush. Slowing the situation down is a key de-escalation tactic.", page: "Page 2" },
+            { question: "According to the emotional-rational thinking scale, what happens as a person's emotions rise?", options: ["Their rational thinking declines", "Their rational thinking increases", "Their rational thinking is unaffected", "They become more compliant"], answer: "Their rational thinking declines", rationale: "The scale illustrates an inverse relationship: as emotions go up, the ability to think rationally goes down. The goal is to lower emotions to allow for more rational thought.", page: "Page 2" },
+            { question: "What is the goal of lowering someone's emotions during a crisis?", options: ["To help them think more rationally and make better decisions", "To make them easier to control physically", "To get them to admit to a crime", "To show emotional superiority"], answer: "To help them think more rationally and make better decisions", rationale: "By lowering a person's emotional level, an officer can help them access their rational thinking, which can lead to better decisions and voluntary compliance.", page: "Page 2" },
+            { question: "One key to active listening is paying close attention. What is another key skill mentioned?", options: ["Avoid distractions", "Think about your next question while they talk", "Interrupt to show you're paying attention", "Focus only on their words, not body language"], answer: "Avoid distractions", rationale: "To truly listen actively, an officer must avoid internal and external distractions to focus completely on what the person is communicating verbally and non-verbally.", page: "Page 2" },
+            { question: "The '80/20 rule' of active listening suggests that an officer should spend 80% of their time ______ and 20% of their time ______.", options: ["listening, talking", "talking, listening", "assessing, acting", "observing, documenting"], answer: "listening, talking", rationale: "This rule emphasizes the importance of listening to understand and gather information, rather than dominating the conversation.", page: "Page 2" },
+            { question: "In active listening, what is the officer's primary goal?", options: ["To understand and gather information", "To find inconsistencies in the person's story", "To wait for a turn to speak", "To formulate a counter-argument"], answer: "To understand and gather information", rationale: "The goal of listening is to understand what the person is thinking and feeling by gathering information, not just hearing words.", page: "Page 2" },
+            { question: "Which is a recommended non-verbal communication skill for de-escalation?", options: ["Modulate your tone of voice", "Speak in a monotone voice", "Keep your hands in your pockets", "Stare without blinking"], answer: "Modulate your tone of voice", rationale: "Modulating your tone of voice is a key non-verbal skill. A calm, controlled tone can de-escalate, while a harsh tone can escalate a situation.", page: "Page 3" },
+            { question: "Which of the following is a recommended non-verbal communication skill for de-escalation?", options: ["Using open-handed gestures", "Crossing your arms defensively", "Avoiding all eye contact", "Standing with a bladed stance"], answer: "Using open-handed gestures", rationale: "Projecting the right body language is crucial. Open-handed gestures are seen as non-threatening, while crossed arms can be perceived as defensive or aggressive.", page: "Page 3" },
+            { question: "A key verbal communication skill is to establish rapport. Another critical skill is to:", options: ["Provide options", "Dominate the conversation", "Ask only 'yes' or 'no' questions", "Make demands, not requests"], answer: "Provide options", rationale: "Providing options, rather than just issuing commands, can give a person a sense of control and increase the likelihood of voluntary compliance.", page: "Page 3" },
+            { question: "To establish rapport, an officer should:", options: ["Be respectful and listen", "Share personal stories", "Agree with everything the person says", "Use police jargon"], answer: "Be respectful and listen", rationale: "Establishing rapport is built on mutual respect and understanding. This is achieved through active listening and respectful communication, not by sharing personal stories or using jargon.", page: "Page 3" },
+            { question: "What is 'emotional contagion' in the context of de-escalation?", options: ["The way an officer's calmness can influence a subject to become calm", "A type of mental health crisis", "The spread of fear in a crowd", "A tactic for escalating a situation"], answer: "The way an officer's calmness can influence a subject to become calm", rationale: "Emotional contagion is the principle that emotions can be transferred between people. An officer's calm, professional demeanor can positively influence the subject.", page: "Page 3" },
+            { question: "What is a recommended alternative to the adversarial phrase 'What's your problem?'", options: ["'What can I do to help you?'", "'State your issue clearly.'", "'Are you going to be a problem?'", "'You need to tell me what's wrong.'"], answer: "'What can I do to help you?'", rationale: "The handout suggests replacing hostile-sounding phrases with helpful, inquisitive ones. 'What can I do to help you?' is a non-adversarial alternative.", page: "Page 3" },
+            { question: "Instead of saying 'Calm down,' an officer should consider saying:", options: ["'I see that you are upset. Please tell me about it.'", "'You need to calm down right now!'", "'If you don't calm down, there will be consequences.'", "'There's no reason to be upset.'"], answer: "'I see that you are upset. Please tell me about it.'", rationale: "Telling someone to 'calm down' often has the opposite effect. Acknowledging their emotion and inviting them to talk is a more effective de-escalation technique.", page: "Page 3" },
+            { question: "Which is a critical pre-response requirement for critical incidents?", options: ["Use sound tactics", "Arrive with lights and sirens off", "Wait for a supervisor before acting", "Immediately engage the subject physically"], answer: "Use sound tactics", rationale: "The training lists three critical requirements for response: Recognize the nature of the incident, communicate well, and use sound tactics.", page: "Page 3" },
+            { question: "During which step of the CDM does a 'tactical pause' fit best?", options: ["Step 1: Collect information", "Step 5: Act, review, and re-assess", "Step 3: Consider police powers", "Step 4: Identify options"], answer: "Step 1: Collect information", rationale: "The handout lists 'Tactical pause' under the 'Collect information' step for managing a critical incident, as it's a moment officers use to slow down and gather information before acting.", page: "Page 3" },
+            { question: "What does the concept 'Distance + Cover = Time' mean for officers?", options: ["When officers have distance and cover, their tactical options multiply", "Officers should always prioritize time over cover", "Distance is the most important factor in any incident", "These elements force a quick decision"], answer: "When officers have distance and cover, their tactical options multiply", rationale: "Being in close quarters limits an officer's options. Creating distance, using cover, and gaining time allows for more and better tactical options.", page: "Page 4" },
+            { question: "A 'tactical pause' is best described as:", options: ["Slowing the situation down when there is no immediate threat", "A required 30-second delay before taking action", "A break taken during a long standoff", "The moment an officer requests backup"], answer: "Slowing the situation down when there is no immediate threat", rationale: "If there is no immediate threat, officers should use any available time to their advantage by slowing down, collecting information, and planning, which is a tactical pause.", page: "Page 4" },
+            { question: "'Tactical repositioning' refers to:", options: ["Maintaining a position of advantage and a safety zone", "Switching positions with a cover officer", "Retreating from the scene entirely", "Moving closer to the subject to gain compliance"], answer: "Maintaining a position of advantage and a safety zone", rationale: "This concept involves moving to and maintaining a position that gives the officer a tactical advantage while ensuring their safety.", page: "Page 4" },
+            { question: "What is the primary purpose of an After-Action Review (AAR)?", options: ["To improve future performance", "To assign blame for any mistakes", "To complete paperwork for the incident", "To prepare a statement for the media"], answer: "To improve future performance", rationale: "An AAR is part of a continuous learning process. Its purpose is to analyze the response to an incident to improve performance in the future.", page: "Page 4" },
+            { question: "An AAR is conducted to uncover and document what?", options: ["Strengths and weaknesses of the response", "Only the errors made during the incident", "Only the successful tactics used", "A timeline for the report"], answer: "Strengths and weaknesses of the response", rationale: "AARs are comprehensive and should document both the strengths and weaknesses of an incident response to provide a full picture for learning.", page: "Page 4" },
+            { question: "How is the CDM used after a critical incident?", options: ["As a tool for examining decision-making after the fact", "It is not used after an incident", "To determine civil liability", "To write the press release"], answer: "As a tool for examining decision-making after the fact", rationale: "The CDM serves as a framework not only for making decisions during an incident but also for analyzing those decisions in an AAR.", page: "Page 4" },
+            { question: "When a team of officers responds to a critical incident, how many officers should communicate with the subject?", options: ["Only one officer", "The two closest officers", "All officers on the scene", "The highest-ranking officer"], answer: "Only one officer", rationale: "To avoid confusion and conflicting commands, it is a key tactical expectation that only one officer acts as the primary communicator with the subject.", page: "Page 4" },
+            { question: "In a team response, what is a typical role for officers who are not the primary communicator?", options: ["Providing cover", "Directing traffic", "Interviewing witnesses far from the scene", "All communicating simultaneously"], answer: "Providing cover", rationale: "Other officers arriving on scene should take on key roles such as providing cover, readying less-lethal weapons, or establishing perimeters.", page: "Page 4" },
+            { question: "An officer's communication skills can become a tactical advantage because they can:", options: ["Help gain voluntary compliance", "Intimidate subjects into submission", "Confuse a suspect", "Justify any use of force"], answer: "Help gain voluntary compliance", rationale: "Good communication skills are a tactical advantage because they are key to defusing situations and gaining voluntary compliance without resorting to force.", page: "Page 2" },
+            { question: "Asking open-ended questions, especially those beginning with 'what' and 'how', is a key skill in:", options: ["Verbal communication for de-escalation", "Writing an official report", "Interrogating a suspect", "Testifying in court"], answer: "Verbal communication for de-escalation", rationale: "Open-ended questions encourage conversation and information sharing, which are critical to defusing tense situations and establishing rapport.", page: "Page 3" },
+            { question: "Which action demonstrates active listening?", options: ["Using silence to your advantage", "Interrupting to correct the subject", "Thinking about what you will say next", "Finishing the person's sentences"], answer: "Using silence to your advantage", rationale: "Active listening involves paying close attention, avoiding distractions, and showing you are listening. Using silence can encourage the subject to share more information.", page: "Page 3" },
+            { question: "Which of these is NOT a behavior associated with a person in crisis?", options: ["Good hygiene", "Agitated", "Talking to themselves", "Lack of coherence"], answer: "Good hygiene", rationale: "Poor hygiene is listed as a potential indicator of a person in behavioral crisis, not good hygiene.", page: "Page 2" },
+            { question: "Which of the following is NOT one of the five steps of the CDM?", options: ["Request supervisor approval", "Collect information", "Assess situation, threats, and risks", "Identify options and determine best course of action"], answer: "Request supervisor approval", rationale: "While consulting a supervisor may be a good idea, it is not one of the five formal steps of the Critical Decision-Making Model.", page: "Page 1" },
+            { question: "The questions contained in an AAR are designed to align with what framework?", options: ["The Critical Decision-Making Model (CDM)", "The Texas Penal Code", "The agency's media policy", "The Bill of Rights"], answer: "The Critical Decision-Making Model (CDM)", rationale: "AARs are designed to answer the questions contained in the CDM, using it as a guide to analyze the incident from start to finish.", page: "Page 4" },
+            { question: "The PERF ICAT program is mentioned as a potential resource for what?", options: ["Meeting the learning objectives for de-escalation training", "Annual firearms qualification", "Physical fitness standards", "Promotional exams"], answer: "Meeting the learning objectives for de-escalation training", rationale: "The instructor note states that agencies may adopt the PERF ICAT program's modules to meet the learning objectives for this chapter.", page: "Page 1" },
+            { question: "Continually assessing and re-assessing a situation is a key component of which model?", options: ["The CDM model", "The use of force continuum", "The SARA model", "The Miranda warning"], answer: "The CDM model", rationale: "This concept is central to the CDM, especially in Step 5 (Act, review, and re-assess), emphasizing that decision-making is an ongoing process.", page: "Page 2" },
+            { question: "What is a key principle of tactical communication in a team response?", options: ["Using the team concept", "Having multiple officers give commands", "Speaking louder than the subject", "Using complex, official language"], answer: "Using the team concept", rationale: "Using the team concept, where each officer has a defined role (e.g., one communicator, others on cover), is a critical verbal communication skill for defusing situations.", page: "Page 3" },
+            { question: "Which of the following is an example of an adversarial phrase to be avoided?", options: ["'Calm down'", "'I can see you're upset'", "'Let's work together'", "'How can I help?'"], answer: "'Calm down'", rationale: "The handout explicitly lists 'Calm down' as an adversarial phrase and provides an alternative like 'I see that you are upset. Please tell me about it.'", page: "Page 3" },
+            { question: "All of the following are key concepts for responding to critical incidents EXCEPT:", options: ["Media relations", "Crisis recognition and response", "Tactical communication", "Emotional contagion"], answer: "Media relations", rationale: "The review list of key concepts includes the CDM, crisis recognition, tactical communication, emotional contagion, and operational safety tactics. Media relations is not on this list.", page: "Page 4" },
+            { question: "One of the operational safety tactics listed is:", options: ["Distance + cover = time", "Always maintain close proximity", "Wait for the subject to act first", "Engage in physical contact early"], answer: "Distance + cover = time", rationale: "This formula is a key operational safety tactic, as it emphasizes how creating space and using cover provides officers with more time to make better decisions.", page: "Page 4" },
+            { question: "The final learning objective (27.22) emphasizes demonstrating ability through what method?", options: ["Successful completion of scenario-based training", "A final written exam", "A physical fitness test", "An interview with the instructor"], answer: "Successful completion of scenario-based training", rationale: "The course culminates in demonstrating the ability to put all the concepts into practice through hands-on, scenario-based training exercises.", page: "Page 4" },
+            { question: "The purpose and focus of this de-escalation training is to provide officers with:", options: ["An organized way of making decisions", "A new set of less-lethal weapons", "A list of mental health diagnoses", "A script to read in crisis situations"], answer: "An organized way of making decisions", rationale: "The unit goal and initial description state that the CDM provides officers with an organized way of making decisions, particularly in situations that may involve force.", page: "Page 1" },
+            { question: "The topic of implicit bias should be included in which part of the incident response?", options: ["The after-action review (AAR)", "The initial dispatch", "The use of force report only", "It should not be discussed"], answer: "The after-action review (AAR)", rationale: "The handout specifies to 'Include the topic of implicit bias in your review of the incident' during the AAR.", page: "Page 4" }
+        ];
+
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const reviewScreen = document.getElementById('review-screen');
+
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const reviewBtn = document.getElementById('review-btn');
+        const backToResultsBtn = document.getElementById('back-to-results-btn');
+        
+        const questionNumberEl = document.getElementById('question-number');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const progressBar = document.getElementById('progress-bar');
+        const questionTextEl = document.getElementById('question-text');
+        const answerOptionsEl = document.getElementById('answer-options');
+        const rationaleBox = document.getElementById('rationale-box');
+        const rationaleText = document.getElementById('rationale-text');
+        const rationaleSource = document.getElementById('rationale-source');
+        
+        const scorePercentageEl = document.getElementById('score-percentage');
+        const correctAnswersEl = document.getElementById('correct-answers');
+        const totalAnsweredEl = document.getElementById('total-answered');
+        const finalTimeEl = document.getElementById('final-time');
+        const timerEl = document.getElementById('timer');
+        const reviewContainer = document.getElementById('review-container');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timerInterval;
+        let secondsElapsed = 0;
+        let userAnswers = [];
+        let shuffledQuizData = [];
+        
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        startBtn.addEventListener('click', startQuiz);
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', startQuiz);
+        reviewBtn.addEventListener('click', showReview);
+        backToResultsBtn.addEventListener('click', () => {
+            reviewScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+        });
+
+        function startTimer() {
+            secondsElapsed = 0;
+            timerEl.textContent = '00:00';
+            timerInterval = setInterval(() => {
+                secondsElapsed++;
+                const minutes = Math.floor(secondsElapsed / 60).toString().padStart(2, '0');
+                const seconds = (secondsElapsed % 60).toString().padStart(2, '0');
+                timerEl.textContent = `${minutes}:${seconds}`;
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function startQuiz() {
+            shuffledQuizData = [...quizData];
+            shuffleArray(shuffledQuizData);
+            shuffledQuizData.forEach(q => shuffleArray(q.options));
+
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            startScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            nextBtn.classList.add('hidden');
+            startTimer();
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            rationaleBox.classList.add('hidden');
+            answerOptionsEl.innerHTML = '';
+            const currentQuestion = shuffledQuizData[currentQuestionIndex];
+            
+            questionNumberEl.textContent = currentQuestionIndex + 1;
+            totalQuestionsEl.textContent = shuffledQuizData.length;
+            questionTextEl.textContent = currentQuestion.question;
+
+            const progress = ((currentQuestionIndex) / shuffledQuizData.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('answer-option', 'w-full', 'p-4', 'text-left', 'bg-white', 'border-2', 'border-gray-300', 'rounded-lg', 'hover:bg-gray-50', 'hover:border-blue-500', 'disabled:opacity-75', 'disabled:cursor-not-allowed');
+                button.addEventListener('click', () => selectAnswer(button, option, currentQuestion));
+                answerOptionsEl.appendChild(button);
+            });
+        }
+
+        function selectAnswer(button, selectedOption, currentQuestion) {
+            const { answer, rationale, page } = currentQuestion;
+            userAnswers[currentQuestionIndex] = selectedOption;
+
+            const buttons = answerOptionsEl.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === answer) {
+                    btn.classList.add('correct');
+                }
+            });
+
+            if (selectedOption === answer) {
+                score++;
+                button.classList.add('correct');
+            } else {
+                button.classList.add('incorrect');
+            }
+
+            rationaleText.textContent = rationale;
+            rationaleSource.textContent = page;
+            rationaleBox.classList.remove('hidden');
+            nextBtn.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < shuffledQuizData.length) {
+                nextBtn.classList.add('hidden');
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            stopTimer();
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+
+            const percentage = Math.round((score / shuffledQuizData.length) * 100);
+            scorePercentageEl.textContent = `${percentage}%`;
+            correctAnswersEl.textContent = score;
+            totalAnsweredEl.textContent = shuffledQuizData.length;
+            finalTimeEl.textContent = timerEl.textContent;
+        }
+
+        function showReview() {
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.remove('hidden');
+            reviewContainer.innerHTML = '';
+
+            shuffledQuizData.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === question.answer;
+
+                const reviewItem = document.createElement('div');
+                reviewItem.classList.add('border', 'p-4', 'rounded-lg');
+                reviewItem.classList.add(isCorrect ? 'bg-green-50' : 'bg-red-50');
+                reviewItem.classList.add(isCorrect ? 'border-green-200' : 'border-red-200');
+
+                let userAnswerHTML = '';
+                if (isCorrect) {
+                    userAnswerHTML = `<p>Your answer: <span class="font-semibold review-correct">${userAnswer} (Correct)</span></p>`;
+                } else {
+                    userAnswerHTML = `
+                        <p>Your answer: <span class="font-semibold review-incorrect">${userAnswer ? userAnswer : 'Not Answered'} (Incorrect)</span></p>
+                        <p>Correct answer: <span class="font-semibold review-correct">${question.answer}</span></p>
+                    `;
+                }
+
+                reviewItem.innerHTML = `
+                    <p class="font-bold mb-2">${index + 1}. ${question.question}</p>
+                    ${userAnswerHTML}
+                    <p class="text-sm text-gray-600 mt-2"><em><strong>Rationale:</strong> ${question.rationale} (Source: ${question.page})</em></p>
+                `;
+                reviewContainer.appendChild(reviewItem);
+            });
+        }
+    </script>
+</body>
+</html>
+

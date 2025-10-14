@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCOLE Criminal Investigations Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+        .answer-option {
+            transition: all 0.2s ease-in-out;
+        }
+        .answer-option:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .correct {
+            background-color: #D1FAE5 !important;
+            border-color: #10B981 !important;
+            color: #065F46 !important;
+        }
+        .incorrect {
+            background-color: #FEE2E2 !important;
+            border-color: #EF4444 !important;
+            color: #991B1B !important;
+        }
+        .progress-bar-fill {
+            transition: width 0.3s ease-in-out;
+        }
+        .review-correct {
+            color: #059669;
+        }
+        .review-incorrect {
+            color: #e11d48;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="quiz-app" class="quiz-container p-4 sm:p-8">
+        
+        <!-- Quiz Start Screen -->
+        <div id="start-screen" class="text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Criminal Investigations Quiz</h1>
+            <p class="text-lg text-gray-600 mb-8">A comprehensive quiz based on the "Basic Peace Officer Course | Chapter 32" handout to test your knowledge on the goals, objectives, and procedures of criminal investigation.</p>
+            <button id="start-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Start Quiz</button>
+        </div>
+
+        <!-- Quiz Interface -->
+        <div id="quiz-screen" class="hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold">Question <span id="question-number"></span> of <span id="total-questions"></span></h2>
+                <div id="timer" class="text-lg font-mono bg-gray-200 px-3 py-1 rounded-md">00:00</div>
+            </div>
+            
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+                <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full progress-bar-fill" style="width: 0%"></div>
+            </div>
+
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+                <p id="question-text" class="text-xl font-medium mb-8 min-h-[6rem]"></p>
+                <div id="answer-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Answer options will be injected here by JS -->
+                </div>
+            </div>
+             <div id="rationale-box" class="hidden mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h3 class="font-bold text-blue-800">Rationale:</h3>
+                <p id="rationale-text" class="text-blue-700"></p>
+                <p class="text-sm text-blue-600 mt-2">Source: <span id="rationale-source"></span></p>
+            </div>
+            <button id="next-btn" class="hidden w-full bg-blue-600 text-white font-bold py-3 px-8 rounded-lg mt-8 hover:bg-blue-700 transition-colors shadow-md">Next Question</button>
+        </div>
+
+        <!-- Quiz Results Screen -->
+        <div id="results-screen" class="hidden text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">Quiz Complete!</h1>
+            <p class="text-lg text-gray-600 mb-6">Here's how you did:</p>
+            <div class="flex flex-col sm:flex-row justify-around items-center my-8 gap-8 sm:gap-0">
+                <div>
+                    <p class="text-5xl font-bold text-green-600"><span id="score-percentage"></span>%</p>
+                    <p class="text-gray-500">Score</p>
+                </div>
+                 <div>
+                    <p class="text-5xl font-bold text-blue-600"><span id="correct-answers"></span>/<span id="total-answered"></span></p>
+                    <p class="text-gray-500">Correct Answers</p>
+                </div>
+                 <div>
+                    <p class="text-5xl font-bold text-gray-700"><span id="final-time"></span></p>
+                    <p class="text-gray-500">Time Taken</p>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="restart-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Try Again</button>
+                <button id="review-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md">Review Answers</button>
+            </div>
+        </div>
+        
+        <!-- Review Screen -->
+        <div id="review-screen" class="hidden bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6">Answer Review</h1>
+            <div id="review-container" class="space-y-6">
+                <!-- Review content will be injected here -->
+            </div>
+            <button id="back-to-results-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md mt-8">Back to Results</button>
+        </div>
+
+    </div>
+
+    <script>
+        const quizData = [
+            { question: "What is the definition of a criminal investigation?", options: ["The process of arresting a known criminal", "The process of legally gathering evidence of a crime", "The act of interviewing witnesses after a crime", "The scientific analysis of crime scene evidence"], answer: "The process of legally gathering evidence of a crime", rationale: "A criminal investigation is defined as 'the process of legally gathering evidence of a crime that has been or is being committed.'", page: "Page 1" },
+            { question: "A 'highly personal and unreasoned distortion of judgment' defines what term?", options: ["Prejudice", "Bias", "Opinion", "Fact"], answer: "Bias", rationale: "Bias is defined as: 'A highly personal and unreasoned distortion of judgment.'", page: "Page 1" },
+            { question: "Evidence that is 'not based on actual personal knowledge or observation of the facts' but from which deductions are drawn is known as:", options: ["Direct Evidence", "Conclusive Evidence", "Circumstantial Evidence", "Real Evidence"], answer: "Circumstantial Evidence", rationale: "Circumstantial Evidence is defined as: 'Not based on actual personal knowledge or observation of the facts in controversy, but of other facts from which deductions are drawn, showing indirectly the facts sought to be proved.'", page: "Page 1" },
+            { question: "What does 'corpus delicti' literally mean?", options: ["The body of the suspect", "The body or substance of the crime", "The weapon used in the crime", "The final verdict"], answer: "The body or substance of the crime", rationale: "Corpus delicti 'literally means the body or substance of the crime. In law the term refers to proof establishing that a crime has occurred.'", page: "Page 1" },
+            { question: "What is a criminal's characteristic method of operation called?", options: ["Signature", "Tell", "Modus Operandi (MO)", "Routine"], answer: "Modus Operandi (MO)", rationale: "Modus Operandi (MO) is defined as: 'A criminal's characteristic method of operation.'", page: "Page 1" },
+            { question: "What level of proof is required to obtain a conviction in a criminal trial?", options: ["Preponderance of the evidence", "Reasonable suspicion", "Probable cause", "Proof beyond a reasonable doubt"], answer: "Proof beyond a reasonable doubt", rationale: "The text defines 'Proof beyond a reasonable doubt' as the 'Level of proof required to obtain a conviction in a criminal trial.'", page: "Page 1" },
+            { question: "Specific articulable facts that would reasonably warrant the detention of a person is the definition of:", options: ["Reasonable Doubt", "Reasonable Suspicion", "Probable Cause", "Absolute Certainty"], answer: "Reasonable Suspicion", rationale: "Reasonable Suspicion is defined as: 'Specific articulable facts, together with rational inferences from those facts that would reasonably warrant the detention of a person.'", page: "Page 1-2" },
+            { question: "A person who saw a crime or has relevant information is known as a:", options: ["Suspect", "Victim", "Complainant", "Witness"], answer: "Witness", rationale: "A witness is defined as 'A person who saw a crime or some part of it being committed or who has relevant information.'", page: "Page 2" },
+            { question: "Which of the following is NOT listed as a tool of a criminal investigator?", options: ["Information", "Instrumentation or forensic science", "Media manipulation", "Laws of arrest, search, and seizure"], answer: "Media manipulation", rationale: "The listed tools are Information, Instrumentation or forensic science, Interviewing, and Laws of arrest, search, and seizure.", page: "Page 2" },
+            { question: "Which of the following is a primary goal of any criminal investigation?", options: ["To secure a conviction at all costs", "To recover all stolen property", "To satisfy the victim's desire for revenge", "To create a high-profile media case"], answer: "To recover all stolen property", rationale: "One of the stated goals is 'To recover all stolen property.'", page: "Page 2" },
+            { question: "What is the basic task a criminal investigator must be mindful of?", options: ["To always make an arrest", "To determine the truth", "To close the case quickly", "To work only on solvable cases"], answer: "To determine the truth", rationale: "The criminal investigator must be mindful that 'the basic task of a criminal investigation is to determine the truth. This requires the investigator to gather all the information that tends to prove or disprove a person's involvement...'", page: "Page 2" },
+            { question: "The legal significance of evidence rests in its influence on whom?", options: ["The media", "The investigating officer's supervisor", "The judge or juror", "The police chief"], answer: "The judge or juror", rationale: "The text states, 'The legal significance of evidence rests in its influence on the judge or juror.'", page: "Page 3" },
+            { question: "Which characteristic of a criminal investigator involves taking nothing for granted and verifying information?", options: ["Curious", "Observant", "Suspicious", "Logical"], answer: "Suspicious", rationale: "A suspicious investigator 'takes nothing for granted. Investigators may find that victims and witnesses, as well as suspects, may be motivated by various... needs that may \"color\" the information they give. Gathers information but verifies its credibility.'", page: "Page 3" },
+            { question: "An investigator who 'desires to investigate and learn the facts and truth about people, places or objects' demonstrates which characteristic?", options: ["Observant", "Unbiased", "Logical", "Curious"], answer: "Curious", rationale: "A curious investigator 'desires to investigate and learn the facts and truth about people, places or objects.'", page: "Page 3" },
+            { question: "The ability to 'apply logic when comparing a person's behavior to their statements' is an example of which investigator characteristic?", options: ["Creative problem solving", "Logical thinking", "Being observant", "Being unbiased"], answer: "Logical thinking", rationale: "Logical thinking is 'the ability to apply logic when comparing a person's behavior to their statements and their expressed motivations, in order to search for information, evidence, or other potential leads.'", page: "Page 3-4" },
+            { question: "Why must criminal investigators refrain from discussing case details with unauthorized circles?", options: ["It violates department policy", "It can be prejudicial and compromising to the case", "It could lead to a promotion being denied", "It wastes valuable investigation time"], answer: "It can be prejudicial and compromising to the case", rationale: "This practice 'can be prejudicial and compromising to both the prosecution and defense.'", page: "Page 4" },
+            { question: "A key characteristic of a professional thief's operation is:", options: ["Frequent use of violence", "High number of eyewitnesses", "Lack of planning", "Minimal chances of observation"], answer: "Minimal chances of observation", rationale: "A professional thief 'Operate to minimize chances of observation.'", page: "Page 4" },
+            { question: "A professional thief often works in conjunction with whom?", options: ["Law enforcement informants", "Other professional thieves", "Criminal receivers (fences)", "Their family members"], answer: "Criminal receivers (fences)", rationale: "Professional thieves 'Often work in conjunction with criminal receivers (fences).'", page: "Page 4" },
+            { question: "Compared to a professional thief, a semi-professional (unskilled) thief is more likely to do what?", options: ["Engage in detailed planning", "Avoid violence at all costs", "Resort to violence against the victim", "Steal high-value, specialized items"], answer: "Resort to violence against the victim", rationale: "The semi-professional thief is 'More likely to resort to violence against victim.'", page: "Page 4" },
+            { question: "Which type of robber engages in 'dry runs' or 'casing' of a scene?", options: ["Ambush robber", "Cruising robber", "A robber involved in a planned operation", "An opportunistic robber"], answer: "A robber involved in a planned operation", rationale: "A 'Planned operation' is 'carefully structured; robbery group examines all aspects of the situation and plans for foreseeable contingencies. May engage in \"dry runs\" in preparation for robbery or \"casing\" of the robbery scene.'", page: "Page 5" },
+            { question: "What is the 'Achilles' Heel' (weakness) of property crime?", options: ["The planning of the crime", "Gaining entry to the location", "The disposal of the stolen property", "Avoiding eyewitnesses"], answer: "The disposal of the stolen property", rationale: "The text states, 'The \"Achilles' Heel\" (weakness) of property crime is the disposal of the stolen property.'", page: "Page 5" },
+            { question: "Con artists and their schemes are often based on what?", options: ["Threats of violence", "Intricate disguises", "Promises of unusual return", "Sophisticated technology"], answer: "Promises of unusual return", rationale: "Con games are 'Based on promises of unusual return i.e., something for nothing, double your money, etc. Often use victims' own greed, assuring them risks are minimal.'", page: "Page 5" },
+            { question: "Which type of offender is considered the LEAST violent?", options: ["Robbers", "Burglars", "Street thieves", "Forgery and Credit Card Abusers"], answer: "Forgery and Credit Card Abusers", rationale: "The text describes Forgery and Credit Card Abuse offenders as the 'Least violent of offenders.'", page: "Page 5" },
+            { question: "A joy-riding juvenile who abandons a car when it runs out of gas falls into which category of auto thief?", options: ["Use-in-crime thief", "Professional auto thief", "Unauthorized Use of a Motor Vehicle offender", "Insurance fraud swindler"], answer: "Unauthorized Use of a Motor Vehicle offender", rationale: "This describes an 'Unauthorized Use of a Motor Vehicle offender(s) - Joy- riding juvenile; usually host to several other juveniles. Abandons vehicle when it runs out of gas, or they tire of it.'", page: "Page 6" },
+            { question: "Who are considered the most dangerous auto thieves?", options: ["Professional auto thieves", "Insurance fraud swindlers", "Strippers and dismantlers", "Street thieves"], answer: "Street thieves", rationale: "The text explicitly states, 'Street thieves are the most dangerous auto thieves.' This is because they often carry weapons and take reckless chances.", page: "Page 6" },
+            { question: "Why is a truly professional auto thief rarely armed?", options: ["They cannot afford a weapon", "They prefer to use their mind to outwit captors", "They would get more time for a weapon charge than the theft charge", "They are non-violent by nature"], answer: "They would get more time for a weapon charge than the theft charge", rationale: "The truly professional thief will rarely be armed since he 'would get more time for a weapon charge than the theft charge.'", page: "Page 6" },
+            { question: "What is a 'salvage switch'?", options: ["A method for hot-wiring a car", "A type of insurance fraud", "Altering a vehicle's identity by placing a VIN from a total loss car onto a stolen car", "A place where stolen cars are dismantled"], answer: "Altering a vehicle's identity by placing a VIN from a total loss car onto a stolen car", rationale: "A Salvage Switch is 'described as the altering of a vehicle's identity by placing the serial number of a total loss car... onto a stolen car.'", page: "Page 6" },
+            { question: "If an officer runs a VIN and receives a return with 'junk' salvage title, what does this indicate?", options: ["The vehicle is legally on the road", "The vehicle is a non-operating vehicle that should not be on the road", "The vehicle was recently sold at auction", "The vehicle has been exported"], answer: "The vehicle is a non-operating vehicle that should not be on the road", rationale: "This return 'indicates that Austin MVD computer records show the vehicle as a non-operating vehicle that should not be on the road.'", page: "Page 7" },
+            { question: "What is a common problem with large auto dealerships that can delay the reporting of a stolen car?", options: ["Poor sales records", "High employee turnover", "Infrequent inventory control", "Lack of security cameras"], answer: "Infrequent inventory control", rationale: "A common problem is inventory control. 'A dealer may do an inventory at 30, 60, or 90 days,' allowing a car to be missing for months before it's noticed.", page: "Page 7" },
+            { question: "An officer stops a rental car that is two months overdue, but the rental company is unwilling to prosecute. This is considered what type of case?", options: ["A criminal case", "A federal offense", "A civil case", "A case for the DMV"], answer: "A civil case", rationale: "The text states, 'you have a civil case, not a criminal case unless the rental company is willing to prosecute.'", page: "Page 7-8" },
+            { question: "Which of the following is a condition that might lead an officer to suspect a vehicle is stolen?", options: ["The vehicle is a late model and expensive", "A clean vehicle displays dirty license plates", "The vehicle displays a single license plate in a one-plate state", "The driver is obeying all traffic laws"], answer: "A clean vehicle displays dirty license plates", rationale: "A suspicious indicator is when 'a clean vehicle display dirty license plates or does a dirty vehicle display clean license plates.'", page: "Page 8" },
+            { question: "After a vehicle has been stopped, what is an indicator that it may be stolen?", options: ["The driver is polite and cooperative", "The steering column is covered by a towel or piece of tape", "The radio is playing loudly", "The car has a full tank of gas"], answer: "The steering column is covered by a towel or piece of tape", rationale: "An indicator is if 'the steering column covered by a towel or piece of tape large enough to conceal a break in the steering column.'", page: "Page 8" },
+            { question: "Before taking enforcement action on a suspected stolen rental car, what should an officer secure from the rental agency?", options: ["A copy of the rental agreement", "The manager's name", "A theft report", "The vehicle's maintenance records"], answer: "A theft report", rationale: "The text advises, 'Before any enforcement action is taken, a theft report should be secured by the rental agency.'", page: "Page 8" },
+            { question: "What is the first step an officer should take when investigating a reported auto theft?", options: ["Issue a BOLO for the vehicle", "Interview the owner", "Check if the vehicle was impounded or repossessed", "Canvas the neighborhood for witnesses"], answer: "Check if the vehicle was impounded or repossessed", rationale: "Procedures include checking with the dispatcher to see if the vehicle was impounded and checking with any lien holder to see if it was repossessed.", page: "Page 9" },
+            { question: "Which category of homicide is described as an extension of the crime of assault, following a 'dispute-anger-attack-death' cycle?", options: ["Killing for profit", "Revenge or jealousy killing", "Triangle killing", "Anger killing"], answer: "Anger killing", rationale: "Anger killing is described as 'An extension of the crime of assault. Dispute-anger-attack-death (cycle of violence).'", page: "Page 9" },
+            { question: "A homicide where the husband or wife kills a spouse involved with another lover is categorized as:", options: ["Anger killing", "Revenge killing", "Triangle killing", "Killing for profit"], answer: "Triangle killing", rationale: "'Triangle killing: Husband or wife kills spouse who has involved themselves with another lover.'", page: "Page 9" },
+            { question: "Which type of killing is often the most difficult to solve?", options: ["Triangle killing", "Killing for profit", "Random killing", "Felony murder"], answer: "Random killing", rationale: "Random killing is described as 'Seemingly motive-less. Most difficult to solve.'", page: "Page 9" },
+            { question: "Until proven otherwise, all suspicious deaths should be treated as what?", options: ["Accidents", "Suicides", "Homicides", "Natural causes"], answer: "Homicides", rationale: "The text states, 'All suspicious deaths should be treated as homicide until proven otherwise.'", page: "Page 9" },
+            { question: "When responding to an infant fatality, what term must a responding officer AVOID using at the scene?", options: ["Deceased", "Victim", "Sudden Infant Death (SID)", "Infant"], answer: "Sudden Infant Death (SID)", rationale: "The text warns, 'Sudden Infant Death (SID): is a medical diagnosis, responding officer must not use this term at the scene. Only after a complete and thorough investigation can this be determined.'", page: "Page 9" },
+            { question: "What is the primary purpose of a sexual assault perpetrator?", options: ["To fulfill a sexual desire", "To exercise power over the victim", "To steal from the victim", "To act out a fantasy"], answer: "To exercise power over the victim", rationale: "Sexual assaults are acts of violence where 'The perpetrator's purpose is to exercise power over victim.'", page: "Page 10" },
+            { question: "What has a significant bearing on a sexual assault victim's ability to deal with the crime and assist law enforcement?", options: ["The time of day", "The officer's attitude", "The location of the interview", "The gender of the officer"], answer: "The officer's attitude", rationale: "It is noted that the 'Officer's attitude has a significant bearing on the victim's ability to deal with the crime and assist law enforcement.'", page: "Page 10" },
+            { question: "What are the three major types of elder abuse?", options: ["Theft, Assault, Harassment", "Neglect, Abuse, Exploitation", "Financial, Physical, Emotional", "Scams, Threats, Intimidation"], answer: "Neglect, Abuse, Exploitation", rationale: "The text lists the 'Three major types of elder abuse are: Neglect, Abuse, Exploitation.'", page: "Page 11" },
+            { question: "The failure of a person to provide for themselves the goods and services necessary to avoid physical harm is known as:", options: ["Self-exploitation", "Self-abuse", "Self-neglect", "Self-harm"], answer: "Self-neglect", rationale: "'Over half the cases involve self-neglect, the failure of a person to provide for themselves the goods and services necessary to avoid physical harm, mental anguish or mental illness...'", page: "Page 11" },
+            { question: "What is a 'hate crime'?", options: ["Any crime motivated by anger", "A specific offense listed in the Penal Code", "A criminal offense motivated by the offender's bias", "A crime that receives significant media attention"], answer: "A criminal offense motivated by the offender's bias", rationale: "A hate crime is defined as 'A criminal offense against a person or property which is motivated, in whole or in part, by the offender's bias against race, religion, ethnic/national origin group, or sexual orientation group.'", page: "Page 11" },
+            { question: "What is a key safeguard to minimize the suggestiveness of a field identification (show-up)?", options: ["Have multiple suspects present at once", "Tell the witness you are sure you have the right person", "Transport the witness to the location of the detained suspect", "Allow witnesses to discuss the suspect before the identification"], answer: "Transport the witness to the location of the detained suspect", rationale: "One procedural safeguard is to 'Consider transporting the witness to the location of the detained suspect to limit the legal impact of the suspect's detention.'", page: "Page 12" },
+            { question: "What should an officer do with witnesses before conducting a show-up?", options: ["Have them stand together for support", "Separate them and instruct them not to discuss the incident", "Ask them to write a joint statement", "Let them see the suspect together to confirm"], answer: "Separate them and instruct them not to discuss the incident", rationale: "When multiple witnesses are involved, 'Separate witnesses and instruct them to avoid discussing details of the incident with the other witnesses.'", page: "Page 12" },
+            { question: "What is one of the first duties of an officer at a crime scene?", options: ["Collect all evidence immediately", "Interview the suspect", "Protect the crime scene", "Notify the media"], answer: "Protect the crime scene", rationale: "One of the primary duties listed is to 'Protect the crime scene. Search for and collect objects and traces that are obviously evidence or likely to be evidence.'", page: "Page 13" },
+            { question: "In a homicide investigation, who should be identified first?", options: ["The suspect", "The witnesses", "The victim", "The next of kin"], answer: "The victim", rationale: "One of the steps in a homicide preliminary investigation is to 'Identify the victim.'", page: "Page 13" },
+            { question: "In a preliminary investigation of a sexual assault, what is a key duty of the officer regarding the victim?", options: ["Transport the victim to jail for questioning", "Aid the victim, including emotional support", "Insist on a written statement before medical care", "Take the victim's clothing as evidence immediately"], answer: "Aid the victim, including emotional support", rationale: "A key procedure in sexual assault cases is to 'Aid the victim (includes care for injuries as well as emotional support).'", page: "Page 14" },
+            { question: "What must be done to wet evidence, such as clothing with blood on it, during a child fatality investigation?", options: ["It should be sealed immediately in a plastic bag", "It should be placed in paper bags", "It should be ignored until the medical examiner arrives", "It should be washed at the scene"], answer: "It should be placed in paper bags", rationale: "The procedure for child fatalities states, 'Any wet items, such as clothing with blood on them should be placed in paper bags.'", page: "Page 14" },
+            { question: "What is a sequential identification procedure?", options: ["Showing all suspects in a lineup at the same time", "A procedure where suspects are shown one at a time", "A lineup conducted in the field", "A lineup using only photographs"], answer: "A procedure where suspects are shown one at a time", rationale: "The text distinguishes between simultaneous and sequential identification procedures, with sequential being a method used in live and photo line-ups, implying one at a time.", page: "Page 15" },
+            { question: "What should an investigator instruct a witness before a lineup?", options: ["That the suspect is definitely in the lineup", "That the person who committed the crime may or may not be present", "To pick the person who looks most like the perpetrator", "That the investigation will end after the lineup"], answer: "That the person who committed the crime may or may not be present", rationale: "Investigators should 'Instruct the witness that the person who committed the crime may or may not be present in the line-up.'", page: "Page 15" },
+            { question: "What is an autopsy?", options: ["A preliminary examination at the crime scene", "An interview with the victim's family", "A postmortem examination of a body to determine the cause of death", "A report filed by the first responding officer"], answer: "A postmortem examination of a body to determine the cause of death", rationale: "An autopsy is defined as 'A postmortem examination of the body of a person... to determine the cause of death or nature of any pathological changes that may have contributed to the death.'", page: "Page 16" },
+            { question: "What information can the contents of a victim's stomach provide in an autopsy?", options: ["The victim's blood type", "The time of death", "The interval between the last meal and death", "The presence of genetic disorders"], answer: "The interval between the last meal and death", rationale: "The autopsy report provides data on 'Contents of the stomach - indicates interval between victim's last meal and his or her death and what was eaten.'", page: "Page 16" },
+            { question: "What is rigor mortis?", options: ["The cooling of the body after death", "The discoloration of the body after death", "The chemical change causing muscles to stiffen after death", "The decomposition of body tissues"], answer: "The chemical change causing muscles to stiffen after death", rationale: "Rigor Mortis is 'Chemical changes occurring in body tissues, the muscles stiffen after death.'", page: "Page 16" },
+            { question: "What is postmortem lividity?", options: ["A purplish discoloration on parts of the body nearest the ground", "The stiffening of the muscles after death", "The bloating of the body by gas", "A spasm in the hands at the time of death"], answer: "A purplish discoloration on parts of the body nearest the ground", rationale: "Postmortem lividity is 'A purplish discoloration observable on the parts of the body that are nearest the ground.'", page: "Page 16" },
+            { question: "The decomposition of body tissues, including bloating and skin discoloration, is known as:", options: ["Rigor Mortis", "Putrefaction", "Postmortem Lividity", "Cadaveric Spasm"], answer: "Putrefaction", rationale: "Putrefaction is the 'Decomposition of body tissues.'", page: "Page 17" },
+            { question: "If a dead person's hand is found clutching a weapon, this provides strong presumptive evidence of suicide due to what phenomenon?", options: ["Rigor mortis", "Postmortem lividity", "Putrefaction", "Cadaveric Spasm"], answer: "Cadaveric Spasm", rationale: "Cadaveric Spasm is an immediate stiffening that 'gives strong presumptive evidence of suicide if the hand is clutching the weapon.'", page: "Page 17" },
+            { question: "What is one of the first things an officer should do upon arriving at a crime scene?", options: ["Start collecting evidence", "Determine if the suspect(s) are at or near the scene", "Establish a media briefing area", "Take photographs"], answer: "Determine if the suspect(s) are at or near the scene", rationale: "Upon arrival, an officer should 'Determine if suspect(s) are at, or near, scene by observing unusual activity, persons, vehicles.'", page: "Page 17" },
+            { question: "Before attempting to locate sources of identification on a dead body, whose permission must an officer obtain?", options: ["The police chief or a supervisor", "The district attorney", "The medical examiner or justice of the peace", "A family member of the deceased"], answer: "The medical examiner or justice of the peace", rationale: "Officers 'shall obtain permission from the medical examiner or justice of the peace to move or disturb the body prior to any attempt to locate sources of identification.'", page: "Page 17-18" },
+            { question: "What is a primary objective of a crime scene search?", options: ["To find evidence to support a pre-determined theory", "To quickly clear the scene for the public", "To place the suspect at the scene", "To only look for the weapon used"], answer: "To place the suspect at the scene", rationale: "One objective is that evidence 'Can be used to place the suspect at the scene (i.e., shoe impressions may match those of a known suspect in the community.)'", page: "Page 19" },
+            { question: "Which crime scene search method is effective for indoor and outdoor scenes with regular patterns or defined borders?", options: ["Point-to-point search", "Strip search", "Circular (Spiral) search", "Quadrant, Sector or Zone Search"], answer: "Quadrant, Sector or Zone Search", rationale: "The Quadrant, Sector or Zone Search is 'Effective for indoor and outdoor scenes that have regular patterns or defined borders.'", page: "Page 20" },
+            { question: "Which search method is described as often being disorganized and risks overlooking trace evidence?", options: ["Grid search", "Strip search", "Point-to-point search", "Zone search"], answer: "Point-to-point search", rationale: "Disadvantages of the point-to-point search are that 'It is often disorganized.' and 'Trace of evidence may be overlooked.'", page: "Page 20" },
+            { question: "Which search method would be most useful for finding a missing item from the center of an area that must be searched rapidly?", options: ["Strip search", "Grid search", "Circular (Spiral or Concentric) Search", "Area Search"], answer: "Circular (Spiral or Concentric) Search", rationale: "The Circular (Spiral or Concentric) Search is 'Useful when an item is missing from the center and the search must be conducted rapidly.'", page: "Page 20" },
+            { question: "The transecting baseline method of measurement is particularly useful in what type of area?", options: ["Small, square rooms", "Vehicles", "Large, irregularly shaped outdoor areas", "Multi-story buildings"], answer: "Large, irregularly shaped outdoor areas", rationale: "The transecting baseline system 'is particularly useful in large, irregularly shaped outdoor areas where no satisfactory natural base line exists.'", page: "Page 25" },
+            { question: "What is a 'triangulation' measurement method?", options: ["Measurements from a single fixed point", "Measurements made from two fixed permanent objects to a point", "Measuring in a grid pattern", "Using a baseline and measuring at right angles"], answer: "Measurements made from two fixed permanent objects to a point", rationale: "Triangulation is a method where 'Measurements are made by triangulation from two fixed permanent objects within the area of the crime scene to the point you desire to plot.'", page: "Page 24" },
+            { question: "What is the purpose of a crime scene sketch?", options: ["To replace the need for photography", "To provide a permanent record of conditions like distance and spatial relationships", "To be used as the primary piece of evidence", "To be created by an artist for courtroom presentation"], answer: "To provide a permanent record of conditions like distance and spatial relationships", rationale: "Reasons for sketches include 'To provide a permanent record of conditions otherwise not easily recorded (i.e., distance...)' and 'To record the location and spatial relationships between pieces of evidence.'", page: "Page 24" },
+            { question: "What is Chain of Custody?", options: ["The order in which evidence is presented in court", "The process of recording transactions of evidence from person to person", "A list of all suspects in a case", "The path the suspect took at the crime scene"], answer: "The process of recording transactions of evidence from person to person", rationale: "Chain of Custody is 'the process in which records transactions of evidence from person to person since its acquisition by a law enforcement agency.'", page: "Page 26" },
+            { question: "How should different items of evidence be packaged?", options: ["All together in one large container", "Grouped by type of crime", "Each different item packaged separately", "Only fragile items need to be packaged"], answer: "Each different item packaged separately", rationale: "The purpose of proper packaging includes the rule that 'Each different item should be packaged separately.'", page: "Page 27" },
+            { question: "What is the proper way to package wet evidence like bloodstains?", options: ["Seal it in a plastic bag to keep it moist", "Allow it to dry before packaging in paper", "Freeze it immediately", "Place it in a standard evidence envelope"], answer: "Allow it to dry before packaging in paper", rationale: "Wet evidence... must be allowed to dry before packaging to prevent rotting. Use paper instead of plastic bags to reduce contamination and spoiling.", page: "Page 27" },
+            { question: "When interviewing witnesses at a scene, what is a crucial first step?", options: ["Allow them to talk to each other to confirm their stories", "Interview them all at once to save time", "Separate them so their statements reflect their own observations", "Only interview the person who called the police"], answer: "Separate them so their statements reflect their own observations", rationale: "Interviews should be conducted 'individually and outside the presence of others.' This is done to 'Separate persons so that their statements reflect their own opinions and observations.'", page: "Page 28-29" },
+            { question: "What is the most important phase of a suspect interview?", options: ["Confronting them with the evidence immediately", "Reading them their rights", "Establishing rapport", "Getting a written confession"], answer: "Establishing rapport", rationale: "The text states, 'This is the most important phase of the interview and cannot be emphasized enough' when referring to establishing rapport and allowing the suspect to talk.", page: "Page 29" },
+            { question: "What should an interviewer do after a suspect has told their story in its entirety at least once?", options: ["End the interview", "Immediately make an arrest", "Confront the suspect with discrepancies and falsehoods", "Offer them a plea deal"], answer: "Confront the suspect with discrepancies and falsehoods", rationale: "The interviewer should 'Confront suspect with discrepancies and falsehoods with known facts, but only after allowing them to tell their story in its entirety at least once.'", page: "Page 29" },
+            { question: "What is one of the primary reasons for searching a prisoner during booking?", options: ["To find evidence for the current charge", "To discover evidence of other crimes", "To eliminate suicide risk and prevent death in custody", "To humiliate the prisoner"], answer: "To eliminate suicide risk and prevent death in custody", rationale: "Reasons for search include 'Safety' and to 'Eliminate suicide risk and prevent death in custody.'", page: "Page 32" },
+            { question: "What is the general rule for searching prisoners of the opposite sex?", options: ["It is always permissible if done quickly", "It requires a supervisor's permission", "A male officer searches a male, and a female officer searches a female, except in emergencies", "It is not allowed under any circumstances"], answer: "A male officer searches a male, and a female officer searches a female, except in emergencies", rationale: "'Except in a case of an emergency, a male officer searches a male prisoner, and a female officer searches a female prisoner.'", page: "Page 33" },
+            { question: "When inventorying a prisoner's property, how should an officer describe a 'gold' watch?", options: ["As a gold watch", "As 'yellow in color'", "As a valuable timepiece", "As a Rolex"], answer: "As 'yellow in color'", rationale: "The text advises to 'Be sure to use appropriate descriptors, such as \"yellow in color\" instead of \"gold.\" '", page: "Page 33-34" },
+            { question: "What is a potential negative consequence of an officer not preparing for a court appearance?", options: ["The case will be automatically dismissed", "The officer will be held in contempt of court", "Personal humiliation and a diminished reputation for the department", "The officer will be fined"], answer: "Personal humiliation and a diminished reputation for the department", rationale: "Officers who do not prepare risk 'personal humiliation through unacceptable personal appearances and/or poorly expressing themselves while testifying,' which can diminish the reputation of the department.", page: "Page 36" },
+            { question: "If an officer uses their notes to refresh their memory while testifying, what happens to the notes?", options: ["They are returned to the officer after testimony", "They are sealed as evidence", "They are subject to cross-examination and admission into evidence", "They are destroyed by the court"], answer: "They are subject to cross-examination and admission into evidence", rationale: "'[O]nce the notes are used by the witness/officer, they are subject to cross-examination and admission into evidence.'", page: "Page 37" },
+            { question: "If a judge rules that an objection is 'sustained,' what should the witness do?", options: ["Answer the question", "Rephrase the question for the attorney", "Not answer the question", "Ask the judge for clarification"], answer: "Not answer the question", rationale: "If the judge rules 'Sustained' the officer may not answer.", page: "Page 38" },
+            { question: "What is the purpose of the 'Exclusion of Witnesses' rule (The Rule)?", options: ["To prevent witnesses from hearing each other's testimony", "To allow witnesses to sit in the courtroom", "To make sure all witnesses testify in a specific order", "To exclude witnesses the defense does not like"], answer: "To prevent witnesses from hearing each other's testimony", rationale: "The rule is invoked so witnesses are 'Not to Hear Testimony' from others, preventing them from influencing each other.", page: "Page 39" },
+            { question: "What is the 'badgering/belligerent' defense tactic intended to do?", options: ["To make friends with the witness", "To confuse the witness with rapid questions", "To provoke the officer to lose emotional control", "To ridicule the witness into making a mistake"], answer: "To provoke the officer to lose emotional control", rationale: "This tactic is 'intended to provoke the officer to lose emotional control and, therefore, credibility with the jury.'", page: "Page 40" },
+            { question: "What is a primary reason for creating a properly prepared case folder?", options: ["To make the case file look impressive", "To prevent duplication of work and prove efficiency", "To share with the media", "To use as a template for future cases"], answer: "To prevent duplication of work and prove efficiency", rationale: "The value of a properly prepared case folder is 'To prevent duplication of work' and 'To prove efficiency on the part of the officer and dept.'", page: "Page 40" },
+            { question: "What is a key benefit of providing a well-prepared case file to the defense attorney?", options: ["It ensures they will lose the case", "It may help in obtaining a plea agreement", "It shows the officer is willing to cooperate with the defense", "It fulfills a media request"], answer: "It may help in obtaining a plea agreement", rationale: "A properly prepared file 'Gives the defense attorney the impression that the officers involved are extremely professional... May help in obtaining a plea agreement.'", page: "Page 41" }
+        ];
+
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const reviewScreen = document.getElementById('review-screen');
+
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const reviewBtn = document.getElementById('review-btn');
+        const backToResultsBtn = document.getElementById('back-to-results-btn');
+        
+        const questionNumberEl = document.getElementById('question-number');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const progressBar = document.getElementById('progress-bar');
+        const questionTextEl = document.getElementById('question-text');
+        const answerOptionsEl = document.getElementById('answer-options');
+        const rationaleBox = document.getElementById('rationale-box');
+        const rationaleText = document.getElementById('rationale-text');
+        const rationaleSource = document.getElementById('rationale-source');
+        
+        const scorePercentageEl = document.getElementById('score-percentage');
+        const correctAnswersEl = document.getElementById('correct-answers');
+        const totalAnsweredEl = document.getElementById('total-answered');
+        const finalTimeEl = document.getElementById('final-time');
+        const timerEl = document.getElementById('timer');
+        const reviewContainer = document.getElementById('review-container');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timerInterval;
+        let secondsElapsed = 0;
+        let userAnswers = [];
+        
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        startBtn.addEventListener('click', startQuiz);
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', startQuiz);
+        reviewBtn.addEventListener('click', showReview);
+        backToResultsBtn.addEventListener('click', () => {
+            reviewScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+        });
+
+        function startTimer() {
+            secondsElapsed = 0;
+            timerEl.textContent = '00:00';
+            timerInterval = setInterval(() => {
+                secondsElapsed++;
+                const minutes = Math.floor(secondsElapsed / 60).toString().padStart(2, '0');
+                const seconds = (secondsElapsed % 60).toString().padStart(2, '0');
+                timerEl.textContent = `${minutes}:${seconds}`;
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function startQuiz() {
+            shuffleArray(quizData);
+            quizData.forEach(q => shuffleArray(q.options));
+
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            startScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            nextBtn.classList.add('hidden');
+            startTimer();
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            rationaleBox.classList.add('hidden');
+            answerOptionsEl.innerHTML = '';
+            const currentQuestion = quizData[currentQuestionIndex];
+            
+            questionNumberEl.textContent = currentQuestionIndex + 1;
+            totalQuestionsEl.textContent = quizData.length;
+            questionTextEl.textContent = currentQuestion.question;
+
+            const progress = ((currentQuestionIndex) / quizData.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('answer-option', 'w-full', 'p-4', 'text-left', 'bg-white', 'border-2', 'border-gray-300', 'rounded-lg', 'hover:bg-gray-50', 'hover:border-blue-500');
+                button.addEventListener('click', () => selectAnswer(button, option, currentQuestion));
+                answerOptionsEl.appendChild(button);
+            });
+        }
+
+        function selectAnswer(button, selectedOption, currentQuestion) {
+            const { answer, rationale, page } = currentQuestion;
+            userAnswers[currentQuestionIndex] = selectedOption;
+
+            const buttons = answerOptionsEl.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === answer) {
+                    btn.classList.add('correct');
+                }
+            });
+
+            if (selectedOption === answer) {
+                score++;
+                button.classList.add('correct');
+            } else {
+                button.classList.add('incorrect');
+            }
+
+            rationaleText.textContent = rationale;
+            rationaleSource.textContent = page;
+            rationaleBox.classList.remove('hidden');
+            nextBtn.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                nextBtn.classList.add('hidden');
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            stopTimer();
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            scorePercentageEl.textContent = percentage;
+            correctAnswersEl.textContent = score;
+            totalAnsweredEl.textContent = quizData.length;
+            finalTimeEl.textContent = timerEl.textContent;
+            
+            progressBar.style.width = `100%`;
+        }
+
+        function showReview() {
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.remove('hidden');
+            reviewContainer.innerHTML = '';
+
+            quizData.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === question.answer;
+
+                const reviewItem = document.createElement('div');
+                reviewItem.classList.add('border', 'p-4', 'rounded-lg');
+                reviewItem.classList.add(isCorrect ? 'bg-green-50' : 'bg-red-50', isCorrect ? 'border-green-200' : 'border-red-200');
+
+                let userAnswerHTML = '';
+                if (isCorrect) {
+                    userAnswerHTML = `<p>Your answer: <span class="font-semibold review-correct">${userAnswer} (Correct)</span></p>`;
+                } else {
+                    userAnswerHTML = `
+                        <p>Your answer: <span class="font-semibold review-incorrect">${userAnswer}</span></p>
+                        <p>Correct answer: <span class="font-semibold review-correct">${question.answer}</span></p>
+                    `;
+                }
+
+                reviewItem.innerHTML = `
+                    <p class="font-bold mb-2">${index + 1}. ${question.question}</p>
+                    ${userAnswerHTML}
+                    <p class="text-sm text-gray-600 mt-2"><em><span class="font-semibold">Rationale:</span> ${question.rationale} (Source: ${question.page})</em></p>
+                `;
+                reviewContainer.appendChild(reviewItem);
+            });
+        }
+
+    </script>
+</body>
+</html>
+

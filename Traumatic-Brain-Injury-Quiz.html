@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traumatic Brain Injury (TBI) Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+        .answer-option {
+            transition: all 0.2s ease-in-out;
+        }
+        .answer-option:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .correct {
+            background-color: #D1FAE5 !important;
+            border-color: #10B981 !important;
+            color: #065F46 !important;
+        }
+        .incorrect {
+            background-color: #FEE2E2 !important;
+            border-color: #EF4444 !important;
+            color: #991B1B !important;
+        }
+        .progress-bar-fill {
+            transition: width 0.3s ease-in-out;
+        }
+        .review-correct {
+            color: #059669;
+        }
+        .review-incorrect {
+            color: #e11d48;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="quiz-app" class="quiz-container p-4 sm:p-8">
+        
+        <!-- Quiz Start Screen -->
+        <div id="start-screen" class="text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Traumatic Brain Injury (TBI) Quiz</h1>
+            <p class="text-lg text-gray-600 mb-8">A comprehensive quiz based on the "Basic Peace Officer Course | Chapter 30" handout to test your knowledge on Traumatic Brain Injury.</p>
+            <button id="start-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Start Quiz</button>
+        </div>
+
+        <!-- Quiz Interface -->
+        <div id="quiz-screen" class="hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold">Question <span id="question-number"></span> of <span id="total-questions"></span></h2>
+                <div id="timer" class="text-lg font-mono bg-gray-200 px-3 py-1 rounded-md">00:00</div>
+            </div>
+            
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+                <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full progress-bar-fill" style="width: 0%"></div>
+            </div>
+
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+                <p id="question-text" class="text-xl font-medium mb-8 min-h-[6rem]"></p>
+                <div id="answer-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Answer options will be injected here by JS -->
+                </div>
+            </div>
+             <div id="rationale-box" class="hidden mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h3 class="font-bold text-blue-800">Rationale:</h3>
+                <p id="rationale-text" class="text-blue-700"></p>
+                <p class="text-sm text-blue-600 mt-2">Source: <span id="rationale-source"></span></p>
+            </div>
+            <button id="next-btn" class="hidden w-full bg-blue-600 text-white font-bold py-3 px-8 rounded-lg mt-8 hover:bg-blue-700 transition-colors shadow-md">Next Question</button>
+        </div>
+
+        <!-- Quiz Results Screen -->
+        <div id="results-screen" class="hidden text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">Quiz Complete!</h1>
+            <p class="text-lg text-gray-600 mb-6">Here's how you did:</p>
+            <div class="flex flex-col sm:flex-row justify-around items-center my-8 gap-8 sm:gap-0">
+                <div>
+                    <p id="score-percentage" class="text-5xl font-bold text-green-600">0%</p>
+                    <p class="text-gray-500">Score</p>
+                </div>
+                 <div>
+                    <p class="text-5xl font-bold text-blue-600"><span id="correct-answers">0</span>/<span id="total-answered">0</span></p>
+                    <p class="text-gray-500">Correct Answers</p>
+                </div>
+                 <div>
+                    <p id="final-time" class="text-5xl font-bold text-gray-700">00:00</p>
+                    <p class="text-gray-500">Time Taken</p>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="restart-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Try Again</button>
+                <button id="review-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md">Review Answers</button>
+            </div>
+        </div>
+        
+        <!-- Review Screen -->
+        <div id="review-screen" class="hidden bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6">Answer Review</h1>
+            <div id="review-container" class="space-y-6">
+                <!-- Review content will be injected here -->
+            </div>
+            <button id="back-to-results-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md mt-8">Back to Results</button>
+        </div>
+
+    </div>
+
+    <script>
+        const quizData = [
+            { question: "What is an Acquired Brain Injury (ABI)?", options: ["An injury that occurs at birth", "An injury that occurs after birth and is not congenital or degenerative", "A specific type of stroke", "A temporary state of confusion"], answer: "An injury that occurs after birth and is not congenital or degenerative", rationale: "An ABI occurs after birth, is not related to a congenital or a degenerative disease, and can cause various impairments.", page: "Page 1" },
+            { question: "An injury where an object penetrates the skull and enters the brain is known as what type of injury?", options: ["A closed-head injury", "An anoxic brain injury", "An open-head injury", "A concussion"], answer: "An open-head injury", rationale: "An open-head injury is when an object penetrates the skull and enters the brain, as opposed to a closed-head injury where the skull remains intact.", page: "Page 1" },
+            { question: "What is the key difference between a Traumatic Brain Injury (TBI) and a Non-Traumatic Brain Injury?", options: ["TBIs are more serious", "Non-traumatic injuries are always mild", "TBIs are caused by an external force, while non-traumatic injuries are from an internal event", "TBIs only affect the frontal lobe"], answer: "TBIs are caused by an external force, while non-traumatic injuries are from an internal event", rationale: "A TBI is caused by an external force like a blow to the head, whereas a non-traumatic brain injury is caused by an internal event like a stroke or infection.", page: "Page 1" },
+            { question: "Which of the following is a cause of a NON-traumatic brain injury?", options: ["A fall", "A motor vehicle crash", "A stroke", "A sports injury"], answer: "A stroke", rationale: "Non-traumatic brain injuries are caused by internal events such as stroke, infection, brain tumors, or drug-induced factors.", page: "Page 1" },
+            { question: "How many people sustain a traumatic brain injury in the United States each year?", options: ["About 800,000", "Over 1.6 million", "Over 2.2 million", "About 144,000"], answer: "Over 2.2 million", rationale: "Over 2.2 million people sustain a traumatic brain injury in the United States each year, with over 144,000 of those occurring in Texas.", page: "Page 2" },
+            { question: "The number of people diagnosed with a brain injury each year is more than the number diagnosed with which combination of diseases?", options: ["Heart disease, diabetes, and the flu combined", "All forms of cancer combined", "Alzheimer's, breast cancer, HIV/AIDS, prostate cancer, lung cancer, and ALS combined", "Asthma and arthritis combined"], answer: "Alzheimer's, breast cancer, HIV/AIDS, prostate cancer, lung cancer, and ALS combined", rationale: "The number of people who are diagnosed with a brain injury each year is more than the number of people diagnosed with Alzheimer's, breast cancer, HIV/AIDS, prostate cancer, lung cancer, and ALS combined.", page: "Page 2" },
+            { question: "According to the provided chart, what is the leading cause of TBI in the U.S., accounting for 40% of injuries?", options: ["Motor vehicle crashes", "Assaults", "Falls", "Being struck by an object"], answer: "Falls", rationale: "The pie chart on causes of TBI in the U.S. identifies falls as the leading cause, at 40%.", page: "Pages 2-3" },
+            { question: "According to the pie chart, what percentage of TBIs in the U.S. are caused by assaults?", options: ["11%", "14%", "16%", "19%"], answer: "11%", rationale: "The pie chart indicates that assaults are the cause of 11% of TBIs in the U.S.", page: "Pages 2-3" },
+            { question: "A non-traumatic brain injury caused by a lack of oxygen to the brain, such as from near drowning or strangulation, is called:", options: ["A stroke", "An anoxic/hypoxic brain injury", "Meningitis", "An aneurysm"], answer: "An anoxic/hypoxic brain injury", rationale: "Anoxia/Hypoxia, where no oxygen or too little oxygen makes it to the brain, can be caused by near drowning, asphyxiation, or strangulation.", page: "Page 3" },
+            { question: "Which of the following substances can cause a non-traumatic, drug-induced brain injury?", options: ["Aspirin", "Ibuprofen", "Cocaine", "Caffeine"], answer: "Cocaine", rationale: "Drug induced non-traumatic brain injuries can be caused by substances such as Cocaine, Methamphetamines, Inhalants, and MDMA.", page: "Page 3" },
+            { question: "Which population has the highest estimated prevalence of TBI, at 60.3%?", options: ["Veterans", "Domestic Violence Survivors", "Adult and Juvenile offenders", "Homeless individuals"], answer: "Adult and Juvenile offenders", rationale: "The estimated prevalence of TBI in imprisoned populations (adult and juvenile offenders) is 60.3%.", page: "Page 3" },
+            { question: "Veteran's advocates estimate that what percentage of Iraq veterans have some level of brain injury?", options: ["5 to 10%", "10 to 20%", "25 to 30%", "Over 40%"], answer: "10 to 20%", rationale: "Veteran's advocates estimate that 10 to 20% of Iraq veterans and service members have some level of brain injury.", page: "Page 3" },
+            { question: "Which historical figure, a railroad worker, is known as the first recorded neurological patient after an iron rod penetrated his skull?", options: ["Abraham Lincoln", "Harriet Tubman", "Charles Dickens", "Phineas Gage"], answer: "Phineas Gage", rationale: "Phineas Gage, a railroad worker, is the first recorded neurological patient who sustained a TBI when an iron rod penetrated his skull.", page: "Page 4" },
+            { question: "The severity of a brain injury is determined by all the following factors EXCEPT:", options: ["Loss of consciousness", "Memory loss", "MRI/CT imaging results", "The individual's age"], answer: "The individual's age", rationale: "The severity of a brain injury usually depends on four factors: Confusion/Disorientation, Loss of Consciousness, Memory Loss, and MRI/CT/Imaging.", page: "Page 5" },
+            { question: "A loss of consciousness for 12 hours falls under which severity category for a TBI?", options: ["Mild", "Moderate", "Severe", "Critical"], answer: "Moderate", rationale: "A moderate TBI is characterized by a loss of consciousness lasting more than 30 minutes but less than 24 hours.", page: "Page 5" },
+            { question: "A 'severe' TBI is associated with a memory loss of:", options: ["0-30 minutes", "Less than 24 hours", "24 hours to 7 days", "More than 7 days"], answer: "More than 7 days", rationale: "The chart on severity factors indicates that a severe TBI involves memory loss for more than 7 days.", page: "Page 5" },
+            { question: "Why should a 'mild' brain injury be taken seriously?", options: ["It always leads to a 'severe' brain injury", "It can have severe consequences and the effects can be cumulative", "It is the only type of brain injury that causes permanent damage", "It is usually misdiagnosed as a stroke"], answer: "It can have severe consequences and the effects can be cumulative", rationale: "A 'mild' brain injury can have just as severe consequences as a 'severe' brain injury, and multiple 'mild' injuries can exponentially increase the consequences.", page: "Page 6" },
+            { question: "What is the potential outcome of sustaining multiple 'mild' brain injuries?", options: ["Guaranteed full recovery", "The consequences can increase exponentially and even lead to death", "It has no long-term effect", "It only affects physical coordination"], answer: "The consequences can increase exponentially and even lead to death", rationale: "Multiple 'mild' brain injuries can exponentially increase the consequences and even lead to death.", page: "Page 6" },
+            { question: "The frontal lobe of the brain is the control center for which functions?", options: ["Visual processing", "Balance and coordination", "Hearing and emotions", "Thought, memory, and behavior"], answer: "Thought, memory, and behavior", rationale: "The frontal lobe is responsible for functions like attention, decision making, social behavior, personality, memory, and problem solving, which fall under 'thought, memory and behaviour'.", page: "Page 6" },
+            { question: "Which lobe of the brain is primarily associated with hearing, learning, and emotions?", options: ["Frontal lobe", "Parietal lobe", "Occipital lobe", "Temporal lobe"], answer: "Temporal lobe", rationale: "The diagram of the brain shows the Temporal lobe is associated with hearing, learning, and emotions.", page: "Page 6" },
+            { question: "The processing of visual information is the primary function of which brain lobe?", options: ["Occipital lobe", "Frontal lobe", "Temporal lobe", "Parietal lobe"], answer: "Occipital lobe", rationale: "The Occipital lobe, located at the back of the brain, is the control center for visual processing.", page: "Page 6" },
+            { question: "What type of injury can damage cells throughout the brain, affecting multiple parts?", options: ["Focal contusion", "Aneurysm", "Diffuse axonal injuries", "Skull fracture"], answer: "Diffuse axonal injuries", rationale: "Diffuse axonal injuries can damage cells throughout the brain, meaning they are not localized to one specific lobe.", page: "Page 7" },
+            { question: "After a brain injury, difficulty with memory and lack of concentration are classified as what type of changes?", options: ["Physical changes", "Cognitive changes", "Emotional changes", "Behavioral changes"], answer: "Cognitive changes", rationale: "The most common cognitive changes include difficulty with memory, lack of concentration, delayed thinking/processing, and difficulty communicating.", page: "Page 7" },
+            { question: "Irritability, aggression, and mood swings are examples of which category of change after a brain injury?", options: ["Cognitive", "Physical", "Sensory", "Emotional/Behavioral"], answer: "Emotional/Behavioral", rationale: "The most common emotional/behavioral changes that individuals with brain injury experience include irritability, aggression, anxiety/depression, mood swings, and impulsivity.", page: "Page 7" },
+            { question: "Which of these is a potential PHYSICAL change after a brain injury?", options: ["Personality change", "Delayed thinking", "Poor balance", "Anxiety"], answer: "Poor balance", rationale: "Common physical changes include poor balance, impaired motor skills, vision and hearing issues, chronic headaches, and seizures.", page: "Page 8" },
+            { question: "The inability to recognize the meaning of sounds, despite being able to hear them, is a physical change called:", options: ["Nystagmus", "Auditory agnosia", "Tinnitus", "Aphasia"], answer: "Auditory agnosia", rationale: "Auditory agnosia is a physical change where one does not recognize the meaning of sounds.", page: "Page 8" },
+            { question: "What is the term for the vision issue, a potential physical change after a TBI, that involves involuntary eye movement?", options: ["Double vision", "Nystagmus", "Reduced visual field", "Glaucoma"], answer: "Nystagmus", rationale: "Vision issues from a TBI can include nystagmus, which is involuntary, rapid eye movement.", page: "Page 8" },
+            { question: "If a person with a brain injury seems disrespectful or defiant, it may be a result of:", options: ["A conscious choice to be difficult", "The cognitive, emotional, or physical changes from their injury", "A lack of intelligence", "A normal reaction to police presence"], answer: "The cognitive, emotional, or physical changes from their injury", rationale: "The changes caused by a brain injury can make individuals seem uncooperative, disrespectful, defiant, or rude, even when that is not their intent.", page: "Page 8" },
+            { question: "Simultaneously present chronic diseases or conditions, such as a brain injury and substance abuse, are known as:", options: ["Side effects", "Co-factors", "Comorbidities", "Synergies"], answer: "Comorbidities", rationale: "Two or more simultaneously present chronic diseases or conditions are known as comorbidities. Common ones with brain injury include substance use, sleep problems, and depression.", page: "Page 9" },
+            { question: "Recovery from a brain injury is best described as:", options: ["A quick process similar to a broken bone healing", "A process that always returns the person to 'normal'", "An ongoing process throughout life, like managing a chronic condition", "A one-time event that ends after therapy"], answer: "An ongoing process throughout life, like managing a chronic condition", rationale: "Unlike a broken bone, recovery from a brain injury is an ongoing process, and it is more accurate to think of a brain injury as a chronic condition.", page: "Page 9" },
+            { question: "The World Health Organization defines health as 'a state of complete physical, mental, and social well-being and not merely...'", options: ["...a positive outlook on life.", "...the ability to work.", "...the absence of physical pain.", "...the absence of disease or infirmity."], answer: "...the absence of disease or infirmity.", rationale: "The full WHO definition is 'Health is a state of complete physical, mental, and social well-being and not merely the absence of disease or infirmity.'", page: "Page 10" },
+            { question: "According to the text, what is the best 'medicine' for brain injuries?", options: ["Advanced surgery", "Physical therapy", "Prevention", "Medication"], answer: "Prevention", rationale: "The text states, 'Prevention is the best medicine... most brain injuries are preventable.'", page: "Page 10" },
+            { question: "What is a key strategy for preventing TBI in children related to playgrounds?", options: ["Ensuring playgrounds are made of concrete", "Making sure the surface is made of shock-absorbing materials", "Prohibiting children from using slides", "Allowing play only during daylight hours"], answer: "Making sure the surface is made of shock-absorbing materials", rationale: "To prevent TBI in children, playgrounds should have a surface made of shock-absorbing materials, such as mulch, sand, or recycled tires.", page: "Page 11" },
+            { question: "What does the 'P' in the Period of PURPLE Crying stand for?", options: ["Pain-like face", "Persistent", "Peak of Crying", "Parental guidance"], answer: "Peak of Crying", rationale: "The 'P' in the PURPLE acronym stands for Peak of Crying, indicating that a baby may cry more each week, peaking in the second month.", page: "Page 11" },
+            { question: "In the Period of PURPLE Crying, what does the 'L' stand for?", options: ["Laughing", "Long Lasting", "Loud", "Late"], answer: "Long Lasting", rationale: "The 'L' in PURPLE stands for Long Lasting, meaning the crying can last as much as 5 hours a day or more.", page: "Page 11" },
+            { question: "Texas's Natasha's Law mandates training for coaches on how to manage what condition in school athletics?", options: ["Dehydration", "Broken bones", "A concussion", "Heat stroke"], answer: "A concussion", rationale: "Natasha's Law mandates that coaches and trainers for school and UIL activities be trained on how to best manage a concussion, including removal from and return to play protocols.", page: "Page 11" },
+            { question: "Which of the following is listed as a method for preventing a stroke?", options: ["Taking daily aspirin", "Avoiding physical activity", "Limiting alcohol use", "Getting less sleep"], answer: "Limiting alcohol use", rationale: "Methods for preventing stroke include eating a healthy diet, maintaining a healthy weight, getting enough exercise, not smoking, and limiting alcohol use.", page: "Page 12" },
+            { question: "To reduce TBI risk in car crashes, children under what age should be kept in the back seat?", options: ["8", "10", "12", "16"], answer: "12", rationale: "The vehicle safety chart notes to 'Keep children ages 12 and under in the back seat.'", page: "Page 12" },
+            { question: "Which of the following is a sign of a brain injury that requires immediate emergency room attention?", options: ["A mild headache that goes away", "Feeling tired the next day", "Blood or clear fluid draining from nose or ears", "A small bruise on the arm"], answer: "Blood or clear fluid draining from nose or ears", rationale: "Signs requiring immediate ER attention include blood or clear fluid draining from the nose or ears, severe headache, loss of consciousness, and seizures.", page: "Page 13" },
+            { question: "Which of the following is a potential long-term symptom of a TBI that may appear days or weeks after the injury?", options: ["A broken bone", "Improved memory", "Sensitivity to light and noise", "Increased energy"], answer: "Sensitivity to light and noise", rationale: "Longer-term physical symptoms can include ongoing headaches, sleep disturbances, fatigue, and sensitivity to light and noise.", page: "Page 13" },
+            { question: "What does the F-A-S-T acronym help people remember?", options: ["The steps for CPR", "The signs and symptoms of a stroke", "The causes of TBI", "The types of brain lobes"], answer: "The signs and symptoms of a stroke", rationale: "The F-A-S-T acronym is an easy way to remember the signs and symptoms of a stroke (F-Face drooping, A-Arm Weakness, S-Speech Difficulty, T-Time to call 9-1-1).", page: "Page 14" },
+            { question: "What is the critical action associated with 'T' (Time) in the F-A-S-T acronym for stroke?", options: ["Take a nap", "Tell the person to walk it off", "Take their temperature", "Call 9-1-1 and note when symptoms appeared"], answer: "Call 9-1-1 and note when symptoms appeared", rationale: "T stands for Time to call 9-1-1. It is also important to 'Check the time so you'll know when the first symptoms appeared.'", page: "Page 14" },
+            { question: "What is the first step in creating a safe environment for positive communication with a potential brain injury survivor?", options: ["Speaking very loudly", "Using complex vocabulary", "Explaining the limits and rules", "Interrupting to show you're listening"], answer: "Explaining the limits and rules", rationale: "To create a safe environment, you should be encouraging, respectful, and patient, and explain the limits and rules.", page: "Page 15" },
+            { question: "Which of the following is an action an officer should AVOID when communicating with someone who may have a TBI?", options: ["Staying calm", "Using a neutral tone", "Arguing or challenging them", "Speaking slowly and clearly"], answer: "Arguing or challenging them", rationale: "Officers should not threaten, interrupt, argue, challenge, or shame the individual, as these actions can increase anxiety and worsen symptoms.", page: "Page 16" },
+            { question: "Which of the following is a component of 'active listening' when communicating with a TBI survivor?", options: ["Finishing their sentences for them", "Looking away to seem non-confrontational", "Provide feedback and paraphrase your understanding", "Focusing on how the message was delivered, not the content"], answer: "Provide feedback and paraphrase your understanding", rationale: "Active listening skills include paying attention, showing you are listening, providing feedback, paraphrasing, getting clarification, and deferring judgment.", page: "Page 16" },
+            { question: "Why is communication key when interacting with a person living with a brain injury?", options: ["To make them admit guilt", "To assert authority and control", "To keep the officer and the individual safe and prevent conflict", "To show them you are more intelligent"], answer: "To keep the officer and the individual safe and prevent conflict", rationale: "Using appropriate communication techniques will help to keep the officer and the individual safe, prevent and/or resolve conflict, and provide high-quality assistance.", page: "Page 17" },
+            { question: "Brain injury is often called the 'invisible epidemic' because:", options: ["It is not a real medical condition", "It only affects a very small number of people", "Signs and symptoms may be subtle and many changes are intangible", "It is contagious"], answer: "Signs and symptoms may be subtle and many changes are intangible", rationale: "Brain injury is called the invisible epidemic because signs and symptoms can be subtle and many changes (cognitive, emotional) are intangible, unlike a visible physical injury.", page: "Page 18" },
+            { question: "Why might asking an individual if they have a brain injury be a tricky situation for an officer?", options: ["It is illegal for an officer to ask medical questions", "The answer is always unreliable", "Some may find it invasive, while others are glad to be asked", "It automatically invalidates an arrest"], answer: "Some may find it invasive, while others are glad to be asked", rationale: "Asking is tricky because some individuals find it invasive or offensive, some are glad to be asked, and some may not even know they have a brain injury.", page: "Page 18" },
+            { question: "According to Maslow's hierarchy, the need for friendship, intimacy, and family falls under which category?", options: ["Safety needs", "Esteem needs", "Physiological needs", "Belongingness and love needs"], answer: "Belongingness and love needs", rationale: "Belongingness and love needs are commonly unmet for individuals with brain injuries and include friendship, intimacy, and family.", page: "Page 19" },
+            { question: "In the context of unmet needs, 'realizing one's potential' is known as:", options: ["Esteem", "Safety", "Self-actualization", "Self-transcendence"], answer: "Self-actualization", rationale: "Self-actualization is listed as an unmet need and is defined as 'realizing one's potential.'", page: "Page 19" },
+            { question: "For brain injury resources in Texas, individuals should be referred to which office?", options: ["2-1-1 Texas", "The American Stroke Association", "The Office of Acquired Brain Injury (OABI)", "The CDC's Heads Up program"], answer: "The Office of Acquired Brain Injury (OABI)", rationale: "For brain injury resources, individuals should be directed to contact The Office of Acquired Brain Injury (OABI).", page: "Page 20" }
+        ];
+
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const reviewScreen = document.getElementById('review-screen');
+
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const reviewBtn = document.getElementById('review-btn');
+        const backToResultsBtn = document.getElementById('back-to-results-btn');
+        
+        const questionNumberEl = document.getElementById('question-number');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const progressBar = document.getElementById('progress-bar');
+        const questionTextEl = document.getElementById('question-text');
+        const answerOptionsEl = document.getElementById('answer-options');
+        const rationaleBox = document.getElementById('rationale-box');
+        const rationaleText = document.getElementById('rationale-text');
+        const rationaleSource = document.getElementById('rationale-source');
+        
+        const scorePercentageEl = document.getElementById('score-percentage');
+        const correctAnswersEl = document.getElementById('correct-answers');
+        const totalAnsweredEl = document.getElementById('total-answered');
+        const finalTimeEl = document.getElementById('final-time');
+        const timerEl = document.getElementById('timer');
+        const reviewContainer = document.getElementById('review-container');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timerInterval;
+        let secondsElapsed = 0;
+        let userAnswers = [];
+        let shuffledQuizData = [];
+        
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        startBtn.addEventListener('click', startQuiz);
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', startQuiz);
+        reviewBtn.addEventListener('click', showReview);
+        backToResultsBtn.addEventListener('click', () => {
+            reviewScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+        });
+
+        function startTimer() {
+            secondsElapsed = 0;
+            timerEl.textContent = '00:00';
+            timerInterval = setInterval(() => {
+                secondsElapsed++;
+                const minutes = Math.floor(secondsElapsed / 60).toString().padStart(2, '0');
+                const seconds = (secondsElapsed % 60).toString().padStart(2, '0');
+                timerEl.textContent = `${minutes}:${seconds}`;
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function startQuiz() {
+            shuffledQuizData = [...quizData];
+            shuffleArray(shuffledQuizData);
+            shuffledQuizData.forEach(q => shuffleArray(q.options));
+
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            startScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            nextBtn.classList.add('hidden');
+            startTimer();
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            rationaleBox.classList.add('hidden');
+            answerOptionsEl.innerHTML = '';
+            const currentQuestion = shuffledQuizData[currentQuestionIndex];
+            
+            questionNumberEl.textContent = currentQuestionIndex + 1;
+            totalQuestionsEl.textContent = shuffledQuizData.length;
+            questionTextEl.textContent = currentQuestion.question;
+
+            const progress = ((currentQuestionIndex) / shuffledQuizData.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('answer-option', 'w-full', 'p-4', 'text-left', 'bg-white', 'border-2', 'border-gray-300', 'rounded-lg', 'hover:bg-gray-50', 'hover:border-blue-500');
+                button.addEventListener('click', () => selectAnswer(button, option, currentQuestion));
+                answerOptionsEl.appendChild(button);
+            });
+        }
+
+        function selectAnswer(button, selectedOption, currentQuestion) {
+            const { answer, rationale, page } = currentQuestion;
+            userAnswers[currentQuestionIndex] = selectedOption;
+
+            const buttons = answerOptionsEl.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === answer) {
+                    btn.classList.add('correct');
+                }
+            });
+
+            if (selectedOption === answer) {
+                score++;
+                button.classList.add('correct');
+            } else {
+                button.classList.add('incorrect');
+            }
+
+            rationaleText.textContent = rationale;
+            rationaleSource.textContent = page;
+            rationaleBox.classList.remove('hidden');
+            nextBtn.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < shuffledQuizData.length) {
+                nextBtn.classList.add('hidden');
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            stopTimer();
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+
+            const percentage = Math.round((score / shuffledQuizData.length) * 100);
+            scorePercentageEl.textContent = percentage + '%';
+            correctAnswersEl.textContent = score;
+            totalAnsweredEl.textContent = shuffledQuizData.length;
+            finalTimeEl.textContent = timerEl.textContent;
+            
+            progressBar.style.width = `100%`;
+        }
+
+        function showReview() {
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.remove('hidden');
+            reviewContainer.innerHTML = '';
+
+            shuffledQuizData.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === question.answer;
+
+                const reviewItem = document.createElement('div');
+                reviewItem.classList.add('border', 'p-4', 'rounded-lg');
+                if (isCorrect) {
+                    reviewItem.classList.add('border-green-200', 'bg-green-50');
+                } else {
+                    reviewItem.classList.add('border-red-200', 'bg-red-50');
+                }
+
+                let userAnswerHTML = '';
+                if (isCorrect) {
+                    userAnswerHTML = `<p>Your answer: <span class="font-semibold review-correct">${userAnswer} (Correct)</span></p>`;
+                } else {
+                    userAnswerHTML = `
+                        <p>Your answer: <span class="font-semibold review-incorrect">${userAnswer || 'Not answered'}</span></p>
+                        <p>Correct answer: <span class="font-semibold review-correct">${question.answer}</span></p>
+                    `;
+                }
+
+                reviewItem.innerHTML = `
+                    <p class="font-bold mb-2">${index + 1}. ${question.question}</p>
+                    ${userAnswerHTML}
+                    <p class="text-sm text-gray-600 mt-2"><em><span class="font-semibold">Rationale:</span> ${question.rationale} (Source: ${question.page})</em></p>
+                `;
+                reviewContainer.appendChild(reviewItem);
+            });
+        }
+
+    </script>
+</body>
+</html>
+

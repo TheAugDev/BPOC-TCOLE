@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Guide: De-Escalation Strategies</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --header-bg: #1f2937;
+            --bg-color: #f3f4f6;
+            --tab-active-bg: #3b82f6;
+            --tab-active-text: #ffffff;
+            --card-bg: #ffffff;
+            --text-color: #111827;
+            --link-color: #2563eb;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://rsms.me/inter/inter.css');
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab.active {
+            background-color: var(--tab-active-bg);
+            color: var(--tab-active-text);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tab {
+            transition: all 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="bg-gray-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">
+                <i class="fas fa-shield-alt mr-2"></i>De-Escalation Strategies
+            </h1>
+            <p class="text-sm text-gray-300">BPOC Chapter 27 | TCOLE Preparation</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-4 md:p-6">
+        <!-- Tab Navigation -->
+        <div class="mb-6 bg-white rounded-lg shadow-md overflow-x-auto">
+            <nav id="tabs" class="flex flex-row space-x-1 p-2">
+                <button data-tab="cdm" class="tab active flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-brain mr-2"></i> <span class="hidden md:inline">CDM Model</span>
+                </button>
+                <button data-tab="crisis" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-heart-pulse mr-2"></i> <span class="hidden md:inline">Crisis Response</span>
+                </button>
+                <button data-tab="communication" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-comments mr-2"></i> <span class="hidden md:inline">Communication</span>
+                </button>
+                <button data-tab="incidents" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-car-burst mr-2"></i> <span class="hidden md:inline">Critical Incidents</span>
+                </button>
+                <button data-tab="knowledge-check" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-question-circle mr-2"></i> <span class="hidden md:inline">Knowledge Check</span>
+                </button>
+                <button data-tab="resources" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-link mr-2"></i> <span class="hidden md:inline">Resources</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Tab Content -->
+        <div id="tab-contents">
+            <!-- CDM Model Tab -->
+            <div id="cdm" class="tab-content active space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">The Critical Decision-Making Model (CDM)</h2>
+                    <p class="text-sm text-gray-700 mb-2">The CDM provides officers with an organized way of making decisions about how they will act in any situation, including situations that may involve uses of force.</p>
+                    
+                    <h4 class="font-semibold mt-4">Key Principles of the CDM</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                        <li><strong>Police Ethics:</strong> Upholding the fundamental duties and moral obligations of a peace officer.</li>
+                        <li><strong>Agency Values:</strong> Adhering to the specific values and mission of your law enforcement agency.</li>
+                        <li><strong>Proportionality:</strong> Ensuring the level of force or response is reasonable in relation to the threat or incident.</li>
+                        <li><strong>The Sanctity of Human Life:</strong> Holding the preservation of life as the highest priority in all interactions.</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">The Five Steps of the CDM</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold">Step 1: Collect Information</h4>
+                            <p class="text-sm text-gray-700">Gather as much information as possible from dispatch, witnesses, and your own observations before and upon arrival.</p>
+                            <p class="text-sm text-gray-600 mt-2"><strong>Practical Example:</strong> While en route to a "disturbance" call, you learn from dispatch it involves a person yelling in a park. You ask if weapons are involved or if the person is known to have mental health issues. This is collecting information.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Step 2: Assess Situation, Threats, and Risks</h4>
+                            <p class="text-sm text-gray-700">Evaluate the known information to determine the level of threat, potential risks to officers and the public, and the overall nature of the situation.</p>
+                             <p class="text-sm text-gray-600 mt-2"><strong>Practical Example:</strong> Arriving at the park, you see the person is unarmed, gesturing wildly, and talking to themselves, but no one else is nearby. You assess the immediate threat as low, but recognize the risk of the person's unpredictable behavior.</p>
+                        </div>
+                         <div>
+                            <h4 class="font-semibold">Step 3: Consider Police Powers and Agency Policy</h4>
+                            <p class="text-sm text-gray-700">Review your legal authority to act and the specific policies of your agency that apply to the situation (e.g., use of force, mental health response).</p>
+                             <p class="text-sm text-gray-600 mt-2"><strong>Practical Example:</strong> You consider that you have the authority to detain the individual for evaluation if they are a danger to themselves or others. You also recall your department's policy emphasizing de-escalation for individuals in apparent crisis.</p>
+                        </div>
+                         <div>
+                            <h4 class="font-semibold">Step 4: Identify Options and Determine Best Course of Action</h4>
+                            <p class="text-sm text-gray-700">Based on the first three steps, develop a range of possible responses and select the one that is most appropriate, safe, and consistent with your principles and policies.</p>
+                             <p class="text-sm text-gray-600 mt-2"><strong>Practical Example:</strong> Your options are: (A) Approach aggressively and detain immediately. (B) Keep your distance, call for a mental health officer, and attempt to start a calm conversation. You choose Option B as the best course of action.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Step 5: Act, Review, and Re-assess</h4>
+                            <p class="text-sm text-gray-700">Execute your chosen plan while continuously observing the situation and the subject's reactions. Be prepared to adjust your plan as new information becomes available.</p>
+                             <p class="text-sm text-gray-600 mt-2"><strong>Practical Example:</strong> You begin speaking to the person, who then becomes agitated by your presence. You re-assess the situation, take a step back to create more space (a tactical repositioning), and decide to wait for the specialized unit while maintaining observation.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Benefits of Using the CDM & The Role of Bias</h2>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Organizes Decision-Making:</strong> Provides a structured framework for thinking under pressure.</li>
+                        <li><strong>Promotes Better Decisions:</strong> Encourages a more thorough and thoughtful assessment, leading to safer and more effective outcomes.</li>
+                        <li><strong>Enhances Credibility:</strong> Assists officers in clearly and rationally explaining their actions after an incident, which increases accountability and public trust.</li>
+                    </ul>
+                    <h4 class="font-semibold mt-4">Considering Implicit Bias</h4>
+                    <p class="text-sm text-gray-700 mt-2">Throughout the CDM process, and especially during Step 2 (Assess Situation), officers must be aware of and actively question their own implicit biases. These are the unconscious stereotypes that can affect our perceptions and decisions. Acknowledging the potential for bias is a critical step in ensuring that assessments are fair, objective, and based on the actual behavior of the individual, not on preconceived notions.</p>
+                </div>
+            </div>
+
+            <!-- Crisis Response Tab -->
+            <div id="crisis" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Responding to Persons in Behavioral Crisis</h2>
+                    <p class="text-sm text-gray-700 mb-2">The primary mission is not to diagnose or solve the underlying issues, but to verbally defuse and stabilize the situation. The goal is to guide the person to a state where they can function and better reason, so that voluntary compliance can be achieved.</p>
+                    
+                    <h4 class="font-semibold mt-4">Behavioral Crisis Checklist (Common Signs):</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                        <li>Not responding to verbal commands.</li>
+                        <li>Lack of coherence or nonsensical speech.</li>
+                        <li>High levels of agitation or excitement.</li>
+                        <li>Talking to themselves or reacting to unseen stimuli.</li>
+                        <li>Poor personal hygiene (in some cases).</li>
+                    </ul>
+
+                    <h4 class="font-semibold mt-4">Best Practices for Response:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                        <li><strong>Prioritize De-escalation:</strong> Your top priority is to verbally defuse, stabilize, and minimize the stress level of the situation.</li>
+                        <li><strong>Request Backup:</strong> Call for other officers and specialized help (e.g., Mental Health Officers, EMS) early.</li>
+                        <li><strong>Don't Rush:</strong> Slow the situation down unless immediate action is required for safety.</li>
+                        <li><strong>Communicate:</strong> Use active listening and watch body language (theirs and yours).</li>
+                        <li><strong>Assess and Re-assess:</strong> Continuously use the CDM model to evaluate the situation as it evolves.</li>
+                        <li><strong>Be Respectful:</strong> Always communicate with respect; never be dismissive of their situation or feelings.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Emotional-Rational Thinking Scale</h2>
+                    <p class="text-sm text-gray-700 mb-2">This concept illustrates the inverse relationship between intense emotions and rational thought.</p>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>As emotions rise, rational thinking declines.</strong> A highly emotional person is less capable of logical reasoning.</li>
+                        <li><strong>Lowering emotions can increase rational thought.</strong> By helping someone calm down, you can help them think more clearly and make better decisions.</li>
+                        <li>While not always possible, attempting to lower the emotional intensity is a key de-escalation goal.</li>
+                    </ul>
+                    <p class="text-sm text-gray-600 mt-2"><strong>Practical Example:</strong> A person is screaming about a parking ticket. Instead of arguing about the law (appealing to logic), you say, "I can see this has really upset you. Let's talk about what happened." This acknowledges their emotion, which can help lower it and open the door for a more rational conversation.</p>
+                </div>
+            </div>
+
+            <!-- Communication Tab -->
+            <div id="communication" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Active Listening</h2>
+                    <p class="text-sm text-gray-700 mb-2">Active listening means paying close attention to what others are saying and communicating non-verbally. It's a tactical advantage because it helps you gather intelligence and build rapport.</p>
+                    
+                    <h4 class="font-semibold mt-4">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                        <li><strong>The 80/20 Rule:</strong> Spend 80% of your time listening and only 20% talking.</li>
+                        <li><strong>Goal:</strong> Your primary goal is to understand what the person is thinking and feeling.</li>
+                        <li><strong>Avoid Distractions:</strong> Focus on the person, not your radio, phone, or other officers.</li>
+                        <li><strong>Show You're Listening:</strong> Use verbal and non-verbal cues like nodding, saying "I see," and summarizing what they said.</li>
+                        <li><strong>Use Silence:</strong> Don't feel the need to fill every pause. Silence can encourage the person to share more information.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Non-Verbal & Verbal Communication</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold">Non-Verbal Skills (Body Language)</h4>
+                            <p class="text-sm text-gray-700">Your body language often communicates more than your words.</p>
+                            <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                                <li><strong>Project Calmness:</strong> A calm presence can influence others to be calm (emotional contagion).</li>
+                                <li><strong>Make Eye Contact:</strong> Shows you are engaged and confident.</li>
+                                <li><strong>Use Open Gestures:</strong> Avoid crossing your arms. Use open-handed gestures to appear non-threatening.</li>
+                                <li><strong>Modulate Your Voice:</strong> A controlled, lower tone of voice is more calming than a high-pitched, excited one.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Verbal Skills (What You Say)</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                                <li><strong>Use the Team Concept:</strong> Have only one officer speak to the subject to avoid confusion.</li>
+                                <li><strong>Establish Rapport:</strong> Introduce yourself and try to find common ground.</li>
+                                <li><strong>Ask Clear Questions:</strong> Make requests one at a time. Use open-ended "what" and "how" questions to encourage conversation, but do not dominate it.</li>
+                                <li><strong>Provide Options:</strong> Giving a person choices can empower them and lead to voluntary compliance.</li>
+                                <li><strong>Emotional Contagion:</strong> Be aware that your emotions—positive or negative—can be transferred to the person you are interacting with.</li>
+                             </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Alternatives to Hostile Phrases</h2>
+                    <p class="text-sm text-gray-700 mb-2">Changing your wording can dramatically alter the tone of an interaction.</p>
+                     <ul class="list-none text-sm text-gray-700 space-y-2">
+                        <li><strong>Instead of:</strong> "What's your problem?"<br><strong>Try:</strong> "What can I do to help you?"</li>
+                        <li><strong>Instead of:</strong> "Calm down!"<br><strong>Try:</strong> "I see that you're upset. Please tell me about it so I can understand."</li>
+                         <li><strong>Instead of:</strong> "You need to leave now."<br><strong>Try:</strong> "Is there somewhere else we can go to talk about this more privately?"</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Critical Incidents Tab -->
+            <div id="incidents" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Key Concepts for Incident Response (Review)</h2>
+                    <p class="text-sm text-gray-700 mb-2">Successfully navigating a critical incident relies on the seamless integration of several core skills. Before acting, an officer should mentally review these key concepts:</p>
+                    <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                        <li><strong>Critical Decision-Making Model (CDM):</strong> The foundational framework for all actions.</li>
+                        <li><strong>Crisis Recognition and Response:</strong> The ability to identify a behavioral crisis and apply specialized communication techniques.</li>
+                        <li><strong>Tactical Communication:</strong> Using verbal and non-verbal skills to achieve a tactical advantage and promote de-escalation.</li>
+                        <li><strong>Emotional Contagion:</strong> Awareness that your own emotional state can directly influence the subject's.</li>
+                        <li><strong>Operational Safety Tactics:</strong> The practical application of concepts like tactical pause, distance, cover, and time.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Managing Critical Incidents</h2>
+                    <p class="text-sm text-gray-700 mb-2">Effective management of critical incidents requires sound tactics, clear communication, and defined team roles.</p>
+                    
+                    <h4 class="font-semibold mt-4">Key Tactical Concepts:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                        <li><strong>Prepare Yourself:</strong> Before you arrive, use dispatch information to begin mentally preparing for what you might encounter. This is the start of the CDM process.</li>
+                        <li><strong>Tactical Pause:</strong> If there is no immediate threat, slow the situation down. Use this time to collect information and prepare yourself before engaging.</li>
+                        <li><strong>Distance + Cover = Time:</strong> When officers have distance from a threat, cover to protect themselves, and more time, their options multiply. Close quarters and time pressure reduce options.</li>
+                        <li><strong>Tactical Repositioning:</strong> Consciously moving to a position of advantage and maintaining a safety zone. Never give up distance and cover unnecessarily.</li>
+                    </ul>
+
+                     <p class="text-sm text-gray-600 mt-2"><strong>Practical Example:</strong> On a call involving a man with a knife in his own home, officers stop at the doorway instead of rushing in. This is a <strong>tactical pause</strong>. They then step back behind the door frame (cover), creating <strong>distance</strong> and giving them <strong>time</strong> to communicate. This is <strong>tactical repositioning</strong>.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Team Roles & After-Action Review (AAR)</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold">Team Roles in a Critical Incident</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li><strong>One Communicator:</strong> Only one officer should communicate directly with the subject to avoid conflicting messages.</li>
+                                <li><strong>Defined Support Roles:</strong> Other officers should have clear roles, such as providing cover, using less-lethal weapons if needed, establishing perimeters, or managing bystanders.</li>
+                             </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">After-Action Review (AAR)</h4>
+                            <p class="text-sm text-gray-700">An AAR is conducted after an incident to uncover strengths and weaknesses, with the purpose of improving future performance. It is a tool for learning, not for placing blame.</p>
+                            <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                                <li>The CDM serves as a framework for the AAR, examining the decisions made at each of the five steps.</li>
+                                <li>The review should always include a discussion of whether implicit bias may have played a role in the incident.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Putting It All Into Practice</h2>
+                    <p class="text-sm text-gray-700">Reading and understanding these concepts is the first step. True proficiency comes from applying them in realistic, scenario-based training. These exercises allow officers to practice decision-making, communication, and tactics in a controlled environment, building the muscle memory needed for real-world critical incidents.</p>
+                </div>
+            </div>
+
+            <!-- Knowledge Check Tab -->
+            <div id="knowledge-check" class="tab-content">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Knowledge Check</h2>
+                    <p class="mb-6 text-gray-600">Test your understanding of the material.</p>
+                    <div id="quiz-container" class="space-y-8">
+                        <!-- Questions will be dynamically inserted here -->
+                    </div>
+                    <div class="mt-8 text-center">
+                        <button id="check-answers-btn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors">Check Answers</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resources Tab -->
+            <div id="resources" class="tab-content">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Statutory Resources</h2>
+                    <p class="mb-6 text-gray-600">Links to relevant programs and resources referenced in this guide.</p>
+                    <div id="resources-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+                        <!-- Links will be dynamically inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('#tabs button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                });
+            });
+
+            // --- QUIZ DATA ---
+            const quizData = [
+                {
+                    question: "1. Which of the following is NOT one of the four key principles of the Critical Decision-Making Model (CDM)?",
+                    options: ["Sanctity of Human Life", "Agency Values", "Absolute Certainty", "Proportionality"],
+                    answer: "Absolute Certainty",
+                    explanation: "The four principles are Police Ethics, Agency Values, Proportionality, and the Sanctity of Human Life. The model is designed to help officers make decisions in uncertain situations."
+                },
+                {
+                    question: "2. During which step of the CDM is it most critical for an officer to consciously consider and challenge their own implicit biases?",
+                    options: ["Step 1: Collect Information", "Step 2: Assess Situation, Threats, and Risks", "Step 4: Identify Options", "Step 5: Act, Review, and Re-assess"],
+                    answer: "Step 2: Assess Situation, Threats, and Risks",
+                    explanation: "Implicit biases can most dangerously affect an officer's perception of threats. It is critical to challenge them during the assessment phase to ensure a fair and objective response."
+                },
+                {
+                    question: "3. The idea that an officer's calm demeanor can influence a subject to become calmer is known as:",
+                    options: ["Emotional Contagion", "The 80/20 Rule", "Tactical Repositioning", "Proportionality"],
+                    answer: "Emotional Contagion",
+                    explanation: "Emotional Contagion is the concept that emotions can be transferred from person to person. A calm officer projects calm, while an agitated officer can escalate a situation."
+                },
+                {
+                    question: "4. An officer tells a highly agitated person, 'I can see you're upset. Let's talk about it.' This is a practical application of which concept?",
+                    options: ["Tactical Pause", "The 80/20 Rule", "Emotional-Rational Thinking Scale", "Team Concept"],
+                    answer: "Emotional-Rational Thinking Scale",
+                    explanation: "This response acknowledges the person's emotions in an attempt to lower them, which, according to the Emotional-Rational Thinking Scale, can increase their ability to think rationally."
+                },
+                {
+                    question: "5. The '80/20 Rule' in active listening suggests that an officer should:",
+                    options: ["Spend 80% of the time talking and 20% listening", "Spend 80% of the time listening and 20% talking", "Get 80% of suspects to comply within 20 minutes", "Only believe 20% of what a person in crisis says"],
+                    answer: "Spend 80% of the time listening and 20% talking",
+                    explanation: "The 80/20 rule emphasizes that the primary goal is to listen and understand, which requires dedicating the vast majority of your time to listening rather than speaking."
+                },
+                {
+                    question: "6. When multiple officers respond to a critical incident with a single subject, what is the best practice regarding communication?",
+                    options: ["All officers should shout commands simultaneously to show authority.", "The senior officer on scene should always be the one to talk.", "Only one officer should be designated to communicate with the subject.", "Officers should take turns talking to build different rapports."],
+                    answer: "Only one officer should be designated to communicate with the subject.",
+                    explanation: "Using a single communicating officer (the team concept) prevents confusion, avoids conflicting messages, and presents a clear, unified approach to the subject."
+                },
+                {
+                    question: "7. The tactical concept of 'Distance + Cover = Time' primarily means that:",
+                    options: ["The farther you are, the longer it takes to resolve an incident.", "Officers with more distance and cover have more time to think and a wider range of options.", "You must cover the distance to a suspect as quickly as possible.", "Time is the most important factor, more so than distance or cover."],
+                    answer: "Officers with more distance and cover have more time to think and a wider range of options.",
+                    explanation: "This formula highlights that creating space and using protection removes time pressure, which allows for better decision-making and access to more tactical options beyond immediate force."
+                },
+                {
+                    question: "8. An officer arrives at a chaotic scene and, noticing no immediate deadly threat, stops for a moment behind their car door to listen to the radio updates and observe. This action is best described as a:",
+                    options: ["Tactical Repositioning", "Tactical Pause", "Failure to Act", "Communication Breakdown"],
+                    answer: "Tactical Pause",
+                    explanation: "A tactical pause is the deliberate act of slowing a situation down (when safe to do so) to allow for better information gathering and assessment before acting."
+                },
+                {
+                    question: "9. Which of the following is the best alternative to the hostile-sounding phrase, 'What's your problem?'",
+                    options: ["'Do you want to go to jail?'", "'Let me see your hands!'", "'Why are you acting this way?'", "'What can I do to help you?'"],
+                    answer: "'What can I do to help you?'",
+                    explanation: "This phrase is non-confrontational, shows a willingness to help, and opens the door for communication, whereas the others are demanding or accusatory."
+                },
+                {
+                    question: "10. Which of the following is NOT a recognized behavior associated with a person in behavioral crisis?",
+                    options: ["Lack of coherence", "Responding immediately to all verbal commands", "Agitation", "Talking to themselves"],
+                    answer: "Responding immediately to all verbal commands",
+                    explanation: "A key indicator of someone in behavioral crisis is often their inability or unwillingness to respond to verbal commands, making immediate compliance less likely."
+                },
+                {
+                    question: "11. The primary purpose of an After-Action Review (AAR) is to:",
+                    options: ["Identify which officer was at fault and assign discipline.", "Complete the paperwork for the incident.", "Improve future performance by documenting strengths and weaknesses.", "Brief the media on the outcome of the incident."],
+                    answer: "Improve future performance by documenting strengths and weaknesses.",
+                    explanation: "An AAR is a learning tool. Its goal is to analyze the response to an incident to identify what went well and what could be improved for future events."
+                },
+                {
+                    question: "12. What is the main goal of using 'Operational Safety Tactics' in a critical incident?",
+                    options: ["To arrest the subject as quickly as possible.", "To apply concepts like distance and cover to create more time for decision making.", "To use the highest level of force authorized.", "To wait for a supervisor to arrive on scene."],
+                    answer: "To apply concepts like distance and cover to create more time for decision making.",
+                    explanation: "Operational Safety Tactics are about using your environment and positioning to increase officer safety and expand your available options by creating time and space."
+                },
+                 {
+                    question: "13. The training manual emphasizes that true proficiency in de-escalation comes from:",
+                    options: ["Reading the manual multiple times.", "Passing a written exam.", "Scenario-based training exercises.", "Watching videos of critical incidents."],
+                    answer: "Scenario-based training exercises.",
+                    explanation: "While knowledge is crucial, the manual states that practical application in realistic scenarios is what builds the skills needed for real-world events."
+                },
+                {
+                    question: "14. A key part of an effective After-Action Review (AAR) is discussing if _______ played a role in the decision-making process.",
+                    options: ["agency policy", "the time of day", "implicit bias", "the officer's seniority"],
+                    answer: "implicit bias",
+                    explanation: "AARs should be used as an opportunity to have an open discussion about how unconscious biases may have influenced perceptions or actions during the incident."
+                }
+            ];
+
+            const quizContainer = document.getElementById('quiz-container');
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'quiz-question';
+                let optionsHtml = q.options.map(option => `
+                    <label class="block"><input type="radio" name="q${index}" value="${option}" class="mr-2">${option}</label>
+                `).join('');
+                questionDiv.innerHTML = `
+                    <p class="font-semibold mb-2">${q.question}</p>
+                    <div class="space-y-2">${optionsHtml}</div>
+                    <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                `;
+                quizContainer.appendChild(questionDiv);
+            });
+
+            document.getElementById('check-answers-btn').addEventListener('click', () => {
+                quizData.forEach((q, index) => {
+                    const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                    const feedback = document.querySelectorAll('.feedback')[index];
+                    feedback.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+                    if (selected && selected.value === q.answer) {
+                        feedback.textContent = `Correct! ${q.explanation}`;
+                        feedback.classList.add('bg-green-100', 'text-green-800');
+                    } else {
+                        feedback.textContent = `Incorrect. The correct answer is "${q.answer}". ${q.explanation}`;
+                        feedback.classList.add('bg-red-100', 'text-red-800');
+                    }
+                });
+            });
+
+            // --- RESOURCES LIST ---
+            const resources = [
+                { name: "PERF ICAT Training Guide", url: "http://www.policeforum.org/icat-training-guide" }
+            ];
+            const resourcesList = document.getElementById('resources-list');
+            resources.forEach(res => {
+                const linkContainer = document.createElement('div');
+                const link = document.createElement('a');
+                link.href = res.url;
+                link.target = '_blank';
+                link.className = 'text-blue-600 hover:underline font-semibold';
+                link.textContent = res.name;
+                const description = document.createElement('p');
+                description.className = 'text-xs text-gray-600';
+                description.textContent = "Police Executive Research Forum's Integrating Communications, Assessment, and Tactics program."
+                linkContainer.appendChild(link);
+                linkContainer.appendChild(description);
+                resourcesList.appendChild(linkContainer);
+            });
+        });
+    </script>
+</body>
+</html>
+

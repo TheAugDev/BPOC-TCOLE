@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Guide: Juvenile Offenders</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --header-bg: #1f2937;
+            --bg-color: #f3f4f6;
+            --tab-active-bg: #3b82f6;
+            --tab-active-text: #ffffff;
+            --card-bg: #ffffff;
+            --text-color: #111827;
+            --link-color: #2563eb;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://rsms.me/inter/inter.css');
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab.active {
+            background-color: var(--tab-active-bg);
+            color: var(--tab-active-text);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tab {
+            transition: all 0.3s ease-in-out;
+        }
+        .punishment-level {
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .punishment-cins { background-color: #fee2e2; color: #991b1b; }
+        .punishment-delinquent { background-color: #ffedd5; color: #9a3412; }
+
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-gray-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">
+                <i class="fas fa-child mr-2"></i>Juvenile Offenders
+            </h1>
+            <p class="text-sm text-gray-300">BPOC Chapter 33 | TCOLE Preparation</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-6">
+        <div class="mb-6 bg-white rounded-lg shadow-md overflow-x-auto">
+            <nav id="tabs" class="flex flex-row space-x-1 p-2">
+                <button data-tab="definitions" class="tab active flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-book mr-2"></i> <span class="hidden md:inline">Definitions</span>
+                </button>
+                <button data-tab="conduct" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-balance-scale mr-2"></i> <span class="hidden md:inline">Offenses</span>
+                </button>
+                 <button data-tab="process" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-project-diagram mr-2"></i> <span class="hidden md:inline">Process & Procedures</span>
+                </button>
+                <button data-tab="custody" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-hands-holding-child mr-2"></i> <span class="hidden md:inline">Custody & Statements</span>
+                </button>
+                 <button data-tab="abuse" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-user-shield mr-2"></i> <span class="hidden md:inline">Abuse & Neglect</span>
+                </button>
+                <button data-tab="missing" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-search mr-2"></i> <span class="hidden md:inline">Missing Children</span>
+                </button>
+                <button data-tab="gangs" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-users mr-2"></i> <span class="hidden md:inline">Youth Gangs</span>
+                </button>
+                <button data-tab="knowledge-check" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-question-circle mr-2"></i> <span class="hidden md:inline">Knowledge Check</span>
+                </button>
+                <button data-tab="resources" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-link mr-2"></i> <span class="hidden md:inline">Resources</span>
+                </button>
+            </nav>
+        </div>
+
+        <div id="tab-contents">
+            
+            <div id="definitions" class="tab-content active space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Purpose of the Juvenile Justice Code (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.51.htm#51.01" target="_blank" class="text-blue-600 hover:underline">FC 51.01</a>)</h2>
+                    <p class="text-sm text-gray-700">The purpose of Title 3 of the Texas Family Code is to provide for the care, protection, and wholesome moral, mental, and physical development of children. It aims to protect the welfare of the community and control the commission of unlawful acts by children, consistent with the protection of the public and the best interest of the child.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Key Definitions (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.51.htm#51.02" target="_blank" class="text-blue-600 hover:underline">FC 51.02</a>)</h2>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+                        <div class="p-3 bg-gray-50 rounded-lg"><strong>Child:</strong> A person who is 10 years of age or older and under 17 years of age.</div>
+                        <div class="p-3 bg-gray-50 rounded-lg"><strong>Custodian:</strong> The adult with whom the child resides.</div>
+                        <div class="p-3 bg-gray-50 rounded-lg"><strong>Guardian:</strong> The person who, under court order, is the guardian of the person of the child.</div>
+                        <div class="p-3 bg-gray-50 rounded-lg"><strong>Juvenile Court:</strong> A court designated under Section 51.04 to exercise jurisdiction over juvenile matters.</div>
+                        <div class="p-3 bg-gray-50 rounded-lg"><strong>Parent:</strong> The mother or the father of a child, but does not include a parent whose parental rights have been terminated.</div>
+                        <div class="p-3 bg-gray-50 rounded-lg"><strong>Status Offender:</strong> A child who is accused, adjudicated, or convicted for conduct that would not, under state law, be a crime if committed by an adult (e.g., truancy, running away).</div>
+                        <div class="p-3 bg-gray-50 rounded-lg"><strong>Non-offender:</strong> A child who is subject to jurisdiction of a court under abuse, neglect, or dependency statutes.</div>
+                         <div class="p-3 bg-gray-50 rounded-lg"><strong>Secure Detention Facility:</strong> A public or private facility used for the temporary placement of juveniles accused of delinquent conduct.</div>
+                         <div class="p-3 bg-gray-50 rounded-lg"><strong>Secure Correctional Facility:</strong> A facility for juveniles who have been adjudicated as having engaged in delinquent conduct.</div>
+                         <div class="p-3 bg-gray-50 rounded-lg"><strong>Traffic Offense:</strong> A violation of a law or ordinance governing motor vehicle traffic, other than certain intoxication or felony offenses.</div>
+                         <div class="p-3 bg-gray-50 rounded-lg"><strong>Valid Court Order:</strong> An order issued by a juvenile court for a child who has been found to be a status offender.</div>
+                         <div class="p-3 bg-gray-50 rounded-lg"><strong>Referral to Juvenile Court:</strong> The referral of a child or a child's case to an office or official designated by the juvenile board.</div>
+                    </div>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Adult vs. Juvenile Terminology</h2>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left text-gray-500">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 rounded-l-lg">Adult System (CCP)</th>
+                                    <th scope="col" class="px-6 py-3 rounded-r-lg">Juvenile System (Family Code)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="bg-white border-b"><td class="px-6 py-4 font-medium">Criminal Offense</td><td class="px-6 py-4 font-medium text-blue-700">Delinquent Conduct / CINS</td></tr>
+                                <tr class="bg-white border-b"><td class="px-6 py-4">Arrest Warrant</td><td class="px-6 py-4 text-blue-700">Directive to Apprehend</td></tr>
+                                <tr class="bg-white border-b"><td class="px-6 py-4">Indictment / Information</td><td class="px-6 py-4 text-blue-700">Juvenile Petition</td></tr>
+                                <tr class="bg-white border-b"><td class="px-6 py-4">Defendant</td><td class="px-6 py-4 text-blue-700">Respondent</td></tr>
+                                 <tr class="bg-white border-b"><td class="px-6 py-4">Guilty / Not Guilty Plea</td><td class="px-6 py-4 text-blue-700">Plea of True / Not True</td></tr>
+                                <tr class="bg-white border-b"><td class="px-6 py-4">Conviction</td><td class="px-6 py-4 text-blue-700">Adjudication</td></tr>
+                                <tr class="bg-white border-b"><td class="px-6 py-4">Sentencing Hearing</td><td class="px-6 py-4 text-blue-700">Disposition Hearing</td></tr>
+                                <tr class="bg-white"><td class="px-6 py-4">Motion to Revoke Probation</td><td class="px-6 py-4 text-blue-700">Petition to Modify Disposition</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                 </div>
+            </div>
+
+            <div id="conduct" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Types of Juvenile Conduct (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.51.htm#51.03" target="_blank" class="text-blue-600 hover:underline">FC 51.03</a>)</h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="font-bold text-lg mb-2">Delinquent Conduct</h3>
+                            <p class="punishment-level punishment-delinquent">More Serious Offenses</p>
+                            <h4 class="font-semibold mt-3">Legal Definition:</h4>
+                            <p class="text-sm text-gray-700">Conduct, other than a traffic offense, that violates a penal law of this state or of the United States punishable by imprisonment or by confinement in jail; or a lawful order of a court under circumstances that would constitute contempt of that court.</p>
+                            <h4 class="font-semibold mt-3">Elements Checklist:</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>Violates a penal law (state or federal).</li>
+                                <li>Punishable by jail or imprisonment.</li>
+                                <li>Includes DWI/DUI (<a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.49.htm" target="_blank" class="text-blue-600 hover:underline">PC Ch. 49</a>).</li>
+                                <li>Includes violating a valid court order (contempt).</li>
+                            </ul>
+                            <h4 class="font-semibold mt-3">Practical Example:</h4>
+                            <p class="text-sm text-gray-700">A 15-year-old breaks into a vehicle and steals a laptop. This act violates the Texas Penal Code (Burglary of a Vehicle) and is punishable by jail time, therefore it is classified as Delinquent Conduct.</p>
+                        </div>
+                         <div>
+                            <h3 class="font-bold text-lg mb-2">Conduct Indicating a Need for Supervision (CINS)</h3>
+                            <p class="punishment-level punishment-cins">Less Serious Offenses / Status Offenses</p>
+                            <h4 class="font-semibold mt-3">Legal Definition:</h4>
+                            <p class="text-sm text-gray-700">Conduct, other than a traffic offense, that on three or more occasions violates penal laws of the grade of Class C misdemeanor; or conduct that involves running away from home, violating school compulsory attendance laws, or violating a city ordinance or state law relating to curfew.</p>
+                            <h4 class="font-semibold mt-3">Elements Checklist:</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>Three or more Class C Misdemeanors (non-traffic).</li>
+                                <li>Running away from home.</li>
+                                <li>Truancy (failure to attend school).</li>
+                                <li>Violation of curfew ordinances.</li>
+                                <li>DUI by a Minor (<a href="https://statutes.capitol.texas.gov/Docs/AL/htm/AL.106.htm#106.041" target="_blank" class="text-blue-600 hover:underline">ABC 106.041</a>) is specifically listed as CINS.</li>
+                            </ul>
+                             <h4 class="font-semibold mt-3">Practical Example:</h4>
+                            <p class="text-sm text-gray-700">A 14-year-old is picked up by police for the fourth time in a month for violating the city's 11 PM curfew. This repeated violation constitutes Conduct Indicating a Need for Supervision.</p>
+                        </div>
+                    </div>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Jurisdiction of Juvenile Courts (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.51.htm#51.04" target="_blank" class="text-blue-600 hover:underline">FC 51.04</a>)</h2>
+                    <p class="text-sm text-gray-700 mb-2">Each county in Texas must have a designated juvenile court. The county's juvenile board designates one or more district, criminal district, domestic relations, county, or county courts at law to handle juvenile cases.</p>
+                     <h4 class="font-semibold mt-3">Key Points:</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                         <li>If the designated juvenile judge is unavailable, any magistrate may conduct detention hearings.</li>
+                         <li>A "referee" (a licensed Texas attorney) may also be appointed to conduct these hearings.</li>
+                         <li>Juvenile court has exclusive original jurisdiction over cases involving delinquent conduct or CINS by a person who was a child at the time of the offense.</li>
+                     </ul>
+                </div>
+            </div>
+
+             <div id="process" class="tab-content space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">The Juvenile Court Process Flow</h2>
+                    <p class="text-sm text-gray-700 mb-4">The path a juvenile case takes is similar in principle to the adult system, but the terminology and timelines are different. The focus is on rehabilitation rather than punishment.</p>
+                    <ol class="relative border-l border-gray-200">                  
+                        <li class="mb-10 ml-4"><div class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -left-1.5 border border-white"></div><h3 class="text-lg font-semibold text-gray-900">1. Custody / Referral</h3><p class="mb-4 text-sm font-normal text-gray-500">An officer takes a child into custody (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.52.htm#52.01" target="_blank" class="text-blue-600 hover:underline">FC 52.01</a>) or a referral is made to juvenile probation.</p></li>
+                        <li class="mb-10 ml-4"><div class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -left-1.5 border border-white"></div><h3 class="text-lg font-semibold text-gray-900">2. Release or Detain (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.53.htm#53.02" target="_blank" class="text-blue-600 hover:underline">FC 53.02</a>)</h3><p class="text-sm font-normal text-gray-500">An intake officer investigates and determines if the child should be released or detained. Detention is warranted if the child is likely to abscond, has no suitable supervision, is a danger to self or public, or is a repeat offender.</p></li>
+                         <li class="mb-10 ml-4"><div class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -left-1.5 border border-white"></div><h3 class="text-lg font-semibold text-gray-900">3. Detention Hearing (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.54.htm#54.01" target="_blank" class="text-blue-600 hover:underline">FC 54.01</a>)</h3><p class="text-sm font-normal text-gray-500">If detained, a hearing must be held by the second working day (or first, if taken into custody on a Friday/Saturday) to determine if continued detention is necessary.</p></li>
+                        <li class="mb-10 ml-4"><div class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -left-1.5 border border-white"></div><h3 class="text-lg font-semibold text-gray-900">4. Petition</h3><p class="text-sm font-normal text-gray-500">If the case proceeds, the prosecutor files a petition, similar to an indictment, alleging delinquent conduct or CINS.</p></li>
+                         <li class="mb-10 ml-4"><div class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -left-1.5 border border-white"></div><h3 class="text-lg font-semibold text-gray-900">5. Adjudication Hearing</h3><p class="text-sm font-normal text-gray-500">This is the trial phase. The judge or jury determines if the child engaged in the alleged conduct (a plea of "true" or "not true").</p></li>
+                        <li class="ml-4"><div class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -left-1.5 border border-white"></div><h3 class="text-lg font-semibold text-gray-900">6. Disposition Hearing</h3><p class="text-sm font-normal text-gray-500">This is the sentencing phase. The judge determines the most appropriate outcome, which can range from probation to commitment to a state facility.</p></li>
+                    </ol>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Disposition Without Referral & Diversion Programs</h2>
+                    <h4 class="font-semibold mt-3">Disposition Without Referral to Court (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.52.htm#52.03" target="_blank" class="text-blue-600 hover:underline">FC 52.03</a>)</h4>
+                    <p class="text-sm text-gray-700">For minor offenses (like Class Cs), an officer may dispose of a case without referring it to court if authorized by guidelines from the county juvenile board. This cannot involve keeping the child in custody or requiring them to report to law enforcement.</p>
+                    <h4 class="font-semibold mt-3">First Offender Program (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.52.htm#52.031" target="_blank" class="text-blue-600 hover:underline">FC 52.031</a>)</h4>
+                    <p class="text-sm text-gray-700">A juvenile board may establish a program for the referral of children accused of CINS or minor delinquent conduct. If the child and parent consent and the child successfully completes the program, the case is closed without a formal court referral.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Effect of Adjudication & Parental Rights</h2>
+                     <h4 class="font-semibold mt-3">Effect of Adjudication or Disposition (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.51.htm#51.13" target="_blank" class="text-blue-600 hover:underline">FC 51.13</a>)</h4>
+                     <p class="text-sm text-gray-700 mb-2">An order of adjudication or disposition in a juvenile case is <strong>not</strong> a conviction of a crime and does not impose any civil disabilities (e.g., cannot be used to disqualify from civil service).</p>
+                    <h4 class="font-semibold mt-3">Rights and Duties of a Parent (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.151.htm#151.001" target="_blank" class="text-blue-600 hover:underline">FC 151.001</a>)</h4>
+                    <p class="text-sm text-gray-700">A parent has the right to physical possession, the duty of care, control, protection, and reasonable discipline, the duty to support, and the right to consent to medical treatment and make decisions concerning the child's education.</p>
+                </div>
+            </div>
+
+            <div id="custody" class="tab-content space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Waiver of Rights (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.51.htm#51.09" target="_blank" class="text-blue-600 hover:underline">FC 51.09</a>)</h2>
+                    <p class="text-sm text-gray-700 mb-2">Any right granted to a child by the Constitution or laws can be waived in juvenile proceedings, but only under strict conditions.</p>
+                    <h4 class="font-semibold mt-3">Elements Checklist for a Valid Waiver:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>Waiver must be made by the child AND the child's attorney.</li>
+                        <li>Both child and attorney must be informed of and understand the right and the consequences of waiving it.</li>
+                        <li>The waiver must be voluntary.</li>
+                        <li>It must be made in writing or in recorded court proceedings.</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Admissibility of a Juvenile's Statement (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.51.htm#51.095" target="_blank" class="text-blue-600 hover:underline">FC 51.095</a>)</h2>
+                    <p class="text-sm text-gray-700 mb-2">For a statement made by a child in custody to be admissible, strict legal requirements must be met.</p>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold">Written Statement Checklist:</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                                <li>The child must first be taken before a magistrate.</li>
+                                <li>The magistrate must give the child statutory warnings.</li>
+                                <li>The child must knowingly, intelligently, and voluntarily waive their rights.</li>
+                                <li>The child must sign the statement in the presence of the magistrate.</li>
+                                <li><strong>Crucially:</strong> No law enforcement officer or prosecutor may be present when the child signs.</li>
+                                <li>The magistrate must certify in writing that all requirements were met.</li>
+                            </ul>
+                        </div>
+                        <div>
+                             <h4 class="font-semibold">Oral/Recorded Statement Checklist:</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                                <li>For a recorded statement, the magistrate warnings and waiver must be part of the recording.</li>
+                                <li>All voices on the recording must be identified.</li>
+                                <li>An unrecorded oral statement may be admissible if it leads to evidence of guilt.</li>
+                                <li>Res Gestae (excited utterance) statements are also admissible.</li>
+                            </ul>
+                        </div>
+                    </div>
+                     <h4 class="font-semibold mt-4">Age Considerations & Gray Areas</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>17 years old:</strong> An "adult" in Texas. If the crime occurs at 17 or older, adult rules (CCP 38.22) apply.</li>
+                        <li><strong>Crime under 17, now 17:</strong> Juvenile rules (FC 51.095) still apply because the offense was committed when they were a child.</li>
+                        <li><strong>Crime under 17, now 18+:</strong> Adult rules apply for the interview, even though the case is handled by the juvenile system.</li>
+                        <li><strong>Unknown Age:</strong> If a suspect might be a juvenile, it's safest to follow juvenile procedures, as they will satisfy adult requirements, but not vice versa.</li>
+                    </ul>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Fingerprints, Photos, & Polygraphs</h2>
+                    <p class="text-sm text-gray-700 mb-2">A child may not be photographed or fingerprinted without juvenile court consent unless the child is taken into custody for conduct that would be a felony or jailable misdemeanor if committed by an adult. (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.58.htm#58.002" target="_blank" class="text-blue-600 hover:underline">FC 58.002</a>)</p>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Records Retention (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.58.htm#58.001" target="_blank" class="text-blue-600 hover:underline">FC 58.001</a>):</strong> If a child is taken into custody, law enforcement <strong>shall</strong> forward all information (reports, fingerprints, photos) to the juvenile court within <strong>10 calendar days</strong>. If missed, records must be destroyed.</li>
+                        <li><strong>Comparison/Runaway Identification:</strong> Fingerprints and photos may also be taken for comparison with evidence from a crime scene (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.58.htm#58.0021" target="_blank" class="text-blue-600 hover:underline">FC 58.0021</a>) or to identify a runaway child (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.58.htm#58.0022" target="_blank" class="text-blue-600 hover:underline">FC 58.0022</a>).</li>
+                        <li><strong>Polygraph Exam (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.51.htm#51.151" target="_blank" class="text-blue-600 hover:underline">FC 51.151</a>):</strong> A polygraph examination of a child requires the consent of the child's attorney or the juvenile court.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="abuse" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Investigation of Child Abuse or Neglect (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.261.htm" target="_blank" class="text-blue-600 hover:underline">FC Ch. 261</a>)</h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold">Abuse (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.261.htm#261.001" target="_blank" class="text-blue-600 hover:underline">FC 261.001</a>):</h4>
+                            <p class="text-sm text-gray-700">Includes mental or emotional injury, physical injury that results in substantial harm, sexual abuse, or causing or permitting the child to be in a situation where the child sustains a mental or physical injury.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Neglect (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.261.htm#261.001" target="_blank" class="text-blue-600 hover:underline">FC 261.001</a>):</h4>
+                            <p class="text-sm text-gray-700">Includes leaving a child in a situation where the child would be exposed to a substantial risk of physical or mental harm, or failing to provide a child with food, clothing, shelter, or medical care.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Mandatory Reporting</h2>
+                    <h4 class="font-semibold">Who Must Report? (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.261.htm#261.101" target="_blank" class="text-blue-600 hover:underline">FC 261.101</a>)</h4>
+                    <p class="text-sm text-gray-700">A person having cause to believe that a child's physical or mental health or welfare has been adversely affected by abuse or neglect by any person shall immediately make a report.</p>
+                    <h4 class="font-semibold mt-3">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>The requirement applies to <strong>every person</strong>. Professionals have a heightened duty.</li>
+                        <li>The report must be made <strong>immediately</strong> (within 48 hours is the outer limit).</li>
+                        <li>Reports should be made to any local or state law enforcement agency or DFPS.</li>
+                        <li>Reporters are granted immunity from liability if the report is made in good faith (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.261.htm#261.106" target="_blank" class="text-blue-600 hover:underline">FC 261.106</a>).</li>
+                    </ul>
+                    <h4 class="font-semibold mt-3">Penalties:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Failure to Report (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.261.htm#261.109" target="_blank" class="text-blue-600 hover:underline">FC 261.109</a>):</strong> Class A Misdemeanor.</li>
+                        <li><strong>False Report (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.261.htm#261.107" target="_blank" class="text-blue-600 hover:underline">FC 261.107</a>):</strong> State Jail Felony.</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Emergency Possession & Medical Consent</h2>
+                     <h4 class="font-semibold">Taking Possession Without a Court Order (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.262.htm#262.104" target="_blank" class="text-blue-600 hover:underline">FC 262.104</a>)</h4>
+                    <p class="text-sm text-gray-700">A DFPS representative or law enforcement officer may take possession of a child without a court order if they believe the child is in immediate danger of physical or sexual abuse.</p>
+                     <h4 class="font-semibold mt-3">Consent to Treatment by a Child (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.32.htm#32.003" target="_blank" class="text-blue-600 hover:underline">FC 32.003</a>)</h4>
+                     <p class="text-sm text-gray-700">A child can consent to their own medical treatment if they are in the armed services, are 16 or older and live apart from parents, or are unmarried and pregnant.</p>
+                    <h4 class="font-semibold mt-3">Child Advocacy Centers (CACs) (<a href="https://statutes.capitol.texas.gov/Docs/FA/htm/FA.264.htm#264.403" target="_blank" class="text-blue-600 hover:underline">FC 264.403</a>):</h4>
+                    <p class="text-sm text-gray-700">CACs are community partnerships that bring together law enforcement, CPS, prosecutors, and medical/mental health professionals to provide a coordinated, multi-disciplinary response to child abuse allegations.</p>
+                </div>
+            </div>
+
+            <div id="missing" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Missing Children & Persons (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.63.htm" target="_blank" class="text-blue-600 hover:underline">CCP Ch. 63</a>)</h2>
+                    <p class="text-sm text-gray-700">Texas law provides strict guidelines and timelines for law enforcement response to missing child reports. There is <strong>NO</strong> waiting period to report a child missing.</p>
+                    <h4 class="font-semibold mt-3">Definitions (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.63.htm#63.001" target="_blank" class="text-blue-600 hover:underline">CCP 63.001</a>):</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Child:</strong> A person under 18 years of age.</li>
+                        <li><strong>Missing Child:</strong> A child whose whereabouts are unknown to the child's legal custodian.</li>
+                        <li><strong>Clearinghouse:</strong> The state Missing Children and Missing Persons Information Clearinghouse, managed by the DPS.</li>
+                    </ul>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Law Enforcement Requirements (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.63.htm#63.009" target="_blank" class="text-blue-600 hover:underline">CCP 63.009</a>)</h2>
+                    <p class="text-sm text-gray-700">Upon receiving a report of a missing child, a law enforcement agency <strong>SHALL</strong>:</p>
+                    <h4 class="font-semibold mt-3">Immediate Actions Checklist:</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Immediately</strong> begin an investigation.</li>
+                        <li><strong>Immediately, but no later than 2 hours</strong>, enter the child's info into the state Clearinghouse (TCIC/TLETS) and NCIC.</li>
+                        <li>Inform the person who filed the report about the actions being taken.</li>
+                    </ul>
+                    <h4 class="font-semibold mt-3">Follow-Up Actions Checklist:</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Within 48 hours,</strong> submit the report to all LE agencies within a 200-mile radius.</li>
+                        <li><strong>Within 30 days,</strong> enter the child's name into the National Missing and Unidentified Persons System (NamUs).</li>
+                    </ul>
+                    <h4 class="font-semibold mt-3">High-Risk Children (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.63.htm#63.0091" target="_blank" class="text-blue-600 hover:underline">CCP 63.0091</a>):</h4>
+                    <p class="text-sm text-gray-700">If a child is "high risk" (e.g., has special needs, at risk of trafficking, has a mental illness), the agency must escalate its response and notify all LE agencies within 100 miles within 2 hours.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">AMBER Alert System & School Records</h2>
+                     <h4 class="font-semibold">AMBER Alert Activation Criteria (<a href="https://statutes.capitol.texas.gov/Docs/GV/htm/GV.411.htm#411.355" target="_blank" class="text-blue-600 hover:underline">GC 411.355</a>):</h4>
+                      <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>Confirm a child <strong>17 or younger</strong> has been abducted.</li>
+                        <li>Believe the child is in <strong>imminent danger of serious bodily injury or death</strong>.</li>
+                        <li>A preliminary investigation verifies the abduction.</li>
+                        <li>Sufficient information exists to disseminate to the public.</li>
+                    </ul>
+                    <h4 class="font-semibold mt-3">School Record Flagging (<a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.63.htm#63.020" target="_blank" class="text-blue-600 hover:underline">CCP 63.020</a>):</h4>
+                    <p class="text-sm text-gray-700">If a child under 11 is reported missing, law enforcement must immediately notify their school. The school must "flag" the child's records. If a request for the flagged records is made, the school must immediately notify law enforcement.</p>
+                </div>
+            </div>
+
+            <div id="gangs" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Youth Gangs: Risk Factors</h2>
+                    <p class="text-sm text-gray-700 mb-4">The presence of multiple risk factors across different domains significantly increases the likelihood of gang involvement.</p>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="p-4 bg-gray-50 rounded-lg"><h4 class="font-semibold text-lg mb-2"><i class="fas fa-user text-red-500 mr-2"></i>Individual</h4><ul class="list-disc list-inside text-sm text-gray-700 space-y-1"><li>Problematic behavior</li><li>Victimization history</li><li>Negative life events</li><li>Low self-esteem</li></ul></div>
+                         <div class="p-4 bg-gray-50 rounded-lg"><h4 class="font-semibold text-lg mb-2"><i class="fas fa-house-user text-orange-500 mr-2"></i>Family</h4><ul class="list-disc list-inside text-sm text-gray-700 space-y-1"><li>Disrupted family structure</li><li>Poor parental supervision</li><li>Inconsistent discipline</li><li>Lack of parental involvement</li></ul></div>
+                        <div class="p-4 bg-gray-50 rounded-lg"><h4 class="font-semibold text-lg mb-2"><i class="fas fa-school text-yellow-500 mr-2"></i>School</h4><ul class="list-disc list-inside text-sm text-gray-700 space-y-1"><li>Poor academic performance</li><li>Low attachment to school</li><li>Unsafe school environment</li><li>Learning disabilities</li></ul></div>
+                        <div class="p-4 bg-gray-50 rounded-lg"><h4 class="font-semibold text-lg mb-2"><i class="fas fa-user-friends text-green-500 mr-2"></i>Peers</h4><ul class="list-disc list-inside text-sm text-gray-700 space-y-1"><li>Alienation from mainstream</li><li>Anti-social behavior</li><li>Friends in gangs (strongest factor)</li></ul></div>
+                        <div class="p-4 bg-gray-50 rounded-lg"><h4 class="font-semibold text-lg mb-2"><i class="fas fa-city text-blue-500 mr-2"></i>Community</h4><ul class="list-disc list-inside text-sm text-gray-700 space-y-1"><li>High poverty levels</li><li>Neighborhood disorganization</li><li>Environmental instability</li><li>Access to drugs/firearms</li></ul></div>
+                    </div>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Why Juveniles Join Gangs</h2>
+                    <p class="text-sm text-gray-700 mb-2">Gangs often fulfill perceived needs not being met in a youth's life. Most youth are not forced to join, and it is often not a permanent decision.</p>
+                     <h4 class="font-semibold mt-3">Needs Met by Gangs:</h4>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm mt-2">
+                        <p class="p-2 bg-gray-100 rounded">Status & Self-Worth</p><p class="p-2 bg-gray-100 rounded">Acceptance & Bonding</p><p class="p-2 bg-gray-100 rounded">Protection</p><p class="p-2 bg-gray-100 rounded">Fun & Excitement</p><p class="p-2 bg-gray-100 rounded">Credibility & Notoriety</p><p class="p-2 bg-gray-100 rounded">Wealth & Materialism</p>
+                    </div>
+                    <h4 class="font-semibold mt-4">Underlying Societal Strains:</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>High unemployment</li>
+                        <li>Atmosphere of discrimination or abuse</li>
+                        <li>Community seen as uncaring</li>
+                        <li>Environment that uses intimidation and aggression to solve problems</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="knowledge-check" class="tab-content">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Knowledge Check</h2>
+                    <p class="mb-6 text-gray-600">Test your understanding of the material.</p>
+                    <div id="quiz-container" class="space-y-8"></div>
+                    <div class="mt-8 text-center">
+                        <button id="check-answers-btn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors">Check Answers</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="resources" class="tab-content">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Key Resources</h2>
+                    <p class="mb-6 text-gray-600">Quick links to official statutes and other helpful resources.</p>
+                     <h3 class="text-lg font-semibold mb-2">External Resources</h3>
+                     <ul class="list-disc list-inside text-sm text-gray-700 mb-6 space-y-2">
+                         <li><a href="https://www2.tjjd.texas.gov/publications/other/searchfacilityregistry.aspx" target="_blank" class="text-blue-600 hover:underline">TJJD Juvenile Facility Registry Search</a></li>
+                         <li><a href="https://www.texasattorneygeneral.gov/divisions/criminal-justice/gangs-juvenile-justice" target="_blank" class="text-blue-600 hover:underline">Texas AG Juvenile Justice Handbook</a></li>
+                     </ul>
+                    <h3 class="text-lg font-semibold mb-2">Statutory Links</h3>
+                    <div id="resources-list" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-sm"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('#tabs button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                });
+            });
+
+            const quizData = [
+                { question: "1. According to FC 51.02, what is the definition of a 'child' for juvenile jurisdiction?", options: ["Under 18 years of age", "10 years of age or older and under 17", "Under 17 years of age", "Anyone not certified as an adult"], answer: "10 years of age or older and under 17", explanation: "FC 51.02 defines a 'child' as a person who is 10 years of age or older and under 17 years of age." },
+                { question: "2. A 15-year-old is caught shoplifting an item worth $150 (a Class B Misdemeanor). This is classified as:", options: ["Conduct Indicating a Need for Supervision (CINS)", "Status Offense", "Delinquent Conduct", "Non-Offender Conduct"], answer: "Delinquent Conduct", explanation: "Delinquent conduct (FC 51.03) includes violations of state penal law punishable by jail, which a Class B Misdemeanor is." },
+                { question: "3. For a written statement from a juvenile in custody to be admissible under FC 51.095, what is a critical requirement?", options: ["The child's parent must co-sign.", "The officer must read Miranda rights on camera.", "The child signs in the magistrate's presence, with no law enforcement present.", "The interview occurs at a juvenile processing office."], answer: "The child signs in the magistrate's presence, with no law enforcement present.", explanation: "FC 51.095 requires a magistrate to give warnings and certify the statement, which must be signed by the child with no police or prosecutors in the room." },
+                { question: "4. An agency receives a missing 9-year-old report. According to CCP 63.009, when must the child's info be entered into NCIC?", options: ["Immediately", "Within 24 hours", "Immediately, but not later than 2 hours", "Within 48 hours"], answer: "Immediately, but not later than 2 hours", explanation: "CCP 63.009 mandates entry into TCIC/NCIC no later than two hours after receiving the report." },
+                { question: "5. An officer fingerprints a juvenile taken into custody for a felony-grade offense. What must the officer do with these records under FC 58.001?", options: ["Destroy them after 30 days.", "Keep them in a confidential agency file.", "Forward them to the juvenile court within 10 calendar days.", "Get a court order to retain them."], answer: "Forward them to the juvenile court within 10 calendar days.", explanation: "FC 58.001 requires all records to be forwarded to the juvenile court within 10 calendar days, or they must be destroyed." },
+                { question: "6. Which of the following is an example of Conduct Indicating a Need for Supervision (CINS)?", options: ["A 14-year-old commits robbery.", "A 16-year-old is arrested for DWI.", "A 15-year-old is habitually truant from school.", "A 12-year-old commits criminal mischief ($1,000 damage)."], answer: "A 15-year-old is habitually truant from school.", explanation: "CINS (FC 51.03) includes status offenses like truancy. The other options are jailable offenses and thus Delinquent Conduct." },
+                { question: "7. The juvenile equivalent of an adult's 'Sentencing Hearing' is called a:", options: ["Adjudication Hearing", "Disposition Hearing", "Detention Hearing", "Waiver Hearing"], answer: "Disposition Hearing", explanation: "The Adjudication Hearing is the trial/guilt-innocence phase, and the Disposition Hearing is the punishment/sentencing phase." },
+                { question: "8. An officer suspects child neglect but lacks elements for a criminal charge. The officer is required by FC 261.101 to:", options: ["Take the child into protective custody.", "Obtain a warrant.", "Advise the parents.", "Immediately make a report to DFPS (CPS)."], answer: "Immediately make a report to DFPS (CPS).", explanation: "FC 261.101 creates a duty for all persons to report suspected child abuse or neglect to DFPS or law enforcement immediately." },
+                { question: "9. For an AMBER Alert, law enforcement must believe the abducted child is in imminent danger of:", options: ["Being taken across state lines.", "Serious bodily injury or death.", "Being hidden from a parent.", "Missing school."], answer: "Serious bodily injury or death.", explanation: "A key criterion for an AMBER Alert under GC 411.355 is the belief that the child is in imminent danger of serious bodily injury or death." },
+                { question: "10. An order of adjudication in juvenile court is what?", options: ["The same as a criminal conviction and can be used for enhancements.", "A civil matter that carries no future consequences.", "Not a conviction of a crime and does not impose civil disabilities.", "A final conviction after all appeals are exhausted."], answer: "Not a conviction of a crime and does not impose civil disabilities.", explanation: "FC 51.13 explicitly states that a juvenile adjudication is not a criminal conviction and does not impose civil disabilities like being disqualified from employment." },
+                { question: "11. A child taken into custody on a Friday evening. A detention hearing must be held no later than:", options: ["The following Monday.", "The following Tuesday.", "Saturday morning.", "Within 72 hours."], answer: "The following Monday.", explanation: "FC 54.01 requires a detention hearing on the first working day after being taken into custody if it occurs on a Friday or Saturday." },
+                { question: "12. Under CCP 15.27, if an officer arrests a student for a felony, written notification must be provided to the school superintendent within:", options: ["24 hours", "48 hours", "7 days", "10 days"], answer: "7 days", explanation: "CCP 15.27 requires oral notification to the school within 24 hours and written notification within 7 days." },
+                { question: "13. Knowingly making a false report of child abuse or neglect is what level of offense?", options: ["Class B Misdemeanor", "Class A Misdemeanor", "State Jail Felony", "3rd Degree Felony"], answer: "State Jail Felony", explanation: "According to FC 261.107, making a false report of child abuse or neglect with intent to deceive is a State Jail Felony." },
+                { question: "14. An officer needs to have a polygraph examination administered to a juvenile suspect. Under FC 51.151, this requires the consent of:", options: ["The child's parent or guardian.", "The investigating officer's supervisor.", "The child's attorney or the juvenile court.", "The child, if they are over 14 years old."], answer: "The child's attorney or the juvenile court.", explanation: "A polygraph cannot be administered to a child without the express consent of the child's legal counsel or a direct order from the juvenile court." }
+            ];
+
+            const quizContainer = document.getElementById('quiz-container');
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'quiz-question';
+                let optionsHtml = q.options.map(option => `
+                    <label class="block"><input type="radio" name="q${index}" value="${option}" class="mr-2">${option}</label>
+                `).join('');
+                questionDiv.innerHTML = `
+                    <p class="font-semibold mb-2">${q.question}</p>
+                    <div class="space-y-2">${optionsHtml}</div>
+                    <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                `;
+                quizContainer.appendChild(questionDiv);
+            });
+
+            document.getElementById('check-answers-btn').addEventListener('click', () => {
+                quizData.forEach((q, index) => {
+                    const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                    const feedback = document.querySelectorAll('.feedback')[index];
+                    feedback.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+                    if (selected && selected.value === q.answer) {
+                        feedback.textContent = `Correct! ${q.explanation}`;
+                        feedback.classList.add('bg-green-100', 'text-green-800');
+                    } else {
+                        feedback.textContent = `Incorrect. The correct answer is "${q.answer}". ${q.explanation}`;
+                        feedback.classList.add('bg-red-100', 'text-red-800');
+                    }
+                });
+            });
+
+            const resources = [
+                { name: "CCP 15.27 - Notification to Schools", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.15.htm#15.27" },
+                { name: "CCP Ch. 63 - Missing Children", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.63.htm" },
+                { name: "CCP 63.009 - LE Missing Child Requirements", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.63.htm#63.009" },
+                { name: "FC 32.003 - Consent to Treatment by Child", url: "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.32.htm#32.003" },
+                { name: "FC 32.005 - Medical Exam w/o Consent", url: "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.32.htm#32.005" },
+                { name: "FC 51.01 - Purpose & Interpretation", url: "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.51.htm#51.01" },
+                { name: "FC 51.02 - Definitions", url: "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.51.htm#51.02" },
+                { name: "FC 51.03 - Delinquent Conduct; CINS", url: "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.51.htm#51.03" },
+                { name: "FC 51.04 - Jurisdiction", url: "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.51.htm#51.04" },
+                { name: "FC 51.09 - Waiver of Rights", url: "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.51.htm#51.09" },
+                { name: "FC 51.095 - Admissibility of Statement", url: "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.51.htm#51.095" },
+                { name: "FC 51.13 - Effect of Adjudication", url: "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.51.htm#51.13" },
+                { name: "FC 51.151 - Polygraph Examination", url: "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.51.htm#51.151" },
+                { name: "FC 52.01 - Taking Into Custody", url: "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.52.htm#52.01" },
+                { name: "FC 52.02 - Release or Delivery to Court", url: "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.52.htm#52.02" },
+                { name: "FC 52.025 - Juvenile Processing Office", url: "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.52.htm#52.025" },
+                { name: "FC 52.03 - Disposition Without Referral", url: "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.52.htm#52.03" },
+                { name: "FC 52.031 - First Offender Program", url: "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.52.htm#52.031" },
+                { name: "FC 53.02 - Release from Detention", url: "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.53.htm#53.02" },
+                { name: "FC 54.01 - Detention Hearing", url: "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.54.htm#54.01" },
+                { name: "FC 54.02 - Waiver of Jurisdiction", url: "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.54.htm#54.02" },
+                { name: "FC 58.001 - Collection of Records", url: "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.58.htm#58.001" },
+                { name: "FC 58.002 - Fingerprints/Photos", url: "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.58.htm#58.002" },
+                { name: "FC Ch. 151 - Rights/Duties of Parents", url: "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.151.htm" },
+                { name: "FC Ch. 261 - Abuse/Neglect Investigation", url: "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.261.htm" },
+                { name: "FC 261.101 - Mandatory Reporting", url: "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.261.htm#261.101" },
+                { name: "FC 261.107 - False Report Penalty", url: "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.261.htm#261.107" },
+                { name: "FC 262.104 - Emergency Possession", url: "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.262.htm#262.104" },
+                { name: "GC Ch. 411 - AMBER Alert System", url: "https://statutes.capitol.texas.gov/Docs/GV/htm/GV.411.htm#411.351" },
+                { name: "PC 25.03 - Interference with Custody", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.25.htm#25.03" },
+            ];
+            const resourcesList = document.getElementById('resources-list');
+            resources.sort((a, b) => {
+                const codeA = a.name.split(' ')[0];
+                const codeB = b.name.split(' ')[0];
+                if (codeA !== codeB) {
+                    return codeA.localeCompare(codeB);
+                }
+                const numA = parseFloat(a.name.match(/[\d.]+/)[0]);
+                const numB = parseFloat(b.name.match(/[\d.]+/)[0]);
+                return numA - numB;
+            });
+            resources.forEach(res => {
+                const link = document.createElement('a');
+                link.href = res.url;
+                link.target = '_blank';
+                link.className = 'text-blue-600 hover:underline';
+                link.textContent = res.name;
+                resourcesList.appendChild(link);
+            });
+        });
+    </script>
+</body>
+</html>
+

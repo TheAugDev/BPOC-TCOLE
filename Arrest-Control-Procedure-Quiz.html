@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCOLE Arrest and Control Procedures Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+        .answer-option {
+            transition: all 0.2s ease-in-out;
+        }
+        .answer-option:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .correct {
+            background-color: #D1FAE5 !important;
+            border-color: #10B981 !important;
+            color: #065F46 !important;
+        }
+        .incorrect {
+            background-color: #FEE2E2 !important;
+            border-color: #EF4444 !important;
+            color: #991B1B !important;
+        }
+        .progress-bar-fill {
+            transition: width 0.3s ease-in-out;
+        }
+        .review-correct {
+            color: #059669;
+        }
+        .review-incorrect {
+            color: #e11d48;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="quiz-app" class="quiz-container p-4 sm:p-8">
+        
+        <!-- Quiz Start Screen -->
+        <div id="start-screen" class="text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Arrest and Control Procedures Quiz</h1>
+            <p class="text-lg text-gray-600 mb-8">An exhaustive quiz based on the "Basic Peace Officer Course | Chapter 31" handout to test your knowledge on strategies of defense and the physical process of arrest.</p>
+            <button id="start-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Start Quiz</button>
+        </div>
+
+        <!-- Quiz Interface -->
+        <div id="quiz-screen" class="hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold">Question <span id="question-number"></span> of <span id="total-questions"></span></h2>
+                <div id="timer" class="text-lg font-mono bg-gray-200 px-3 py-1 rounded-md">00:00</div>
+            </div>
+            
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+                <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full progress-bar-fill" style="width: 0%"></div>
+            </div>
+
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+                <p id="question-text" class="text-xl font-medium mb-8 min-h-[6rem]"></p>
+                <div id="answer-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Answer options will be injected here by JS -->
+                </div>
+            </div>
+             <div id="rationale-box" class="hidden mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h3 class="font-bold text-blue-800">Rationale:</h3>
+                <p id="rationale-text" class="text-blue-700"></p>
+                <p class="text-sm text-blue-600 mt-2">Source: <span id="rationale-source"></span></p>
+            </div>
+            <button id="next-btn" class="hidden w-full bg-blue-600 text-white font-bold py-3 px-8 rounded-lg mt-8 hover:bg-blue-700 transition-colors shadow-md">Next Question</button>
+        </div>
+
+        <!-- Quiz Results Screen -->
+        <div id="results-screen" class="hidden text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">Quiz Complete!</h1>
+            <p class="text-lg text-gray-600 mb-6">Here's how you did:</p>
+            <div class="flex flex-col sm:flex-row justify-around items-center my-8 gap-8 sm:gap-0">
+                <div>
+                    <p class="text-5xl font-bold text-green-600"><span id="score-percentage"></span>%</p>
+                    <p class="text-gray-500">Score</p>
+                </div>
+                 <div>
+                    <p class="text-5xl font-bold text-blue-600"><span id="correct-answers"></span>/<span id="total-answered"></span></p>
+                    <p class="text-gray-500">Correct Answers</p>
+                </div>
+                 <div>
+                    <p class="text-5xl font-bold text-gray-700"><span id="final-time"></span></p>
+                    <p class="text-gray-500">Time Taken</p>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="restart-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Try Again</button>
+                <button id="review-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md">Review Answers</button>
+            </div>
+        </div>
+        
+        <!-- Review Screen -->
+        <div id="review-screen" class="hidden bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6">Answer Review</h1>
+            <div id="review-container" class="space-y-6">
+                <!-- Review content will be injected here -->
+            </div>
+            <button id="back-to-results-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md mt-8">Back to Results</button>
+        </div>
+
+    </div>
+
+    <script>
+        const quizData = [
+            { question: "What are the three basic concepts of weaponless strategies?", options: ["Speed, Power, Agility", "Self-control, Balance, Awareness", "Attack, Defend, Retreat", "Observe, Orient, Decide, Act"], answer: "Self-control, Balance, Awareness", rationale: "The text identifies Self-control, Balance, and Awareness as the three basic concepts of weaponless strategies.", page: "Page 1" },
+            { question: "What is the essential police role in a physical arrest?", options: ["To punish the violator immediately", "To protect the public and take the violator into custody", "To de-escalate without making an arrest", "To assert dominance over the suspect"], answer: "To protect the public and take the violator into custody", rationale: "The text states, 'The police role in a physical arrest is essentially to protect the public and to take the violator into custody.'", page: "Page 1" },
+            { question: "Mental balance for a peace officer consists of being prepared to control one's own emotional and physical self and what else?", options: ["To overcome the situation with superior force", "To allow emotions to guide your actions", "To restrain the violator and, ultimately, the situation", "To wait for backup before acting"], answer: "To restrain the violator and, ultimately, the situation", rationale: "Mental balance involves being prepared to control yourself 'and then to restrain the violator and, ultimately, the situation, not allowing the emotional level to overcome your self-control and balance.'", page: "Page 1" },
+            { question: "Proper physical positioning for an officer includes staying just outside the suspect's reach, keeping your gun side away, and what else?", options: ["Maintaining a wide, aggressive stance", "Keeping your hands in your pockets for a relaxed look", "Having a balanced stance that allows for movement", "Focusing only on the suspect's face"], answer: "Having a balanced stance that allows for movement", rationale: "Proper positioning is described as 'staying just outside the suspect's reach... with your gun side away from the suspect and with a balanced stance.'", page: "Page 1" },
+            { question: "Which of the following is a key component of the 'Awareness' concept?", options: ["Ignoring bystanders to focus on the suspect", "Only watching the suspect's eyes", "Being aware of where the suspect's hands are, potential weapons, and escape routes", "Assuming the ground you are on is stable"], answer: "Being aware of where the suspect's hands are, potential weapons, and escape routes", rationale: "Awareness includes observing 'the entire situation and be aware of where the suspect's hands are, weapons, associates... escape routes... and your own footing.'", page: "Page 1" },
+            { question: "According to the principles of self-defense, if attacked, an officer should move in what direction?", options: ["Directly into the force to stop it", "Backwards in a straight line", "Out of the line of force", "Towards the attacker's weapon"], answer: "Out of the line of force", rationale: "A principle of self-defense is: 'If attacked, move out of the line of force rather than try to stop the force.'", page: "Page 1" },
+            { question: "Besides physical techniques, what other skills are mentioned as important in the 'Arrest and Control Procedures' chapter?", options: ["Advanced driving skills", "Firearms marksmanship", "Cultural awareness and verbal persuasion", "Report writing proficiency"], answer: "Cultural awareness and verbal persuasion", rationale: "An instructor note on page 1 states, 'Cultural awareness and skill in verbal persuasion are also important and should be used in completing this chapter.'", page: "Page 1" },
+            { question: "In the proper interview stance described in a practical scenario, how should an officer's body be angled?", options: ["Directly facing the subject", "At a 90-degree angle", "At a 45-degree angle", "With their back to the subject"], answer: "At a 45-degree angle", rationale: "A practical scenario note says, 'The students will blade their bodies in a 45-degree angle with their reaction hand closer to the subject.'", page: "Page 1" },
+            { question: "Which of the following is NOT listed as a weaponless strategy?", options: ["Joint locking", "Pressure points", "Verbal commands", "Hand strikes and foot strikes"], answer: "Verbal commands", rationale: "The list of weaponless strategies includes touching, striking, joint locking, pressure points, hand/foot strikes, and blocks. Verbal commands, while crucial, are not on this specific list of physical strategies.", page: "Page 2" },
+            { question: "Which of the following is listed as a ground technique in weaponless defense?", options: ["The sprint", "The high jump", "The trap and roll", "The grapple hook"], answer: "The trap and roll", rationale: "The text lists several ground techniques, including 'Base get up,' 'Full guard position,' 'Full mount position,' 'Trap and roll,' and 'Side mount.'", page: "Page 2" },
+            { question: "Which of the following is NOT a ground technique listed for weaponless defense?", options: ["Base get up", "Full mount position", "The arm bar", "Trap and roll"], answer: "The arm bar", rationale: "The text lists 'Base get up,' 'Full guard position,' 'Full mount position,' 'Trap and roll,' and 'Side mount' as ground techniques. The arm bar is a specific submission hold not mentioned in this list.", page: "Page 2" },
+            { question: "A Taser or OC pepper spray is classified as what type of less-lethal force weapon?", options: ["Impact weapon", "Distraction device", "Chemical and electrical device", "Positional asphyxiant"], answer: "Chemical and electrical device", rationale: "Under 'Tactical transition,' the text lists Tasers and OC pepper spray under the category of 'Chemical and electrical devices.'", page: "Page 2" },
+            { question: "A baton is legally classified as a weapon capable of inflicting what?", options: ["Minor bruising only", "Temporary discomfort", "Serious bodily injury or death", "Psychological distress"], answer: "Serious bodily injury or death", rationale: "The text states, 'A baton is classified as a weapon capable of inflicting serious bodily injury or death.'", page: "Page 3" },
+            { question: "Impact weapons like batons may be used in situations requiring force greater than weaponless strategies but less than what?", options: ["Verbal commands", "The use of handcuffs", "The use of deadly weapons/force", "The presence of a supervisor"], answer: "The use of deadly weapons/force", rationale: "Batons are for situations 'requiring a degree of force greater than the use of weaponless strategies but less than the use of deadly weapons/force.'", page: "Page 3" },
+            { question: "In a riot control formation, what is a justified use of a baton?", options: ["To punish unruly protesters", "To move, separate, disperse, or deny a person access", "To break windows to gain entry", "As a pointing device for giving directions"], answer: "To move, separate, disperse, or deny a person access", rationale: "In a tactical squad or riot control formation, a baton may be used 'to move, separate, disperse, or deny a person access to a structure or through an area.'", page: "Page 3" },
+            { question: "An officer is attacked by a suspect with a baseball bat. According to the text, what would be a justified use of an impact weapon?", options: ["To hold the suspect at bay until assistance arrives", "Only as a last resort before using a firearm", "To strike the suspect in the head", "To throw the baton at the suspect"], answer: "To hold the suspect at bay until assistance arrives", rationale: "When an officer is attacked by a suspect with a non-firearm weapon, the baton may be used 'to disarm, distract, or disable the suspect, or to hold the suspect at bay until additional assistance arrives.'", page: "Page 3" },
+            { question: "An officer has the burden to justify the use of a baton by what standard?", options: ["The officer's personal feelings", "The approval of their partner", "The totality of the circumstances", "The suspect's criminal history"], answer: "The totality of the circumstances", rationale: "The text clearly states, 'The officer has the burden to justify the use of a baton by the totality of the circumstances.'", page: "Page 3" },
+            { question: "If a suspect who is under the influence of drugs cannot be restrained by lesser means, what might this justify?", options: ["The use of deadly force", "The immediate use of a taser", "The use of a baton", "Allowing the suspect to leave"], answer: "The use of a baton", rationale: "One justification for baton use is 'The suspect's inability to be restrained by lesser means due to the influence of alcohol and/or other drugs.'", page: "Page 3" },
+            { question: "What is a key tactical consideration regarding a suspect that could justify the use of a baton?", options: ["The suspect's criminal record", "The suspect is being verbally abusive", "The suspect's apparent knowledge of a fighting form", "The suspect is running away"], answer: "The suspect's apparent knowledge of a fighting form", rationale: "One tactical determination is 'The officer's perception of the suspect's knowledge or apparent knowledge of a fighting form.'", page: "Page 3" },
+            { question: "Which of the following is a primary 'strike area' for a baton?", options: ["The head", "The throat", "The groin", "Center mass of legs"], answer: "Center mass of legs", rationale: "The designated strike areas are 'Center mass of arms,' 'Center mass of legs,' and 'Abdomen.'", page: "Page 4" },
+            { question: "Unless a deadly force situation has escalated, an officer should not intentionally strike what part of the body with a baton?", options: ["The shins", "The forearms", "The head or throat", "The abdomen"], answer: "The head or throat", rationale: "The guidelines state, 'Do not intentionally use a baton to strike at the head or throat unless the situation has escalated to a deadly force situation.'", page: "Page 3" },
+            { question: "Which of the following is considered a 'non-strike area' for a baton?", options: ["The thigh", "The bicep", "The center of the back (spine)", "The calf muscle"], answer: "The center of the back (spine)", rationale: "Non-strike areas include areas above the plane of shoulders, groin, center of back (spine) / kidney area, and the pectoral region (chest).", page: "Page 4" },
+            { question: "What is a primary reason that justifies training in weapons retention?", options: ["It is required for firearm certification", "The number of officers shot with their own weapon", "It improves an officer's physical fitness", "It is a de-escalation technique"], answer: "The number of officers shot with their own weapon", rationale: "The text begins this section by stating, 'The number of officers shot with their own weapon is reason enough for the need for training in weapons retention.'", page: "Page 4" },
+            { question: "Peace officers may use deadly force to protect themselves or others when they reasonably believe what exists?", options: ["A possibility of escape", "An immediate threat of death or serious bodily injury", "The suspect is being uncooperative", "The suspect has committed a felony"], answer: "An immediate threat of death or serious bodily injury", rationale: "The text specifies that deadly force is justified when officers 'reasonably believe an immediate threat of death or serious bodily injury exists.'", page: "Page 5" },
+            { question: "How is 'non-deadly force' defined in the text?", options: ["Any force that does not involve a firearm", "Force that makes a suspect uncomfortable", "Force not likely to cause death or great bodily harm", "Force applied with an open hand only"], answer: "Force not likely to cause death or great bodily harm", rationale: "Non-deadly force is defined as 'force not likely to cause death or great bodily harm.'", page: "Page 5" },
+            { question: "Using a vehicle to stop a threat could be considered an application of what?", options: ["Non-deadly force", "A weaponless strategy", "Deadly force", "An escort technique"], answer: "Deadly force", rationale: "The text lists 'Vehicles' as a topic to relate to deadly force, implying it can be used as such.", page: "Page 6" },
+            { question: "Which of the following is considered a risk factor that an officer must assess in an arrest situation?", options: ["The officer's attitude", "The type of patrol car being used", "The current weather conditions", "The day of the week"], answer: "The officer's attitude", rationale: "The text lists several risk factors, including the suspect's mental state, time and location, intoxication, spectator attitudes, and importantly, the 'Officer attitude.'", page: "Page 6" },
+            { question: "How can the attitude of spectators during an arrest become a risk factor for the officer?", options: ["They might ask for directions", "If they are supportive of the subject", "They could block traffic", "They might offer to help the officer"], answer: "If they are supportive of the subject", rationale: "The text lists 'Spectators supportive attitude toward subject' as a risk factor an officer must consider.", page: "Page 6" },
+            { question: "What is the primary disadvantage of a direct, on-foot approach to a suspect?", options: ["It is too slow", "You cannot observe the suspect's movements", "You lose the element of surprise and are more vulnerable", "It may provoke a defensive physical response"], answer: "You lose the element of surprise and are more vulnerable", rationale: "The disadvantage of a direct approach is that you 'lose surprise element; vulnerable to resistance.'", page: "Page 6" },
+            { question: "What is the primary advantage of a rear, on-foot approach?", options: ["It allows for clear communication", "It reduces the probability of a direct attack", "It is less physically demanding", "It allows you to observe all movements"], answer: "It reduces the probability of a direct attack", rationale: "The advantages of a rear approach are 'surprise; reduces probability of direct attack.'", page: "Page 6" },
+            { question: "What is the main advantage of a side approach on foot?", options: ["It provides the best view of the suspect", "The suspect is off balance", "It is the fastest approach", "It allows for easy conversation"], answer: "The suspect is off balance", rationale: "The advantage of a side approach is that the 'suspect [is] off balance.'", page: "Page 6" },
+            { question: "When two officers approach a suspect on foot, what formation should they use?", options: ["A single-file line", "A side-by-side line", "A V formation", "One in front, one directly behind"], answer: "A V formation", rationale: "When two officers approach, they 'should be spread in V formation.'", page: "Page 6" },
+            { question: "During a two-officer interview, one officer is in charge. What is a key responsibility of the second officer?", options: ["To write down the suspect's answers", "To keep their hands free and observe the suspect", "To search the immediate area for evidence", "To engage in conversation with bystanders"], answer: "To keep their hands free and observe the suspect", rationale: "The 'Side officer keep hands free, gun away from suspect, observe suspect hands.'", page: "Page 7" },
+            { question: "A frisk, if justified, is conducted for what specific purpose?", options: ["To search for contraband", "To search for evidence of a crime", "To find weapons for officer and public safety", "To identify the suspect"], answer: "To find weapons for officer and public safety", rationale: "A frisk is justified 'for Weapons... Officer and/or public safety.'", page: "Page 7" },
+            { question: "What is the key difference between a pat down (frisk) and a search?", options: ["A frisk is more thorough than a search", "A frisk is for weapons, while a search can be for evidence or contraband", "Only searches require two officers", "There is no difference"], answer: "A frisk is for weapons, while a search can be for evidence or contraband", rationale: "The text stresses that a frisk is for weapons for safety. The distinction implies a search is more intrusive and for different items, a standard legal concept emphasized by 'Stress pat down vs. search.'", page: "Page 7" },
+            { question: "Why is it important to clearly advise a subject of the reason for their arrest?", options: ["It is required by the U.S. Constitution", "Subjects may resist simply because they don't understand", "It makes the officer appear more authoritative", "It gives the subject time to think of an alibi"], answer: "Subjects may resist simply because they don't understand", rationale: "The text advises to 'advise the subject of the reason for the arrest. Subject may resist officers simply because they don't understand the nature of the arrest.'", page: "Page 7" },
+            { question: "What is the standard procedure for handcuffing a single suspect?", options: ["Hands in front, palms in, single-locked", "Hands to the rear, palms out, double-locked", "Left hand to right ankle", "One hand in front, one in back"], answer: "Hands to the rear, palms out, double-locked", rationale: "For one suspect, the procedure is 'Hands to rear, Palms out, Handcuffs double locked.'", page: "Page 8" },
+            { question: "What is the guideline for applying handcuffs during a chaotic emergency situation?", options: ["Wait for the situation to calm down", "Apply them in any manner possible", "Only use plastic cuffs", "Do not apply them without a supervisor's approval"], answer: "Apply them in any manner possible", rationale: "The text states, 'In an emergency, apply in any manner possible.'", page: "Page 8" },
+            { question: "How should two suspects be secured with only one set of handcuffs?", options: ["Their right hands cuffed together", "Their wrists cuffed to their ankles", "Their hands cuffed behind their backs together", "This should never be attempted"], answer: "Their right hands cuffed together", rationale: "The procedure is 'Right hand to right hand' or 'Left hand to left hand,' because 'This procedure causes them difficulty in running.'", page: "Page 8" },
+            { question: "How should two suspects be handcuffed using two sets of cuffs?", options: ["Right hand to right hand", "Separately, with hands in front", "Hands to rear, with arms interlocking", "To the patrol car's door handles"], answer: "Hands to rear, with arms interlocking", rationale: "The procedure for two suspects and two sets of handcuffs is 'Hands to rear, Arms interlocking, Palms out, Handcuffs double locked.'", page: "Page 8" },
+            { question: "Which item is listed as a potential supplement to handcuffs in an emergency?", options: ["A firearm", "Duct tape", "A belt or shoelaces", "Another officer's hands"], answer: "A belt or shoelaces", rationale: "Supplements to handcuffs include a 'Tie, Belt, Shoelaces, Strips of cloth, [or] Plastic handcuffs.'", page: "Page 8" },
+            { question: "What is a critical reminder provided in the text about handcuffs?", options: ["They are an offensive weapon", "They are a temporary restraining device only", "They should be used on all citizens an officer contacts", "They are escape-proof"], answer: "They are a temporary restraining device only", rationale: "The text emphatically states, 'Remember, handcuffs are a temporary restraining device only!'", page: "Page 8" },
+            { question: "Claims of excessive force related to handcuffing have most often focused on what issue?", options: ["The brand of handcuffs used", "The speed of application", "The excessive tightening of handcuffs", "Handcuffing a person in public"], answer: "The excessive tightening of handcuffs", rationale: "The text notes that the focus of most cases has been 'the excessive tightening of handcuffs in a manner causing extreme pain or significant injury.'", page: "Page 8" },
+            { question: "According to the *Baskin v. Smith* case, what action by officers, combined with a suspect's complaints, might lead to an excessive force claim?", options: ["Applying handcuffs too slowly", "Handcuffing too tightly and failing to double-lock", "Using plastic cuffs instead of metal ones", "Forgetting to read Miranda rights"], answer: "Handcuffing too tightly and failing to double-lock", rationale: "The case summary states: 'Handcuffing too tightly and failing to double-lock the handcuffs may lead to an excessive force claim when the officers have been placed on notice of a suspect's complaints.'", page: "Page 9" },
+            { question: "In *Vondrak v. City of Las Cruces*, what claim were officers NOT entitled to qualified immunity against?", options: ["A claim of unlawful arrest", "A claim of an illegal search", "An excessive force claim for unduly tightening handcuffs", "A claim of verbal abuse"], answer: "An excessive force claim for unduly tightening handcuffs", rationale: "The summary of *Vondrak v. City of Las Cruces* states officers were not entitled to qualified immunity on claims they 'used excessive force in unduly tightening an arrestee's handcuffs.'", page: "Page 9" },
+            { question: "In the case of *Gousse v. City of Los Angeles*, what was the severe consequence for the surgeon who was improperly handcuffed?", options: ["A minor wrist sprain", "He was late for a scheduled surgery", "Permanent nerve damage to his hand", "He received a public apology"], answer: "Permanent nerve damage to his hand", rationale: "In this case, the surgeon was awarded damages 'for permanent nerve damage to hand, resulting in inability to perform surgery unassisted.'", page: "Page 9" },
+            { question: "During a standing body search, what is the recommended position for the officer's hand for safety?", options: ["On the suspect's head", "On the officer's weapon", "Holding the suspect's waistband from the rear", "On the suspect's shoulder"], answer: "Holding the suspect's waistband from the rear", rationale: "The procedure for a standing search includes 'One holding suspect's waistband from the rear.'", page: "Page 9" },
+            { question: "How is the standing body wall search technique described in the text?", options: ["As the safest method", "As a high-risk technique", "As the preferred method for all arrests", "As a technique that requires no training"], answer: "As a high-risk technique", rationale: "The instructor note explicitly states, 'The wall search is a high-risk technique.'", page: "Page 10" },
+            { question: "What is the primary advantage of holding a suspect's waistband during a search?", options: ["It keeps the suspect warm", "It allows the officer to pull or push the suspect off-balance if they resist", "It prevents the suspect from seeing the officer", "It is more comfortable for the suspect"], answer: "It allows the officer to pull or push the suspect off-balance if they resist", rationale: "The advantage is officer safety. 'Should the suspect attempt resistance, they can be pulled backward or pushed forward, giving the officer an opportunity to step away.'", page: "Page 10" },
+            { question: "During a physical search, an officer's hands should be doing the searching. Where should their eyes be?", options: ["On their own hands to see what they are finding", "On the suspect to observe movement", "Scanning the surrounding area for other threats", "Closed to enhance the sense of touch"], answer: "On the suspect to observe movement", rationale: "The text directs: 'Officers' eyes should be on subject to observe movement.'", page: "Page 10" },
+            { question: "In which body search position are the suspect's legs crossed?", options: ["Standing body search", "Prone body search", "Kneeling body search", "Wall search"], answer: "Kneeling body search", rationale: "The kneeling body search involves the suspect being 'On knees' with 'Legs crossed.'", page: "Page 9-10" },
+            { question: "What should an officer do immediately before starting a shift and after every transport for safety?", options: ["Clean the windshield", "Check the oil", "Search the seating/carrying area of their vehicle", "Refuel the vehicle"], answer: "Search the seating/carrying area of their vehicle", rationale: "For officer safety, 'a peace officer should search the seating or carrying area of their vehicle for weapons or contraband when going on duty and after each prisoner transport is completed.'", page: "Page 10" },
+            { question: "For officer safety, when should the seating area of a patrol vehicle be searched?", options: ["Only at the beginning of a shift", "Only after transporting a prisoner", "When going on duty and after each prisoner transport", "Once a week during vehicle inspection"], answer: "When going on duty and after each prisoner transport", rationale: "An officer should search the seating or carrying area 'when going on duty and after each prisoner transport is completed.'", page: "Page 10" },
+            { question: "Without access to special transporting equipment, what is the maximum number of prisoners one officer should attempt to transport at a time?", options: ["One", "Two", "Three", "As many as can fit in the vehicle"], answer: "One", rationale: "'...one officer should not attempt to transport more than one prisoner at a time without access to special transporting equipment.'", page: "Page 10" },
+            { question: "Which action is listed as a necessary component of 'affecting an arrest' after a suspect has been cuffed on the ground?", options: ["Reading the suspect their Miranda rights immediately", "Removing the suspect's shoes", "Standing the subject up safely and efficiently", "Waiting for a transport vehicle to arrive"], answer: "Standing the subject up safely and efficiently", rationale: "The components of affecting an arrest include 'Standing a cuffed suspect up from prone, kneeling in a safe and efficient manner.'", page: "Page 11" },
+            { question: "In a comprehensive scenario, what must a student be able to cite regarding their authority to stop a subject?", options: ["Departmental policy", "Their personal judgment", "The relevant section of the Code of Criminal Procedure", "The Fourth Amendment"], answer: "The relevant section of the Code of Criminal Procedure", rationale: "The comprehensive scenario requirements state the student must 'Cite what gives them the legal authority to stop the subject. (CCP)'.", page: "Page 11" },
+            { question: "Before a physical confrontation, what key de-escalation factor should an officer consider?", options: ["If there is an opportunity to de-escalate the situation", "If the suspect is likely to win the fight", "If bystanders are recording", "If it is near the end of the officer's shift"], answer: "If there is an opportunity to de-escalate the situation", rationale: "The scenario requirements include: 'Determine if there is an opportunity for them to de-escalate the situation prior to the physical confrontation. If so, how? (CIT)'.", page: "Page 11" },
+            { question: "In the comprehensive scenario, the subject refuses to leave a gas station after being told by an employee. What offense has likely been committed?", options: ["Theft of Service", "Disorderly Conduct", "Criminal Trespass", "Public Intoxication"], answer: "Criminal Trespass", rationale: "When a person is asked to leave a property by someone with apparent authority and refuses, they have committed Criminal Trespass.", page: "Page 11" },
+            { question: "During the comprehensive scenario, the subject escalates the encounter by throwing a punch at the officer. What is the most serious offense committed at that point?", options: ["Resisting Arrest", "Assault on a Public Servant", "Deadly Conduct", "Obstruction or Retaliation"], answer: "Assault on a Public Servant", rationale: "Intentionally causing bodily injury to a person the actor knows is a public servant while the public servant is lawfully discharging an official duty constitutes Assault on a Public Servant.", page: "Page 12" },
+            { question: "Which of these is NOT a principle of self-defense mentioned in the text?", options: ["Be aware of potential dangers", "Avoid overextending yourself", "Always stop the force of an attack head-on", "Maintain proper distance for reaction time"], answer: "Always stop the force of an attack head-on", rationale: "The text explicitly advises to 'move out of the line of force rather than try to stop the force,' which contradicts the incorrect option.", page: "Page 1" },
+            { question: "Which of the following is listed under 'Principles of self-defense'?", options: ["Always escalate to a higher level of force", "Engage the suspect in conversation to distract them", "Avoid overextending yourself", "Wait for the suspect to make the first move"], answer: "Avoid overextending yourself", rationale: "The principles of self-defense listed include: Prevention, be aware of dangers, maintain proper distance, avoid overextending yourself, and move out of the line of force.", page: "Page 1" },
+            { question: "A baton may be used to obtain compliance when a suspect refuses verbal commands prior to which action?", options: ["Answering interview questions", "Providing identification", "Searching or handcuffing", "Exiting a vehicle"], answer: "Searching or handcuffing", rationale: "A baton may be used when a suspect 'refuses or fails to comply with the verbal commands prior to searching or handcuffing.'", page: "Page 3" },
+            { question: "Which of the following IS NOT listed as a 'weaponless strategy'?", options: ["Striking (open hand and closed fist)", "Blocks", "Taser", "Pressure points"], answer: "Taser", rationale: "A Taser is listed under 'Chemical and electrical devices' and is a weapon, not a weaponless strategy.", page: "Page 2" },
+            { question: "The 'Full mount position' and 'Side mount' are examples of what type of technique?", options: ["Handcuffing techniques", "Baton strikes", "Ground techniques", "Escort positions"], answer: "Ground techniques", rationale: "The text lists 'Full mount position' and 'Side mount' under the heading 'Ground techniques.'", page: "Page 2" },
+            { question: "During a two-officer transport with one suspect, what is the implied safe procedure?", options: ["Both officers in the front seat", "One officer drives, the other sits in the back with the suspect", "Letting the suspect sit in the front passenger seat", "Cuffing the suspect to the outside of the vehicle"], answer: "One officer drives, the other sits in the back with the suspect", rationale: "While not explicitly detailed, the emphasis on control and safety throughout the chapter implies that one officer must maintain direct physical control in the backseat, a standard and safe procedure.", page: "Page 11" }
+        ];
+
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const reviewScreen = document.getElementById('review-screen');
+
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const reviewBtn = document.getElementById('review-btn');
+        const backToResultsBtn = document.getElementById('back-to-results-btn');
+        
+        const questionNumberEl = document.getElementById('question-number');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const progressBar = document.getElementById('progress-bar');
+        const questionTextEl = document.getElementById('question-text');
+        const answerOptionsEl = document.getElementById('answer-options');
+        const rationaleBox = document.getElementById('rationale-box');
+        const rationaleText = document.getElementById('rationale-text');
+        const rationaleSource = document.getElementById('rationale-source');
+        
+        const scorePercentageEl = document.getElementById('score-percentage');
+        const correctAnswersEl = document.getElementById('correct-answers');
+        const totalAnsweredEl = document.getElementById('total-answered');
+        const finalTimeEl = document.getElementById('final-time');
+        const timerEl = document.getElementById('timer');
+        const reviewContainer = document.getElementById('review-container');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timerInterval;
+        let secondsElapsed = 0;
+        let userAnswers = [];
+        
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        startBtn.addEventListener('click', startQuiz);
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', startQuiz);
+        reviewBtn.addEventListener('click', showReview);
+        backToResultsBtn.addEventListener('click', () => {
+            reviewScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+        });
+
+        function startTimer() {
+            secondsElapsed = 0;
+            timerEl.textContent = '00:00';
+            timerInterval = setInterval(() => {
+                secondsElapsed++;
+                const minutes = Math.floor(secondsElapsed / 60).toString().padStart(2, '0');
+                const seconds = (secondsElapsed % 60).toString().padStart(2, '0');
+                timerEl.textContent = `${minutes}:${seconds}`;
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function startQuiz() {
+            shuffleArray(quizData);
+            quizData.forEach(q => shuffleArray(q.options));
+
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            startScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            nextBtn.classList.add('hidden');
+            startTimer();
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            rationaleBox.classList.add('hidden');
+            answerOptionsEl.innerHTML = '';
+            const currentQuestion = quizData[currentQuestionIndex];
+            
+            questionNumberEl.textContent = currentQuestionIndex + 1;
+            totalQuestionsEl.textContent = quizData.length;
+            questionTextEl.textContent = currentQuestion.question;
+
+            const progress = ((currentQuestionIndex) / quizData.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('answer-option', 'w-full', 'p-4', 'text-left', 'bg-white', 'border-2', 'border-gray-300', 'rounded-lg', 'hover:bg-gray-50', 'hover:border-blue-500');
+                button.addEventListener('click', () => selectAnswer(button, option, currentQuestion));
+                answerOptionsEl.appendChild(button);
+            });
+        }
+
+        function selectAnswer(button, selectedOption, currentQuestion) {
+            const { answer, rationale, page } = currentQuestion;
+            userAnswers[currentQuestionIndex] = selectedOption;
+
+            const buttons = answerOptionsEl.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === answer) {
+                    btn.classList.add('correct');
+                }
+            });
+
+            if (selectedOption === answer) {
+                score++;
+                button.classList.add('correct');
+            } else {
+                button.classList.add('incorrect');
+            }
+
+            rationaleText.textContent = rationale;
+            rationaleSource.textContent = page;
+            rationaleBox.classList.remove('hidden');
+            nextBtn.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                nextBtn.classList.add('hidden');
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            stopTimer();
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            scorePercentageEl.textContent = percentage;
+            correctAnswersEl.textContent = score;
+            totalAnsweredEl.textContent = quizData.length;
+            finalTimeEl.textContent = timerEl.textContent;
+            
+            progressBar.style.width = `100%`;
+        }
+
+        function showReview() {
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.remove('hidden');
+            reviewContainer.innerHTML = '';
+
+            quizData.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === question.answer;
+
+                const reviewItem = document.createElement('div');
+                reviewItem.classList.add('border', 'p-4', 'rounded-lg');
+                reviewItem.classList.add(isCorrect ? 'bg-green-50' : 'bg-red-50', isCorrect ? 'border-green-200' : 'border-red-200');
+
+                let userAnswerHTML = '';
+                if (isCorrect) {
+                    userAnswerHTML = `<p>Your answer: <span class="font-semibold review-correct">${userAnswer} (Correct)</span></p>`;
+                } else {
+                    userAnswerHTML = `
+                        <p>Your answer: <span class="font-semibold review-incorrect">${userAnswer}</span></p>
+                        <p>Correct answer: <span class="font-semibold review-correct">${question.answer}</span></p>
+                    `;
+                }
+
+                reviewItem.innerHTML = `
+                    <p class="font-bold mb-2">${index + 1}. ${question.question}</p>
+                    ${userAnswerHTML}
+                    <p class="text-sm text-gray-600 mt-2"><em><span class="font-semibold">Rationale:</span> ${question.rationale} (Source: ${question.page})</em></p>
+                `;
+                reviewContainer.appendChild(reviewItem);
+            });
+        }
+
+    </script>
+</body>
+</html>
+

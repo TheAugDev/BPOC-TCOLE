@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Guide: Crisis Intervention Training (CIT)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --header-bg: #1f2937;
+            --bg-color: #f3f4f6;
+            --tab-active-bg: #3b82f6;
+            --tab-active-text: #ffffff;
+            --card-bg: #ffffff;
+            --text-color: #111827;
+            --link-color: #2563eb;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://rsms.me/inter/inter.css');
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab.active {
+            background-color: var(--tab-active-bg);
+            color: var(--tab-active-text);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tab {
+            transition: all 0.3s ease-in-out;
+        }
+        .key-term {
+            background-color: #eef2ff;
+            color: #4338ca;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        .symptom-category {
+            border-left: 4px solid;
+            padding-left: 1rem;
+        }
+        .symptom-paranoid { border-color: #f97316; }
+        .symptom-antisocial { border-color: #ef4444; }
+        .symptom-borderline { border-color: #a855f7; }
+        .symptom-narcissistic { border-color: #d946ef; }
+        .symptom-depressive { border-color: #3b82f6; }
+        .symptom-manic { border-color: #eab308; }
+        .symptom-psychosis { border-color: #14b8a6; }
+        .symptom-tbi { border-color: #64748b; }
+        .symptom-autism { border-color: #0ea5e9; }
+        .symptom-id { border-color: #84cc16; }
+        .symptom-ptsd { border-color: #6366f1; }
+        .drug-category { border-left: 4px solid #8b5cf6; padding-left: 1rem; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-gray-800 text-white p-4 shadow-md sticky top-0 z-10">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-bold">
+                <i class="fas fa-brain mr-2"></i>Crisis Intervention Training
+            </h1>
+            <p class="text-sm text-gray-300">BPOC Chapter 29 | TCOLE Preparation</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-6">
+        <div class="mb-6 bg-white rounded-lg shadow-md overflow-x-auto">
+            <nav id="tabs" class="flex flex-row space-x-1 p-2">
+                <button data-tab="intro" class="tab active flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-info-circle mr-2"></i> <span class="hidden md:inline">Intro & History</span>
+                </button>
+                <button data-tab="basics" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-book-open mr-2"></i> <span class="hidden md:inline">Mental Health Basics</span>
+                </button>
+                <button data-tab="illnesses" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-diagnoses mr-2"></i> <span class="hidden md:inline">Illness Categories</span>
+                </button>
+                <button data-tab="trauma" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-user-shield mr-2"></i> <span class="hidden md:inline">PTSD & Trauma</span>
+                </button>
+                 <button data-tab="suicide" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-life-ring mr-2"></i> <span class="hidden md:inline">Suicide Prevention</span>
+                </button>
+                 <button data-tab="comm" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-comments mr-2"></i> <span class="hidden md:inline">Communication</span>
+                </button>
+                 <button data-tab="legal" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-gavel mr-2"></i> <span class="hidden md:inline">Legal & System</span>
+                </button>
+                <button data-tab="knowledge-check" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-question-circle mr-2"></i> <span class="hidden md:inline">Knowledge Check</span>
+                </button>
+                <button data-tab="resources" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-link mr-2"></i> <span class="hidden md:inline">Resources</span>
+                </button>
+            </nav>
+        </div>
+
+        <div id="tab-contents">
+            <div id="intro" class="tab-content active space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Origins & Problem Statement</h2>
+                     <p class="text-sm text-gray-700 mb-2">The underlying element behind mental illness-related behavior is usually not criminal or malicious. The CIT program was conceived in Memphis, TN, after a 1987 incident where police shot and killed a 26-year-old man with a history of mental illness who was threatening suicide. This event catalyzed the creation of CIT.</p>
+                     <h4 class="font-semibold mt-3">The Problem for Law Enforcement:</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                         <li>Individuals with mental illness generate no less than 1 in 10 calls for police service.</li>
+                         <li>The risk of being killed when stopped by law enforcement is 16 times higher for individuals with untreated serious mental illness.</li>
+                         <li>In 2015, 25% of all fatal officer-involved shootings involved a subject displaying signs of mental illness.</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Texas Senate Bill 1849</h2>
+                    <p class="text-sm text-gray-700 mb-4">This bill established significant mandates for Texas law enforcement regarding mental health response.</p>
+                    <ul class="list-disc list-inside text-sm text-gray-700 space-y-2">
+                        <li><strong>De-escalation Training:</strong> Law enforcement officers are required to learn de-escalation techniques to reduce the use of force.</li>
+                        <li><strong>Diversion Efforts:</strong> Agencies must make a good faith effort to divert persons suffering from a mental health crisis or substance abuse to proper treatment facilities rather than incarcerating them.</li>
+                        <li><strong>Personal Bond:</strong> The bill establishes an easier process for individuals with mental illness or intellectual disability to receive a personal bond.</li>
+                        <li><strong>Statutory Changes:</strong> Key changes were made to the <a href="https://statutes.capitol.texas.gov/Docs/OC/htm/OC.1701.htm" target="_blank" class="text-blue-600 hover:underline">Occupations Code, Chapter 1701</a>, specifically sections 1701.253 and 1701.273, cementing these training requirements.</li>
+                    </ul>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Primary Goal of CIT</h2>
+                    <p class="text-sm text-gray-700 mb-2">"The primary goal of CITs involves calming persons with mental illness who are in crisis and referring them to mental health care services, rather than incarcerating them." This includes lessening injuries to officers and individuals, decriminalizing mental illness, reducing stigma, and using a team approach.</p>
+                     <h4 class="font-semibold mt-3">Key Objectives:</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                         <li>Educate officers on recognizing signs of mental illness.</li>
+                         <li>Provide practical de-escalation skills to mitigate violence.</li>
+                         <li>Increase officer and public safety.</li>
+                         <li>Provide information on safely transporting individuals to appropriate facilities.</li>
+                    </ul>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">CIT's Impact on Community Relations</h2>
+                    <p class="text-sm text-gray-700 mb-4">CIT has been shown to positively impact officer perceptions, decrease the need for higher levels of police intervention, and reduce officer injuries. It redirects individuals from the justice system to the healthcare system, building public trust.</p>
+                     <ul class="list-disc list-inside text-sm text-gray-700 space-y-2">
+                        <li><strong>National Presence:</strong> 46 of the 50 states have CIT programs.</li>
+                        <li><strong>Reduced Use of Force:</strong> A study of Houston PD found CIT officers were 82% less likely to use their guns on CIT-related calls.</li>
+                        <li><strong>Cost Savings:</strong> The Bexar County Sheriff's Office CIT program saved the county nearly $100 million over eight years and drastically reduced use-of-force incidents.</li>
+                        <li><strong>Improved Officer Confidence:</strong> Research shows CIT improves officer comfort, knowledge, and attitudes towards individuals with mental illness.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="basics" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Fundamental Concepts</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="font-bold text-lg mb-2">Defining "Crisis"</h3>
+                            <p class="text-sm text-gray-700 mb-2"><span class="key-term">Crisis:</span> An emotionally significant event or radical change that results in feelings of confusion, desperation, or terror.</p>
+                             <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>A person in crisis may act instinctually (self-preservation) rather than with logical thought.</li>
+                                <li><strong>Potential Triggers:</strong> Death of a loved one/pet, job loss, financial difficulty, divorce, legal troubles.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg mb-2">Mental Illness vs. Insanity</h3>
+                             <p class="text-sm text-gray-700"><span class="key-term">Mental Illness:</span> A diagnosed condition based on the DSM-5 that impacts thinking, feeling, or mood and impairs daily function.</p>
+                             <p class="text-sm text-gray-700 mt-2"><span class="key-term">Insanity:</span> A legal term. In Texas, per <a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.8.htm#8.01" target="_blank" class="text-blue-600 hover:underline">TPC §8.01</a>, it is an affirmative defense where the actor "did not know that his conduct was wrong" due to a severe mental disease or defect.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Prevalence & Stigma</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold">Key Statistics & Terms</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700">
+                                 <li><strong>1 in 5</strong> U.S. adults experiences mental illness in a given year.</li>
+                                 <li><strong>1 in 25</strong> U.S. adults experiences a <span class="key-term">serious mental illness</span>, which means severe impairment in one or more major life activities.</li>
+                                 <li>A <span class="key-term">persistent mental illness</span> is indicated by long durations of impairment.</li>
+                                 <li>Nearly <strong>two-thirds</strong> of all people with a diagnosable mental illness do not seek treatment.</li>
+                             </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Stigma & Barriers to Treatment</h4>
+                            <p class="text-sm text-gray-700 mb-2"><span class="key-term">Stigma:</span> A mark of disgrace or shame. It encourages inaccurate perceptions, such as the false belief that mental illness is a sign of weakness.</p>
+                            <ul class="list-disc list-inside text-sm text-gray-700 space-y-2">
+                               <li><strong>Negative Stereotypes:</strong> The common misconception that people with mental illness are dangerous, although only 3-5% of violent acts are attributed to serious mental illness.</li>
+                               <li><strong>Access Issues:</strong> Difficulty accessing care, cost of medication, and lack of insurance are major barriers.</li>
+                           </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Psychotropic Medications & Myths</h2>
+                    <div class="grid md:grid-cols-2 gap-x-8">
+                        <div>
+                             <h4 class="font-semibold">Psychotropic Medications</h4>
+                            <p class="text-sm text-gray-700 mb-2"><span class="key-term">Psychotropic Medication:</span> Any medication capable of affecting a person's mind, emotions, and behavior. Used to treat psychosis, anxiety, depression, etc.</p>
+                            <h5 class="font-semibold text-sm mt-2">Reasons for Non-Compliance (A Primary Cause of Crisis):</h5>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>Feeling better and believing they no longer need it.</li>
+                                <li>Unpleasant side effects (weight gain, sexual dysfunction, feeling "dissociated").</li>
+                                <li>Lack of health insurance or high cost.</li>
+                                <li>Stigma associated with taking medication.</li>
+                            </ul>
+                        </div>
+                        <div>
+                             <h4 class="font-semibold">Common Myths vs. Realities</h4>
+                            <div class="space-y-2 text-sm">
+                                <p><strong>Myth:</strong> A person with a mental illness is also intellectually challenged.</p>
+                                <p class="pl-4"><strong>Reality:</strong> They are fundamentally different conditions.</p>
+                                <p><strong>Myth:</strong> Most people with mental illness are homeless.</p>
+                                <p class="pl-4"><strong>Reality:</strong> About two-thirds live in the community and lead productive lives.</p>
+                                <p><strong>Myth:</strong> I can't do anything for a person with a mental health problem.</p>
+                                <p class="pl-4"><strong>Reality:</strong> It may be life-changing to help someone access services.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="illnesses" class="tab-content space-y-6">
+                <!-- Personality Disorders -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Personality Disorders</h2>
+                    <p class="text-sm text-gray-700 mb-4">An enduring pattern of thinking, feeling, and behaving that is inflexible and deviates from the person's culture. Law enforcement may encounter these individuals because their way of thinking can lead to law-breaking behavior.</p>
+                    <div class="space-y-4">
+                        <div class="symptom-category symptom-paranoid">
+                            <h4 class="font-semibold">Paranoid Personality Disorder</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700"><li>Pervasive distrust and suspiciousness of others.</li><li>Believes others are exploiting or deceiving them.</li><li>Quick to react angrily to perceived attacks.</li></ul>
+                        </div>
+                        <div class="symptom-category symptom-antisocial">
+                            <h4 class="font-semibold">Antisocial Personality Disorder</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700"><li>Pervasive disregard for and violation of the rights of others.</li><li>Pattern of rule-breaking, deceitfulness, and aggression.</li><li>Lack of remorse or accountability.</li></ul>
+                        </div>
+                         <div class="symptom-category symptom-borderline">
+                            <h4 class="font-semibold">Borderline Personality Disorder (BPD)</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700"><li>Pervasive instability in relationships, self-image, and impulse control.</li><li>Frantic efforts to avoid abandonment.</li><li>Self-damaging impulsivity and recurrent suicidal behavior.</li></ul>
+                        </div>
+                        <div class="symptom-category symptom-narcissistic">
+                            <h4 class="font-semibold">Narcissistic Personality Disorder</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700"><li>Persistent grandiosity, a need for admiration, and a lack of empathy.</li><li>Exaggerates achievements and feels entitled.</li><li>Exploits others and demonstrates arrogant behaviors.</li></ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mood & Thought Disorders -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Mood & Thought Disorders</h2>
+                     <div class="space-y-6">
+                        <div class="symptom-category symptom-depressive">
+                            <h4 class="font-semibold">Depression</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700"><li>The single most common factor in suicidal behavior.</li><li><strong>Symptoms:</strong> Hopelessness, loss of interest, low energy, appetite/sleep changes.</li></ul>
+                        </div>
+                         <div class="symptom-category symptom-manic">
+                            <h4 class="font-semibold">Bipolar Disorder</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700"><li>Cycles between mania (highs) and depression (lows).</li><li>Suicide risk is 15 times higher than the general population.</li><li><strong>Manic Phase Symptoms:</strong> Inflated self-esteem, decreased need for sleep, racing thoughts, excessive risk-taking.</li></ul>
+                        </div>
+                        <div class="symptom-category symptom-psychosis">
+                            <h4 class="font-semibold">Thought Disorders (Psychosis)</h4>
+                            <p class="text-sm text-gray-600 mb-2">An illness involving a distortion of reality. Can include <span class="key-term">Delusions</span> (fixed false beliefs) and <span class="key-term">Hallucinations</span> (sensory distortions like hearing voices).</p>
+                            <ul class="list-disc list-inside text-sm text-gray-700"><li><strong>Symptoms:</strong> Nonsense speech ('word salad'), responding to unseen stimuli, disheveled appearance.</li></ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Substance Use Disorders -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Substance Use Disorders</h2>
+                    <p class="text-sm text-gray-700 mb-4">Continued substance use despite significant problems. It is rare to see intoxication from only one type of substance.</p>
+                    <div class="space-y-4">
+                        <div class="drug-category"><h4 class="font-semibold">CNS Depressants (e.g., Alcohol, Xanax)</h4><p class="text-sm text-gray-600"><strong>Signs:</strong> 'Drunk' behavior, slurred speech, disorientation. <strong>Overdose:</strong> Shallow breathing, cold skin, coma.</p></div>
+                        <div class="drug-category"><h4 class="font-semibold">CNS Stimulants (e.g., Cocaine, Meth)</h4><p class="text-sm text-gray-600"><strong>Signs:</strong> Anxiety, euphoria, grinding teeth, talkative. <strong>Overdose:</strong> Agitation, high body temp, seizures.</p></div>
+                        <div class="drug-category"><h4 class="font-semibold">Hallucinogens (e.g., LSD, Ecstasy)</h4><p class="text-sm text-gray-600"><strong>Signs:</strong> Dazed, disoriented, paranoia, poor perception of time.</p></div>
+                        <div class="drug-category"><h4 class="font-semibold">Dissociative Anesthetics (e.g., PCP, Ketamine)</h4><p class="text-sm text-gray-600"><strong>Signs:</strong> Blank stare, confused, possibly violent, increased pain threshold. Can lead to <span class="key-term">excited delirium</span>.</p></div>
+                        <div class="drug-category"><h4 class="font-semibold">Narcotic Analgesics (e.g., Heroin, Oxycontin)</h4><p class="text-sm text-gray-600"><strong>Signs:</strong> Drowsiness, droopy eyelids, facial itching, slow speech. <strong>Overdose:</strong> Slow/shallow breathing, coma.</p></div>
+                        <div class="drug-category"><h4 class="font-semibold">Inhalants (e.g., Paint, Gasoline)</h4><p class="text-sm text-gray-600"><strong>Signs:</strong> Bloodshot eyes, confusion, odor of substance, flushed face.</p></div>
+                        <div class="drug-category"><h4 class="font-semibold">Cannabis (e.g., Marijuana, K2/Spice)</h4><p class="text-sm text-gray-600"><strong>Signs:</strong> Reddening of conjunctiva, increased appetite, relaxed inhibitions.</p></div>
+                        <div class="drug-category"><h4 class="font-semibold">Other Substances (e.g., Bath Salts, Kratom)</h4><p class="text-sm text-gray-600">Often analogs of other drugs; behavior is hard to predict. Kratom affects opioid brain receptors.</p></div>
+                    </div>
+                </div>
+
+                <!-- Cognitive & Developmental Disorders -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Cognitive & Developmental Disorders</h2>
+                    <div class="space-y-6">
+                        <div class="symptom-category symptom-tbi">
+                            <h4 class="font-semibold text-lg">Traumatic Brain Injury (TBI)</h4>
+                             <p class="text-sm text-gray-700 mb-2">Caused by an impact to the head or blast injuries. Can cause deficits in attention, memory, judgment, and learning from mistakes.</p>
+                        </div>
+                        <div class="symptom-category symptom-tbi">
+                            <h4 class="font-semibold text-lg">Dementia & Alzheimer's Disease</h4>
+                            <p class="text-sm text-gray-700 mb-2">Degeneration of mental function. 6 in 10 people with Alzheimer's will wander. If not found in 24 hours, up to half risk serious injury or death.</p>
+                            <h5 class="font-semibold text-sm mt-2">Practical Example: Law Enforcement Interactions</h5>
+                             <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li><strong>Car Accidents:</strong> May drive erratically, fail to obey traffic laws, or flee the scene due to confusion.</li>
+                                <li><strong>False Reports:</strong> May call 911 to report a theft after misplacing an item, or report an "intruder" who is actually a family member.</li>
+                                <li><strong>Indecent Exposure/Shoplifting:</strong> May forget social norms or forget to pay for items.</li>
+                            </ul>
+                        </div>
+                        <div class="symptom-category symptom-autism">
+                            <h4 class="font-semibold text-lg">Autism Spectrum Disorder (ASD)</h4>
+                            <p class="text-sm text-gray-700 mb-2">Developmental disorder with repetitive behaviors and difficulty with social interaction. <strong>Communication Tips:</strong> Be patient and calm, avoid physical contact, use praise, interact with a caregiver if possible.</p>
+                        </div>
+                        <div class="symptom-category symptom-id">
+                             <h4 class="font-semibold text-lg">Intellectual Disability (ID)</h4>
+                            <p class="text-sm text-gray-700 mb-2">A fixed condition diagnosed by age 18 involving deficits in intellectual and adaptive functioning. Degrees range from Mild (IQ 50-69) to Profound (IQ below 20).</p>
+                             <h5 class="font-semibold text-sm mt-2">Practical Example: Questioning Methods</h5>
+                             <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>Be patient; repeat questions. Ask short, simple, open-ended questions. Speak slowly.</li>
+                                <li>To help determine if an ID problem exists, you can ask them to perform simple tasks (e.g., tell time, give directions home, explain how to make change from a dollar).</li>
+                                <li>Be aware that subjects may readily confess due to a lack of full understanding.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="trauma" class="tab-content space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Post-Traumatic Stress (PTS)</h2>
+                    <p class="text-sm text-gray-700 mb-4">Can develop after exposure to a traumatic event. 7-8% of the general population will experience PTSD in their lifetime.</p>
+                    <div class="symptom-category symptom-ptsd">
+                        <h4 class="font-semibold">Core Symptom Categories</h4>
+                        <ul class="list-disc list-inside text-sm text-gray-700 space-y-3">
+                            <li><strong>Intrusion:</strong> Recurrent unwanted memories, dreams, or flashbacks.</li>
+                            <li><strong>Avoidance:</strong> Efforts to avoid reminders of the trauma.</li>
+                            <li><strong>Negative Changes in Mood/Thought:</strong> Persistent negative beliefs, self-blame (<span class="key-term">survivor's guilt</span>), fear, shame, loss of interest.</li>
+                            <li><strong>Increased Arousal/Reactivity:</strong> Irritability, heightened startle response, recklessness, <span class="key-term">hypervigilance</span>. This is the symptom cluster most likely to be encountered by law enforcement.</li>
+                        </ul>
+                    </div>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Trauma in Veterans</h2>
+                     <p class="text-sm text-gray-700 mb-4">Rates of PTSD are significantly higher in veteran populations. 20% of all national suicides are completed by veterans.</p>
+                     <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold">Moral Injury</h4>
+                            <p class="text-sm text-gray-700"><span class="key-term">Moral Injury:</span> Damage to one's conscience from perpetrating, witnessing, or failing to prevent acts that violate one's own moral code. Can lead to shame, guilt, and self-harm.</p>
+                        </div>
+                         <div>
+                            <h4 class="font-semibold">Survivor's Guilt</h4>
+                            <p class="text-sm text-gray-700"><span class="key-term">Survivor's Guilt:</span> Arises when someone survives an event that others did not, leading to feelings that they should have died instead.</p>
+                        </div>
+                         <div>
+                            <h4 class="font-semibold">Practical Example: Officer Interaction</h4>
+                            <p class="text-sm text-gray-700">A veteran may feel extremely threatened by anyone approaching from behind (<span class="key-term">hypervigilance</span>). An officer should approach from the front, announce their presence calmly, and maintain distance. Explaining each step before it happens (<span class="key-term">tactical transparency</span>) can help build trust.</p>
+                        </div>
+                    </div>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Intimate Partner Violence (IPV) and PTSD</h2>
+                    <p class="text-sm text-gray-700 mb-4">IPV is a major cause of PTSD in women, who have a 10% lifetime chance of developing it.</p>
+                     <ul class="list-disc list-inside text-sm text-gray-700 space-y-2">
+                         <li>IPV victims can develop the same post-traumatic stress symptoms as combat veterans.</li>
+                         <li>Women with PTSD due to IPV often present as depressed or emotionally numb.</li>
+                         <li>Repeated trauma can impair a victim's ability to assess the danger of a situation.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="suicide" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Suicide Statistics & Risk Factors</h2>
+                     <p class="text-sm text-gray-700 mb-4">In 2010, suicide was the 9th leading cause of death in Texas. It is the 2nd leading cause of death for ages 15-24. Firearms account for nearly 50% of all suicide deaths.</p>
+                     <div class="grid md:grid-cols-2 gap-6">
+                         <div>
+                            <h4 class="font-semibold text-red-600">Known Risk Factors</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                                <li>Male, age 15-34.</li>
+                                <li>Depression.</li>
+                                <li>Substance intoxication.</li>
+                                <li>Previous suicide attempts.</li>
+                                <li>Feelings of hopelessness/helplessness.</li>
+                                <li>Specific plan, intent, and means.</li>
+                                <li>Lack of support system & recent loss.</li>
+                                <li>Feeling like a burden to family.</li>
+                            </ul>
+                         </div>
+                         <div>
+                             <h4 class="font-semibold text-green-600">Protective Factors</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                                <li>Healthy support system.</li>
+                                <li>Connection to spiritual faith.</li>
+                                <li>Employment & financial stability.</li>
+                                <li>Access to effective mental health care.</li>
+                                <li>Positive coping and problem-solving skills.</li>
+                            </ul>
+                         </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Suicide Risk Assessment (PLAN)</h2>
+                     <p class="text-sm text-gray-700 mb-4">A structured method to evaluate the immediacy of suicide risk.</p>
+                     <ol class="list-decimal list-inside text-sm text-gray-700 space-y-2 font-semibold">
+                        <li><strong>PLAN:</strong> Has the person been thinking of hurting themself? Have they made a specific plan?</li>
+                        <li><strong>METHOD:</strong> Has the person decided on a method (e.g., firearm, pills) or a location?</li>
+                        <li><strong>MEANS:</strong> Does the individual have the means to carry out the plan (e.g., access to a firearm, pills in hand)?</li>
+                        <li><strong>INTENT:</strong> How determined is the person to follow through? Listen for cues of doubt or statements of certainty. Ask directly.</li>
+                    </ol>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Law Enforcement Suicide</h2>
+                     <p class="text-sm text-gray-700 mb-4">More officers die of suicide than from shootings and traffic accidents combined. The average age for police suicide is 42 with 16 years on the job.</p>
+                     <ul class="list-disc list-inside text-sm text-gray-700 space-y-2">
+                        <li>Almost 1 in 4 police officers has thoughts of suicide at some point in their life.</li>
+                        <li>Between 7-19% of police officers have symptoms of PTSD.</li>
+                         <li>Changing the culture requires addressing mental health and suicide head-on, from the academy onward.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="comm" class="tab-content space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Initial Assessment & De-escalation</h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold">Three-Point Assessment</h4>
+                            <p class="text-sm text-gray-600 mb-2">A quick field assessment of a person's mental state.</p>
+                             <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                                <li><strong>Level of Comprehension:</strong> Do they understand you? Does their speech make sense?</li>
+                                <li><strong>Behavior:</strong> How is their self-care? Is non-compliance potentially due to a mental health issue?</li>
+                                <li><strong>Emotion:</strong> What is their emotional state? Is it appropriate? Is it fluctuating rapidly?</li>
+                            </ul>
+                        </div>
+                         <div>
+                             <h4 class="font-semibold">5 Universal Truths of Human Interaction</h4>
+                             <ol class="list-decimal list-inside text-sm text-gray-700 space-y-1">
+                                <li>ALL people want to be treated with <strong>Dignity and Respect</strong>.</li>
+                                <li>ALL people would rather be <strong>asked</strong> than told.</li>
+                                <li>ALL people want to know <strong>why</strong>.</li>
+                                <li>ALL people would rather have <strong>options</strong> than threats.</li>
+                                <li>ALL people want a <strong>second chance</strong>.</li>
+                             </ol>
+                        </div>
+                    </div>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">The LEAPS Communication Model</h2>
+                    <p class="text-sm text-gray-700 mb-4">A framework for effective verbal de-escalation. Remember the <span class="key-term">80/20 Rule</span>: Listen 80% of the time, talk 20% of the time.</p>
+                     <ul class="list-disc list-inside text-sm text-gray-700 space-y-3">
+                        <li><strong>Listen:</strong> The fundamental skill. Let the person vent while you gather information.</li>
+                        <li><strong>Empathize:</strong> Put yourself in their shoes. Verbalize understanding of their feelings (e.g., "It sounds like you feel betrayed."). You don't have to agree.</li>
+                        <li><strong>Ask Questions:</strong> Use open-ended questions (Who, What, When, Where, How) to gather more information.</li>
+                        <li><strong>Paraphrase:</strong> Reiterate what they said in your own words ("Let me be sure I understand..."). This confirms understanding and builds rapport.</li>
+                        <li><strong>Summarize:</strong> Bring it all together. Summarize their view, the options, and what happens next.</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Advanced Communication Techniques</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold">"I" Statements vs. "You" Statements</h4>
+                            <p class="text-sm text-gray-700">Use <span class="font-bold">"I" statements</span> to de-escalate (e.g., "I am worried you are going to harm yourself. Please..."). Avoid accusatory <span class="font-bold">"You" statements</span> (e.g., "You are not listening.").</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Tactical Transparency</h4>
+                            <p class="text-sm text-gray-700">Explain an action <span class="font-bold">before</span> initiating it, so the person knows what to expect (e.g., "For your safety and mine, you will be handcuffed..."). Use only when the scene is secure.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Reflecting Statements & Responding to Verbal Abuse</h4>
+                            <p class="text-sm text-gray-700"><span class="key-term">Reflecting Statements:</span> Neutral responses to encourage more communication (e.g., 'I see...').</p>
+                            <p class="text-sm text-gray-700 mt-2"><span class="key-term">Responding to Verbal Abuse:</span> Ignore demeaning language. Focus on deflecting and redirecting (e.g., 'I understand that, but...').</p>
+                        </div>
+                         <div>
+                            <h4 class="font-semibold">Pro-LEAPS vs. Anti-LEAPS Phrases</h4>
+                            <ul class="list-disc list-inside text-sm grid grid-cols-2 gap-x-4">
+                                <li class="text-green-600"><strong>Pro:</strong> "What can I do to help?"</li>
+                                <li class="text-red-600"><strong>Anti:</strong> "Calm down."</li>
+                                <li class="text-green-600"><strong>Pro:</strong> "Would you assist me...?"</li>
+                                <li class="text-red-600"><strong>Anti:</strong> "What's your problem?"</li>
+                                <li class="text-green-600"><strong>Pro:</strong> "For your safety and mine..."</li>
+                                <li class="text-red-600"><strong>Anti:</strong> "I'm not going to tell you again."</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="legal" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Systemic Issues & Victimization</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold">Deinstitutionalization</h4>
+                             <p class="text-sm text-gray-700"><span class="key-term">Deinstitutionalization:</span> The policy of relocating people with severe mental illness from residential facilities into the community, often without adequate resources. This has led to the criminal justice system becoming the de facto mental health system for many.</p>
+                        </div>
+                         <div>
+                            <h4 class="font-semibold">Homelessness & Victimization</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>At minimum, 25% of the American homeless population is seriously mentally ill.</li>
+                                <li>People with serious mental illness are over 10 times more likely to be victims of violent crime than the general population.</li>
+                                 <li><strong>Practical Example:</strong> A child with a mental illness may be more vulnerable to abuse and their report may be less likely deemed valid. An adult may be easily robbed or conned.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Legal Standards for Officers</h2>
+                     <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold">Police Officer Emergency Detention (<a href="https://statutes.capitol.texas.gov/Docs/HS/htm/HS.573.htm#573.001" target="_blank" class="text-blue-600 hover:underline">HSC §573.001</a>)</h4>
+                             <h5 class="font-semibold text-sm mt-2">Elements Checklist:</h5>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>An officer has reason to believe and does believe the person has a mental illness; <strong>AND</strong></li>
+                                <li>Because of that illness, there is a <span class="font-bold">substantial risk of serious harm</span> to the person or others unless immediately restrained; <strong>AND</strong></li>
+                                <li>The officer believes there is not sufficient time to obtain a warrant.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Transportation Considerations & Liability</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700">
+                                 <li>An officer who detains someone under HSC 573.001 must immediately transport them to the nearest appropriate inpatient mental health facility.</li>
+                                 <li><strong>Officer Safety Checklist:</strong> Follow departmental policy, be aware of distance to the facility, and evaluate the person's behavior (violent, ambulatory, comatose, sedated) to determine the appropriate method of transport.</li>
+                                 <li><a href="https://statutes.capitol.texas.gov/Docs/HS/htm/HS.571.htm#571.019" target="_blank" class="text-blue-600 hover:underline">HSC §571.019(a)</a> provides a limitation of liability: People acting in good faith, reasonably, and without negligence are not civilly or criminally liable.</li>
+                             </ul>
+                        </div>
+                     </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Jail Diversion Programs</h2>
+                    <p class="text-sm text-gray-700 mb-4">Strategies to redirect individuals out of the criminal justice system and into treatment.</p>
+                    <ul class="list-disc list-inside text-sm text-gray-700 space-y-2">
+                        <li><strong>Pre-arrest Diversion:</strong> Diverting someone from the system with no arrest, guiding them toward a mental health facility or hospital.</li>
+                        <li><strong>Post-arrest Diversion:</strong> Voluntary programs for offenders that provide an alternative to criminal case processing.</li>
+                        <li><strong>Mental Health Courts:</strong> A court that combines judicial supervision with community mental health treatment. Offenders who complete the program have a much lower recidivism rate (20% vs. 72%).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="knowledge-check" class="tab-content">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Knowledge Check</h2>
+                    <p class="mb-6 text-gray-600">Test your understanding of the material.</p>
+                    <div id="quiz-container" class="space-y-8"></div>
+                    <div class="mt-8 text-center">
+                        <button id="check-answers-btn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors">Check Answers</button>
+                         <button id="reset-quiz-btn" class="bg-gray-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-gray-600 transition-colors ml-4">Reset Quiz</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="resources" class="tab-content">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Statutory & Organizational Resources</h2>
+                    <p class="mb-6 text-gray-600">Quick links to the Texas Codes and national organizations referenced in this guide.</p>
+                    <div id="resources-list" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-sm"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('#tabs button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                });
+            });
+
+            const quizData = [
+                {
+                    question: "1. The legal term 'insanity', as defined by the Texas Penal Code, is a(n):",
+                    options: ["Psychological diagnosis", "Medical condition", "Affirmative defense to prosecution", "Mitigating factor in sentencing"],
+                    answer: "Affirmative defense to prosecution",
+                    explanation: "Under TPC §8.01, insanity is a legal term used as an affirmative defense, stating the actor did not know their conduct was wrong due to a severe mental disease or defect."
+                },
+                {
+                    question: "2. An officer responds to a man who believes aliens have removed his organs, yet he is still alive. This is an example of a:",
+                    options: ["Non-bizarre delusion", "Auditory hallucination", "Bizarre delusion", "Tactile hallucination"],
+                    answer: "Bizarre delusion",
+                    explanation: "A bizarre delusion is a fixed false belief about something that could not possibly occur in real life."
+                },
+                {
+                    question: "3. Which communication technique involves reiterating what a person has said in your own words to confirm understanding?",
+                    options: ["Empathizing", "Paraphrasing", "Reflecting", "Summarizing"],
+                    answer: "Paraphrasing",
+                    explanation: "Paraphrasing ('Let me be sure I understand what you've said...') ensures you understand the situation correctly and helps build rapport."
+                },
+                {
+                    question: "4. The single most common factor in suicidal behavior or death by suicide is:",
+                    options: ["Substance abuse", "Recent job loss", "Depression", "Bipolar disorder"],
+                    answer: "Depression",
+                    explanation: "The training material explicitly states that the single most common factor in suicidal behavior or death by suicide is that the individual is experiencing depression."
+                },
+                {
+                    question: "5. According to Health & Safety Code §573.001, an officer can make a warrantless apprehension if they believe the person has a mental illness AND:",
+                    options: ["The person has committed a crime", "There is a substantial risk of serious harm to self or others", "A family member has requested it", "The person is homeless"],
+                    answer: "There is a substantial risk of serious harm to self or others",
+                    explanation: "The key elements are belief of mental illness AND a substantial risk of serious harm, coupled with the belief that there is no time to get a warrant."
+                },
+                {
+                    question: "6. Which of the following is an example of an 'I' statement?",
+                    options: ["'You need to calm down right now.'", "'Why are you acting this way?'", "'I am concerned for your safety, and I want to help.'", "'You are not listening to me.'"],
+                    answer: "'I am concerned for your safety, and I want to help.'",
+                    explanation: "'I' statements take responsibility for the speaker's feelings and intentions, which de-escalates situations, whereas 'You' statements are often perceived as accusatory."
+                },
+                 {
+                    question: "7. Explaining an action before you perform it, such as informing someone they will be handcuffed for safety, is known as:",
+                    options: ["Tactical Empathy", "The 80/20 Rule", "Rapport Building", "Tactical Transparency"],
+                    answer: "Tactical Transparency",
+                    explanation: "Tactical transparency is explaining an action before initiating it to let the person know what to expect, which is particularly useful for individuals with PTSD or ASD."
+                },
+                {
+                    question: "8. A person with Borderline Personality Disorder is most characterized by:",
+                    options: ["A pervasive distrust of others.", "A persistent need for admiration and lack of empathy.", "Instability in relationships, self-image, and impulse control.", "A pattern of rule-breaking and disregard for others' rights."],
+                    answer: "Instability in relationships, self-image, and impulse control.",
+                    explanation: "BPD is defined by a pervasive pattern of instability, including frantic efforts to avoid abandonment and poor impulse control."
+                },
+                 {
+                    question: "9. The 'LEAPS' model is a framework for de-escalation. What does the 'L' stand for?",
+                    options: ["Look", "Lead", "Listen", "Limit"],
+                    answer: "Listen",
+                    explanation: "Listening is the fundamental first step in the LEAPS model, as it allows an officer to identify the problem and understand the circumstances before acting."
+                },
+                {
+                    question: "10. The policy of moving people with severe mental illness out of large state hospitals and into communities, a process that led to an increase in incarceration, is called:",
+                    options: ["Deinstitutionalization", "Jail Diversion", "Community Policing", "Decriminalization"],
+                    answer: "Deinstitutionalization",
+                    explanation: "Deinstitutionalization began in 1955 and resulted in many individuals with mental illness being routed through the criminal justice system due to a lack of community resources."
+                },
+                 {
+                    question: "11. A veteran who becomes highly agitated when approached from behind is likely experiencing which PTSD symptom?",
+                    options: ["Avoidance", "Intrusion", "Negative Mood", "Hyperarousal / Hypervigilance"],
+                    answer: "Hyperarousal / Hypervigilance",
+                    explanation: "Hypervigilance involves being 'on edge' and overly alert. A veteran may feel easily threatened by anyone approaching, especially from a blind spot like their back."
+                },
+                 {
+                    question: "12. An officer is talking to an individual who is rocking back and forth, avoiding eye contact, and repeating the officer's last words. These are common behavioral characteristics of:",
+                    options: ["Bipolar Disorder", "Antisocial Personality Disorder", "Autism Spectrum Disorder", "Schizophrenia"],
+                    answer: "Autism Spectrum Disorder",
+                    explanation: "Repetitive motor movements (rocking), avoidance of eye contact, and echoing words (echolalia) are all hallmark characteristics of ASD."
+                },
+                 {
+                    question: "13. The 80/20 rule in crisis communication states that you should:",
+                    options: ["Talk 80% of the time, listen 20%", "Give 80% facts, 20% empathy", "Listen 80% of the time, talk 20%", "Spend 80% of time on scene, 20% in transport"],
+                    answer: "Listen 80% of the time, talk 20%",
+                    explanation: "The 80/20 rule emphasizes the importance of listening to gather information and allow the person to vent before an officer speaks."
+                },
+                 {
+                    question: "14. A person who believes they are a historical figure and should be treated as superior, has an exaggerated sense of talent, and exploits others likely has which personality disorder?",
+                    options: ["Borderline Personality Disorder", "Paranoid Personality Disorder", "Antisocial Personality Disorder", "Narcissistic Personality Disorder"],
+                    answer: "Narcissistic Personality Disorder",
+                    explanation: "These are classic traits of Narcissistic Personality Disorder, which includes grandiosity, a sense of entitlement, and a lack of empathy."
+                },
+                 {
+                    question: "15. The primary goal of Crisis Intervention Training (CIT) is to:",
+                    options: ["Train officers to diagnose mental illness in the field.", "Give officers the authority to administer medication.", "Calm persons in crisis and refer them to mental health services instead of jail.", "Ensure that every person with mental illness is arrested."],
+                    answer: "Calm persons in crisis and refer them to mental health services instead of jail.",
+                    explanation: "The primary goal is to de-escalate, ensure safety, and divert individuals from the criminal justice system to the healthcare system when appropriate."
+                },
+                 {
+                    question: "16. A 'moral injury' is best described as:",
+                    options: ["A physical injury sustained in combat.", "Damage done to one's conscience from violating one's own moral code.", "A legal term for being found not guilty by reason of insanity.", "The guilt of surviving an event that others did not."],
+                    answer: "Damage done to one's conscience from violating one's own moral code.",
+                    explanation: "A moral injury occurs when a person perpetrates, witnesses, or fails to prevent acts that violate their personal morals or ethics, leading to shame and guilt."
+                },
+                {
+                    question: "17. An officer is assessing a person's level of comprehension, behavior, and emotional state. This is known as the:",
+                    options: ["LEAPS Model", "Suicide Risk Assessment", "Three-Point Assessment", "Tactical Transparency Check"],
+                    answer: "Three-Point Assessment",
+                    explanation: "This quick field assessment helps an officer roughly determine a subject's mental health status by checking their comprehension, behavior, and emotion."
+                },
+                {
+                    question: "18. According to research, people with serious mental illness are:",
+                    options: ["Slightly more likely to be violent than the general population.", "The primary cause of violent crime in the U.S.", "Over 10 times more likely to be victims of violent crime.", "Less likely to be victims of crime due to social isolation."],
+                    answer: "Over 10 times more likely to be victims of violent crime.",
+                    explanation: "Stigma creates the false narrative that people with mental illness are dangerous, but research shows they are far more likely to be victims of crime than perpetrators."
+                },
+                {
+                    question: "19. A court that combines judicial supervision with community mental health treatment to reduce recidivism is called a:",
+                    options: ["Superior Court", "Justice of the Peace Court", "Drug Court", "Mental Health Court"],
+                    answer: "Mental Health Court",
+                    explanation: "Mental Health Courts are a form of post-arrest diversion designed to provide treatment and supervision as an alternative to traditional incarceration, significantly reducing recidivism."
+                },
+                {
+                    question: "20. Which of the following is considered a PROTECTIVE factor against suicide?",
+                    options: ["Previous suicide attempt", "Feelings of hopelessness", "Access to local health services", "Male, age 15-34"],
+                    answer: "Access to local health services",
+                    explanation: "Access to health services, a support system, and positive coping skills are protective factors, while the others are risk factors."
+                }
+            ];
+
+            const quizContainer = document.getElementById('quiz-container');
+            const checkAnswersBtn = document.getElementById('check-answers-btn');
+            const resetQuizBtn = document.getElementById('reset-quiz-btn');
+
+            function loadQuiz() {
+                quizContainer.innerHTML = '';
+                 quizData.forEach((q, index) => {
+                    const questionDiv = document.createElement('div');
+                    questionDiv.className = 'quiz-question';
+                    let optionsHtml = q.options.map(option => `
+                        <label class="block cursor-pointer p-2 rounded-md hover:bg-gray-100 transition-colors"><input type="radio" name="q${index}" value="${option}" class="mr-2">${option}</label>
+                    `).join('');
+                    questionDiv.innerHTML = `
+                        <p class="font-semibold mb-2">${q.question}</p>
+                        <div class="space-y-2">${optionsHtml}</div>
+                        <div class="feedback hidden mt-2 p-3 rounded-lg text-sm transition-opacity duration-300"></div>
+                    `;
+                    quizContainer.appendChild(questionDiv);
+                });
+            }
+            
+            checkAnswersBtn.addEventListener('click', () => {
+                quizData.forEach((q, index) => {
+                    const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                    const feedback = document.querySelectorAll('.feedback')[index];
+                    feedback.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+                    if (selected) {
+                         if (selected.value === q.answer) {
+                            feedback.innerHTML = `<i class="fas fa-check-circle mr-2"></i><strong>Correct!</strong> ${q.explanation}`;
+                            feedback.classList.add('bg-green-100', 'text-green-800');
+                        } else {
+                            feedback.innerHTML = `<i class="fas fa-times-circle mr-2"></i><strong>Incorrect.</strong> The correct answer is "<strong>${q.answer}</strong>". ${q.explanation}`;
+                            feedback.classList.add('bg-red-100', 'text-red-800');
+                        }
+                    } else {
+                         feedback.innerHTML = `<i class="fas fa-exclamation-circle mr-2"></i><strong>Unanswered.</strong> The correct answer is "<strong>${q.answer}</strong>". ${q.explanation}`;
+                         feedback.classList.add('bg-yellow-100', 'text-yellow-800');
+                    }
+                    feedback.classList.remove('hidden');
+                });
+            });
+
+            resetQuizBtn.addEventListener('click', loadQuiz);
+
+            loadQuiz();
+
+
+            const resources = [
+                { name: "HSC §571.019 - Liability", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.571.htm#571.019" },
+                { name: "HSC §573 - Emergency Detention", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.573.htm" },
+                { name: "Occupations Code §1701", url: "https://statutes.capitol.texas.gov/Docs/OC/htm/OC.1701.htm" },
+                { name: "Texas Penal Code §8.01 - Insanity", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.8.htm#8.01" },
+                { name: "National Alliance on Mental Illness (NAMI)", url: "https://www.nami.org/" },
+                { name: "Substance Abuse and Mental Health Services Administration (SAMHSA)", url: "https://www.samhsa.gov/" },
+                { name: "Mental Health America (MHA)", url: "https://www.mhanational.org/" },
+                { name: "U.S. Dept. of Veterans Affairs (VA) - Mental Health", url: "https://www.mentalhealth.va.gov/" },
+                { name: "American Foundation for Suicide Prevention (AFSP)", url: "https://afsp.org/" },
+                { name: "Police Executive Research Forum (PERF)", url: "https://www.policeforum.org/" },
+                { name: "Texas Health & Human Services", url: "https://www.hhs.texas.gov/" }
+            ];
+            const resourcesList = document.getElementById('resources-list');
+            resources.sort((a, b) => a.name.localeCompare(b.name));
+            resources.forEach(res => {
+                const link = document.createElement('a');
+                link.href = res.url;
+                link.target = '_blank';
+                link.className = 'block p-3 bg-gray-50 rounded-lg text-blue-600 hover:bg-blue-100 hover:shadow-sm transition-all';
+                link.innerHTML = `<i class="fas fa-external-link-alt mr-2"></i>${res.name}`;
+                resourcesList.appendChild(link);
+            });
+        });
+    </script>
+</body>
+</html>
+

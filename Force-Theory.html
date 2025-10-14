@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Guide: Use of Force Theory</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --header-bg: #1f2937;
+            --bg-color: #f3f4f6;
+            --tab-active-bg: #3b82f6;
+            --tab-active-text: #ffffff;
+            --card-bg: #ffffff;
+            --text-color: #111827;
+            --link-color: #2563eb;
+            --punishment-defense: #22c55e; /* Green */
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://rsms.me/inter/inter.css');
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab.active {
+            background-color: var(--tab-active-bg);
+            color: var(--tab-active-text);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tab {
+            transition: all 0.3s ease-in-out;
+        }
+        .punishment-badge {
+            display: inline-block;
+            padding: 0.25rem 0.6rem;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+        .punishment-defense {
+            background-color: var(--punishment-defense);
+            color: white;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="bg-gray-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">
+                <i class="fas fa-hand-rock mr-2"></i>Use of Force Theory
+            </h1>
+            <p class="text-sm text-gray-300">BPOC Chapter 28 | TCOLE Preparation</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-4 md:p-6">
+        <!-- Tab Navigation -->
+        <div class="mb-6 bg-white rounded-lg shadow-md overflow-x-auto">
+            <nav id="tabs" class="flex flex-row space-x-1 p-2">
+                <button data-tab="legal" class="tab active flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-gavel mr-2"></i> <span class="hidden md:inline">Legal Authority</span>
+                </button>
+                <button data-tab="concepts" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-brain mr-2"></i> <span class="hidden md:inline">Concepts</span>
+                </button>
+                <button data-tab="options" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-tasks mr-2"></i> <span class="hidden md:inline">Force Options</span>
+                </button>
+                <button data-tab="crm" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-users mr-2"></i> <span class="hidden md:inline">CRM</span>
+                </button>
+                 <button data-tab="consequences" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-exclamation-triangle mr-2"></i> <span class="hidden md:inline">Consequences</span>
+                </button>
+                <button data-tab="knowledge-check" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-question-circle mr-2"></i> <span class="hidden md:inline">Knowledge Check</span>
+                </button>
+                <button data-tab="resources" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-link mr-2"></i> <span class="hidden md:inline">Resources</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Tab Content -->
+        <div id="tab-contents">
+            <!-- Legal Authority Tab -->
+            <div id="legal" class="tab-content active space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">PC Ch. 9: Justification Excluding Criminal Responsibility</h2>
+                    <p class="text-gray-600 text-sm">Chapter 9 of the Texas Penal Code outlines the circumstances under which conduct, including the use of force, is justified by law. It provides a defense to prosecution, meaning that if the conduct meets these criteria, it is not a criminal offense.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-lg mb-2">PC §9.01 - Definitions: "Deadly Force"</h3>
+                     <div class="mb-4">
+                        <span class="punishment-badge punishment-defense">Definition</span>
+                    </div>
+                    <p class="text-sm text-gray-700 mb-4">"Deadly Force" means force that is intended or known by the actor to cause, or in the manner of its use or intended use is capable of causing, death or serious bodily injury.</p>
+                    <h4 class="font-semibold mt-4">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                        <li>Force is intended or known to cause death/SBI, OR</li>
+                        <li>The way the force is used makes it capable of causing death/SBI.</li>
+                    </ul>
+                    <p class="text-sm text-gray-600 mt-2"><strong>Practical Example:</strong> Firing a handgun at a person is deadly force. Striking someone in the head with a heavy iron pipe is also deadly force, because the manner of its use is capable of causing death or serious bodily injury.</p>
+                    <a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.9.htm#9.01" target="_blank" class="text-sm text-blue-600 hover:underline mt-2 inline-block">View Statute <i class="fas fa-external-link-alt ml-1"></i></a>
+                </div>
+
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-lg mb-2">PC §9.21 - Public Duty</h3>
+                    <div class="mb-4">
+                        <span class="punishment-badge punishment-defense">Justification / Defense</span>
+                    </div>
+                    <p class="text-sm text-gray-700 mb-4">Conduct is justified if the actor reasonably believes the conduct is required or authorized by law, by the judgment or order of a competent court, or in the execution of legal process.</p>
+                    <h4 class="font-semibold mt-4">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                        <li>Actor reasonably believes conduct is required/authorized by law.</li>
+                        <li>For example, executing a lawful arrest warrant.</li>
+                    </ul>
+                    <p class="text-sm text-gray-600 mt-2"><strong>Practical Example:</strong> A peace officer acting under a valid arrest warrant uses the force necessary to enter a home and effect the arrest. The conduct of entering and arresting is justified under public duty.</p>
+                    <a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.9.htm#9.21" target="_blank" class="text-sm text-blue-600 hover:underline mt-2 inline-block">View Statute <i class="fas fa-external-link-alt ml-1"></i></a>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-lg mb-2">PC §9.22 - Necessity</h3>
+                    <div class="mb-4">
+                        <span class="punishment-badge punishment-defense">Justification / Defense</span>
+                    </div>
+                    <p class="text-sm text-gray-700 mb-4">Conduct is justified if the actor reasonably believes the conduct is immediately necessary to avoid imminent harm, and the desirability and urgency of avoiding the harm clearly outweigh the harm sought to be prevented by the law proscribing the conduct.</p>
+                    <h4 class="font-semibold mt-4">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                        <li>Actor reasonably believes conduct is immediately necessary.</li>
+                        <li>To avoid imminent harm.</li>
+                        <li>The urgency to avoid the harm outweighs the harm of the illegal act.</li>
+                    </ul>
+                    <p class="text-sm text-gray-600 mt-2"><strong>Practical Example:</strong> An officer, seeing a child locked in a hot car who is clearly in distress, breaks the car window to rescue the child. The act of breaking the window (criminal mischief) is justified by the necessity of preventing imminent serious bodily injury or death to the child.</p>
+                    <a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.9.htm#9.22" target="_blank" class="text-sm text-blue-600 hover:underline mt-2 inline-block">View Statute <i class="fas fa-external-link-alt ml-1"></i></a>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-lg mb-2">PC §9.31 - Self-Defense</h3>
+                    <div class="mb-4">
+                        <span class="punishment-badge punishment-defense">Justification / Defense</span>
+                    </div>
+                    <p class="text-sm text-gray-700 mb-4">A person is justified in using force against another when and to the degree the actor reasonably believes the force is immediately necessary to protect the actor against the other's use or attempted use of unlawful force.</p>
+                    <h4 class="font-semibold mt-4">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                        <li>Actor reasonably believes force is needed.</li>
+                        <li>Force is immediately necessary.</li>
+                        <li>To protect against another's unlawful force.</li>
+                        <li>The actor did not provoke the person against whom force is used.</li>
+                    </ul>
+                    <p class="text-sm text-gray-600 mt-2"><strong>Practical Example:</strong> A subject shoves an officer during an interview. The officer is justified in using physical force, such as a takedown, to stop the assault and gain control, as it's immediately necessary to prevent further unlawful force.</p>
+                    <a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.9.htm#9.31" target="_blank" class="text-sm text-blue-600 hover:underline mt-2 inline-block">View Statute <i class="fas fa-external-link-alt ml-1"></i></a>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-lg mb-2">PC §9.32 - Deadly Force in Defense of Person</h3>
+                    <div class="mb-4">
+                        <span class="punishment-badge punishment-defense">Justification / Defense</span>
+                    </div>
+                    <p class="text-sm text-gray-700 mb-4">A person is justified in using deadly force against another if they would be justified in using force under §9.31, and when they reasonably believe deadly force is immediately necessary to protect against death or serious bodily injury.</p>
+                    <h4 class="font-semibold mt-4">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                        <li>Standard self-defense is justified.</li>
+                        <li>Reasonably believes deadly force is immediately necessary.</li>
+                        <li>To protect against another's use/attempted use of deadly force, OR</li>
+                        <li>To prevent an imminent aggravated kidnapping, murder, sexual assault, or robbery.</li>
+                    </ul>
+                    <p class="text-sm text-gray-600 mt-2"><strong>Practical Example:</strong> A suspect pulls a knife and lunges at an officer. The officer reasonably believes their life is in danger and is justified in using deadly force to stop the imminent threat of serious bodily injury or death.</p>
+                    <a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.9.htm#9.32" target="_blank" class="text-sm text-blue-600 hover:underline mt-2 inline-block">View Statute <i class="fas fa-external-link-alt ml-1"></i></a>
+                </div>
+
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-lg mb-2">PC §9.33 - Defense of Third Person</h3>
+                    <div class="mb-4">
+                        <span class="punishment-badge punishment-defense">Justification / Defense</span>
+                    </div>
+                    <p class="text-sm text-gray-700 mb-4">A person is justified in using force or deadly force against another to protect a third person if, under the circumstances as the actor reasonably believes them to be, the third person would be justified in using force or deadly force to protect himself.</p>
+                    <h4 class="font-semibold mt-4">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                        <li>Actor reasonably believes force is needed to protect a third person.</li>
+                        <li>The third person would be justified in using that level of force themselves.</li>
+                        <li>The actor reasonably believes their intervention is immediately necessary.</li>
+                    </ul>
+                    <p class="text-sm text-gray-600 mt-2"><strong>Practical Example:</strong> An officer sees a suspect actively assaulting a victim on the street. The officer is justified in using the force reasonably necessary to stop the assault and protect the victim, stepping into the shoes of the victim, who would be justified in self-defense.</p>
+                    <a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.9.htm#9.33" target="_blank" class="text-sm text-blue-600 hover:underline mt-2 inline-block">View Statute <i class="fas fa-external-link-alt ml-1"></i></a>
+                </div>
+                
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-lg mb-2">PC §9.41 & §9.42 - Protection of Property</h3>
+                    <div class="mb-4">
+                        <span class="punishment-badge punishment-defense">Justification / Defense</span>
+                    </div>
+                    <p class="text-sm text-gray-700 mb-4">A person may use force (but not deadly force) when they reasonably believe it is immediately necessary to prevent trespass or theft. Deadly force is only justified to protect property to prevent arson, robbery, burglary, theft during the nighttime, or criminal mischief during the nighttime, AND the actor reasonably believes the property cannot be protected by any other means.</p>
+                    <h4 class="font-semibold mt-4">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                        <li>(Force) Reasonably believe force is immediately necessary to prevent trespass or interference with property.</li>
+                        <li>(Deadly Force) Only justified for specific crimes (arson, robbery, night-time burglary/theft).</li>
+                        <li>(Deadly Force) AND reasonably believe land/property cannot be protected by other means.</li>
+                    </ul>
+                    <p class="text-sm text-gray-600 mt-2"><strong>Practical Example:</strong> A property owner sees someone trying to steal their lawnmower during the day. They can use reasonable force to stop them. They cannot use deadly force. If they see someone breaking into their home at night to commit a theft, deadly force may be justified.</p>
+                    <a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.9.htm#9.41" target="_blank" class="text-sm text-blue-600 hover:underline mt-2 inline-block">View Statutes <i class="fas fa-external-link-alt ml-1"></i></a>
+                </div>
+
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-lg mb-2">PC §9.51 - Arrest and Search</h3>
+                    <div class="mb-4">
+                        <span class="punishment-badge punishment-defense">Justification / Defense</span>
+                    </div>
+                    <p class="text-sm text-gray-700 mb-4">A peace officer is justified in using force against another when the actor reasonably believes the force is immediately necessary to make or assist in making an arrest or search, or to prevent escape after arrest.</p>
+                    <h4 class="font-semibold mt-4">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                        <li>Actor is a peace officer (or assisting one).</li>
+                        <li>Reasonably believes force is immediately necessary.</li>
+                        <li>To make an arrest, search, or prevent escape.</li>
+                        <li>The officer reasonably believes the arrest or search is lawful.</li>
+                    </ul>
+                    <p class="text-sm text-gray-600 mt-2"><strong>Practical Example:</strong> A suspect pulls away and tries to run while an officer is attempting to place them in handcuffs. The officer is justified in using the amount of force reasonably necessary, like a takedown or control hold, to complete the arrest and prevent escape.</p>
+                    <a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.9.htm#9.51" target="_blank" class="text-sm text-blue-600 hover:underline mt-2 inline-block">View Statute <i class="fas fa-external-link-alt ml-1"></i></a>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-lg mb-2">PC §9.52 - Prevention of Escape from Custody</h3>
+                    <div class="mb-4">
+                        <span class="punishment-badge punishment-defense">Justification / Defense</span>
+                    </div>
+                    <p class="text-sm text-gray-700 mb-4">The use of force to prevent the escape of an arrested person from custody is justifiable when the force could have been employed to effect the arrest under which the person is in custody.</p>
+                    <h4 class="font-semibold mt-4">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                        <li>A person is under arrest and in custody.</li>
+                        <li>The officer uses force to prevent an escape.</li>
+                        <li>The level of force used would have been justified to make the initial arrest.</li>
+                    </ul>
+                    <p class="text-sm text-gray-600 mt-2"><strong>Practical Example:</strong> An officer is transporting an inmate who suddenly kicks out a window of the patrol car and attempts to flee. The officer is justified in using the same level of force they would have used in the original arrest to prevent the escape.</p>
+                    <a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.9.htm#9.52" target="_blank" class="text-sm text-blue-600 hover:underline mt-2 inline-block">View Statute <i class="fas fa-external-link-alt ml-1"></i></a>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-lg mb-2">PC §9.61-9.63 - Special Relationships</h3>
+                    <div class="mb-4">
+                        <span class="punishment-badge punishment-defense">Justification / Defense</span>
+                    </div>
+                    <p class="text-sm text-gray-700 mb-4">Force is justified by those with special responsibilities, such as a parent, educator, or guardian, when they reasonably believe the force is necessary to discipline a child, maintain order, or safeguard and promote the welfare of the incompetent person.</p>
+                    <h4 class="font-semibold mt-4">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                        <li>Actor is a parent, educator, or guardian with legal responsibility.</li>
+                        <li>Force is used for discipline or to maintain order/welfare.</li>
+                        <li>The force used is not deadly force and does not create a substantial risk of death, serious bodily injury, or disfigurement.</li>
+                    </ul>
+                    <p class="text-sm text-gray-600 mt-2"><strong>Practical Example:</strong> A teacher physically separates two students who are fighting in a classroom to maintain order. This use of force is justified under their role as an educator.</p>
+                    <a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.9.htm#9.61" target="_blank" class="text-sm text-blue-600 hover:underline mt-2 inline-block">View Statutes <i class="fas fa-external-link-alt ml-1"></i></a>
+                </div>
+
+
+            </div>
+
+            <!-- Concepts Tab -->
+            <div id="concepts" class="tab-content space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Key Court Cases</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold">Graham v. Connor, 490 U.S. 386 (1989)</h4>
+                            <p class="text-sm text-gray-700">Established the "objective reasonableness" standard. The reasonableness of a particular use of force must be judged from the perspective of a reasonable officer on the scene, rather than with 20/20 hindsight. It requires consideration of the facts and circumstances of each case, including the severity of the crime, whether the suspect poses an immediate threat, and whether they are actively resisting or attempting to evade arrest.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Tennessee v. Garner, 471 U.S. 1 (1985)</h4>
+                            <p class="text-sm text-gray-700">Deadly force may not be used against a fleeing felon unless it is necessary to prevent the escape AND the officer has probable cause to believe that the suspect poses a significant threat of death or serious physical injury to the officer or others. It is unconstitutional to use deadly force to stop a fleeing suspect who is unarmed and non-dangerous.</p>
+                        </div>
+                    </div>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Psychological Aspects & Control</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold">The Officer's Role is Defensive</h4>
+                            <p class="text-sm text-gray-700">In a physical arrest, the police role is defensive—serving to protect the community from criminality. This initiative is not aggression, but an act to resist or prevent aggression or attack.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Concept of Control</h4>
+                            <p class="text-sm text-gray-700">Control is the degree of influence an officer must exert over a violator to take them safely into custody. This requires complete self-control; an officer who is not in control of their own emotions cannot effectively control a violator. The objective is to elicit cooperation.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Emotions, Behavior, and Prejudices</h4>
+                            <p class="text-sm text-gray-700">Arrests are emotional events. Uncertainty can lead to compensating behaviors like hesitation, verbal abuse, or unnecessary force. An officer must be aware of their own prejudices and remain firm but fair to reduce conflict.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Assessing Reasonable Force</h2>
+                    <p class="text-sm text-gray-700 mb-4">An officer should consider the following factors when assessing the level of force that is reasonable under the circumstances:</p>
+                    <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                        <li>Is the suspect submitting peacefully or resisting?</li>
+                        <li>Is the suspect armed?</li>
+                        <li>What is the nature of the crime?</li>
+                        <li>Does the suspect have a history of violence?</li>
+                        <li>How many suspects are involved versus how many officers are available?</li>
+                        <li>What is the risk of injury to bystanders or other officers?</li>
+                    </ul>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Moral Considerations & Professionalism</h2>
+                    <p class="text-sm text-gray-700 mb-4">An officer's decision to use force, especially deadly force, is affected by multiple layers of controls and considerations:</p>
+                    <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                        <li><strong>Legal Standards:</strong> Is the force justifiable under statutory and case law?</li>
+                        <li><strong>Agency Policy:</strong> Departmental policy should be at least as restrictive as the law.</li>
+                        <li><strong>Informal Norms:</strong> The informal culture of law enforcement can influence decisions.</li>
+                        <li><strong>Individual Conscience:</strong> An officer's personal ethics and beliefs provide the final inner control.</li>
+                        <li>A professional officer must be able to move from words to force and back to words, accurately assess situations, and articulate the reasons for their actions.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Force Options Tab -->
+            <div id="options" class="tab-content space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Use of Force Options</h2>
+                    <p class="text-sm text-gray-700 mb-4">Officers have a range of tools and strategies. The appropriate level of force depends on the totality of the circumstances, particularly the subject's actions and level of resistance. A key concept is that force must be no more than what a reasonable officer would use under the same circumstances.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 text-center text-sm">
+                        <div class="p-4 bg-gray-100 rounded-lg">
+                            <i class="fas fa-eye text-2xl text-gray-500 mb-2"></i>
+                            <h4 class="font-semibold">Professional Presence</h4>
+                            <p>The deterrent effect of a visible, uniformed officer.</p>
+                        </div>
+                        <div class="p-4 bg-gray-100 rounded-lg">
+                            <i class="fas fa-bullhorn text-2xl text-blue-500 mb-2"></i>
+                            <h4 class="font-semibold">Verbal Communications</h4>
+                            <p>Commands, instructions, and warnings.</p>
+                        </div>
+                        <div class="p-4 bg-gray-100 rounded-lg">
+                            <i class="fas fa-hand-paper text-2xl text-yellow-500 mb-2"></i>
+                            <h4 class="font-semibold">Weaponless Strategies</h4>
+                            <p>Control holds, pressure points, takedowns.</p>
+                        </div>
+                        <div class="p-4 bg-gray-100 rounded-lg">
+                            <i class="fas fa-shield-alt text-2xl text-orange-500 mb-2"></i>
+                            <h4 class="font-semibold">Weapon Strategies</h4>
+                            <p>Baton, OC spray, ECD/Taser.</p>
+                        </div>
+                        <div class="p-4 bg-gray-100 rounded-lg">
+                            <i class="fas fa-skull-crossbones text-2xl text-red-500 mb-2"></i>
+                            <h4 class="font-semibold">Deadly Force</h4>
+                            <p>Firearms and any force likely to cause death or SBI.</p>
+                        </div>
+                    </div>
+                     <h4 class="font-semibold mt-6">Principal Considerations:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                        <li><strong>Ineffective Control:</strong> The level of force is less than the subject's resistance.</li>
+                        <li><strong>Excessive Control:</strong> The level of force is unreasonably greater than the subject's resistance.</li>
+                        <li>The force must be reasonable, lawful, and align with departmental policy.</li>
+                    </ul>
+                </div>
+                <!-- Image of Force Model would go here if available -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Communication Strategies</h2>
+                     <p class="text-sm text-gray-700 mb-4">Communication is a critical professional skill. An estimated 97% of an officer's duties involve verbal skills, while only 3% require physical force. Approximately 93% of a message's reception is based on *how* it is said (tone and body language), not *what* is said.</p>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold">Best Practices for Verbal Persuasion:</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                                <li><strong>Listen:</strong> Understand the real problem.</li>
+                                <li><strong>Empathize:</strong> See the situation from their perspective.</li>
+                                <li><strong>Ask:</strong> Use questions to gain control, buy time, and show concern.</li>
+                                <li><strong>Paraphrase:</strong> Repeat what you've heard to confirm understanding.</li>
+                                <li><strong>Summarize:</strong> State the resolution and provide the bottom line.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Types of Verbal Appeals:</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                                <li><strong>Ethical:</strong> Based on your position as a professional officer; assures and persuades.</li>
+                                <li><strong>Rational:</strong> Appeals to common sense, reason, and community standards.</li>
+                                <li><strong>Practical:</strong> Based on an urgent need to change the circumstance; a short-term solution.</li>
+                                <li><strong>Personal:</strong> Addresses an individual's own needs and desires.</li>
+                            </ul>
+                        </div>
+                    </div>
+                     <h4 class="font-semibold mt-6">When Words Are Not Enough:</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                        <li>When a person seriously threatens bodily harm to an officer or others.</li>
+                        <li>When a suspect begins walking or running away, or escapes custody.</li>
+                        <li>When an officer is forced to repeat the same words or ideas with no effect.</li>
+                        <li>Remember: When words and actions disagree, trust actions.</li>
+                     </ul>
+                </div>
+            </div>
+
+            <!-- CRM Tab -->
+            <div id="crm" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Crew Resource Management (CRM)</h2>
+                    <p class="text-sm text-gray-700 mb-2">CRM is a management model that gives every team member an active voice in situations where human error can have devastating effects. It is designed to prevent accidents by improving communication and crew coordination.</p>
+                    <h4 class="font-semibold mt-4">Benefits of CRM in Law Enforcement:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                        <li><strong>Supports the Duty to Intervene:</strong> Encourages officers to speak up if they see a partner's emotions (anger, frustration) potentially leading to a bad decision.</li>
+                        <li><strong>Fosters Communication:</strong> Improves teamwork between officers and with outside resources (Fire, EMS).</li>
+                        <li><strong>Maintains Accountability:</strong> Every officer on a scene is responsible for what happens. CRM reinforces this shared responsibility.</li>
+                        <li><strong>Alleviates Emotional Responses:</strong> By involving all parties and listening to concerns, it can slow a situation down and allow rational thought to prevail over emotion.</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-lg mb-2">Excessive Professional Courtesy</h3>
+                    <p class="text-sm text-gray-700 mb-4">A major danger identified in CRM is "Excessive Professional Courtesy"—when a junior member of a team shows excessive deference to a senior member and fails to challenge a potentially bad decision. This was a factor in the George Floyd case, where a junior officer's concerns were dismissed by his senior Field Training Officer.</p>
+                     <h4 class="font-semibold mt-4">How to Intervene Using CRM (5 Steps):</h4>
+                    <ol class="list-decimal list-inside text-sm text-gray-700 mt-2 space-y-1">
+                        <li><strong>Get Attention:</strong> Address the individual by name/rank. ("Sarge, listen!")</li>
+                        <li><strong>State Your Concern:</strong> "I am concerned for the suspect's health."</li>
+                        <li><strong>State the Problem:</strong> "It looks like he is suffering from positional asphyxia."</li>
+                        <li><strong>Suggest a Solution:</strong> "I think we should roll him onto his side to help him breathe."</li>
+                        <li><strong>Obtain Agreement:</strong> "Does that sound good to you?"</li>
+                    </ol>
+                </div>
+            </div>
+            
+             <!-- Consequences Tab -->
+            <div id="consequences" class="tab-content space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Consequences of Excessive Force</h2>
+                    <p class="text-sm text-gray-700 mb-2">Officers can be held personally liable for using excessive force under both state and federal law. This can include criminal charges and civil lawsuits.</p>
+                    <h4 class="font-semibold mt-4">Federal Criminal Liability:</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                        <li><strong>18 U.S.C. § 241 - Conspiracy Against Rights:</strong> Makes it unlawful for two or more persons to conspire to injure, oppress, threaten, or intimidate any person in the free exercise of any right secured by the Constitution.</li>
+                        <li><strong>18 U.S.C. § 242 - Deprivation of Rights Under Color of Law:</strong> Makes it a crime for a person acting under color of any law to willfully deprive a person of a right protected by the Constitution or laws of the United States. This is the primary statute used to prosecute officers for excessive force.</li>
+                    </ul>
+                     <h4 class="font-semibold mt-4">State Criminal Liability:</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                         <li><strong>PC §39.04 - Violation of Civil Rights of Person in Custody:</strong> An official or employee of a correctional facility commits an offense if he intentionally subjects a person in custody to bodily injury.</li>
+                    </ul>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-lg mb-2">Duty to Intervene</h3>
+                    <p class="text-sm text-gray-700 mb-4">An officer may face personal liability for failing to stop other officers from using excessive force in their presence. Both non-supervisory and supervisory officers have an affirmative duty to intervene.</p>
+                    <p class="text-sm text-gray-600 mt-2"><strong>Practical Example:</strong> Officer A sees their partner, Officer B, continuing to strike a subject who is already handcuffed and no longer resisting. Officer A has a legal duty to step in and stop Officer B's actions. Failure to do so could result in Officer A also being held liable.</p>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-lg mb-2">Court Factors & Post-Incident Procedures</h3>
+                     <h4 class="font-semibold">Factors Courts Use to Determine Excessive Force</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                        <li>The 4th Amendment limits the level of force to what is reasonable.</li>
+                        <li>Reasonableness is based on the individual facts and circumstances.</li>
+                        <li>The need for force will be evaluated against the feasibility of alternatives.</li>
+                        <li>The extent of the injury inflicted is a key consideration.</li>
+                        <li>An officer can be liable even for a justified use of force if their negligent conduct prior to the use of force created the danger.</li>
+                    </ul>
+                     <h4 class="font-semibold mt-4">Post-Incident Procedures (Garrity Warning)</h4>
+                    <p class="text-sm text-gray-700 mt-2">Following a critical incident like an officer-involved shooting, an officer will be subject to an administrative (internal) investigation and potentially a separate criminal investigation. Under <a href="https://supreme.justia.com/cases/federal/us/385/493/" target="_blank" class="text-blue-600 hover:underline">Garrity v. New Jersey</a>, an officer can be compelled to provide a statement for the administrative investigation under threat of discipline, but that statement cannot be used against them in a criminal trial.</p>
+                </div>
+            </div>
+
+            <!-- Knowledge Check Tab -->
+            <div id="knowledge-check" class="tab-content">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Knowledge Check</h2>
+                    <p class="mb-6 text-gray-600">Test your understanding of the material.</p>
+                    <div id="quiz-container" class="space-y-8">
+                        <!-- Questions will be dynamically inserted here -->
+                    </div>
+                    <div class="mt-8 text-center">
+                        <button id="check-answers-btn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors">Check Answers</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resources Tab -->
+            <div id="resources" class="tab-content">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Statutory & Case Law Resources</h2>
+                    <div id="resources-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+                        <!-- Links will be dynamically inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('#tabs button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                });
+            });
+
+            const quizData = [
+                {
+                    question: "1. The 'objective reasonableness' standard for use of force was established by which landmark Supreme Court case?",
+                    options: ["Tennessee v. Garner", "Graham v. Connor", "Miranda v. Arizona", "Garrity v. New Jersey"],
+                    answer: "Graham v. Connor",
+                    explanation: "Graham v. Connor established that the reasonableness of force must be judged from the perspective of a reasonable officer on the scene, based on the totality of the circumstances."
+                },
+                {
+                    question: "2. An officer breaks a car window to save a child locked inside a hot car. This action is most likely justified under which section of the Penal Code?",
+                    options: ["PC §9.31 - Self-Defense", "PC §9.51 - Arrest and Search", "PC §9.22 - Necessity", "PC §9.33 - Defense of Third Person"],
+                    answer: "PC §9.22 - Necessity",
+                    explanation: "The necessity defense applies when conduct is immediately necessary to avoid imminent harm, and the urgency of avoiding the harm (death of the child) clearly outweighs the harm of the act (criminal mischief)."
+                },
+                {
+                    question: "3. Force that is intended or known to be capable of causing death or serious bodily injury is defined as:",
+                    options: ["Reasonable Force", "Excessive Force", "Weaponless Strategy", "Deadly Force"],
+                    answer: "Deadly Force",
+                    explanation: "This is the definition of Deadly Force provided in PC §9.01. It includes not just intent, but also the manner of the force's use."
+                },
+                {
+                    question: "4. An officer is justified in using force to perform an arrest under PC §9.21, which covers actions required or authorized by law. This justification is known as:",
+                    options: ["Public Duty", "Self-Defense", "Necessity", "Special Relationship"],
+                    answer: "Public Duty",
+                    explanation: "Public Duty justifies conduct, including use of force, when an officer reasonably believes it is required or authorized by law, such as executing a valid warrant."
+                },
+                {
+                    question: "5. A junior officer sees their senior partner becoming visibly angry and using threatening language. The first step in a proper CRM intervention is to:",
+                    options: ["Suggest a solution.", "State the problem.", "Get the officer's attention.", "Obtain agreement."],
+                    answer: "Get the officer's attention.",
+                    explanation: "The 5-step CRM intervention process begins with getting the crew member's attention, often by addressing them clearly by name or rank."
+                },
+                {
+                    question: "6. When an officer's use of force is unreasonably greater than the subject's level of resistance, it is defined as:",
+                    options: ["Ineffective Control", "Reasonable Control", "Excessive Control", "Deadly Force"],
+                    answer: "Excessive Control",
+                    explanation: "Excessive control (or excessive force) is a level of force unreasonably greater than the subject's resistance, potentially causing preventable injury."
+                },
+                {
+                    question: "7. Under Tennessee v. Garner, an officer can use deadly force against a fleeing felon ONLY if the suspect poses a significant threat of death or serious bodily injury and:",
+                    options: ["The suspect has committed a violent felony.", "The officer has given a verbal warning.", "The deadly force is necessary to prevent escape.", "The supervisor has approved it."],
+                    answer: "The deadly force is necessary to prevent escape.",
+                    explanation: "Tennessee v. Garner requires both elements: the suspect must pose a significant threat, AND the use of deadly force must be necessary to prevent their escape."
+                },
+                {
+                    question: "8. The primary federal statute that makes it a crime for an officer to willfully deprive someone of their constitutional rights (e.g., through excessive force) is:",
+                    options: ["18 U.S.C. § 241", "18 U.S.C. § 242", "The Fourth Amendment", "The Civil Rights Act of 1964"],
+                    answer: "18 U.S.C. § 242",
+                    explanation: "18 U.S.C. § 242, Deprivation of Rights Under Color of Law, is the key statute used in federal criminal prosecutions of law enforcement officers for excessive force and other misconduct."
+                },
+                {
+                    question: "9. Research suggests that approximately what percentage of a message is received and interpreted based on HOW something is said (tone, body language) rather than WHAT is said?",
+                    options: ["25%", "50%", "75%", "93%"],
+                    answer: "93%",
+                    explanation: "Studies show that about 7% of a message's impact is from the words, 33% from the voice/tone, and 60% from non-verbal cues, making tone and body language critically important."
+                },
+                 {
+                    question: "10. An officer dealing with a highly emotional person says, 'I understand you are frustrated, and as an officer, I want to help find a safe solution.' This is an example of which type of verbal appeal?",
+                    options: ["Ethical Appeal", "Rational Appeal", "Practical Appeal", "Personal Appeal"],
+                    answer: "Ethical Appeal",
+                    explanation: "An ethical appeal is based on the officer's professional position and their stated desire for a positive outcome, which is useful for de-escalating emotional individuals."
+                },
+                {
+                    question: "11. An officer sees a person about to steal a television from a home during the daytime. Under PC §9.42, can the officer use deadly force to protect the property?",
+                    options: ["Yes, because a theft is occurring.", "No, deadly force is not justified to prevent theft during the daytime.", "Yes, but only if the officer gives a warning first.", "No, deadly force is never justified to protect property."],
+                    answer: "No, deadly force is not justified to prevent theft during the daytime.",
+                    explanation: "PC §9.42 only allows for deadly force to protect property in specific circumstances, such as preventing arson, robbery, or a theft/burglary *during the nighttime*."
+                },
+                {
+                    question: "12. A statement an officer is compelled to give during an administrative (internal) investigation cannot be used against them in a criminal trial. This protection comes from:",
+                    options: ["Tennessee v. Garner", "Graham v. Connor", "The Concept of Control", "Garrity v. New Jersey"],
+                    answer: "Garrity v. New Jersey",
+                    explanation: "The Garrity Warning protects officers from having their administratively compelled statements used against them in a subsequent criminal prosecution."
+                },
+                {
+                    question: "13. The failure of a junior crew member to challenge a senior member's bad decision due to excessive deference is a CRM concept known as:",
+                    options: ["Duty to Intervene", "Excessive Professional Courtesy", "The 5-Step Model", "Rational Appeal"],
+                    answer: "Excessive Professional Courtesy",
+                    explanation: "Excessive Professional Courtesy is a dangerous dynamic where rank or seniority prevents subordinates from voicing legitimate concerns, which CRM aims to correct."
+                }
+            ];
+
+            const quizContainer = document.getElementById('quiz-container');
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'quiz-question';
+                let optionsHtml;
+                if(q.options.length === 2) {
+                     optionsHtml = q.options.map(option => `
+                        <label class="block"><input type="radio" name="q${index}" value="${option}" class="mr-2">${option}</label>
+                    `).join('');
+                } else {
+                    optionsHtml = q.options.map(option => `
+                        <label class="block"><input type="radio" name="q${index}" value="${option}" class="mr-2">${option}</label>
+                    `).join('');
+                }
+
+                questionDiv.innerHTML = `
+                    <p class="font-semibold mb-2">${q.question}</p>
+                    <div class="space-y-2">${optionsHtml}</div>
+                    <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                `;
+                quizContainer.appendChild(questionDiv);
+            });
+
+            document.getElementById('check-answers-btn').addEventListener('click', () => {
+                quizData.forEach((q, index) => {
+                    const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                    const feedback = document.querySelectorAll('.feedback')[index];
+                    feedback.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+                    if (selected && selected.value === q.answer) {
+                        feedback.textContent = `Correct! ${q.explanation}`;
+                        feedback.classList.add('bg-green-100', 'text-green-800');
+                    } else {
+                        feedback.textContent = `Incorrect. The correct answer is "${q.answer}". ${q.explanation}`;
+                        feedback.classList.add('bg-red-100', 'text-red-800');
+                    }
+                });
+            });
+
+            const resources = [
+                { name: "PC Ch. 9 - Justification Excluding Criminal Responsibility", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.9.htm" },
+                { name: "PC §39.04 - Violation of Civil Rights of Person in Custody", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.39.htm#39.04" },
+                { name: "CCP Art. 2A.051 - Duties and Powers", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.2A.htm#2A.051" },
+                { name: "18 U.S.C. § 241 - Conspiracy Against Rights", url: "https://www.law.cornell.edu/uscode/text/18/241" },
+                { name: "18 U.S.C. § 242 - Deprivation of Rights Under Color of Law", url: "https://www.law.cornell.edu/uscode/text/18/242" },
+                { name: "Graham v. Connor (1989)", url: "https://supreme.justia.com/cases/federal/us/490/386/" },
+                { name: "Tennessee v. Garner (1985)", url: "https://supreme.justia.com/cases/federal/us/471/1/" },
+                { name: "Garrity v. New Jersey (1967)", url: "https://supreme.justia.com/cases/federal/us/385/493/" }
+            ];
+            const resourcesList = document.getElementById('resources-list');
+            resources.forEach(res => {
+                const link = document.createElement('a');
+                link.href = res.url;
+                link.target = '_blank';
+                link.className = 'block p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors';
+                link.innerHTML = `<span class="font-semibold text-blue-600">${res.name}</span><i class="fas fa-external-link-alt ml-2 text-xs text-gray-400"></i>`;
+                resourcesList.appendChild(link);
+            });
+        });
+    </script>
+</body>
+</html>
+

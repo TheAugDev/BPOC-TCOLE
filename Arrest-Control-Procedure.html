@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Guide: Arrest and Control Procedures</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --header-bg: #1f2937;
+            --bg-color: #f3f4f6;
+            --tab-active-bg: #3b82f6;
+            --tab-active-text: #ffffff;
+            --card-bg: #ffffff;
+            --text-color: #111827;
+            --link-color: #2563eb;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://rsms.me/inter/inter.css');
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab.active {
+            background-color: var(--tab-active-bg);
+            color: var(--tab-active-text);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tab {
+            transition: all 0.3s ease-in-out;
+        }
+        .statute-link {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        .statute-link:hover {
+            text-decoration: underline;
+        }
+        .strike-zone {
+            background-color: #dc2626; /* red-600 */
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .no-strike-zone {
+            background-color: #2563eb; /* blue-600 */
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="bg-gray-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">
+                <i class="fas fa-user-shield mr-2"></i>Arrest & Control Procedures
+            </h1>
+            <p class="text-sm text-gray-300">BPOC Chapter 31 | TCOLE Preparation</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-4 md:p-6">
+        <!-- Tab Navigation -->
+        <div class="mb-6 bg-white rounded-lg shadow-md overflow-x-auto">
+            <nav id="tabs" class="flex flex-row space-x-1 p-2">
+                <button data-tab="core-concepts" class="tab active flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-brain mr-2"></i> <span class="hidden md:inline">Core Concepts</span>
+                </button>
+                <button data-tab="defense" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-fist-raised mr-2"></i> <span class="hidden md:inline">Defense Tactics</span>
+                </button>
+                <button data-tab="retention" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-hand-rock mr-2"></i> <span class="hidden md:inline">Weapons Retention</span>
+                </button>
+                <button data-tab="force" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-balance-scale mr-2"></i> <span class="hidden md:inline">Use of Force</span>
+                </button>
+                <button data-tab="arrest" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-user-lock mr-2"></i> <span class="hidden md:inline">Arrest Process</span>
+                </button>
+                <button data-tab="knowledge-check" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-question-circle mr-2"></i> <span class="hidden md:inline">Knowledge Check</span>
+                </button>
+                <button data-tab="resources" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-link mr-2"></i> <span class="hidden md:inline">Resources</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Tab Content -->
+        <div id="tab-contents">
+            <!-- Core Concepts Tab -->
+            <div id="core-concepts" class="tab-content active space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Three Basic Concepts of Weaponless Strategies</h2>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div>
+                            <h3 class="font-semibold text-lg"><i class="fas fa-hand-paper mr-2"></i>Self-Control</h3>
+                            <p class="text-sm text-gray-700">The police role is to protect the public and take the violator into custody. Officers must maintain physical and emotional control to ensure safety for all parties.</p>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg"><i class="fas fa-street-view mr-2"></i>Balance</h3>
+                            <p class="text-sm text-gray-700"><strong>Mental balance</strong> is preparing to control your emotions and the situation. <strong>Physical balance</strong> is a position that allows movement while maintaining strength and advantage (e.g., bladed stance).</p>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg"><i class="fas fa-eye mr-2"></i>Awareness</h3>
+                            <p class="text-sm text-gray-700">Observe the entire situation: suspect's hands, weapons, associates, escape routes, and your own footing.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Principles of Self-Defense</h2>
+                    <div>
+                        <h3 class="font-semibold text-lg mb-2">Elements Checklist:</h3>
+                        <ul class="list-disc list-inside text-sm text-gray-700 space-y-2">
+                            <li><strong>Prevention:</strong> The best strategy is to prevent an attack from happening.</li>
+                            <li><strong>Awareness of Dangers:</strong> Be constantly aware of potential threats in your environment.</li>
+                            <li><strong>Maintain Distance:</strong> Stay just outside a suspect's reach to allow for adequate reaction time.</li>
+                            <li><strong>Avoid Overextending:</strong> Do not compromise your balance or position by reaching too far.</li>
+                            <li><strong>Move Out of the Line of Force:</strong> If attacked, it's better to move laterally out of the attack's path rather than trying to stop it head-on.</li>
+                        </ul>
+                    </div>
+                    <div class="mt-4 border-t pt-4">
+                        <h3 class="font-semibold text-lg mb-2">Practical Example: Proper Interview Stance</h3>
+                        <p class="text-sm text-gray-700">An officer conducts an interview with a cooperative but nervous subject. The officer demonstrates a proper interview stance by:</p>
+                        <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                            <li>Blading their body at a 45-degree angle.</li>
+                            <li>Keeping their reaction hand (non-gun side) closer to the subject.</li>
+                            <li>Maintaining a balanced position that allows for quick movement.</li>
+                            <li>Keeping their gun side away from the subject.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Defense Tactics Tab -->
+            <div id="defense" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Weaponless Defense Strategies</h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="font-semibold text-lg mb-2">Standing Techniques</h3>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>Touching</li>
+                                <li>Striking (open hand and closed fist)</li>
+                                <li>Joint locking</li>
+                                <li>Pressure points</li>
+                                <li>Hand strikes and foot strikes</li>
+                                <li>Blocks (using hands, arms, legs)</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg mb-2">Ground Techniques</h3>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>Base get up</li>
+                                <li>Full guard position</li>
+                                <li>Full mount position</li>
+                                <li>Trap and roll</li>
+                                <li>Side mount</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Less-Lethal Force Weapons</h2>
+                     <p class="text-sm text-gray-700 mb-4">These are chemical, electrical, or kinetic weapons used to gain control of a situation and are a step above weaponless strategies but below deadly force. A tactical transition to one of these weapons may be necessary. (<a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.9.htm#9.55" target="_blank" class="statute-link">PC 9.55</a>)</p>
+                     <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                        <li><strong>Chemical & Electrical Devices:</strong> Taser, OC pepper spray, similar weapons.</li>
+                        <li><strong>Impact Weapons:</strong> Straight baton, expandable baton, side-handle baton.</li>
+                     </ul>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Impact Weapons (Baton)</h2>
+                     <p class="text-sm text-gray-700 mb-4">A baton is classified as a weapon capable of inflicting serious bodily injury or death. Its use is justified when force greater than weaponless strategies is needed, but less than deadly force is required.
+                     (<a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.46.htm#46.01" target="_blank" class="statute-link">PC 46.01(1)</a>, <a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.46.htm#46.15" target="_blank" class="statute-link">PC 46.15</a>)</p>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="font-semibold text-lg mb-2">Situations Necessitating Baton Use:</h3>
+                            <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                                <li>For a tactical squad in crowd/riot control.</li>
+                                <li>When attacked by a suspect with a non-firearm weapon.</li>
+                                <li>When assaulted by an unarmed suspect to disable or defend.</li>
+                                <li>When confronted by multiple threatening suspects.</li>
+                                <li>When a suspect who has committed a crime refuses verbal commands.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg mb-2">Justification for Baton Use (Checklist):</h3>
+                            <p class="text-sm text-gray-700 mb-2">The officer carries the burden to justify baton use based on the totality of the circumstances. (<a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.9.htm#9.51" target="_blank" class="statute-link">PC 9.51</a>) Factors include:</p>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>The physical stature of the suspect compared to the officer.</li>
+                                <li>The suspect's skill level (e.g., martial arts) or history of violence.</li>
+                                <li>The suspect's assumption of an aggressive stance.</li>
+                                <li>The suspect's inability to be restrained by lesser means.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 border-t pt-4 grid md:grid-cols-2 gap-6">
+                         <div>
+                            <h3 class="font-semibold text-lg mb-2">Guidelines for Baton Use</h3>
+                             <ul class="list-disc list-inside text-sm text-gray-700">
+                                 <li>Position the baton between yourself and the suspect.</li>
+                                 <li>Maintain a good defensive position.</li>
+                                 <li>Do not intentionally strike the head or throat unless deadly force is justified.</li>
+                             </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg mb-2">Strike & Non-Strike Areas</h3>
+                             <div class="space-y-2">
+                                <div>
+                                    <h4 class="font-semibold mb-1"><span class="strike-zone">STRIKE AREAS</span></h4>
+                                    <ul class="list-disc list-inside text-gray-700 text-sm">
+                                        <li>Center mass of arms</li>
+                                        <li>Center mass of legs</li>
+                                        <li>Abdomen</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold mb-1"><span class="no-strike-zone">NON-STRIKE AREAS</span></h4>
+                                    <ul class="list-disc list-inside text-gray-700 text-sm">
+                                        <li>Groin, Center of back/kidneys, Chest</li>
+                                        <li>Anything above the plane of the shoulders</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Weapons Retention Tab -->
+            <div id="retention" class="tab-content">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Basic Concepts of Weapons Retention</h2>
+                    <p class="text-sm text-gray-700 mb-4">The high number of officers shot with their own weapon highlights the critical need for training in weapons retention. The goal is to maintain possession of your weapon(s) during a physical confrontation.</p>
+
+                    <div>
+                        <h3 class="font-semibold text-lg mb-2">Elements Checklist:</h3>
+                        <ul class="list-disc list-inside text-sm text-gray-700 space-y-2">
+                            <li><strong>Holstered Retention:</strong> Techniques to keep the weapon secured in the holster when a suspect is attempting to take it.</li>
+                            <li><strong>Un-holstered Retention:</strong> Techniques to maintain control of the weapon once it has been drawn.</li>
+                            <li><strong>Positional Awareness:</strong> Keeping your weapon side away from a suspect during an approach or interview.</li>
+                            <li><strong>Multi-Weapon Retention:</strong> Retention skills should apply to handguns, rifles, shotguns, and intermediate weapons from all angles and positions (standing, kneeling, prone).</li>
+                        </ul>
+                    </div>
+
+                    <div class="mt-4 border-t pt-4">
+                        <h3 class="font-semibold text-lg mb-2">Practical Example: Attempted Disarm</h3>
+                        <p class="text-sm text-gray-700">An officer is clearing an unsecured building after a report of an open door. While moving through a hallway, a suspect lunges from a side room and grabs the officer's holstered handgun.</p>
+                        <p class="text-sm text-gray-700 mt-2"><strong>Required Action:</strong> The student officer must immediately demonstrate proper holstered weapon retention techniques to defeat the suspect's attempt to disarm them. This could involve using their body weight to pin the weapon, striking the suspect to create distance, and maintaining control until the threat is neutralized.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Use of Force Tab -->
+            <div id="force" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Deadly vs. Non-Deadly Force</h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="font-semibold text-lg mb-2">Use of Non-Deadly Force</h3>
+                            <p class="text-sm text-gray-700"><strong>Legal Definition:</strong> Force not likely to cause death or great bodily harm. It can be used when you reasonably believe it's necessary to defend yourself or another against an attacker's imminent use of unlawful force.</p>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg mb-2">Use of Deadly Force</h3>
+                            <p class="text-sm text-gray-700"><strong>Legal Definition:</strong> Peace officers may use deadly force to protect themselves or others when and to the degree they reasonably believe an immediate threat of death or serious bodily injury exists.</p>
+                        </div>
+                    </div>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Applying Deadly Force Concepts</h2>
+                    <p class="text-sm text-gray-700 mb-2">The concept of deadly force is not limited to firearms. Any object or action can constitute deadly force if it is used in a manner capable of causing death or serious bodily injury. Officers must consider this for:</p>
+                    <ul class="list-disc list-inside text-sm text-gray-700 space-y-2">
+                        <li><strong>Empty Hand Techniques:</strong> Strikes to the head, throat, or spine could be considered deadly force.</li>
+                        <li><strong>Control Weapons (Batons):</strong> Intentionally striking the head, throat, or other vital areas with an impact weapon constitutes deadly force.</li>
+                        <li><strong>Chemical & Electrical Devices:</strong> While generally less-lethal, prolonged or improper use against a vulnerable person could potentially be construed as deadly force.</li>
+                        <li><strong>Firearms:</strong> Any discharge of a firearm at a person is considered deadly force.</li>
+                        <li><strong>Vehicles:</strong> Using a vehicle to ram another vehicle or drive towards a person is considered deadly force.</li>
+                    </ul>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Relevant Statutes for Deadly Force</h2>
+                    <ul class="list-disc list-inside text-sm text-gray-700 space-y-2">
+                        <li><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.9.htm#9.32" target="_blank" class="statute-link"><strong>PC 9.32 Deadly Force in Defense of Person:</strong></a> Governs the use of deadly force to protect oneself.</li>
+                        <li><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.9.htm#9.33" target="_blank" class="statute-link"><strong>PC 9.33 Defense of Third Person:</strong></a> Governs the use of deadly force to protect another person.</li>
+                        <li><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.9.htm#9.51" target="_blank" class="statute-link"><strong>PC 9.51(a) and (g) Arrest and Search:</strong></a> Specifies when force and deadly force may be used in making an arrest or preventing an escape.</li>
+                        <li><a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.22.htm#22.05" target="_blank" class="statute-link"><strong>PC 22.05 Deadly Conduct:</strong></a> Defines the offense of recklessly engaging in conduct that places another in imminent danger of serious bodily injury.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Arrest Process Tab -->
+            <div id="arrest" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Discretionary Authority & Risk Factors</h2>
+                     <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                             <h3 class="font-semibold text-lg mb-2">Factors Influencing Discretion</h3>
+                             <p class="text-sm text-gray-700 mb-2">An officer must use discretion in arrest vs. non-arrest situations, guided by law and circumstances.</p>
+                             <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>The likelihood of behavioral disorders in the suspect.</li>
+                                <li>Legal mandates, such as <a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.14.htm#14.06" target="_blank" class="statute-link">CCP 14.06(b)</a> which requires taking an offender before a magistrate.</li>
+                             </ul>
+                        </div>
+                         <div>
+                            <h3 class="font-semibold text-lg mb-2">Risk Factors in an Encounter</h3>
+                            <p class="text-sm text-gray-700 mb-2">Officers must constantly assess risk factors to maintain control.</p>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                               <li>Suspect's mental attitude / behavioral disorders.</li>
+                               <li>Time and location of the encounter.</li>
+                               <li>Intoxication (suspect).</li>
+                               <li>Presence of a supportive crowd toward the suspect.</li>
+                               <li>Officer's own attitude.</li>
+                            </ul>
+                         </div>
+                     </div>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Approach, Confrontation & Frisk</h2>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="p-4 bg-gray-100 rounded-lg">
+                            <h4 class="font-semibold">Direct Approach</h4>
+                            <p class="text-sm"><strong>Advantage:</strong> Observe all movements. <br><strong>Disadvantage:</strong> Lose surprise, vulnerable to resistance.</p>
+                        </div>
+                        <div class="p-4 bg-gray-100 rounded-lg">
+                            <h4 class="font-semibold">Rear Approach</h4>
+                            <p class="text-sm"><strong>Advantage:</strong> Surprise, reduces direct attack. <br><strong>Disadvantage:</strong> May provoke defensive response.</p>
+                        </div>
+                        <div class="p-4 bg-gray-100 rounded-lg">
+                            <h4 class="font-semibold">Side Approach</h4>
+                            <p class="text-sm"><strong>Advantage:</strong> Suspect is off-balance. <br><strong>Disadvantage:</strong> Cannot observe all movement.</p>
+                        </div>
+                    </div>
+                     <div class="mt-4 border-t pt-4 grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-lg">Interviewing & Physical Contact</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li><strong>Interview Position:</strong> Gun side away, non-restricted stance, hands free. Two officers use a 'V' position with one in command.</li>
+                                <li><strong>Physical Contact Position:</strong> Approach from the side or rear when possible to keep the subject off-balance.</li>
+                                <li><strong>Verbal Commands:</strong> Keep the subject verbally informed of your actions and expectations.</li>
+                            </ul>
+                        </div>
+                         <div>
+                            <h4 class="font-semibold text-lg">Conducting a Frisk:</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li><strong>Justification:</strong> A frisk is justified for weapons to ensure officer and/or public safety.</li>
+                                <li><strong>Procedure:</strong> It is a "pat down" of the outer clothing, not a full search.</li>
+                                <li><strong>Considerations:</strong> Stress safety, be aware of clothing type (heavy vs. light), and adapt technique for one vs. two officers.</li>
+                            </ul>
+                         </div>
+                     </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Handcuffing Procedures</h2>
+                     <div class="grid md:grid-cols-3 gap-6">
+                        <div class="md:col-span-2">
+                             <h3 class="font-semibold text-lg mb-2">Application Checklist:</h3>
+                             <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>Apply from a position of advantage (Standing, Sitting, Prone, Kneeling).</li>
+                                <li>Hands to the rear, palms facing out.</li>
+                                <li>Check for tightness (one fingertip space).</li>
+                                <li>Handcuffs are double-locked.</li>
+                                <li>Advise the subject of the reason for arrest to reduce confusion.</li>
+                            </ul>
+                        </div>
+                        <div>
+                             <h3 class="font-semibold text-lg mb-2">Handcuff Basics:</h3>
+                             <ul class="list-disc list-inside text-sm text-gray-700">
+                                 <li>Know handcuff nomenclature (parts).</li>
+                                 <li>Follow department policy for method of carry.</li>
+                                 <li>Perform regular handcuff maintenance.</li>
+                             </ul>
+                        </div>
+                    </div>
+                     <div class="mt-4 border-t pt-4">
+                        <h3 class="font-semibold text-lg mb-2">Special Handcuffing Scenarios:</h3>
+                        <ul class="list-disc list-inside text-sm text-gray-700">
+                             <li><strong>Two Suspects, One Set of Cuffs:</strong> Cuff right hand to right hand OR left hand to left hand to impede running.</li>
+                             <li><strong>Two Suspects, Two Sets of Cuffs:</strong> Place suspects hands-to-rear and interlock their arms before cuffing.</li>
+                             <li><strong>Supplements:</strong> In an emergency, items like a tie, belt, shoelaces, or plastic cuffs can be used.</li>
+                        </ul>
+                         <p class="text-sm font-semibold mt-2">Remember, handcuffs are a temporary restraining device only!</p>
+                     </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Physical Search, Escort & Transport</h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="font-semibold text-lg mb-2">Searching Suspects</h3>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li><strong>Eyes on Subject:</strong> Let your hands do the searching; keep your eyes on the subject.</li>
+                                <li><strong>Control Advantage:</strong> Holding the suspect's waistband from the rear allows you to pull them off-balance.</li>
+                                <li><strong>Search Methods:</strong> Standing, Prone, or Kneeling searches. Wall searches are high-risk.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg mb-2">Escorting & Transporting</h3>
+                             <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li><strong>Search Vehicle First:</strong> Before shift and after every transport.</li>
+                                <li><strong>Walking Escorts:</strong> Follow policy for various officer/suspect combinations (1-on-1, 1-on-2, 2-on-1, 2-on-2).</li>
+                                <li><strong>Vehicle Transport:</strong> Adhere to agency policy. A common safe practice for two officers and one suspect is placing the suspect in the right rear, with the second officer in the left rear.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Components of a Successful Arrest</h2>
+                    <p class="text-sm text-gray-700 mb-2">A successful arrest is a combination of multiple skills applied effectively and safely.</p>
+                     <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                        <li><strong>Control:</strong> Keeping the subject in sight and using proper escort positions.</li>
+                        <li><strong>Communication:</strong> Using clear verbal commands throughout the process.</li>
+                        <li><strong>Restraint:</strong> Applying handcuffs correctly and safely.</li>
+                        <li><strong>Positioning:</strong> Safely and efficiently moving a cuffed suspect from prone or kneeling to standing.</li>
+                        <li><strong>Assessment:</strong> Constantly assessing for safety, communication opportunities, and de-escalation.</li>
+                        <li><strong>Transport:</strong> Moving the suspect securely according to policy.</li>
+                     </ul>
+                </div>
+            </div>
+
+            <!-- Knowledge Check Tab -->
+            <div id="knowledge-check" class="tab-content">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Knowledge Check</h2>
+                    <p class="mb-6 text-gray-600">Test your understanding of the material.</p>
+                    <div id="quiz-container" class="space-y-8">
+                        <!-- Questions will be dynamically inserted here -->
+                    </div>
+                    <div class="mt-8 text-center">
+                        <button id="check-answers-btn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors">Check Answers</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resources Tab -->
+            <div id="resources" class="tab-content">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Resources</h2>
+                    <p class="mb-6 text-gray-600">Quick links to Texas statutes referenced in this guide.</p>
+                    <div id="resources-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+                        <!-- Links will be dynamically inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('#tabs button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                });
+            });
+
+            // --- QUIZ DATA ---
+            const quizData = [
+                {
+                    question: "1. Which concept involves observing the suspect's hands, weapons, associates, and escape routes?",
+                    options: ["Self-Control", "Balance", "Awareness", "Prevention"],
+                    answer: "Awareness",
+                    explanation: "Awareness is the concept of observing the entire situation for potential threats and tactical considerations."
+                },
+                {
+                    question: "2. Which of the following is NOT a designated baton strike area?",
+                    options: ["Center mass of arms", "Abdomen", "Center mass of legs", "Groin"],
+                    answer: "Groin",
+                    explanation: "The groin is a non-strike area unless deadly force is justified. Center mass of arms, legs, and the abdomen are approved strike areas."
+                },
+                {
+                    question: "3. An officer is arresting an intoxicated person who is belligerent in front of a large crowd that is yelling at the officer. This situation describes several:",
+                    options: ["Principles of self-defense", "Justifications for deadly force", "Risk factors", "Methods of transport"],
+                    answer: "Risk factors",
+                    explanation: "The suspect's intoxication, mental attitude, and the supportive crowd are all risk factors an officer must manage."
+                },
+                {
+                    question: "4. Using a vehicle to ram a suspect's car would be considered what level of force?",
+                    options: ["Non-deadly force", "Less-lethal force", "Deadly force", "Reasonable force"],
+                    answer: "Deadly force",
+                    explanation: "A vehicle, when used to cause harm, is considered a deadly weapon, and its use in this manner constitutes deadly force."
+                },
+                {
+                    question: "5. What is the primary reason for training in weapons retention?",
+                    options: ["To comply with department policy", "To prevent the high number of officers shot with their own weapons", "To be able to draw your weapon faster", "To intimidate suspects"],
+                    answer: "To prevent the high number of officers shot with their own weapons",
+                    explanation: "The need for weapons retention training is driven by the danger of an officer being disarmed and shot with their own weapon."
+                },
+                {
+                    question: "6. When approaching to make physical contact, an officer should try to be positioned:",
+                    options: ["Directly in front of the subject", "To the side or rear of the subject", "At least 10 feet away", "Below the subject's eye level"],
+                    answer: "To the side or rear of the subject",
+                    explanation: "Approaching from the side or rear puts the suspect off-balance and gives the officer a tactical advantage."
+                },
+                {
+                    question: "7. Which of the following is a key component of a successful arrest?",
+                    options: ["Using the loudest possible verbal commands", "Constantly assessing for safety and de-escalation", "Searching the suspect before handcuffing", "Allowing the suspect to sit in the front seat"],
+                    answer: "Constantly assessing for safety and de-escalation",
+                    explanation: "A successful arrest involves continuous assessment of the situation for safety, communication, and opportunities to de-escalate."
+                },
+                {
+                    question: "8. What is the purpose of double-locking handcuffs?",
+                    options: ["To make them tighter on the suspect's wrists", "To prevent the handcuffs from tightening further and to prevent tampering", "To make it easier for the officer to remove them", "To connect two suspects together"],
+                    answer: "To prevent the handcuffs from tightening further and to prevent tampering",
+                    explanation: "Double-locking prevents the cuffs from constricting further, which could cause injury, and makes them more difficult to pick."
+                },
+                {
+                    question: "9. For officer safety, when should an officer search the carrying area of their patrol vehicle?",
+                    options: ["Only at the end of their shift", "Only when transporting a female suspect", "When going on duty and after each prisoner transport", "Only if they believe the prisoner hid something"],
+                    answer: "When going on duty and after each prisoner transport",
+                    explanation: "Searching the vehicle before a shift and after every transport ensures no weapons or contraband are left behind for the officer or the next prisoner to access."
+                },
+                {
+                    question: "10. In a two-officer transport with one suspect, where should the second officer be positioned?",
+                    options: ["In the front passenger seat", "Driving the vehicle", "In the left rear seat, observing the suspect", "Following in a separate patrol car"],
+                    answer: "In the left rear seat, observing the suspect",
+                    explanation: "With the suspect in the right rear, the second officer sits in the left rear to maintain direct observation and control during transport."
+                },
+                {
+                    question: "11. How should an officer handcuff two suspects with only one set of handcuffs?",
+                    options: ["This is not a recognized technique.", "Right hand to right hand OR left hand to left hand.", "Cuff them back to back.", "Cuff one wrist of each suspect together in the front."],
+                    answer: "Right hand to right hand OR left hand to left hand.",
+                    explanation: "This procedure makes it difficult for the suspects to run or coordinate an attack effectively."
+                },
+                {
+                    question: "12. The case law from Baskin v. Smith established that handcuffing a suspect too tightly could be considered excessive force, especially under what condition?",
+                    options: ["If the suspect is a juvenile.", "If the officer is placed on notice of the suspect's complaints or medical condition.", "If the arrest is for a misdemeanor.", "If the incident is recorded on video."],
+                    answer: "If the officer is placed on notice of the suspect's complaints or medical condition.",
+                    explanation: "Case law emphasizes officer liability when they are aware of a suspect's pain or a relevant medical issue caused by handcuffing and fail to address it."
+                }
+            ];
+
+            const quizContainer = document.getElementById('quiz-container');
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'quiz-question';
+                let optionsHtml = q.options.map(option => `
+                    <label class="block"><input type="radio" name="q${index}" value="${option}" class="mr-2">${option}</label>
+                `).join('');
+                questionDiv.innerHTML = `
+                    <p class="font-semibold mb-2">${q.question}</p>
+                    <div class="space-y-2">${optionsHtml}</div>
+                    <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                `;
+                quizContainer.appendChild(questionDiv);
+            });
+
+            document.getElementById('check-answers-btn').addEventListener('click', () => {
+                quizData.forEach((q, index) => {
+                    const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                    const feedback = document.querySelectorAll('.feedback')[index];
+                    feedback.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+                    if (selected && selected.value === q.answer) {
+                        feedback.textContent = `Correct! ${q.explanation}`;
+                        feedback.classList.add('bg-green-100', 'text-green-800');
+                    } else {
+                        feedback.textContent = `Incorrect. The correct answer is "${q.answer}". ${q.explanation}`;
+                        feedback.classList.add('bg-red-100', 'text-red-800');
+                    }
+                });
+            });
+
+            // --- RESOURCES LIST ---
+            const resources = [
+                { name: "PC 9.32 - Deadly Force in Defense of Person", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.9.htm#9.32" },
+                { name: "PC 9.33 - Defense of Third Person", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.9.htm#9.33" },
+                { name: "PC 9.51 - Arrest and Search", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.9.htm#9.51" },
+                { name: "PC 9.55 - Use of Less-Lethal Force Weapon", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.9.htm#9.55"},
+                { name: "PC 22.05 - Deadly Conduct", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.22.htm#22.05" },
+                { name: "PC 46.01 - Definitions (Club)", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.46.htm#46.01" },
+                { name: "PC 46.15 - Nonapplicability", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.46.htm#46.15" },
+                { name: "CCP 14.06 - Must Take Offender Before Magistrate", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.14.htm#14.06" }
+            ];
+            const resourcesList = document.getElementById('resources-list');
+            resources.sort((a, b) => a.name.localeCompare(b.name));
+            resources.forEach(res => {
+                const linkDiv = document.createElement('div');
+                const link = document.createElement('a');
+                link.href = res.url;
+                link.target = '_blank';
+                link.className = 'statute-link font-semibold';
+                link.textContent = res.name;
+                linkDiv.appendChild(link);
+                resourcesList.appendChild(linkDiv);
+            });
+        });
+    </script>
+</body>
+</html>
+

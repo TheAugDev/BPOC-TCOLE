@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCOLE Juvenile Offenders Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+        .answer-option {
+            transition: all 0.2s ease-in-out;
+        }
+        .answer-option:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .correct {
+            background-color: #D1FAE5 !important;
+            border-color: #10B981 !important;
+        }
+        .incorrect {
+            background-color: #FEE2E2 !important;
+            border-color: #EF4444 !important;
+        }
+        .progress-bar-fill {
+            transition: width 0.3s ease-in-out;
+        }
+        .review-correct {
+            color: #059669;
+        }
+        .review-incorrect {
+            color: #e11d48;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="quiz-app" class="quiz-container p-4 sm:p-8">
+        
+        <!-- Quiz Start Screen -->
+        <div id="start-screen" class="text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">TCOLE Juvenile Offenders</h1>
+            <p class="text-lg text-gray-600 mb-8">An exhaustive quiz based on the "Basic Peace Officer Course | Chapter 33" handout to test your knowledge on juvenile law and procedures.</p>
+            <button id="start-btn" class="w-full smw-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Start Quiz</button>
+        </div>
+
+        <!-- Quiz Interface -->
+        <div id="quiz-screen" class="hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold">Question <span id="question-number"></span> of <span id="total-questions"></span></h2>
+                <div id="timer" class="text-lg font-mono bg-gray-200 px-3 py-1 rounded-md">00:00</div>
+            </div>
+            
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+                <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full progress-bar-fill" style="width: 0%"></div>
+            </div>
+
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+                <p id="question-text" class="text-xl font-medium mb-8 min-h-[6rem]"></p>
+                <div id="answer-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Answer options will be injected here by JS -->
+                </div>
+            </div>
+             <div id="rationale-box" class="hidden mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h3 class="font-bold text-blue-800">Rationale:</h3>
+                <p id="rationale-text" class="text-blue-700"></p>
+                <p class="text-sm text-blue-600 mt-2">Source: <span id="rationale-source"></span></p>
+            </div>
+            <button id="next-btn" class="hidden w-full bg-blue-600 text-white font-bold py-3 px-8 rounded-lg mt-8 hover:bg-blue-700 transition-colors shadow-md">Next Question</button>
+        </div>
+
+        <!-- Quiz Results Screen -->
+        <div id="results-screen" class="hidden text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">Quiz Complete!</h1>
+            <p class="text-lg text-gray-600 mb-6">Here's how you did:</p>
+            <div class="flex flex-col sm:flex-row justify-around items-center my-8 gap-8 sm:gap-0">
+                <div>
+                    <p class="text-5xl font-bold text-green-600"><span id="score-percentage"></span>%</p>
+                    <p class="text-gray-500">Score</p>
+                </div>
+                 <div>
+                    <p class="text-5xl font-bold text-blue-600"><span id="correct-answers"></span>/<span id="total-answered"></span></p>
+                    <p class="text-gray-500">Correct Answers</p>
+                </div>
+                 <div>
+                    <p class="text-5xl font-bold text-gray-700"><span id="final-time"></span></p>
+                    <p class="text-gray-500">Time Taken</p>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="restart-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Try Again</button>
+                <button id="review-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md">Review Answers</button>
+            </div>
+        </div>
+        
+        <!-- Review Screen -->
+        <div id="review-screen" class="hidden bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6">Answer Review</h1>
+            <div id="review-container" class="space-y-6">
+                <!-- Review content will be injected here -->
+            </div>
+            <button id="back-to-results-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md mt-8">Back to Results</button>
+        </div>
+
+    </div>
+
+    <script>
+        const quizData = [
+            // Page 1
+            { question: "In juvenile case terminology, what is the equivalent of an adult 'Conviction'?", options: ["Adjudication", "Disposition", "Petition", "Apprehension"], answer: "Adjudication", rationale: "The terminology chart shows that an 'Adjudication' in the juvenile system is equivalent to a 'Conviction' in the adult system.", page: "Page 1" },
+            { question: "What is the juvenile equivalent of an adult 'Arrest Warrant'?", options: ["Juvenile Petition", "Directive to Apprehend", "Disposition Order", "Referral"], answer: "Directive to Apprehend", rationale: "The chart comparing Adult and Juvenile Case Terminology lists 'Directive to Apprehend' as the juvenile equivalent of an 'Arrest Warrant'.", page: "Page 1" },
+            { question: "In the juvenile court process, what is the equivalent term for an adult 'Defendant'?", options: ["Accused", "Subject", "Respondent", "Minor"], answer: "Respondent", rationale: "The Adult vs. Juvenile Terminology chart lists 'Respondent' as the juvenile equivalent for an adult 'Defendant'.", page: "Page 1" },
+            { question: "A 'Plea of True/Not True' in juvenile court is analogous to what in adult court?", options: ["An Appeal", "A Guilty/Not Guilty Plea", "A Motion to Suppress", "An Indictment"], answer: "A Guilty/Not Guilty Plea", rationale: "According to the terminology chart, a 'Plea of True/Not True' is the juvenile system's version of a 'Guilty/Not Guilty Plea'.", page: "Page 1" },
+            { question: "What is the juvenile terminology for an adult 'Indictment or Information'?", options: ["A Delinquent Conduct Report", "A Referral", "A Juvenile Petition", "A Directive"], answer: "A Juvenile Petition", rationale: "The comparison chart on page 1 shows that a 'Juvenile Petition' serves the same function as an 'Indictment/Information' in the adult system.", page: "Page 1" },
+
+            // Page 2
+            { question: "According to Family Code 51.04, who is responsible for designating one or more courts as the juvenile court for a county?", options: ["The Governor", "The County Sheriff", "The Juvenile Board", "The District Attorney"], answer: "The Juvenile Board", rationale: "Family Code Chapter 51.04 states: 'Each County has a juvenile board. That board shall designate 1 or more district, criminal district, domestic relations, juvenile, county courts, county courts at law as the juvenile court.'", page: "Page 2" },
+            { question: "If the designated juvenile court judge is unavailable, who may make a detention release determination under FC 53.02?", options: ["The arresting officer", "The senior probation officer", "Any magistrate", "The county clerk"], answer: "Any magistrate", rationale: "The text notes that if a juvenile judge is not available, 'any magistrate may make detention release determination (Family Code Chapter 53.02) or Conduct detention hearings (Family Code Chapter 54.01)'.", page: "Page 2" },
+            { question: "Under FC 51.09, for a waiver of rights by a child to be valid, who must make the waiver?", options: ["The child only", "The child's parent or guardian", "The child and the attorney for the child", "The magistrate only"], answer: "The child and the attorney for the child", rationale: "FC 51.09 specifies that a waiver of rights is valid if, among other things, the 'Waiver is made by child and attorney for the child'.", page: "Page 2" },
+            { question: "Which of the following is NOT a required condition for a valid waiver of rights by a child under FC 51.09?", options: ["The waiver is voluntary", "The child and attorney understand the rights being waived", "The waiver is made in the presence of a parent", "The waiver is made in writing or in recorded court proceedings"], answer: "The waiver is made in the presence of a parent", rationale: "FC 51.09 lists requirements for a valid waiver, including being made by the child and attorney, being informed and voluntary, and being in writing or recorded. It does not require a parent's presence for the waiver itself.", page: "Page 2" },
+            { question: "For a written statement by a child to be admissible under FC 51.095, who must administer the magistrate warnings?", options: ["The arresting officer", "A juvenile probation officer", "A Magistrate", "The defense attorney"], answer: "A Magistrate", rationale: "FC 51.095 requires that for a written statement, the child must have been given magistrate warnings 'by a Magistrate (think Miranda warning - but they must be given by a Judge, not an officer)'.", page: "Page 2" },
+            { question: "To ensure admissibility of a written statement under FC 51.095, what must the magistrate certify?", options: ["That the child has no prior record", "That the officer conducted a lawful arrest", "That the magistrate examined the child independently from law enforcement", "That the child's parents have been notified"], answer: "That the magistrate examined the child independently from law enforcement", rationale: "The magistrate must certify 'that the magistrate has examined the child independently from law enforcement or prosecutor and determined that child understands the nature of the statement.'", page: "Page 2" },
+            
+            // Page 3
+            { question: "An oral statement by a child can be admissible if it leads to the discovery of what?", options: ["The child's motive", "The names of other suspects", "Secreted or stolen property", "The child's location at the time of the offense"], answer: "Secreted or stolen property", rationale: "FC 51.095 allows for the admissibility of an oral statement if it contains 'facts or circumstances that are found to be true & tend to establish the child's guilt, such as finding of secreted or stolen property'.", page: "Page 3" },
+            { question: "For an audio/video statement from a child to be admissible, what is the deadline for the defense attorney to receive a copy?", options: ["Not later than the 10th day before the proceeding", "Not later than the 20th day before the proceeding", "Within 48 hours of the recording", "At the start of the hearing"], answer: "Not later than the 20th day before the proceeding", rationale: "FC 51.095 states 'not later than 20th day before the date of the proceeding, the defense attorney is entitled to a copy of this recording.'", page: "Page 3" },
+            { question: "When determining the voluntariness of a statement from a child not in custody, courts look at the totality of the circumstances, which includes the child's:", options: ["Popularity at school", "Athletic ability", "Age, maturity, experience, and intelligence", "Parents' marital status"], answer: "Age, maturity, experience, and intelligence", rationale: "The text states, 'Courts will look at the totality of the circumstance including the child's age, maturity, experience, background, intelligence and education.'", page: "Page 3" },
+            { question: "If a crime occurs after a person turns 17 years of age in Texas, which rules apply?", options: ["Juvenile rules", "Adult rules", "A combination of both", "Special rules for young adults"], answer: "Adult rules", rationale: "The text clarifies, 'If crime occurs after 17 - all the rules will follow adult rules'.", page: "Page 3" },
+            { question: "If an officer is unsure of a suspect's age but a possibility exists they are a juvenile, what is the safest procedure for an interrogation?", options: ["Follow adult procedures to save time", "Follow juvenile procedures", "Wait until the age is confirmed", "Do not conduct an interrogation"], answer: "Follow juvenile procedures", rationale: "The text advises it is 'safer to conduct interrogation pursuant to juvenile procedures as compliance with those will satisfy CCP 38.22, but not vice versa'.", page: "Pages 3-4" },
+
+            // Page 4
+            { question: "Under CCP 2B.0202, which of the following adult cases requires an officer to electronically record a suspect's statement?", options: ["Burglary of a Habitation", "Theft over $2,500", "Aggravated Robbery", "Improper Educator/Student Relationship"], answer: "Improper Educator/Student Relationship", rationale: "CCP 2B.0202 lists specific offenses that must be recorded, including 'Improper Educator/Student relationship'.", page: "Page 4" },
+            { question: "Under what circumstances is an order of adjudication or disposition in a juvenile case considered a conviction of a crime?", options: ["Always", "Only for felony offenses", "Never", "If the child re-offends"], answer: "Never", rationale: "Family Code Chapter 51.13 clearly states that an 'Order of Adjudication or disposition in NOT a conviction of a crime'.", page: "Page 4" },
+            { question: "A juvenile disposition can be used in a later proceeding for what purpose?", options: ["Applying for a government job", "Civil Commitment under the Health and Safety Code", "Enlisting in the military", "Obtaining a driver's license"], answer: "Civil Commitment under the Health and Safety Code", rationale: "FC 51.13 specifies that a disposition can be used 'When still a juvenile and child is a party to new stuff' or for 'Civil Commitment under Health and Safety Code Chapter 841'.", page: "Page 4" },
+            
+            // Page 5
+            { question: "What is the deadline for a law enforcement agency to forward information (reports, fingerprints) to the juvenile court after taking a child into custody?", options: ["24 hours", "48 hours", "On or before the 10th calendar day", "Within 30 days"], answer: "On or before the 10th calendar day", rationale: "FC 58.001 requires law enforcement to forward information 'on or before the 10th calendar day after the date the child is taken into custody (this includes weekends and holidays in the 10 days).'", page: "Page 5" },
+            { question: "If law enforcement fails to meet the 10-day deadline for forwarding a child's records, what is the consequence?", options: ["The officer receives a written reprimand", "The agency must destroy all information on the case", "The case is automatically transferred to adult court", "The agency is fined by the juvenile board"], answer: "The agency must destroy all information on the case", rationale: "FC 58.001 states that if the deadline is not met, 'law enforcement shall destroy all info including the fingerprints, photos and reports and case won't proceed forward.'", page: "Page 5" },
+            { question: "Which of the following is NOT a legal basis for taking a child into custody under FC 52.01?", options: ["Pursuant to a lawful arrest", "Pursuant to an order from a Juvenile Court", "For violating a school rule like dress code", "Probable cause to believe the child violated a condition of probation"], answer: "For violating a school rule like dress code", rationale: "FC 52.01 lists valid reasons for taking a child into custody, such as court orders, laws of arrest, penal law violations, and probation violations. School rule violations are not included.", page: "Page 5" },
+            { question: "A probation officer may take a child into custody if there is probable cause the child violated what?", options: ["A parent's curfew", "A school attendance policy", "A condition of probation imposed by the juvenile court", "A verbal warning from a police officer"], answer: "A condition of probation imposed by the juvenile court", rationale: "FC 52.01 states a child may be taken into custody 'By a probation officer if there is probable cause to believe that the child has violated a condition of probation imposed by the juvenile court'.", page: "Page 5" },
+            
+            // Page 6
+            { question: "Which of the following is a required condition for holding a juvenile in a non-secure custody area?", options: ["The juvenile must be handcuffed to a chair", "The juvenile must be under continuous visual supervision", "The area must be a designated holding cell", "The juvenile can be held for up to 12 hours"], answer: "The juvenile must be under continuous visual supervision", rationale: "Procedures for non-secure custody require that the 'Juvenile shall be under continuous visual supervision by law enforcement of facility staff.'", page: "Page 6" },
+            { question: "What is the maximum amount of time a juvenile can be held in non-secure custody?", options: ["2 hours", "6 hours", "12 hours", "24 hours"], answer: "6 hours", rationale: "One of the procedures for non-secure custody is that the juvenile is 'Not held in non-secure custody for more than 6 hours'.", page: "Page 6" },
+            { question: "What is prohibited in a non-secure custody area?", options: ["Providing the juvenile with food or water", "Allowing the juvenile to contact a parent", "Residential use of the area", "Having an officer present in the room"], answer: "Residential use of the area", rationale: "The rules for non-secure custody state that 'Residential use of the \"non secure\" area is prohibited.'", page: "Page 6" },
+            { question: "Which Penal Code offense would apply if a person knowingly helps a child to remain away from their legal guardian?", options: ["PC 25.04 Enticing A Child", "PC 25.06 Harboring Runaway Child", "PC 25.03 Interference with Child Custody", "PC 38.05 Hindering Apprehension"], answer: "PC 25.06 Harboring Runaway Child", rationale: "PC 25.06, Harboring Runaway Child, is listed as a potential crime to consider in situations where a child is missing or involved in a custody dispute.", page: "Page 6" },
+            { question: "What is the legal authority of a CPS worker to enter a private residence without a court order, compared to a law enforcement officer?", options: ["CPS has greater authority", "CPS has less authority", "CPS has the same authority (none, without exigent circumstances)", "CPS can enter with permission from a supervisor"], answer: "CPS has the same authority (none, without exigent circumstances)", rationale: "The text clarifies that 'CPS does not have any greater authority, without a court order in hand, to enter a premise than LE.'", page: "Page 6" },
+            { question: "When there is cause for concern for a child's health or safety during a custody dispute, an officer must call which agency to file a report?", options: ["The District Attorney's office", "The Juvenile Probation department", "Child Protective Services (CPS)", "The local school district"], answer: "Child Protective Services (CPS)", rationale: "FC 261.101 requires that 'An officer must call CPS to file a report and document the CPS report number... when there is cause for concern for the child's health or safety'.", page: "Page 6" },
+            
+            // Page 7
+            { question: "What is the preferred location for a law enforcement officer to conduct a non-custodial follow-up interview with a juvenile?", options: ["The police station", "The juvenile's home", "A public park", "While the juvenile is at school"], answer: "While the juvenile is at school", rationale: "The text states, 'The preferred time/location to do a non-custodial follow-up interview with a juvenile is while that juvenile is at school.'", page: "Page 7" },
+            { question: "For an interview to remain 'non-custodial', what must an officer do after the interview, regardless of what the juvenile says?", options: ["Arrest the juvenile immediately", "Transport the juvenile to the station", "Allow the juvenile to leave", "Require the juvenile to sign a statement"], answer: "Allow the juvenile to leave", rationale: "The text emphasizes, 'For this to remain \"non-custodial\", remember the juvenile must be allowed to leave regardless of what they tell you.'", page: "Page 7" },
+            { question: "Under FC 52.02, which is a valid action an officer can take after taking a child into custody?", options: ["Take the child to school (if in session)", "Release the child to an older sibling", "Hold the child until the end of the shift", "Require the child to perform community service"], answer: "Take the child to school (if in session)", rationale: "FC 52.02 lists several options for an officer, including to 'Take child to school (if in session)'.", page: "Page 7" },
+            { question: "If a juvenile is taken into custody for an intoxication offense, what is required for the request and response for a breath specimen?", options: ["The consent of an attorney", "The presence of a parent", "It must be videotaped", "A court order"], answer: "It must be videotaped", rationale: "FC 52.02 (c) and (d) state that the 'request and response must be videotaped and maintained as evidence in the case.'", page: "Page 7" },
+            
+            // Page 8
+            { question: "When an officer refers a case to the juvenile board, what information must accompany the referral?", options: ["The officer's performance evaluation", "A complete statement of all prior contacts with the child by the officer's agency", "A character reference for the child", "The child's school attendance record"], answer: "A complete statement of all prior contacts with the child by the officer's agency", rationale: "FC 52.04 requires the referral to be accompanied by a 'Complete statement of all prior contacts with child by Officer's agency'.", page: "Page 8" },
+            { question: "When a child is delivered to a detention facility, what is the first step the intake officer must take?", options: ["Notify the school", "Immediately make an investigation", "Place the child in a holding cell", "Schedule a hearing for the following week"], answer: "Immediately make an investigation", rationale: "FC 53.02 states the intake officer of the court 'Shall: Immediately make an investigation and Release unless detention warranted'.", page: "Page 8" },
+            { question: "Which of the following is a valid reason to detain a juvenile under FC 53.02?", options: ["The child was disrespectful to the officer", "The child is likely to abscond or be removed from the jurisdiction", "The parents refuse to pay a fine", "The officer needs more time to write the report"], answer: "The child is likely to abscond or be removed from the jurisdiction", rationale: "FC 53.02 lists several considerations used to detain, including if the 'child is likely to abscond or be removed from jurisdiction'.", page: "Page 8" },
+            { question: "A juvenile is accused of delinquent conduct involving the use of a firearm. Who must see these cases for a detention decision?", options: ["A Probation Officer", "A Magistrate", "A Judge", "The Chief of Police"], answer: "A Judge", rationale: "FC 53.02 states that if a child is accused of delinquent conduct involving a firearm, a 'Judge MUST see these cases'.", page: "Page 8" },
+            
+            // Page 9
+            { question: "If a child is detained, a detention hearing without a jury must be held no later than the:", options: ["Next calendar day", "Second working day after being taken into custody", "Fifth calendar day", "Tenth working day"], answer: "Second working day after being taken into custody", rationale: "FC 54.01 mandates that a detention hearing 'SHALL be held no later than second working day after the child is taken into custody.'", page: "Page 8" },
+            { question: "If a child is brought into custody on a Friday or Saturday, when must the detention hearing be held?", options: ["Immediately", "The following Sunday", "The first working day after the weekend", "Within 72 hours"], answer: "The first working day after the weekend", rationale: "FC 54.01 specifies that if a child is brought in on a Friday/Saturday, 'then hearing held first working day'.", page: "Page 8" },
+            { question: "What right does a child have regarding legal representation before a detention hearing?", options: ["They can only use a court-appointed attorney", "The court shall appoint an attorney if one was not retained prior to the hearing", "They must have a parent act as their representative", "They can waive their right to an attorney without counsel"], answer: "The court shall appoint an attorney if one was not retained prior to the hearing", rationale: "FC 54.01 requires that the 'Court shall appoint attorney if one not retained prior to detention hearing'.", page: "Page 8" },
+            { question: "A disposition without referral under FC 52.03 cannot require what of the child?", options: ["A brief conference with a parent", "Referral to a social services agency", "Periodic reporting to a law enforcement officer", "Participation in a counseling program"], answer: "Periodic reporting to a law enforcement officer", rationale: "FC 52.03 states 'No disposition can keep the child in law-enforcement custody or require periodic reporting of the child to law enforcement officer'.", page: "Page 9" },
+            { question: "To participate in a First Offender Program under FC 52.031, who must consent?", options: ["Only the child", "Only the parent/guardian", "The child and parent must consent", "The juvenile court judge must consent"], answer: "The child and parent must consent", rationale: "A requirement for the First Offender Program is that the 'Child & parent must consent to participate'.", page: "Page 9" },
+            
+            // Page 10
+            { question: "Which term is defined under FC 261.001 as leaving a child in a situation where the child would be exposed to a substantial risk of harm, without arranging for reasonable care?", options: ["Abuse", "Endangerment", "Neglect", "Abandonment"], answer: "Neglect", rationale: "FC 261.001 defines 'Neglect' which includes placing a child in or failing to remove a child from a situation that a reasonable person would realize requires judgment or actions beyond the child's level of maturity, resulting in substantial risk.", page: "Page 10" },
+            { question: "Who is granted immunity from liability under FC 261.106 for reporting suspected child abuse?", options: ["Only law enforcement officers", "Only school professionals", "A person who reports in good faith", "The person suspected of the abuse"], answer: "A person who reports in good faith", rationale: "FC 261.106, Immunities, grants protection from liability to any person who, in good faith, reports or assists in an investigation of a report of child abuse or neglect.", page: "Page 10" },
+            { question: "What is the penalty for knowingly making a false report of child abuse or neglect under FC 261.107?", options: ["A written warning", "A Class C Misdemeanor", "A State Jail Felony", "A civil fine only"], answer: "A State Jail Felony", rationale: "FC 261.107, False report; penalty, states that a person commits an offense, which is a state jail felony, if they make a report of child abuse or neglect with intent to deceive.", page: "Page 10" },
+            { question: "Under FC 32.003, a child can consent to their own medical treatment if the child is:", options: ["Accompanied by any adult", "On active duty with the armed services", "Over 12 years old and seems mature", "Able to pay for the treatment"], answer: "On active duty with the armed services", rationale: "FC 32.003, Consent to treatment by child, lists several conditions where a minor can consent, including if the minor 'is on active duty with the armed services of the United States.'", page: "Page 10" },
+            { question: "An officer is authorized to take emergency possession of a child without a court order under FC 262.104 if there is immediate danger to the child's:", options: ["Academic performance", "Social standing", "Physical health or safety", "Future employment"], answer: "Physical health or safety", rationale: "FC 262.104 allows taking possession of a child without a court order if there is 'information that would lead a person of ordinary prudence and caution to believe that there is an immediate danger to the physical health or safety of the child.'", page: "Page 10" },
+            
+            // Page 11
+            { question: "Under CCP 63.001, a 'child' is defined as a person under what age?", options: ["16", "17", "18", "21"], answer: "18", rationale: "Code of Criminal Procedure Chapter 63.001 defines a 'Child' as a 'person under 18 years of age'.", page: "Page 11" },
+            { question: "What is the role of the 'Clearinghouse' as defined in CCP 63.001?", options: ["A facility for detaining juveniles", "A state repository of information on missing children and persons", "A court that handles juvenile cases", "A program for first-time offenders"], answer: "A state repository of information on missing children and persons", rationale: "CCP 63.001 defines the 'Clearinghouse' which is established in CCP 63.002 as the 'missing children and missing persons information clearinghouse'.", page: "Page 11" },
+            { question: "After receiving a report of a missing child, a law enforcement agency must enter the child into the clearinghouse and NCIC within what timeframe?", options: ["Immediately, but not later than two hours", "Within 12 hours", "Within 24 hours", "Within 48 hours"], answer: "Immediately, but not later than two hours", rationale: "CCP 63.009 requires an agency to, 'Immediately start investigation, but not later than two hours after receiving report, enter child into the clearinghouse and NCIC'.", page: "Page 11" },
+            { question: "After a missing child report is filed, law enforcement must also inform whom of the steps taken in the investigation?", options: ["The local media", "The child's school principal", "The person who filed the report", "The governor's office"], answer: "The person who filed the report", rationale: "CCP 63.009 requires the agency to 'Inform the person who filed the report of the steps the agency has taken.'", page: "Page 12" },
+
+            // Page 12
+            { question: "If a law enforcement agency receives a report of a 'high risk' missing child, they must notify all law enforcement agencies within how many miles?", options: ["25 miles", "50 miles", "100 miles", "200 miles"], answer: "100 miles", rationale: "CCP 63.0091 requires the agency to 'Immediately but not later than two hours, notify all law enforcement agencies within 100 miles including from other states of the high-risk designation.'", page: "Page 12" },
+            { question: "Which of the following would designate a missing child as 'high risk' under CCP 63.0091?", options: ["The child has a history of running away", "The child has an intellectual or developmental disability", "The child is missing from a public park", "The parents are offering a reward"], answer: "The child has an intellectual or developmental disability", rationale: "CCP 63.0091 lists several factors for a high-risk designation, including if the child 'Has an intellectual or developmental disability'.", page: "Page 12" },
+            { question: "Is there a waiting period for a parent or guardian to report a child as missing to law enforcement?", options: ["Yes, 24 hours", "Yes, 48 hours", "Yes, 72 hours", "No, there is NO waiting period"], answer: "No, there is NO waiting period", rationale: "The first step listed in a missing child investigation is 'Take a report - there is NO waiting period.'", page: "Page 12" },
+            
+            // Page 13
+            { question: "If a missing child under 11 attended a school, law enforcement must notify the school to do what with the child's records?", options: ["Delete them", "Archive them", "Flag them", "Forward them to the state"], answer: "Flag them", rationale: "CCP 63.020 requires entities like schools to 'flag the child's records' upon notification from law enforcement.", page: "Page 13" },
+            { question: "If a school has flagged a missing child's records and does not receive confirmation of the child being found within 45 days of a request, what may they do?", options: ["Contact the media", "Delete the record permanently", "Remove the flag from the record", "Hold the record indefinitely"], answer: "Remove the flag from the record", rationale: "CCP 63.022 states 'If no response within 45 days, entities may remove flag.'", page: "Page 13" },
+            { question: "A person enrolling a child under 11 in a school for the first time must provide a birth certificate or other proof of identity within what timeframe if the child was born in the U.S.?", options: ["10 days", "30 days", "60 days", "90 days"], answer: "30 days", rationale: "CCP 63.019 requires proof of identity 'within 30 days (90 if born outside US)'.", page: "Page 13" },
+            { question: "Which of the following is NOT a criterion for activating the Statewide AMBER Alert System under Gov. Code 411.355?", options: ["The child is 17 years of age or younger", "The abduction poses a credible threat of serious bodily injury or death", "The child's parents have offered a cash reward", "Sufficient descriptive information exists about the child, captor, or captor's vehicle"], answer: "The child's parents have offered a cash reward", rationale: "The activation criteria listed in the Government Code focus on the age of the child, the level of danger, and the availability of descriptive information. A parental reward is not part of the official criteria.", page: "Page 13" },
+            
+            // Page 14
+            { question: "Which of the five domains of risk factors for joining a gang is considered one of the strongest factors?", options: ["Individual", "Family", "School", "Peers"], answer: "Peers", rationale: "The text explicitly states, 'Peers (one of the strongest factors) - normalize anti-social behavior, alienation from mainstream.'", page: "Page 14" },
+            { question: "Poor academic performance and low school attachment are risk factors for gang involvement within which domain?", options: ["Community", "Family", "School", "Individual"], answer: "School", rationale: "The 'School' domain lists 'poor academic performance, low attachment, poor school environment, learning disabilities' as risk factors.", page: "Page 14" },
+            { question: "Poverty and neighborhood disorganization are risk factors for youth gang involvement in which domain?", options: ["Individual", "Family", "Peers", "Community"], answer: "Community", rationale: "The 'Community' domain includes risk factors such as 'poverty, environmental instability, neighborhood disorganization'.", page: "Page 14" },
+            { question: "Which statement is true regarding youth gang involvement?", options: ["Most youth are forced to join gangs", "Joining a gang is usually a permanent, lifelong decision", "The presence of only one risk factor is enough to guarantee gang involvement", "The presence of multiple risk domains increases the likelihood of gang involvement"], answer: "The presence of multiple risk domains increases the likelihood of gang involvement", rationale: "One of the three important points is that 'The presence of multiple domains in a youth's life increases the likelihood of gang involvement.'", page: "Page 14" },
+            { question: "Which of the following is listed as a need met by gangs for juveniles?", options: ["Academic tutoring", "Career counseling", "Protection", "Community service opportunities"], answer: "Protection", rationale: "The list of 'Needs met by gangs for juveniles' includes 'Protection' among other things like status, acceptance, and self-worth.", page: "Page 14" },
+            { question: "Which of the following is described as an underlying societal strain that can give rise to gangs?", options: ["High levels of community volunteerism", "An atmosphere of discrimination/abuse/criticism", "Widespread access to after-school programs", "Strong family structures"], answer: "An atmosphere of discrimination/abuse/criticism", rationale: "The list of societal strains includes 'High unemployment' and an 'Atmosphere of discrimination/abuse/criticism'.", page: "Page 14" }
+        ];
+
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const reviewScreen = document.getElementById('review-screen');
+
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const reviewBtn = document.getElementById('review-btn');
+        const backToResultsBtn = document.getElementById('back-to-results-btn');
+        
+        const questionNumberEl = document.getElementById('question-number');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const progressBar = document.getElementById('progress-bar');
+        const questionTextEl = document.getElementById('question-text');
+        const answerOptionsEl = document.getElementById('answer-options');
+        const rationaleBox = document.getElementById('rationale-box');
+        const rationaleText = document.getElementById('rationale-text');
+        const rationaleSource = document.getElementById('rationale-source');
+        
+        const scorePercentageEl = document.getElementById('score-percentage');
+        const correctAnswersEl = document.getElementById('correct-answers');
+        const totalAnsweredEl = document.getElementById('total-answered');
+        const finalTimeEl = document.getElementById('final-time');
+        const timerEl = document.getElementById('timer');
+        const reviewContainer = document.getElementById('review-container');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timerInterval;
+        let secondsElapsed = 0;
+        let userAnswers = [];
+        
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        startBtn.addEventListener('click', startQuiz);
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', startQuiz);
+        reviewBtn.addEventListener('click', showReview);
+        backToResultsBtn.addEventListener('click', () => {
+            reviewScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+        });
+
+        function startTimer() {
+            secondsElapsed = 0;
+            timerEl.textContent = '00:00';
+            timerInterval = setInterval(() => {
+                secondsElapsed++;
+                const minutes = Math.floor(secondsElapsed / 60).toString().padStart(2, '0');
+                const seconds = (secondsElapsed % 60).toString().padStart(2, '0');
+                timerEl.textContent = `${minutes}:${seconds}`;
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function startQuiz() {
+            shuffleArray(quizData);
+            quizData.forEach(q => shuffleArray(q.options));
+
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            startScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            nextBtn.classList.add('hidden');
+            startTimer();
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            rationaleBox.classList.add('hidden');
+            answerOptionsEl.innerHTML = '';
+            const currentQuestion = quizData[currentQuestionIndex];
+            
+            questionNumberEl.textContent = currentQuestionIndex + 1;
+            totalQuestionsEl.textContent = quizData.length;
+            questionTextEl.textContent = currentQuestion.question;
+
+            const progress = ((currentQuestionIndex) / quizData.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('answer-option', 'w-full', 'p-4', 'text-left', 'bg-white', 'border-2', 'border-gray-300', 'rounded-lg', 'hover:bg-gray-50', 'hover:border-blue-500');
+                button.addEventListener('click', () => selectAnswer(button, option, currentQuestion));
+                answerOptionsEl.appendChild(button);
+            });
+        }
+
+        function selectAnswer(button, selectedOption, currentQuestion) {
+            const { answer, rationale, page } = currentQuestion;
+            userAnswers[currentQuestionIndex] = selectedOption;
+
+            const buttons = answerOptionsEl.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === answer) {
+                    btn.classList.add('correct');
+                }
+            });
+
+            if (selectedOption === answer) {
+                score++;
+                button.classList.add('correct');
+            } else {
+                button.classList.add('incorrect');
+            }
+
+            rationaleText.textContent = rationale;
+            rationaleSource.textContent = page;
+            rationaleBox.classList.remove('hidden');
+            nextBtn.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                nextBtn.classList.add('hidden');
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            stopTimer();
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            scorePercentageEl.textContent = percentage;
+            correctAnswersEl.textContent = score;
+            totalAnsweredEl.textContent = quizData.length;
+            finalTimeEl.textContent = timerEl.textContent;
+            
+            const finalProgress = 100;
+            progressBar.style.width = `${finalProgress}%`;
+        }
+
+        function showReview() {
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.remove('hidden');
+            reviewContainer.innerHTML = '';
+
+            quizData.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === question.answer;
+
+                const reviewItem = document.createElement('div');
+                reviewItem.classList.add('border', 'p-4', 'rounded-lg');
+                reviewItem.classList.add(isCorrect ? 'border-green-200' : 'border-red-200');
+
+                let userAnswerHTML = '';
+                if (isCorrect) {
+                    userAnswerHTML = `<p>Your answer: <span class="font-semibold review-correct">${userAnswer} (Correct)</span></p>`;
+                } else {
+                    userAnswerHTML = `
+                        <p>Your answer: <span class="font-semibold review-incorrect">${userAnswer || 'No answer'}</span></p>
+                        <p>Correct answer: <span class="font-semibold review-correct">${question.answer}</span></p>
+                    `;
+                }
+
+                reviewItem.innerHTML = `
+                    <p class="font-bold mb-2">${index + 1}. ${question.question}</p>
+                    ${userAnswerHTML}
+                    <p class="text-sm text-gray-600 mt-2"><em>Rationale: ${question.rationale} (Source: ${question.page})</em></p>
+                `;
+                reviewContainer.appendChild(reviewItem);
+            });
+        }
+
+    </script>
+</body>
+</html>
+

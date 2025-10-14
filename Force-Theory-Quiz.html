@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Use of Force Theory Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+        .answer-option {
+            transition: all 0.2s ease-in-out;
+        }
+        .answer-option:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .correct {
+            background-color: #D1FAE5 !important;
+            border-color: #10B981 !important;
+            color: #065F46 !important;
+        }
+        .incorrect {
+            background-color: #FEE2E2 !important;
+            border-color: #EF4444 !important;
+            color: #991B1B !important;
+        }
+        .progress-bar-fill {
+            transition: width 0.3s ease-in-out;
+        }
+        .review-correct {
+            color: #059669;
+        }
+        .review-incorrect {
+            color: #e11d48;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="quiz-app" class="quiz-container p-4 sm:p-8">
+        
+        <!-- Quiz Start Screen -->
+        <div id="start-screen" class="text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Use of Force Theory Quiz</h1>
+            <p class="text-lg text-gray-600 mb-8">A comprehensive quiz based on the "Basic Peace Officer Course | Chapter 28" handout to test your knowledge on use of force concepts, legal authorities, and decision-making.</p>
+            <button id="start-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Start Quiz</button>
+        </div>
+
+        <!-- Quiz Interface -->
+        <div id="quiz-screen" class="hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold">Question <span id="question-number"></span> of <span id="total-questions"></span></h2>
+                <div id="timer" class="text-lg font-mono bg-gray-200 px-3 py-1 rounded-md">00:00</div>
+            </div>
+            
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+                <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full progress-bar-fill" style="width: 0%"></div>
+            </div>
+
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+                <p id="question-text" class="text-xl font-medium mb-8 min-h-[6rem]"></p>
+                <div id="answer-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Answer options will be injected here by JS -->
+                </div>
+            </div>
+             <div id="rationale-box" class="hidden mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h3 class="font-bold text-blue-800">Rationale:</h3>
+                <p id="rationale-text" class="text-blue-700"></p>
+                <p class="text-sm text-blue-600 mt-2">Source: <span id="rationale-source"></span></p>
+            </div>
+            <button id="next-btn" class="hidden w-full bg-blue-600 text-white font-bold py-3 px-8 rounded-lg mt-8 hover:bg-blue-700 transition-colors shadow-md">Next Question</button>
+        </div>
+
+        <!-- Quiz Results Screen -->
+        <div id="results-screen" class="hidden text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">Quiz Complete!</h1>
+            <p class="text-lg text-gray-600 mb-6">Here's how you did:</p>
+            <div class="flex flex-col sm:flex-row justify-around items-center my-8 gap-8 sm:gap-0">
+                <div>
+                    <p id="score-percentage" class="text-5xl font-bold text-green-600">0%</p>
+                    <p class="text-gray-500">Score</p>
+                </div>
+                 <div>
+                    <p class="text-5xl font-bold text-blue-600"><span id="correct-answers"></span>/<span id="total-answered"></span></p>
+                    <p class="text-gray-500">Correct Answers</p>
+                </div>
+                 <div>
+                    <p id="final-time" class="text-5xl font-bold text-gray-700">00:00</p>
+                    <p class="text-gray-500">Time Taken</p>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="restart-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Try Again</button>
+                <button id="review-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md">Review Answers</button>
+            </div>
+        </div>
+        
+        <!-- Review Screen -->
+        <div id="review-screen" class="hidden bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6">Answer Review</h1>
+            <div id="review-container" class="space-y-6">
+                <!-- Review content will be injected here -->
+            </div>
+            <button id="back-to-results-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md mt-8">Back to Results</button>
+        </div>
+
+    </div>
+
+    <script>
+        const quizData = [
+            // Unit 1
+            { question: "Under PC 9.01(3), 'Deadly Force' is defined as force that is...", options: ["Intended or known by the actor to cause, or in the manner of its use is capable of causing, death or serious bodily injury", "Any force greater than verbal commands", "Force that causes any physical pain", "Only force involving a firearm"], answer: "Intended or known by the actor to cause, or in the manner of its use is capable of causing, death or serious bodily injury", rationale: "This is the legal definition of Deadly Force provided in the Texas Penal Code, Section 9.01(3).", page: "Page 1" },
+            { question: "According to PC 9.04, a threat to cause death or serious bodily injury by producing a weapon constitutes the use of what?", options: ["Non-deadly force", "Deadly force", "Unjustified force", "Reasonable force"], answer: "Deadly force", rationale: "PC 9.04, 'Threats as Justifiable Force,' clarifies that a threat to cause death or serious bodily injury by the production of a weapon or otherwise, so long as the actor's purpose is limited to creating an apprehension that he will use deadly force if necessary, does constitute the use of deadly force.", page: "Page 1" },
+            { question: "Under PC 9.05, if an officer is justified in using force but recklessly injures an innocent third person, the justification is:", options: ["Still valid", "Unavailable in a prosecution for the reckless injury", "Only valid if the officer apologizes", "Transferred to the innocent third person"], answer: "Unavailable in a prosecution for the reckless injury", rationale: "PC 9.05 states that even if force is justified, that justification is unavailable in a prosecution for the reckless injury or killing of an innocent third person.", page: "Page 1" },
+            { question: "The justification of 'Necessity' under PC 9.22 is available when an actor reasonably believes the conduct is immediately necessary to avoid what?", options: ["Personal inconvenience", "Imminent harm", "A civil lawsuit", "Departmental discipline"], answer: "Imminent harm", rationale: "PC 9.22 provides a justification defense when an actor reasonably believes their conduct is immediately necessary to avoid imminent harm.", page: "Page 1" },
+            { question: "According to PC 9.31, Self-Defense is NOT justified in response to what?", options: ["Unlawful force", "Verbal provocation alone", "A physical assault", "An attempted kidnapping"], answer: "Verbal provocation alone", rationale: "PC 9.31 specifies that the use of force against another is not justified in response to verbal provocation alone.", page: "Page 1" },
+            { question: "Under PC 9.42, when is deadly force justified to protect property?", options: ["To prevent any theft during the daytime", "To stop a suspect from escaping with any stolen property", "To prevent the imminent commission of arson, burglary, robbery, or aggravated robbery", "To prevent criminal mischief at any time"], answer: "To prevent the imminent commission of arson, burglary, robbery, or aggravated robbery", rationale: "PC 9.42, 'Deadly Force to Protect Property', limits its use to preventing specific, dangerous felonies.", page: "Page 1" },
+            { question: "Which special relationship is listed in the Penal Code as a justification for force, such as a parent reasonably disciplining a child?", options: ["Landlord-tenant", "Employer-employee", "Parent-child (PC 9.61)", "Officer-citizen"], answer: "Parent-child (PC 9.61)", rationale: "PC 9.61, 'Parent-child', is one of the special relationships listed where the use of force is justified for the purpose of safeguarding or promoting the child's welfare.", page: "Page 2" },
+            { question: "Under PC 9.52, a peace officer is justified in using any force they reasonably believe necessary to prevent an escape from custody, but can only use deadly force when...", options: ["The escape is from a penal institution", "The suspect is disrespectful", "The escape happens at night", "The suspect committed a traffic offense"], answer: "The escape is from a penal institution", rationale: "PC 9.52, 'Prevention of Escape from Custody,' specifies that the use of deadly force to prevent escape is only justified when the escape is from a penal institution.", page: "Page 2" },
+            { question: "The Supreme Court case Tennessee v. Garner placed constitutional limits on the use of:", options: ["Handcuffing techniques", "Canine as force", "Deadly force against fleeing felons", "Pepper spray"], answer: "Deadly force against fleeing felons", rationale: "Tennessee v. Garner is a landmark case that established the constitutional rule that deadly force may not be used to prevent the escape of a felon unless the suspect poses a significant threat.", page: "Page 2, 20" },
+            { question: "The court case Cruz v. Laramie dealt with the use of which force tactic?", options: ["Hog-Tie/Hobble Tie", "Taser", "Seizure at Gunpoint", "Pepper Spray"], answer: "Hog-Tie/Hobble Tie", rationale: "The case of Cruz v. Laramie is listed under the section 'Hog-Tie/Hobble Tie', indicating it is a key case related to the legal scrutiny of this restraint method.", page: "Page 3" },
+            { question: "In the context of an arrest, the police role is essentially defined as:", options: ["Aggressive", "Offensive", "Defensive", "Punitive"], answer: "Defensive", rationale: "'In a physical arrest, the police role is essentially defensive.' It is defined as 'serving to protect,' 'devoted to resisting or preventing aggression or attack.'", page: "Page 3" },
+            { question: "The concept of 'Control' is a 'two-way street,' meaning an officer must first be in complete self-control to be able to...", options: ["Write an accurate report", "Control a violator", "Drive a patrol car safely", "Use a firearm effectively"], answer: "Control a violator", rationale: "The document states, 'An officer must be in complete self-control to be able to control a violator.'", page: "Page 3" },
+            { question: "What is considered one of the greatest assets an officer has in dealing with a law violator?", options: ["Physical strength", "A loud voice", "Self-control", "Advanced weaponry"], answer: "Self-control", rationale: "'Self-control is one of the greatest assets in dealing with a law violator.' It results from confidence in one's skills, achieved through training and practice.", page: "Page 4" },
+            { question: "Compensating behaviors such as hesitation, verbal abuse, or unnecessary force can result from an officer's feelings of:", options: ["Confidence", "Certainty", "Uncertainty", "Superiority"], answer: "Uncertainty", rationale: "Emotional responses are often the direct result of uncertainty. 'Uncertainty may also result in compensating behavior, such as Hesitation, Verbal abuse, Bluff, Unnecessary force.'", page: "Page 4" },
+            { question: "An officer's commitment to what kind of behavior can reduce problems and danger associated with a physical arrest?", options: ["Aggressive and intimidating", "Firm but fair", "Passive and observant", "Strict and uncompromising"], answer: "Firm but fair", rationale: "The document states that an officer's 'commitment to firm but fair behavior can reduce problems and danger associated with a physical arrest.'", page: "Page 4" },
+            { question: "Besides the number of suspects, what is another key factor an officer should consider when assessing reasonable force?", options: ["The suspect's political views", "The weather conditions", "The nature of the crime", "The nearest backup's ETA"], answer: "The nature of the crime", rationale: "The document lists several factors, including 'What is the nature of the crime?' when assessing the level of force that is reasonable.", page: "Page 5" },
+            { question: "What are 'informal organizational norms' in the context of moral considerations for deadly force?", options: ["Official departmental policies", "State laws and statutes", "An officer's personal conscience", "The informal culture of law enforcement, which may be stricter or less strict than policy"], answer: "The informal culture of law enforcement, which may be stricter or less strict than policy", rationale: "Informal organizational norms are described as reflecting 'law enforcement's informal culture, may or may not be stricter than legal or agency restrictions.'", page: "Page 5" },
+            
+            // Unit 2
+            { question: "In the Dynamic Resistance-Response Model (DRM), which option is a 'weaponless strategy'?", options: ["Baton", "Stun gun", "Takedowns and come-along holds", "Verbal commands"], answer: "Takedowns and come-along holds", rationale: "The force options list categorizes 'Takedowns' and 'Come-along holds' under 'Weaponless strategies'.", page: "Page 6" },
+            { question: "What is meant by 'ineffective control' in the context of use of force?", options: ["The level of force is less than the subject's level of resistance", "The level of force is exactly equal to the subject's resistance", "The level of force is unreasonably greater than the subject's level of resistance", "The force used was illegal"], answer: "The level of force is less than the subject's level of resistance", rationale: "'Ineffective control' is defined as when 'The level of force is less than the subject's level of resistance.'", page: "Page 6" },
+            { question: "What is meant by 'excessive control' in the context of use of force?", options: ["The level of force is less than the subject's level of resistance", "The level of force is exactly equal to the subject's resistance", "The level of force is unreasonably greater than the subject's level of resistance", "The force used was effective in gaining compliance"], answer: "The level of force is unreasonably greater than the subject's level of resistance", rationale: "'Excessive control' is defined as when 'The level of force is unreasonably greater than the subject's level of resistance, potentially causing preventable injury.'", page: "Page 6" },
+            { question: "When an officer enters a scene, what impact does their professional presence have?", options: ["It has no effect on the scene's dynamics", "It always calms the situation immediately", "It will impact the current dynamics of the scene", "It only matters if the officer is a supervisor"], answer: "It will impact the current dynamics of the scene", rationale: "The text states, 'As they enter the scene, the officer's presence will impact current dynamics.'", page: "Page 6" },
+            { question: "What percentage of an officer's duties involve verbal skills?", options: ["3%", "25%", "50%", "97%"], answer: "97%", rationale: "The document states, '97% of an officer's duties involve verbal skills. Only about 3% of contacts require physical force.'", page: "Page 7" },
+            { question: "Which of the following is NOT listed as an element of communication?", options: ["Words and touch", "Voice and tone", "An officer's rank", "Non-verbal posture"], answer: "An officer's rank", rationale: "The elements of communication listed are 'Words, touch, body movement,' 'Content,' 'Voice and tone,' and 'Non-verbal, raised eyebrows, and posture.'", page: "Page 7" },
+            { question: "What percentage of a message is perceived due to non-verbal cues and body language?", options: ["7%", "33%", "60%", "93%"], answer: "60%", rationale: "Message perception is broken down as 7% content, 33% voice, and '60% of the time a message is received due to non-verbal/body language.'", page: "Page 7" },
+            { question: "What is given as an example of improper listening?", options: ["Asking clarifying questions", "Nodding to show you are paying attention", "Waiting for an opportunity to speak as soon as someone finishes talking", "Taking notes while someone is speaking"], answer: "Waiting for an opportunity to speak as soon as someone finishes talking", rationale: "'An example is merely waiting for the opportunity to speak as soon as someone finishes talking.' This shows a lack of true listening.", page: "Page 7" },
+            { question: "According to the training material, how do upset people often respond to appeals of reason?", options: ["They respond positively", "They are often incapable of acting reasonably", "They become more logical", "They immediately comply"], answer: "They are often incapable of acting reasonably", rationale: "The document states, 'Upset people are often incapable of acting reasonably and will not respond to appeals of reason.'", page: "Page 7" },
+            { question: "In tactical communication, what does it mean to 'maintain disinterest'?", options: ["To be unconcerned and mechanical", "To be objective, free from bias, and impartial", "To ignore the subject's emotional state", "To show you are bored with the situation"], answer: "To be objective, free from bias, and impartial", rationale: "The document clarifies this point: 'Maintain disinterest (objectivity, free from bias, impartial, it does not mean un-interested, unconcerned, or mechanical)'.", page: "Page 8" },
+            { question: "Which of the following is considered a 'constraint' that can be an obstacle to effective communication?", options: ["The officer's ethical presence", "The officer's mood", "A receptive audience", "A clear plan of approach"], answer: "The officer's mood", rationale: "The text lists examples of constraints, including 'Officer's mood,' along with time of day, weather, location, external noise, and the individual's values or state.", page: "Page 8" },
+            { question: "What is an 'Ethical Presence' an expression of?", options: ["Physical dominance", "Superior knowledge", "Self-control", "Emotional detachment"], answer: "Self-control", rationale: "The document defines 'Ethical Presence' as 'An expression of self-control.' It involves using words for purpose, not personal feelings, and maintaining a professional attitude.", page: "Page 8" },
+            { question: "In verbal persuasion, what is the purpose of the 'Ask' step?", options: ["To show you are in charge", "To confuse the subject", "To gain control by causing others to report to you and buy time", "To get personal information for your report"], answer: "To gain control by causing others to report to you and buy time", rationale: "The 'Ask' step is used to 'gain control by causing others to report to you,' 'direct attention away from the problem,' 'buy time,' and 'demonstrate concern.'", page: "Page 9" },
+            { question: "The verbal persuasion technique of seeing a situation through the eyes of the other person is known as:", options: ["Paraphrasing", "Summarizing", "Empathizing", "Listening"], answer: "Empathizing", rationale: "Empathize is defined as to 'Understand the other person's state of mind. See through the eyes of the other person.'", page: "Page 9" },
+            { question: "Which verbal appeal is based on reasoning, common sense, and community standards?", options: ["Ethical appeal", "Rational appeal", "Practical appeal", "Personal appeal"], answer: "Rational appeal", rationale: "The 'Rational appeal' is 'Based on use of reasoning. Appeals to common sense, good judgment, or community standards.'", page: "Page 9" },
+            { question: "A 'Personal appeal' is most useful when dealing with what type of individual?", options: ["Highly emotional people", "Calm and rational people", "Headstrong people who insist on getting their own way", "People who are confused"], answer: "Headstrong people who insist on getting their own way", rationale: "The personal appeal is described as being 'useful when dealing with headstrong people who insist on getting their own way.'", page: "Page 10" },
+            { question: "When a person's words and actions disagree, what is the recommended principle for an officer to follow?", options: ["Trust the words", "Trust the actions", "Disregard both", "Wait for a third party to confirm"], answer: "Trust the actions", rationale: "A good principle to remember is 'when words and actions disagree, trust actions.' This is because actions can be a more reliable indicator of intent.", page: "Page 10" },
+            { question: "When is it clear that words are not effective and more than words may be needed?", options: ["When the person seems frustrated", "When the person asks a question", "When a suspect begins walking or running away", "When the person makes eye contact"], answer: "When a suspect begins walking or running away", rationale: "One of the situations where words are not effective is 'When a suspect begins walking or running away, or escapes from custody.'", page: "Page 10" },
+            { question: "According to research, which type of call is often the most dangerous for responding officers?", options: ["Traffic stops", "Thefts in progress", "Domestic violence calls", "Noise complaints"], answer: "Domestic violence calls", rationale: "'research has shown that domestic violence calls are the most dangerous for responding officers.'", page: "Page 11" },
+            { question: "What is a key criterion of a professional peace officer regarding their performance?", options: ["The ability to always avoid using force", "The ability to never make a mistake", "The ability to self-evaluate performance", "The ability to win every physical confrontation"], answer: "The ability to self-evaluate performance", rationale: "Among the criteria for assessing professionalism is the 'Ability to self-evaluate performance.'", page: "Page 12" },
+            { question: "The Garrity v. New Jersey case relates to what aspect of an internal investigation?", options: ["An officer's right to have a lawyer present", "The admissibility of a compelled statement in a criminal trial", "The maximum length of an interview", "The requirement for video recording"], answer: "The admissibility of a compelled statement in a criminal trial", rationale: "The Garrity rule holds that information from a compelled administrative interview is not admissible in a criminal trial against the officer.", page: "Page 13" },
+
+            // Unit 3
+            { question: "Under Title 18, Section 242, 'Deprivation of Rights Under Color of Law,' what is the key element that makes it a federal crime?", options: ["The act was accidental", "The act was done willfully", "The act was approved by a supervisor", "The act occurred during the day"], answer: "The act was done willfully", rationale: "This federal law focuses on 'clearly offensive, deliberate, and willful misconduct.'", page: "Page 13" },
+            { question: "Is there a 'good faith' defense available for an officer charged with a CRIMINAL violation of civil rights?", options: ["Yes, always", "Only if a supervisor approved the action", "No good faith defense for criminal violations", "Yes, if the officer apologizes"], answer: "No good faith defense for criminal violations", rationale: "The document explicitly states, 'No good faith defense for criminal violations' under these federal laws.", page: "Page 13" },
+            { question: "Federal civil rights complaints against law enforcement are investigated by which agency?", options: ["The DEA", "The local police department's Internal Affairs", "The FBI", "The ATF"], answer: "The FBI", rationale: "The document explicitly states, 'Federal civil rights complaints are investigated by the FBI.'", page: "Page 13" },
+            { question: "What is the primary purpose of Crew Resource Management (CRM)?", options: ["To ensure the senior officer's orders are always followed", "To provide every crew member with an active voice in situations where human error can have a devastating effect", "To speed up decision-making on a scene", "To document errors after an incident for disciplinary action"], answer: "To provide every crew member with an active voice in situations where human error can have a devastating effect", rationale: "CRM is defined as 'A management model which provides every crew member with an active voice during situations where human error can have a devastating effect.'", page: "Page 13" },
+            { question: "Besides supporting the duty to intervene, what is another key benefit of using Crew Resource Management?", options: ["It guarantees no mistakes will be made", "It fosters communication and maintains accountability for all personnel", "It eliminates the need for supervisors", "It makes report writing faster"], answer: "It fosters communication and maintains accountability for all personnel", rationale: "Benefits of CRM include fostering 'communication between crew members and outside resources' and maintaining 'accountability for all personnel involved.'", page: "Page 15" },
+            { question: "Which of the following is a sign that a partner officer's emotions may be escalating a situation?", options: ["Speaking in a calm voice", "Using open-handed gestures", "Clenching their fist", "Taking a step back"], answer: "Clenching their fist", rationale: "The text lists several signs a crewmember may recognize, including 'Speaking louder, Heavy breathing, Flushed skin, Clinching fist, Threatening word choices'.", page: "Page 14-15" },
+            { question: "What is 'Excessive Professional Courtesy' as described by LTC Roger Stinson?", options: ["Being overly polite to suspects", "When a junior crew member shows excessive deference to a senior member's experience, leading to a lack of preventative action", "Allowing a senior officer to take all the credit", "Ignoring a minor policy violation committed by a partner"], answer: "When a junior crew member shows excessive deference to a senior member's experience, leading to a lack of preventative action", rationale: "It is defined as 'when a junior pilot or crew member demonstrates excessive professional courtesy or excessive deference to a more senior pilot and trust in that senior crew-member's experience and judgment.'", page: "Page 16" },
+            { question: "Traditionally on a police scene, who was often considered to have ultimate authority?", options: ["The most junior officer", "The first bystander to call 911", "The primary officer on the scene", "The dispatcher"], answer: "The primary officer on the scene", rationale: "The text notes that 'Traditionally the primary officer on a scene has ultimate authority. It was often heard 'my scene, my decisions.''", page: "Page 16" },
+            { question: "According to TCOLE's Model Policies under HB 3712, which of the following is a required duty?", options: ["Duty to write a press release", "Duty to Render Aid", "Duty to inform the mayor", "Duty to clean the patrol vehicle"], answer: "Duty to Render Aid", rationale: "The text lists TCOLE Published Model Policies: 'Duty to Intervene and Duty to Report Excessive Force,' 'Prohibition Against Chokeholds,' and 'Duty to Render Aid.'", page: "Page 16" },
+            { question: "The CRM model for police scenes suggests that every responder must acknowledge the concerns of whom?", options: ["Only their direct supervisor", "Only officers with more experience", "All other responders on a scene", "Only the primary officer"], answer: "All other responders on a scene", rationale: "A key tenet of the CRM model is that 'Every responder must acknowledge the concerns of all other responders on a scene,' regardless of rank or experience.", page: "Page 16" },
+            { question: "The CRM model expands the concept of a 'team' to include non-police resources and even who?", options: ["The media", "Suspects' family members", "Bystanders who may be able to assist", "Federal agents"], answer: "Bystanders who may be able to assist", rationale: "The model includes 'Bystanders or anyone who may assist,' such as for medical or de-escalation assistance.", page: "Page 18" },
+            { question: "What is the second step in the 5-step CRM field application model?", options: ["Get attention", "State your concern", "Suggest a solution", "Obtain agreement"], answer: "State your concern", rationale: "The five steps are: 1. Get attention. 2. State your concern. 3. State the problem as you see it. 4. Suggest a solution. 5. Obtain agreement.", page: "Page 18" },
+            { question: "What is the fourth step in the 5-step CRM field application model?", options: ["Get attention", "State the problem as you see it", "Suggest a solution", "Obtain agreement"], answer: "Suggest a solution", rationale: "The five steps are: 1. Get attention. 2. State your concern. 3. State the problem as you see it. 4. Suggest a solution. 5. Obtain agreement.", page: "Page 18-19" },
+            { question: "When using CRM in a time-sensitive situation, what should you avoid in your communication?", options: ["Using a loud voice", "Using titles or names", "Using personal pronouns (e.g., 'You're...')", "Being specific"], answer: "Using personal pronouns (e.g., 'You're...')", rationale: "In time-sensitive situations, the training advises to 'Avoid personal pronouns.' Instead, one should use titles or names and describe the issue.", page: "Page 19" },
+            { question: "The 4th Amendment limits the level of force that may be used by officers to:", options: ["The minimum force possible", "Deadly force", "Reasonable force", "The amount of force the suspect uses"], answer: "Reasonable force", rationale: "The document states, 'The 4th Amendment limits the level of force that may be used to reasonable force.'", page: "Page 19" },
+            { question: "Which of the following is a factor the courts will evaluate to determine if force was reasonable?", options: ["The officer's years on the force", "The extent of injury inflicted", "The suspect's criminal record", "The time of day"], answer: "The extent of injury inflicted", rationale: "The text lists 'The extent of injury inflicted will be evaluated' as one of the factors, along with the need for force and availability of alternatives.", page: "Page 19" },
+            { question: "Besides an arrestee's behavior, what is another consideration for the reasonableness of force?", options: ["The arrestee's political affiliation", "The arrestee's physical size, strength, and weaponry", "The arrestee's opinion of the police", "The arrestee's profession"], answer: "The arrestee's physical size, strength, and weaponry", rationale: "The text lists 'Arrestee's physical size, strength, and weaponry' as a consideration for determining if force was excessive.", page: "Page 20" },
+            { question: "An officer's vulnerability to legal liability increases if they use more force than is allowed by what?", "options": ["The U.S. Constitution", "Their own feelings", "The agency's written directives", "The suspect's request"], "answer": "The agency's written directives", "rationale": "The text states, 'An officer using more force than allowed by the agency's written directives increases their vulnerability to legal liability.'", "page": "Page 20" },
+            { question: "An officer can be found liable for a justified use of deadly force if what occurred prior to the use of force?", "options": ["They failed to file a report on time", "Their negligent conduct created the danger", "They did not attend briefing", "They had a disagreement with their partner"], "answer": "Their negligent conduct created the danger", "rationale": "'An officer can be found liable in their justified use of deadly force if their negligent conduct created a danger for themselves or others.'", "page": "Page 21" },
+            { question: "What affirmative duty does a non-supervisory peace officer have regarding excessive force?", "options": ["A duty to report it after the fact", "A duty to intervene and stop officers engaging in excessive force in their presence", "A duty to look away to avoid conflict", "A duty to only intervene if the suspect is a minor"], "answer": "A duty to intervene and stop officers engaging in excessive force in their presence", "rationale": "A non-supervisory officer has an 'affirmative duty to intervene to stop officers and/or supervisors engaging in excessive force in their presence.'", "page": "Page 21" },
+            { question: "The cases of Davis v. Rennie and Shaw v. Stroud are associated with what duty?", "options": ["The duty to retreat", "The duty to render medical aid", "An officer's personal liability for failure to stop other officers from using excessive force", "The duty to protect property"], "answer": "An officer's personal liability for failure to stop other officers from using excessive force", "rationale": "These two cases are cited directly after the section discussing a peace officer's affirmative duty to intervene, indicating they are the applicable cases for this topic.", "page": "Page 21" }
+        ];
+
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const reviewScreen = document.getElementById('review-screen');
+
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const reviewBtn = document.getElementById('review-btn');
+        const backToResultsBtn = document.getElementById('back-to-results-btn');
+        
+        const questionNumberEl = document.getElementById('question-number');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const progressBar = document.getElementById('progress-bar');
+        const questionTextEl = document.getElementById('question-text');
+        const answerOptionsEl = document.getElementById('answer-options');
+        const rationaleBox = document.getElementById('rationale-box');
+        const rationaleText = document.getElementById('rationale-text');
+        const rationaleSource = document.getElementById('rationale-source');
+        
+        const scorePercentageEl = document.getElementById('score-percentage');
+        const correctAnswersEl = document.getElementById('correct-answers');
+        const totalAnsweredEl = document.getElementById('total-answered');
+        const finalTimeEl = document.getElementById('final-time');
+        const timerEl = document.getElementById('timer');
+        const reviewContainer = document.getElementById('review-container');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timerInterval;
+        let secondsElapsed = 0;
+        let userAnswers = [];
+        let shuffledQuizData = [];
+        
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        startBtn.addEventListener('click', startQuiz);
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', startQuiz);
+        reviewBtn.addEventListener('click', showReview);
+        backToResultsBtn.addEventListener('click', () => {
+            reviewScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+        });
+
+        function startTimer() {
+            secondsElapsed = 0;
+            timerEl.textContent = '00:00';
+            timerInterval = setInterval(() => {
+                secondsElapsed++;
+                const minutes = Math.floor(secondsElapsed / 60).toString().padStart(2, '0');
+                const seconds = (secondsElapsed % 60).toString().padStart(2, '0');
+                timerEl.textContent = `${minutes}:${seconds}`;
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function startQuiz() {
+            shuffledQuizData = [...quizData];
+            shuffleArray(shuffledQuizData);
+            shuffledQuizData.forEach(q => shuffleArray(q.options));
+
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            startScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            nextBtn.classList.add('hidden');
+            startTimer();
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            rationaleBox.classList.add('hidden');
+            answerOptionsEl.innerHTML = '';
+            const currentQuestion = shuffledQuizData[currentQuestionIndex];
+            
+            questionNumberEl.textContent = currentQuestionIndex + 1;
+            totalQuestionsEl.textContent = shuffledQuizData.length;
+            questionTextEl.textContent = currentQuestion.question;
+
+            const progress = ((currentQuestionIndex) / shuffledQuizData.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('answer-option', 'w-full', 'p-4', 'text-left', 'bg-white', 'border-2', 'border-gray-300', 'rounded-lg', 'hover:bg-gray-50', 'hover:border-blue-500', 'disabled:opacity-75', 'disabled:cursor-not-allowed');
+                button.addEventListener('click', () => selectAnswer(button, option, currentQuestion));
+                answerOptionsEl.appendChild(button);
+            });
+        }
+
+        function selectAnswer(button, selectedOption, currentQuestion) {
+            const { answer, rationale, page } = currentQuestion;
+            userAnswers[currentQuestionIndex] = selectedOption;
+
+            const buttons = answerOptionsEl.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === answer) {
+                    btn.classList.add('correct');
+                }
+            });
+
+            if (selectedOption === answer) {
+                score++;
+                button.classList.add('correct');
+            } else {
+                button.classList.add('incorrect');
+            }
+
+            rationaleText.textContent = rationale;
+            rationaleSource.textContent = page;
+            rationaleBox.classList.remove('hidden');
+            nextBtn.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < shuffledQuizData.length) {
+                nextBtn.classList.add('hidden');
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            stopTimer();
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+
+            const percentage = Math.round((score / shuffledQuizData.length) * 100);
+            scorePercentageEl.textContent = `${percentage}%`;
+            correctAnswersEl.textContent = score;
+            totalAnsweredEl.textContent = shuffledQuizData.length;
+            finalTimeEl.textContent = timerEl.textContent;
+        }
+
+        function showReview() {
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.remove('hidden');
+            reviewContainer.innerHTML = '';
+
+            shuffledQuizData.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === question.answer;
+
+                const reviewItem = document.createElement('div');
+                reviewItem.classList.add('border', 'p-4', 'rounded-lg');
+                reviewItem.classList.add(isCorrect ? 'bg-green-50' : 'bg-red-50');
+                reviewItem.classList.add(isCorrect ? 'border-green-200' : 'border-red-200');
+
+                let userAnswerHTML = '';
+                if (isCorrect) {
+                    userAnswerHTML = `<p>Your answer: <span class="font-semibold review-correct">${userAnswer} (Correct)</span></p>`;
+                } else {
+                    userAnswerHTML = `
+                        <p>Your answer: <span class="font-semibold review-incorrect">${userAnswer ? userAnswer : 'Not Answered'} (Incorrect)</span></p>
+                        <p>Correct answer: <span class="font-semibold review-correct">${question.answer}</span></p>
+                    `;
+                }
+
+                reviewItem.innerHTML = `
+                    <p class="font-bold mb-2">${index + 1}. ${question.question}</p>
+                    ${userAnswerHTML}
+                    <p class="text-sm text-gray-600 mt-2"><em><strong>Rationale:</strong> ${question.rationale} (Source: ${question.page})</em></p>
+                `;
+                reviewContainer.appendChild(reviewItem);
+            });
+        }
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Guide: Traumatic Brain Injury</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --header-bg: #1f2937;
+            --bg-color: #f3f4f6;
+            --tab-active-bg: #3b82f6;
+            --tab-active-text: #ffffff;
+            --card-bg: #ffffff;
+            --text-color: #111827;
+            --link-color: #2563eb;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://rsms.me/inter/inter.css');
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab.active {
+            background-color: var(--tab-active-bg);
+            color: var(--tab-active-text);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tab {
+            transition: all 0.3s ease-in-out;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="bg-gray-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">
+                <i class="fas fa-brain mr-2"></i>Traumatic Brain Injury
+            </h1>
+            <p class="text-sm text-gray-300">BPOC Chapter 30 | TCOLE Preparation</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-4 md:p-6">
+        <!-- Tab Navigation -->
+        <div class="mb-6 bg-white rounded-lg shadow-md overflow-x-auto">
+            <nav id="tabs" class="flex flex-row space-x-1 p-2">
+                <button data-tab="definitions" class="tab active flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-book-open mr-2"></i> <span class="hidden md:inline">Definitions & Types</span>
+                </button>
+                <button data-tab="prevalence" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-chart-pie mr-2"></i> <span class="hidden md:inline">Prevalence & Causes</span>
+                </button>
+                <button data-tab="effects" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-user-cog mr-2"></i> <span class="hidden md:inline">Effects & Recovery</span>
+                </button>
+                <button data-tab="intervention" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-hands-helping mr-2"></i> <span class="hidden md:inline">Prevention & Intervention</span>
+                </button>
+                 <button data-tab="communication" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-comments mr-2"></i> <span class="hidden md:inline">Communication</span>
+                </button>
+                <button data-tab="knowledge-check" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-question-circle mr-2"></i> <span class="hidden md:inline">Knowledge Check</span>
+                </button>
+                <button data-tab="resources" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-link mr-2"></i> <span class="hidden md:inline">Resources</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Tab Content -->
+        <div id="tab-contents">
+            <!-- Definitions Tab -->
+            <div id="definitions" class="tab-content active space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Defining Brain Injury</h2>
+                    <p class="text-sm text-gray-700 mb-2">Brain injuries encompass a wide range of conditions and are referred to by many terms, including TBI, Concussion, Stroke, Abusive Head Trauma, Shaken Baby Syndrome, and Neurological Damage. These all fall under the umbrella term "Acquired Brain Injury."</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Types of Acquired Brain Injury (ABI)</h2>
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="font-bold text-lg mb-2">Acquired Brain Injury (ABI)</h3>
+                            <ul class="list-disc list-inside text-sm space-y-2 text-gray-700">
+                                <li><strong>Definition:</strong> An injury to the brain that occurs after birth and is not related to a congenital or degenerative disease.</li>
+                                <li><strong>Effects:</strong> Can cause temporary or permanent impairments resulting in physical, emotional, and intellectual difficulties.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg mb-2">Traumatic Brain Injury (TBI)</h3>
+                             <ul class="list-disc list-inside text-sm space-y-2 text-gray-700">
+                                <li><strong>Definition:</strong> A type of ABI that disrupts normal brain function, caused by an external force like a blow to the head or a penetrating injury.</li>
+                                 <li><strong>Injury Types:</strong> Can be a <strong>closed-head injury</strong> (skull remains intact) or an <strong>open-head injury</strong> (an object penetrates the skull and brain).</li>
+                            </ul>
+                        </div>
+                        <div>
+                             <h3 class="font-bold text-lg mb-2 mt-4">Non-Traumatic Brain Injury</h3>
+                             <ul class="list-disc list-inside text-sm space-y-2 text-gray-700">
+                                <li><strong>Definition:</strong> A type of ABI that disrupts normal brain function, caused by an internal event rather than an external force.</li>
+                                <li><strong>Causes Include:</strong> Stroke, infection (meningitis, encephalitis), anoxia/hypoxia (lack of oxygen from near-drowning, strangulation, etc.), brain tumors, aneurysms, exposure to toxins, and drug-induced events.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Comparison of Brain Injury Causes</h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="font-semibold text-lg mb-2">Traumatic Brain Injury Causes</h3>
+                            <p class="text-sm text-gray-600 mb-2">(Caused by external forces)</p>
+                            <ul class="list-disc list-inside text-sm space-y-1 text-gray-700">
+                                <li>Concussion / Sports injuries</li>
+                                <li>Violence / Assault</li>
+                                <li>Blast injury (explosion)</li>
+                                <li>Being struck by or against something</li>
+                                <li>Falls</li>
+                                <li>Motor vehicle crash</li>
+                                <li>Abusive Head Trauma / Shaken Baby Syndrome</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg mb-2">Non-Traumatic Brain Injury Causes</h3>
+                            <p class="text-sm text-gray-600 mb-2">(Caused by internal events)</p>
+                            <ul class="list-disc list-inside text-sm space-y-1 text-gray-700">
+                                <li>Stroke</li>
+                                <li>Drug induced / Exposure to toxins</li>
+                                <li>Anoxic brain injury (lack of oxygen)</li>
+                                <li>Meningitis / Encephalitis</li>
+                                <li>Brain tumors</li>
+                                <li>Near drowning</li>
+                                <li>Aneurysm</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Prevalence & Causes Tab -->
+            <div id="prevalence" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Prevalence of Brain Injury</h2>
+                    <p class="text-sm text-gray-700 mb-2">Traumatic brain injury is the leading cause of death and disability in children and adults. Over <strong>2.2 million</strong> people sustain a TBI in the U.S. each year, with over <strong>144,000</strong> in Texas alone. This number is greater than annual diagnoses of Alzheimer's, breast cancer, HIV/AIDS, prostate cancer, lung cancer, and ALS combined.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Causes of Traumatic Brain Injury (TBI)</h2>
+                     <div class="grid md:grid-cols-2 gap-6">
+                         <div>
+                            <h4 class="font-semibold">Primary Causes:</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                                <li><strong>Falls:</strong> From heights or simple slips and tumbles.</li>
+                                <li><strong>Struck by/against something:</strong> Falling debris, violence, etc.</li>
+                                <li><strong>Motor vehicle crashes:</strong> Cars, motorcycles, ATVs.</li>
+                                <li><strong>Violence:</strong> Assault, domestic violence, shaken baby syndrome.</li>
+                                <li><strong>Explosion/Blast Injury:</strong> Military or civilian exposure.</li>
+                                <li><strong>Concussion:</strong> Sports injuries, crashes.</li>
+                            </ul>
+                         </div>
+                         <div>
+                            <div class="chart-container">
+                                <canvas id="tbiCausesChart"></canvas>
+                            </div>
+                            <div class="mt-4 text-center text-sm text-gray-600">
+                                <p><span class="font-bold">Falls:</span> 40%</p>
+                                <p><span class="font-bold">Struck by/against:</span> 16%</p>
+                                <p><span class="font-bold">Motor vehicle crashes:</span> 14%</p>
+                                <p><span class="font-bold">Assaults:</span> 11%</p>
+                                <p><span class="font-bold">Other/Unknown:</span> 19%</p>
+                            </div>
+                         </div>
+                     </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Populations with Higher Risk</h2>
+                    <ul class="list-disc list-inside text-sm text-gray-700 space-y-2">
+                        <li><strong>Children (0-4) & Adolescents (16-19):</strong> Most likely to have TBI-related ER visits.</li>
+                        <li><strong>Older Adults (75+):</strong> Highest rates of TBI-related hospitalizations and deaths.</li>
+                        <li><strong>Domestic Violence Survivors:</strong> Prevalence of TBI is estimated to be over 35%.</li>
+                        <li><strong>Athletes:</strong> Over 1.6 million sports-related concussions occur annually in the U.S.</li>
+                        <li><strong>Offenders (Adult & Juvenile):</strong> Estimated TBI prevalence in imprisoned populations is 60.3%.</li>
+                        <li><strong>Homeless Individuals:</strong> TBI prevalence is between 30% and 40%.</li>
+                        <li><strong>Veterans:</strong> An estimated 10-20% of Iraq veterans have some level of brain injury.</li>
+                    </ul>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">The Reality of Brain Injury</h2>
+                    <p class="text-sm text-gray-700 mb-2">Brain injuries can happen to anyone, anywhere, at any time. They are not planned and often come as a complete shock. Many historical and public figures have lived with the effects of brain injuries, highlighting its widespread impact.</p>
+                     <p class="text-xs text-gray-600">Examples include Harriet Tubman (TBI from injury), Abraham Lincoln (TBI from being kicked by a mule), Charles Dickens (stroke), Gabby Giffords (TBI from gunshot wound), and Tracy Morgan (TBI from car crash).</p>
+                </div>
+            </div>
+
+            <!-- Effects & Recovery Tab -->
+            <div id="effects" class="tab-content space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Brain Injury Severity</h2>
+                    <p class="text-sm text-gray-700 mb-4">Severity is determined by confusion/disorientation, loss of consciousness, memory loss, and imaging results. A "mild" TBI can have severe consequences, is often unrecognized, and should always be taken seriously, as multiple mild injuries can have exponential effects.</p>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left text-gray-500">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">Factor</th>
+                                    <th scope="col" class="px-6 py-3">Mild</th>
+                                    <th scope="col" class="px-6 py-3">Moderate</th>
+                                    <th scope="col" class="px-6 py-3">Severe</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="bg-white border-b">
+                                    <td class="px-6 py-4 font-medium">Confusion/Disorientation</td>
+                                    <td class="px-6 py-4">Less than 24 hours</td>
+                                    <td class="px-6 py-4">More than 30 min but less than 24 hrs</td>
+                                    <td class="px-6 py-4">More than 24 hours</td>
+                                </tr>
+                                <tr class="bg-white border-b">
+                                    <td class="px-6 py-4 font-medium">Loss of Consciousness</td>
+                                    <td class="px-6 py-4">0-30 minutes</td>
+                                     <td class="px-6 py-4">More than 30 min but less than 24 hrs</td>
+                                    <td class="px-6 py-4">More than 24 hours</td>
+                                </tr>
+                                <tr class="bg-white">
+                                    <td class="px-6 py-4 font-medium">Memory Loss</td>
+                                    <td class="px-6 py-4">Less than 24 hours</td>
+                                    <td class="px-6 py-4">More than 24 hours but less than 7 days</td>
+                                    <td class="px-6 py-4">More than 7 days</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                     <p class="text-xs mt-2 text-gray-600"><strong>Note on Imaging:</strong> For all levels of severity, imaging results (MRI/CT) may come back normal or abnormal. These tests do not always pick up certain chemical and physical reactions, so imaging should not be the only determining factor.</p>
+                 </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Functions of the Brain & Effects of Injury</h2>
+                    <p class="text-sm text-gray-700 mb-4">An injury to a specific lobe of the brain affects its corresponding functions. For example, an injury to the Frontal Lobe can impact personality, decision-making, memory, and impulse control. Often, injuries like a <strong>Diffuse Axonal Injury</strong> can damage cells throughout multiple parts of the brain.</p>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+                        <div class="p-4 bg-red-100 rounded-lg"><strong>Frontal Lobe:</strong> Thought, memory, behavior, personality, planning, problem-solving.</div>
+                        <div class="p-4 bg-blue-100 rounded-lg"><strong>Parietal Lobe:</strong> Language, touch, spatial awareness.</div>
+                        <div class="p-4 bg-yellow-100 rounded-lg"><strong>Temporal Lobe:</strong> Hearing, learning, emotions.</div>
+                        <div class="p-4 bg-green-100 rounded-lg"><strong>Occipital Lobe:</strong> Visual processing.</div>
+                        <div class="p-4 bg-purple-100 rounded-lg"><strong>Cerebellum:</strong> Balance and coordination.</div>
+                        <div class="p-4 bg-orange-100 rounded-lg"><strong>Brain Stem:</strong> Breathing, heart rate, temperature.</div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Three Categories of Change & Their Manifestations</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-lg">Cognitive Changes</h4>
+                            <p class="text-sm mb-2">Common changes include difficulty with memory, lack of concentration, delayed thinking/processing, reckless decision-making, and difficulty communicating.</p>
+                            <h5 class="font-semibold text-sm">Practical Manifestations (Checklist):</h5>
+                             <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>Struggles following conversations or needs things repeated.</li>
+                                <li>Has difficulty finding a word to say.</li>
+                                <li>Is unable to recognize words they once knew.</li>
+                                <li>Is easily distracted or has trouble following directions.</li>
+                                <li>Can't remember answers to simple questions.</li>
+                             </ul>
+                        </div>
+                        <div class="border-t pt-4">
+                            <h4 class="font-semibold text-lg">Emotional/Behavioral Changes</h4>
+                             <p class="text-sm mb-2">Common changes include irritability, aggression, anxiety/depression, mood swings, inappropriate social behavior, and impulsivity.</p>
+                            <h5 class="font-semibold text-sm">Practical Manifestations (Checklist):</h5>
+                             <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>Has physical and verbal outbursts.</li>
+                                <li>Displays inappropriate sexual behavior.</li>
+                                <li>Makes impulsive decisions.</li>
+                                <li>Shows inappropriate laughing or crying.</li>
+                             </ul>
+                        </div>
+                        <div class="border-t pt-4">
+                            <h4 class="font-semibold text-lg">Physical Changes</h4>
+                             <p class="text-sm mb-2">Common changes include poor balance, impaired motor skills, hearing/vision issues, slurred speech, muscle tremors, chronic headaches, and seizures.</p>
+                            <h5 class="font-semibold text-sm">Practical Manifestations (Checklist):</h5>
+                             <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>Has impaired fine motor skills.</li>
+                                <li>Experiences double vision, nystagmus, or trouble with depth perception.</li>
+                                <li>Cannot recognize the meaning of sounds (auditory agnosia).</li>
+                                <li>Is unable to speak or has slurred speech.</li>
+                             </ul>
+                        </div>
+                    </div>
+                     <div class="mt-4 p-4 bg-yellow-100 rounded-lg text-yellow-800 text-sm">
+                        <p><strong>Officer Perception:</strong> These combined changes can make individuals seem uncooperative, disrespectful, indifferent, defiant, rude, vulgar, reckless, detached, irrational, evasive, dazed, "out of it," or as if they are under the influence of alcohol and/or drugs.</p>
+                     </div>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Comorbidities & Recovery</h2>
+                     <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                             <h4 class="font-semibold">Common Comorbidities</h4>
+                            <p class="text-sm text-gray-700 mb-2">The effects of a brain injury often lead to the development of two or more simultaneously present chronic conditions. Common ones include:</p>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                               <li>Substance use/abuse</li>
+                               <li>Sleep problems</li>
+                               <li>Depression and suicidality</li>
+                               <li>Epilepsy</li>
+                               <li>Neurodegenerative diseases (ALS, Alzheimer's)</li>
+                               <li>Fatigue</li>
+                            </ul>
+                        </div>
+                         <div>
+                            <h4 class="font-semibold">The Recovery Process</h4>
+                            <p class="text-sm text-gray-700">Recovery is different for everyone and is best thought of as an ongoing, life-long process rather than a complete return to "normal." Survivors often learn to live with a "new normal," adapting to their limitations. A brain injury is more like a chronic condition than a broken bone that heals completely.</p>
+                         </div>
+                     </div>
+                </div>
+            </div>
+
+            <!-- Intervention Tab -->
+            <div id="intervention" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">The First Responder's Role</h2>
+                    <p class="text-sm text-gray-700">As a first responder, you have a profound impact on the physical, mental, and social well-being of the people you interact with. You will encounter individuals with potential brain injuries when responding to:</p>
+                     <ul class="list-disc list-inside text-sm text-gray-700 grid grid-cols-2 md:grid-cols-3 gap-x-4">
+                        <li>Domestic Violence</li>
+                        <li>Elderly falls</li>
+                        <li>Public Intoxication</li>
+                        <li>Strokes / Heart Attacks</li>
+                        <li>Juvenile Misconduct</li>
+                        <li>Drug activity</li>
+                        <li>Assault</li>
+                        <li>Suspicious person</li>
+                        <li>Child abuse</li>
+                        <li>Trauma calls</li>
+                        <li>DWIs</li>
+                        <li>Motor vehicle accidents</li>
+                        <li>Mental health concerns</li>
+                        <li>Suicide attempts</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Brain Injury Prevention</h2>
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-semibold">In Children & Abusive Head Trauma</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700 mb-4">
+                                <li>Keep stairs/floors clear, use safety gates, and install window guards. Use nonslip mats in bathtubs.</li>
+                                <li>Ensure playgrounds have shock-absorbing surfaces (mulch, sand).</li>
+                                <li>Follow <a href="https://www.cdc.gov/headsup/youthsports/index.html" target="_blank" class="text-blue-600 hover-underline">CDC's Heads Up</a> program and Natasha's Law for youth sports.</li>
+                            </ul>
+                            <div class="p-4 bg-indigo-100 rounded-lg">
+                                <h5 class="font-semibold text-indigo-800">The Period of PURPLE Crying</h5>
+                                <p class="text-sm text-indigo-700">An approach to prevent Shaken Baby Syndrome by educating caregivers that this period of crying is normal and will pass. The letters stand for:</p>
+                                <ul class="list-disc list-inside text-sm text-indigo-700 mt-2">
+                                    <li><strong>P</strong> - Peak of Crying: May cry more each week, most in month 2.</li>
+                                    <li><strong>U</strong> - Unexpected: Crying can come and go for no reason.</li>
+                                    <li><strong>R</strong> - Resists Soothing: May not stop crying no matter what you try.</li>
+                                    <li><strong>P</strong> - Pain-like Face: May look like they are in pain, even when they are not.</li>
+                                    <li><strong>L</strong> - Long Lasting: Crying can last as much as 5 hours a day.</li>
+                                    <li><strong>E</strong> - Evening: May cry more in the late afternoon and evening.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">In Older Adults & Stroke Prevention:</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>Remove tripping hazards, improve home lighting, and install grab bars/handrails.</li>
+                                <li>Maintain a regular physical activity program.</li>
+                                <li>To prevent stroke: Eat a healthy diet, maintain a healthy weight, get enough exercise, don't smoke, and limit alcohol.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">General Safety:</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li><strong>Motor Vehicles:</strong> Always wear seat belts, never drive intoxicated or distracted, and use appropriate child safety seats.</li>
+                                <li><strong>Helmets:</strong> Wear a properly fitted helmet when skiing, snowboarding, skateboarding, playing contact sports, or riding a motorcycle, bike, ATV, horse, or scooter.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Signs, Symptoms & Intervention Case Studies</h2>
+                     <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold">Immediate Signs & Symptoms</h4>
+                            <p class="text-sm text-gray-700 mb-2">After a hit or jolt to the head/body, encourage ER visit for:</p>
+                             <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>Confusion or disorientation</li>
+                                <li>Loss of consciousness</li>
+                                <li>Severe headache, nausea, vomiting</li>
+                                <li>Blood/clear fluid from nose/ears</li>
+                                <li>Weakness, numbness, slurred speech</li>
+                             </ul>
+                             <p class="text-sm text-gray-700 mt-2">Symptoms can appear days or weeks later. Watch for ongoing headaches, sleep disturbances, irritability, or changes in performance.</p>
+                        </div>
+                         <div>
+                             <h4 class="font-semibold">Signs of a Stroke (F.A.S.T.)</h4>
+                             <ul class="list-none text-sm space-y-1">
+                                <li><strong>F - Face Drooping:</strong> Is the smile uneven?</li>
+                                <li><strong>A - Arm Weakness:</strong> Does one arm drift down?</li>
+                                <li><strong>S - Speech Difficulty:</strong> Is speech slurred?</li>
+                                <li><strong>T - Time to call 911:</strong> Act immediately.</li>
+                             </ul>
+                         </div>
+                     </div>
+                     <div class="border-t mt-4 pt-4">
+                        <h4 class="font-semibold mb-2">Case Studies</h4>
+                        <div class="text-sm text-gray-700 space-y-2">
+                            <p><strong>Case 1 (Delayed Symptoms):</strong> "Marni" was in a car crash, felt shaky but declined hospital transport to run errands. Months later, struggling with concentration and memory, she was diagnosed with a TBI. This highlights the importance of encouraging immediate medical evaluation even if the person feels "fine."</p>
+                            <p><strong>Case 2 (Proactive Intervention):</strong> Officer Ortega saw an older adult fall. He checked for immediate symptoms. Finding none, he still encouraged them to monitor for delayed symptoms and provided a handout. This demonstrates excellent proactive service.</p>
+                        </div>
+                     </div>
+                </div>
+            </div>
+            
+            <!-- Communication Tab -->
+             <div id="communication" class="tab-content space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                     <h2 class="text-xl font-bold mb-4 border-b pb-2">Effective Communication Techniques</h2>
+                     <div class="grid md:grid-cols-2 gap-6">
+                         <div>
+                             <h4 class="font-semibold text-lg text-green-700">Do:</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700">
+                                 <li>Create a safe environment; explain limits and rules.</li>
+                                 <li>Be encouraging, respectful, and patient.</li>
+                                 <li>Use a positive or neutral tone.</li>
+                                 <li>Reduce distractions (move to a quiet area).</li>
+                                 <li>Speak slowly, simply, and clearly.</li>
+                                 <li>Focus on one subject at a time.</li>
+                                 <li>Check for understanding and ask for clarification.</li>
+                                 <li>Use active listening skills (see checklist below).</li>
+                                 <li>Show empathy for feelings, but not negative behavior.</li>
+                             </ul>
+                         </div>
+                         <div>
+                            <h4 class="font-semibold text-lg text-red-700">Do Not:</h4>
+                             <ul class="list-disc list-inside text-sm text-gray-700">
+                                <li>Threaten, interrupt, argue, or challenge.</li>
+                                <li>Shame or use a condescending tone.</li>
+                                <li>Attempt to finish their sentences.</li>
+                                <li>Speak harshly or too loudly.</li>
+                                <li>View the interaction as a competition to be won.</li>
+                             </ul>
+                         </div>
+                     </div>
+                     <div class="border-t mt-4 pt-4">
+                         <h4 class="font-semibold">Active Listening Skills (Checklist)</h4>
+                         <ul class="list-disc list-inside text-sm text-gray-700">
+                            <li><strong>Pay attention:</strong> Give the speaker your undivided attention.</li>
+                            <li><strong>Show you are listening:</strong> Use open body language, nod, and provide small verbal cues ("uh huh," "I see").</li>
+                            <li><strong>Provide feedback:</strong> Paraphrase your understanding of their message ("What I'm hearing is...").</li>
+                            <li><strong>Get clarification:</strong> Ask questions to clarify anything you don't understand.</li>
+                            <li><strong>Defer judgment:</strong> Avoid interrupting with counterarguments.</li>
+                            <li><strong>Respond appropriately:</strong> Be candid, open, and honest in your response.</li>
+                         </ul>
+                     </div>
+                 </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                     <h2 class="text-xl font-bold mb-4 border-b pb-2">Case Study & Recognizing Difficulties</h2>
+                     <div class="space-y-4">
+                        <div>
+                             <h4 class="font-semibold">Recognizing Communication Difficulties</h4>
+                             <p class="text-sm text-gray-700 mb-2">A person with a brain injury may have slurred speech, trouble finding words, misunderstand sarcasm, use inappropriate language, or need things repeated. If you notice these, consider the possibility of a brain injury and adapt your communication. It is not your job to diagnose. Some survivors carry a wallet card with emergency contacts.</p>
+                        </div>
+                        <div class="border-t pt-4">
+                             <h4 class="font-semibold">Case Study: DWI Stop</h4>
+                            <p class="text-sm text-gray-700">"Jordan," a brain injury survivor, was pulled over for speeding. The officer's questions and the noisy environment increased Jordan's anxiety, causing symptoms to worsen: slurred speech, stumbling, and difficulty following instructions. The officer misinterpreted these as signs of intoxication, even when Jordan presented an emergency contact card. The interaction escalated, resulting in an unnecessary arrest, use of force, and a second brain injury for Jordan. This illustrates how recognizing symptoms and using proper communication techniques could have de-escalated the situation and led to a better outcome.</p>
+                        </div>
+                     </div>
+                 </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                     <h2 class="text-xl font-bold mb-4 border-b pb-2">Resource Facilitation & Unmet Needs</h2>
+                     <p class="text-sm text-gray-700 mb-2">You will likely encounter individuals living with brain injury who have unmet needs. Referring them to resources can have a hugely positive effect. These needs can be understood through a framework similar to Maslow's hierarchy:</p>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Physiological:</strong> Food, shelter, health care.</li>
+                        <li><strong>Safety:</strong> Personal, physical, and financial security.</li>
+                        <li><strong>Belongingness/Love:</strong> Friendship, family, intimacy.</li>
+                        <li><strong>Esteem:</strong> Self-respect, confidence, independence.</li>
+                        <li><strong>Self-Actualization:</strong> Realizing one's potential.</li>
+                    </ul>
+                    <p class="text-sm mt-2">Your role in communication, intervention, and resource facilitation can have a profoundly positive impact on a person's life.</p>
+                 </div>
+             </div>
+
+            <!-- Knowledge Check Tab -->
+            <div id="knowledge-check" class="tab-content">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Knowledge Check</h2>
+                    <p class="mb-6 text-gray-600">Test your understanding of the material.</p>
+                    <div id="quiz-container" class="space-y-8">
+                        <!-- Questions will be dynamically inserted here -->
+                    </div>
+                    <div class="mt-8 text-center">
+                        <button id="check-answers-btn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors">Check Answers</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resources Tab -->
+            <div id="resources" class="tab-content">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Resources</h2>
+                    <p class="mb-6 text-gray-600">Quick links to resources and organizations mentioned in this guide.</p>
+                    <div id="resources-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+                        <!-- Links will be dynamically inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('#tabs button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                });
+            });
+
+            // --- TBI CAUSES CHART ---
+            const ctx = document.getElementById('tbiCausesChart');
+            if (ctx) {
+                new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: ['Falls', 'Struck by/against', 'Motor vehicle crashes', 'Assaults', 'Other/Unknown'],
+                        datasets: [{
+                            label: 'Leading Causes of TBI',
+                            data: [40, 16, 14, 11, 19],
+                            backgroundColor: [
+                                'rgba(54, 162, 235, 0.8)',
+                                'rgba(255, 159, 64, 0.8)',
+                                'rgba(153, 102, 255, 0.8)',
+                                'rgba(255, 99, 132, 0.8)',
+                                'rgba(75, 192, 192, 0.8)'
+                            ],
+                            borderColor: [
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 159, 64, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(75, 192, 192, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        if (context.parsed !== null) {
+                                            label += context.parsed + '%';
+                                        }
+                                        return label;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // --- QUIZ DATA ---
+            const quizData = [
+                {
+                    question: "1. An injury where the skull remains intact is called a(n) ________, while an injury where an object penetrates the skull is a(n) ________.",
+                    options: ["Acquired injury / Traumatic injury", "Open-head injury / Closed-head injury", "Closed-head injury / Open-head injury", "Non-traumatic injury / Traumatic injury"],
+                    answer: "Closed-head injury / Open-head injury",
+                    explanation: "A closed-head injury means the skull is not breached, whereas an open-head injury involves penetration of the skull."
+                },
+                {
+                    question: "2. An injury that damages cells throughout multiple parts of the brain, rather than being localized to one lobe, is known as a:",
+                    options: ["Focal Injury", "Diffuse Axonal Injury", "Parietal Injury", "Open-Head Injury"],
+                    answer: "Diffuse Axonal Injury",
+                    explanation: "A Diffuse Axonal Injury involves widespread damage to brain cells and is not confined to one specific area."
+                },
+                {
+                    question: "3. Which of the following is a 'Practical Manifestation' of a cognitive change after a TBI?",
+                    options: ["Physical and verbal outbursts", "Struggles following a conversation and needs things repeated", "Double vision or trouble with depth perception", "Inappropriate laughing or crying"],
+                    answer: "Struggles following a conversation and needs things repeated",
+                    explanation: "Struggling to follow a conversation is a direct example of a cognitive deficit, such as delayed processing or memory issues."
+                },
+                {
+                    question: "4. A person experiences a 45-minute loss of consciousness and memory loss for about 36 hours. What is the severity of their brain injury?",
+                    options: ["Mild", "Moderate", "Severe", "Cannot be determined"],
+                    answer: "Moderate",
+                    explanation: "A loss of consciousness between 30 minutes and 24 hours, and memory loss over 24 hours but less than 7 days, is classified as a moderate brain injury."
+                },
+                {
+                    question: "5. In the 'Period of PURPLE Crying,' what does the 'R' stand for?",
+                    options: ["Regular Crying", "Really Loud", "Resists Soothing", "Restless"],
+                    answer: "Resists Soothing",
+                    explanation: "The 'R' stands for 'Resists Soothing,' meaning the baby may not stop crying no matter what the caregiver tries."
+                },
+                {
+                    question: "6. Two or more simultaneously present chronic diseases or conditions in a brain injury survivor, such as substance abuse and epilepsy, are known as:",
+                    options: ["Side effects", "Comorbidities", "Co-diagnoses", "Syndromes"],
+                    answer: "Comorbidities",
+                    explanation: "Comorbidities are additional chronic conditions that are present alongside a primary condition like a brain injury."
+                },
+                {
+                    question: "7. The acronym F.A.S.T. is used to identify the signs of what medical emergency?",
+                    options: ["A severe TBI", "A heart attack", "A seizure", "A stroke"],
+                    answer: "A stroke",
+                    explanation: "F.A.S.T. (Face, Arm, Speech, Time) is a mnemonic used to help people quickly recognize the warning signs of a stroke."
+                },
+                {
+                    question: "8. Which Active Listening skill involves summarizing your understanding of what the person said, for example by saying 'What I'm hearing is...'?",
+                    options: ["Pay attention", "Show you are listening", "Provide feedback", "Defer judgment"],
+                    answer: "Provide feedback",
+                    explanation: "Providing feedback, such as paraphrasing, confirms your understanding and shows the person you are actively listening."
+                },
+                 {
+                    question: "9. Natasha's Law in Texas mandates training on concussion management for which group?",
+                    options: ["All emergency first responders", "Nurses in public schools", "Coaches and trainers for school district athletic activities", "All parents of children under 18"],
+                    answer: "Coaches and trainers for school district athletic activities",
+                    explanation: "Natasha's Law specifically targets coaches and trainers involved in UIL interscholastic sports to ensure they can manage concussions properly."
+                },
+                {
+                    question: "10. The recovery process from a brain injury is best described as:",
+                    options: ["A quick process, similar to a broken bone healing", "A complete return to normal within a few months", "An ongoing, life-long process of adaptation", "Guaranteed with proper medical care"],
+                    answer: "An ongoing, life-long process of adaptation",
+                    explanation: "A brain injury is more like a chronic condition, and recovery is an ongoing process where survivors often adapt to a 'new normal'."
+                },
+                 {
+                    question: "11. According to the PDF, which population has an estimated TBI prevalence of 60.3%?",
+                    options: ["Domestic Violence Survivors", "Homeless Individuals", "Veterans", "Imprisoned Populations"],
+                    answer: "Imprisoned Populations",
+                    explanation: "The estimated prevalence of TBI in adult and juvenile offender populations is 60.3%."
+                },
+                {
+                    question: "12. An individual with a brain injury seems uncooperative, is easily distracted, and struggles to follow instructions. This is likely a result of:",
+                    options: ["Intentional defiance", "Cognitive changes", "A hearing impairment only", "Lack of respect for authority"],
+                    answer: "Cognitive changes",
+                    explanation: "Difficulty concentrating, delayed processing, and memory problems are cognitive effects of a brain injury that can be mistaken for uncooperative behavior."
+                }
+            ];
+
+            const quizContainer = document.getElementById('quiz-container');
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'quiz-question';
+                let optionsHtml = q.options.map(option => `
+                    <label class="block"><input type="radio" name="q${index}" value="${option}" class="mr-2">${option}</label>
+                `).join('');
+                questionDiv.innerHTML = `
+                    <p class="font-semibold mb-2">${q.question}</p>
+                    <div class="space-y-2">${optionsHtml}</div>
+                    <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                `;
+                quizContainer.appendChild(questionDiv);
+            });
+
+            document.getElementById('check-answers-btn').addEventListener('click', () => {
+                quizData.forEach((q, index) => {
+                    const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                    const feedback = document.querySelectorAll('.feedback')[index];
+                    feedback.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+                    if (selected && selected.value === q.answer) {
+                        feedback.textContent = `Correct! ${q.explanation}`;
+                        feedback.classList.add('bg-green-100', 'text-green-800');
+                    } else {
+                        feedback.textContent = `Incorrect. The correct answer is "${q.answer}". ${q.explanation}`;
+                        feedback.classList.add('bg-red-100', 'text-red-800');
+                    }
+                });
+            });
+
+            // --- RESOURCES LIST ---
+            const resources = [
+                { name: "Office of Acquired Brain Injury (OABI)", url: "http://www.hhsc.state.tx.us/hhsc_projects/abj/" },
+                { name: "2-1-1 Texas", url: "http://www.211texas.org/" },
+                { name: "CDC Heads Up Program", url: "https://www.cdc.gov/headsup/youthsports" },
+                { name: "Natasha's Law Info (Head Safety Texas)", url: "http://headsafetytexas.org" },
+                { name: "Period of PURPLE Crying", url: "http://purplecrying.info/what-is-the-period-of-purple-crying.php" },
+                { name: "A Matter of Balance (Fall Prevention)", url: "https://www.ncoa.org/healthy-aging/falls-prevention/falls-prevention-programs-for-older-adults" },
+                { name: "American Stroke Association", url: "http://www.strokeassociation.org/STROKEORG/WarningSigns/Stroke-Warning-Signs-and-Symptoms_UCM_308528_SubHomePage.jsp" }
+            ];
+            const resourcesList = document.getElementById('resources-list');
+            resources.sort((a, b) => a.name.localeCompare(b.name));
+            resources.forEach(res => {
+                const linkDiv = document.createElement('div');
+                const link = document.createElement('a');
+                link.href = res.url;
+                link.target = '_blank';
+                link.className = 'text-blue-600 hover:underline font-semibold';
+                link.textContent = res.name;
+                linkDiv.appendChild(link);
+                resourcesList.appendChild(linkDiv);
+            });
+        });
+    </script>
+</body>
+</html>
+
