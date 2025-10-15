@@ -621,9 +621,9 @@
             if (!assembled[current]) { showResults(); return; }
             qIndexEl.textContent = current+1;
             const q = assembled[current];
-            questionText.textContent = q.question || q.prompt || 'Question text missing';
+            questionText.textContent = q.question || (q.raw && q.raw.question) || q.prompt || 'Question text missing';
             optionsEl.innerHTML = '';
-            const opts = q.options ? q.options.slice() : [];
+            const opts = (q.options && q.options.slice()) || (q.raw && q.raw.options && q.raw.options.slice()) || [];
             // shuffle options
             for (let i = opts.length-1; i>0; i--) {
                 const j = Math.floor(Math.random()*(i+1)); [opts[i], opts[j]] = [opts[j], opts[i]];
@@ -650,8 +650,8 @@
 
         function showRationaleFor(q) {
             if (!rationaleBox) return;
-            const rationale = q.rationale || q.explain || q.note || '';
-            const page = q.page || q.sourcePage || q.__page || '';
+            const rationale = q.rationale || (q.raw && q.raw.rationale) || q.explain || q.note || '';
+            const page = q.page || (q.raw && q.raw.page) || q.sourcePage || q.__page || '';
             if (!rationale && !page) { hideRationale(); return; }
             rationaleText.textContent = rationale || '';
             rationaleSource.textContent = page || q.__source || '';
@@ -662,7 +662,7 @@
             // disable all
             optionsEl.querySelectorAll('button').forEach(b => b.disabled = true);
             // highlight correct/incorrect
-            const correct = q.answer || q.correctAnswer || q.correct;
+            const correct = q.answer || (q.raw && (q.raw.answer || q.raw.correct || q.raw.correctAnswer)) || q.correctAnswer || q.correct;
             const buttons = Array.from(optionsEl.querySelectorAll('button'));
             buttons.forEach(b => {
                 if (b.textContent === correct) {
