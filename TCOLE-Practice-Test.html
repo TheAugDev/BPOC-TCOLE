@@ -395,23 +395,25 @@
         // Fetch consolidated JSON built by the repo build script or the distribution assembled file.
         // On GitHub Pages we publish dist/assembled_250.json; prefer that and fall back to all_quiz_data.json.
         async function fetchAllQuizJson() {
-            // First try a randomly selected prebuilt bank from dist/banks to avoid building on the client
+            // First try the banks manifest so the client can discover available prebuilt banks
             try {
-                const bankCount = 6; // must match build-time BANK_COUNT
-                const pick = Math.floor(Math.random()*bankCount) + 1;
-                const bankUrl = `dist/banks/bank_${pick}.json`;
-                const r = await tryFetchUrl(bankUrl);
-                if (r && r.data) {
-                    console.info('Loaded prebuilt bank from', r.url);
-                    const payload = r.data;
-                    if (Array.isArray(payload)) {
+                const manifestUrl = 'dist/banks/manifest.json';
+                const mRes = await tryFetchUrl(manifestUrl);
+                if (mRes && mRes.data && Array.isArray(mRes.data.banks) && mRes.data.banks.length) {
+                    const banks = mRes.data.banks;
+                    const pickName = banks[Math.floor(Math.random()*banks.length)];
+                    const bankUrl = `dist/banks/${pickName}`;
+                    const r = await tryFetchUrl(bankUrl);
+                    if (r && r.data && Array.isArray(r.data)) {
+                        console.info('Loaded prebuilt bank from', r.url);
+                        const payload = r.data;
                         const map = {};
                         for (const q of payload) {
                             const src = q.__source || q.source || (q.raw && q.raw.__source) || (q.raw && q.raw.source) || '__assembled__';
                             map[src] = map[src] || [];
                             map[src].push(q);
                         }
-                        window.__lastQuizFetchAttempts = tried;
+                        window.__lastQuizFetchAttempts = window.__lastQuizFetchAttempts || [];
                         window.__lastQuizFetchUrl = r.url;
                         window.__lastLoadedKeys = Object.keys(map);
                         return map;

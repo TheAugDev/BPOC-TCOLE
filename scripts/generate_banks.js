@@ -19,8 +19,13 @@ for (let i = 0; i < BANK_COUNT; i++) {
   const copy = assembled.slice();
   shuffle(copy);
   const out = copy.slice(0, 250);
-  fs.writeFileSync(path.join(banksDir, `bank_${i+1}.json`), JSON.stringify(out, null, 2));
-  console.log('Wrote', `dist/banks/bank_${i+1}.json`);
+  const name = `bank_${i+1}.json`;
+  fs.writeFileSync(path.join(banksDir, name), JSON.stringify(out, null, 2));
+  filenames.push(name);
+  console.log('Wrote', `dist/banks/${name}`);
 }
 
-console.log(`Generated ${BANK_COUNT} banks in dist/banks`);
+// write a simple manifest so the client can discover available banks instead of hard-coding a count
+const manifest = { bankCount: BANK_COUNT, banks: filenames };
+fs.writeFileSync(path.join(banksDir, 'manifest.json'), JSON.stringify(manifest, null, 2));
+console.log(`Generated ${BANK_COUNT} banks in dist/banks (manifest written)`);
