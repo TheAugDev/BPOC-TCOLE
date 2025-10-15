@@ -31,18 +31,14 @@ try {
   console.warn('Failed to generate banks:', e && e.message);
 }
 
-// run validation
+// run validation (invoke the validator script directly to avoid relying on local npm cli path)
 try {
   const spawn = require('child_process').spawnSync;
-  const res = spawn(process.execPath, [path.join(ROOT,'node_modules','npm','bin','npm-cli.js'), 'run', 'validate-dist'], { stdio: 'inherit' });
-  // If npm binary isn't available like this, just run the validator directly
-  if (res.status !== 0) {
-    const res2 = spawn(process.execPath, [path.join(ROOT,'scripts','validate_dist.js')], { stdio: 'inherit' });
-    if (res2.status !== 0) process.exit(res2.status);
-  }
+  const res = spawn(process.execPath, [path.join(ROOT,'scripts','validate_dist.js')], { stdio: 'inherit' });
+  if (res.status !== 0) process.exit(res.status);
   process.exit(0);
 } catch (err) {
-  // fallback: require the validator
+  // fallback: require the validator module
   try {
     require('./validate_dist.js');
     process.exit(0);
