@@ -395,6 +395,30 @@
         // Fetch consolidated JSON built by the repo build script or the distribution assembled file.
         // On GitHub Pages we publish dist/assembled_250.json; prefer that and fall back to all_quiz_data.json.
         async function fetchAllQuizJson() {
+            // First try a randomly selected prebuilt bank from dist/banks to avoid building on the client
+            try {
+                const bankCount = 6; // must match build-time BANK_COUNT
+                const pick = Math.floor(Math.random()*bankCount) + 1;
+                const bankUrl = `dist/banks/bank_${pick}.json`;
+                const r = await tryFetchUrl(bankUrl);
+                if (r && r.data) {
+                    console.info('Loaded prebuilt bank from', r.url);
+                    const payload = r.data;
+                    if (Array.isArray(payload)) {
+                        const map = {};
+                        for (const q of payload) {
+                            const src = q.__source || q.source || (q.raw && q.raw.__source) || (q.raw && q.raw.source) || '__assembled__';
+                            map[src] = map[src] || [];
+                            map[src].push(q);
+                        }
+                        window.__lastQuizFetchAttempts = tried;
+                        window.__lastQuizFetchUrl = r.url;
+                        window.__lastLoadedKeys = Object.keys(map);
+                        return map;
+                    }
+                }
+            } catch (e) { /* ignore and fall through */ }
+
             // Try a set of candidate URLs so the page works when deployed under different bases
             const attempts = [];
             const relDist = 'dist/assembled_250.json';

@@ -21,6 +21,16 @@ try {
   console.log('Copied build/assembled_250.json -> dist/assembled_250.json');
 } catch (err) { fail('Failed to copy assembled file: '+err.message); }
 
+// generate multiple prebuilt banks for faster client loads
+try {
+  console.log('Generating prebuilt banks...');
+  const spawn = require('child_process').spawnSync;
+  const gen = spawn(process.execPath, [path.join(ROOT,'scripts','generate_banks.js')], { stdio: 'inherit' });
+  if (gen.status !== 0) console.warn('generate_banks.js exited with', gen.status);
+} catch (e) {
+  console.warn('Failed to generate banks:', e && e.message);
+}
+
 // run validation
 try {
   const spawn = require('child_process').spawnSync;
