@@ -15,6 +15,7 @@ function shuffle(arr) {
 }
 
 const BANK_COUNT = parseInt(process.env.BANK_COUNT || '6', 10);
+const filenames = [];
 for (let i = 0; i < BANK_COUNT; i++) {
   const copy = assembled.slice();
   shuffle(copy);
