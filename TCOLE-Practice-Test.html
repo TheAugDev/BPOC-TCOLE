@@ -387,17 +387,77 @@
             timerEl.textContent = `${m}:${s}`;
         }
 
-        // Fetch consolidated JSON built by the repo build script
+        // Fetch consolidated JSON built by the repo build script or the distribution assembled file.
+        // On GitHub Pages we publish dist/assembled_250.json; prefer that and fall back to all_quiz_data.json.
         async function fetchAllQuizJson() {
+            // Try a set of candidate URLs so the page works when deployed under different bases
+            const attempts = [];
+            const relDist = 'dist/assembled_250.json';
+            attempts.push(relDist);
             try {
-                const res = await fetch('all_quiz_data.json');
-                if (!res.ok) throw new Error('HTTP ' + res.status);
-                const data = await res.json();
-                return data; // mapping filename -> array
+                const basePath = location.pathname.replace(/\/[^\/]*$/, '');
+                const absDist = `${location.origin}${basePath}/dist/assembled_250.json`;
+                if (!attempts.includes(absDist)) attempts.push(absDist);
             } catch (e) {
-                console.error('Failed to fetch all_quiz_data.json', e);
-                return null;
+                // ignore
             }
+            // also try the all_quiz_data.json paths
+            attempts.push('all_quiz_data.json');
+            try {
+                const basePath = location.pathname.replace(/\/[^\/]*$/, '');
+                const absAll = `${location.origin}${basePath}/all_quiz_data.json`;
+                if (!attempts.includes(absAll)) attempts.push(absAll);
+            } catch (e) { }
+
+            const tried = [];
+            async function tryFetchUrl(u) {
+                try {
+                    const r = await fetch(u);
+                    tried.push({ url: u, status: r.status });
+                    if (!r.ok) return null;
+                    const data = await r.json();
+                    return { url: u, data };
+                } catch (err) {
+                    tried.push({ url: u, error: String(err) });
+                    return null;
+                }
+            }
+
+            for (const url of attempts) {
+                const res = await tryFetchUrl(url);
+                if (!res) continue;
+                const payload = res.data;
+                // If it's an assembled array, convert to mapping by __source so the existing assembler logic works
+                if (Array.isArray(payload)) {
+                    const map = {};
+                    for (const q of payload) {
+                        const src = q.__source || q.source || (q.raw && q.raw.__source) || (q.raw && q.raw.source) || '__assembled__';
+                        map[src] = map[src] || [];
+                        map[src].push(q);
+                    }
+                    console.info('Loaded assembled array from', res.url);
+                    // expose debug info for runtime inspection
+                    window.__lastQuizFetchAttempts = tried;
+                    window.__lastQuizFetchUrl = res.url;
+                    window.__lastLoadedKeys = Object.keys(map);
+                    return map;
+                }
+                // If payload looks like a mapping object, return it
+                if (payload && typeof payload === 'object') {
+                    console.info('Loaded quiz mapping from', res.url);
+                    window.__lastQuizFetchAttempts = tried;
+                    window.__lastQuizFetchUrl = res.url;
+                    window.__lastLoadedKeys = Object.keys(payload);
+                    return payload;
+                }
+            }
+
+            console.error('Failed to load quiz JSON from candidates. Attempts:', tried);
+            // Helpful hint: if you're viewing this file on github.com (not on GitHub Pages), fetch will 404.
+            if (location.hostname.includes('github.com')) {
+                console.info('Note: You seem to be viewing the file on github.com. Use the GitHub Pages URL (e.g., https://<user>.github.io/<repo>/TCOLE-Practice-Test.html) or ensure dist/assembled_250.json is published to Pages.');
+            }
+            return null;
         }
 
         function pickRandom(arr, n) {
@@ -418,6 +478,14 @@
             statusEl.textContent = 'Loading consolidated quiz JSON...';
             const allJson = await fetchAllQuizJson();
             if (!allJson) { statusEl.textContent = 'Failed to load quiz JSON. See console.'; return; }
+            // defensive: if the loaded mapping has no keys or total questions = 0, abort early with a helpful message
+            const loadedKeys = Object.keys(allJson || {});
+            const totalQuestionsAvailable = Object.values(allJson || {}).flat().length;
+            if (loadedKeys.length === 0 || totalQuestionsAvailable === 0) {
+                statusEl.textContent = 'No quiz data found. Check console for attempted URLs and ensure `dist/assembled_250.json` or `all_quiz_data.json` is available.';
+                console.error('Empty quiz mapping loaded. Attempts:', window.__lastQuizFetchAttempts || 'none', 'loadedKeys:', loadedKeys, 'totalQuestionsAvailable:', totalQuestionsAvailable);
+                return;
+            }
             const keys = Object.keys(distribution);
             for (let key of keys) {
                 const mapped = fileMap[key];

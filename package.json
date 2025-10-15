@@ -1,0 +1,12 @@
+{
+  "name": "bpoc-tcole",
+  "version": "1.0.0",
+  "description": "TCOLE practice test tools",
+  "scripts": {
+    "validate-dist": "node ./scripts/validate_dist.js",
+    "predeploy": "node ./scripts/predeploy.js"
+  },
+  "engines": {
+    "node": ">=14"
+  }
+}
