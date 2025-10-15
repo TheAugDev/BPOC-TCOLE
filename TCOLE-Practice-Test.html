@@ -31,6 +31,11 @@
                     <p id="question-text" class="font-medium"></p>
                 </div>
                 <div id="options" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+                <div id="rationale-box" class="hidden mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                    <h3 class="font-bold text-blue-800">Rationale:</h3>
+                    <p id="rationale-text" class="text-blue-700"></p>
+                    <p class="text-sm text-blue-600 mt-2">Source: <span id="rationale-source"></span></p>
+                </div>
                 <div class="mt-4 text-right">
                     <button id="next-btn" class="bg-indigo-600 text-white px-4 py-2 rounded hidden">Next</button>
                 </div>
@@ -368,6 +373,8 @@
 
         let allPool = {}; // key -> array of questions
         let assembled = [];
+    // global set to track seen question text across all sources during top-up fill
+    const seen = new Set();
         let current = 0;
         let score = 0;
         let timer;
@@ -460,6 +467,8 @@
                 seenBySource[src] = seenBySource[src] || new Set();
                 if (seenBySource[src].has(key)) return false; // duplicate inside same file
                 seenBySource[src].add(key);
+                // also mark globally seen so the later fill step can avoid reuse
+                seen.add(key);
                 return true;
             });
 
@@ -469,7 +478,10 @@
                 statusEl.textContent = `Only assembled ${assembled.length} unique questions; filling remaining from available pools...`;
                 const flat = Object.values(allPool).flat();
                 // filter out duplicates
-                const flatFiltered = flat.filter(q => !seen.has((q.question||q.prompt||'').trim()));
+                const flatFiltered = flat.filter(q => {
+                    const k = (q.question||q.prompt||'').trim();
+                    return k && !seen.has(k);
+                });
                 while (assembled.length < totalNeeded && flatFiltered.length) {
                     const i = Math.floor(Math.random() * flatFiltered.length);
                     const q = flatFiltered.splice(i,1)[0];
@@ -482,7 +494,7 @@
 
             // report shortages in console and status
             if (shortageReport.length) {
-                console.warn('Shortages detected:', shortageReport);
+                console.info('Shortages detected:', shortageReport);
                 statusEl.textContent = `Warning: some topics had fewer available questions than requested. See console for details.`;
             }
 
@@ -513,6 +525,8 @@
         }
 
         function renderQuestion() {
+            // ensure rationale is hidden for each new question
+            try { hideRationale(); } catch (e) { /* ignore */ }
             if (!assembled[current]) { showResults(); return; }
             qIndexEl.textContent = current+1;
             const q = assembled[current];
@@ -533,6 +547,26 @@
             nextBtn.classList.add('hidden');
         }
 
+        const rationaleBox = document.getElementById('rationale-box');
+        const rationaleText = document.getElementById('rationale-text');
+        const rationaleSource = document.getElementById('rationale-source');
+
+        function hideRationale() {
+            if (rationaleBox) rationaleBox.classList.add('hidden');
+            if (rationaleText) rationaleText.textContent = '';
+            if (rationaleSource) rationaleSource.textContent = '';
+        }
+
+        function showRationaleFor(q) {
+            if (!rationaleBox) return;
+            const rationale = q.rationale || q.explain || q.note || '';
+            const page = q.page || q.sourcePage || q.__page || '';
+            if (!rationale && !page) { hideRationale(); return; }
+            rationaleText.textContent = rationale || '';
+            rationaleSource.textContent = page || q.__source || '';
+            rationaleBox.classList.remove('hidden');
+        }
+
         function selectAnswer(btn, opt, q) {
             // disable all
             optionsEl.querySelectorAll('button').forEach(b => b.disabled = true);
@@ -546,6 +580,9 @@
             });
             if (opt === correct) { score++; btn.classList.add('bg-emerald-100'); }
             else { btn.classList.add('bg-rose-100'); }
+            // show rationale/source like the other quizzes
+            showRationaleFor(q);
+
             nextBtn.classList.remove('hidden');
             nextBtn.onclick = () => {
                 current++;
