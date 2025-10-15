@@ -43,13 +43,22 @@
         
         <!-- Study Guides Section -->
         <section id="study-guides" class="mb-16">
-            <div class="mb-8">
-                <h2 class="text-3xl font-bold text-gray-800">My Study Materials</h2>
-                <p class="text-gray-600 mt-2">Select a topic below to open its comprehensive guide or start a quiz.</p>
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-800">My Study Materials</h2>
+                    <p class="text-gray-600 mt-2">Select a topic below to open its comprehensive guide or start a quiz.</p>
+                </div>
+                 <!-- Search Bar -->
+                <div class="relative mt-4 md:mt-0 md:w-1/3">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                        <i class="fas fa-search text-gray-400"></i>
+                    </span>
+                    <input type="text" id="search-bar" class="w-full bg-white border border-gray-300 rounded-md pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Search topics...">
+                </div>
             </div>
 
             <!-- Grid for Study Guide Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div id="card-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
                 <!-- Card 1: Professionalism & Ethics -->
                 <div class="card bg-white rounded-xl shadow-md overflow-hidden flex flex-col">
@@ -220,7 +229,6 @@
                     </div>
                 </div>
 
-                
                 <!-- Card 9: Health & Safety Code -->
                 <div class="card bg-white rounded-xl shadow-md overflow-hidden flex flex-col">
                     <div class="p-6 flex-grow">
@@ -394,7 +402,7 @@
                     <div class="p-6 flex-grow">
                         <div class="flex items-center mb-4">
                             <div class="w-12 h-12 rounded-full bg-lime-100 text-lime-600 flex items-center justify-center">
-                                <i class="fas fa-car text-2xl"></i>
+                                <i class="fas fa-car-on text-2xl"></i>
                             </div>
                             <h3 class="ml-4 text-xl font-bold text-gray-900">Intoxicated Driver (SFST)</h3>
                         </div>
@@ -541,7 +549,7 @@
                     <div class="p-6 flex-grow">
                         <div class="flex items-center mb-4">
                             <div class="w-12 h-12 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center">
-                                <i class="fas fa-brain text-2xl"></i>
+                                <i class="fas fa-head-side-virus text-2xl"></i>
                             </div>
                             <h3 class="ml-4 text-xl font-bold text-gray-900">Traumatic Brain Injury</h3>
                         </div>
@@ -590,16 +598,16 @@
                          <p class="text-gray-600 text-sm">Key concepts and techniques for criminal investigation, evidence collection, and interviews.</p>
                      </div>
                      <div class="px-6 pb-6 mt-auto grid grid-cols-2 gap-4">
-                         <a href="Criminal-Investigation.html" class="block w-full text-center bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
+                        <a href="Criminal-Investigations.html" class="block w-full text-center bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
                              <i class="fas fa-book-open mr-2"></i>Guide
                          </a>
-                         <a href="Criminal-Investigation-Quiz.html" class="block w-full text-center bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors">
+                         <a href="Criminal-Investigations-Quiz.html" class="block w-full text-center bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors">
                             <i class="fas fa-vial mr-2"></i>Quiz
                          </a>
                      </div>
                  </div>
 
-                <!--- Card 27: Juvenile Offenders -->
+                <!-- Card 27: Juvenile Offenders -->
                  <div class="card bg-white rounded-xl shadow-md overflow-hidden flex flex-col">
                      <div class="p-6 flex-grow">
                          <div class="flex items-center mb-4">
@@ -619,7 +627,46 @@
                          </a>
                      </div>
                  </div>
+
+                 <!-- Card 28: SFST -->
+                 <div class="card bg-white rounded-xl shadow-md overflow-hidden flex flex-col">
+                     <div class="p-6 flex-grow">
+                         <div class="flex items-center mb-4">
+                             <div class="w-12 h-12 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center">
+                                 <i class="fas fa-child-reaching text-2xl"></i>
+                             </div>
+                             <h3 class="ml-4 text-xl font-bold text-gray-900">SFST</h3>
+                         </div>
+                         <p class="text-gray-600 text-sm">Legal considerations for Standardized Field Sobriety Tests (SFST), their administration, and the legal implications.</p>
+                     </div>
+                     <div class="px-6 pb-6 mt-auto grid grid-cols-2 gap-4">
+                         <a href="SFST.html" class="block w-full text-center bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
+                             <i class="fas fa-book-open mr-2"></i>Guide
+                         </a>
+                      </div>
+                 </div>
                 
+                 <!-- Card: TCOLE Practice Test -->
+                <div class="card bg-white rounded-xl shadow-md overflow-hidden flex flex-col">
+                    <div class="p-6 flex-grow">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-200 to-indigo-200 text-indigo-600 flex items-center justify-center">
+                                <i class="fas fa-list-check text-2xl"></i>
+                            </div>
+                            <h3 class="ml-4 text-xl font-bold text-gray-900">TCOLE Practice Test (250 Q)</h3>
+                        </div>
+                        <p class="text-gray-600 text-sm">Generate a 250-question practice exam assembled from all topic quizzes using the TCOLE distribution you provided.</p>
+                    </div>
+                    <div class="px-6 pb-6 mt-auto grid grid-cols-2 gap-4">
+                        <a href="TCOLE-Practice-Test.html" class="block w-full text-center bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
+                            <i class="fas fa-play mr-2"></i>Start Test
+                        </a>
+                        <a href="#" id="practice-info" class="block w-full text-center bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors">
+                           <i class="fas fa-info-circle mr-2"></i>Info
+                        </a>
+                    </div>
+                </div>
+
                 <!---
                 =============================================================================
                 === SNIPPET FOR NEW STUDY GUIDE & QUIZ ===
@@ -667,6 +714,30 @@
             <p>&copy; 2025 TCOLE Study Hub. All Rights Reserved.</p>
         </div>
     </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchBar = document.getElementById('search-bar');
+            const cardGrid = document.getElementById('card-grid');
+            const cards = cardGrid.getElementsByClassName('card');
+
+            searchBar.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+
+                Array.from(cards).forEach(card => {
+                    const titleElement = card.querySelector('h3');
+                    if (titleElement) {
+                        const title = titleElement.textContent.toLowerCase();
+                        if (title.includes(searchTerm)) {
+                            card.style.display = 'flex'; // Use 'flex' as the cards are flex containers
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 
 </body>
 </html>

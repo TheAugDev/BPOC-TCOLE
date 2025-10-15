@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>TCOLE Practice Test - 250 Questions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://rsms.me/inter/inter.css');
+        body { font-family: 'Inter', sans-serif; background: #f3f4f6 }
+        .answer-option { transition: all 0.15s ease; }
+        .answer-option:hover { transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+    <main class="container mx-auto p-6">
+        <div class="bg-white p-6 rounded-lg shadow-md max-w-4xl mx-auto">
+            <h1 class="text-2xl font-bold mb-2">TCOLE Practice Test — 250 Questions</h1>
+            <p class="text-sm text-gray-600 mb-4">This page aggregates all topic quizzes and builds a 250-question practice exam according to the requested distribution. It may take a few seconds to load all sources.</p>
+            <div id="status" class="text-sm text-gray-700 mb-4">Status: Preparing...</div>
+            <div id="start-area" class="text-center">
+                <button id="build-btn" class="bg-blue-600 text-white px-6 py-2 rounded-lg font-bold">Build Practice Test</button>
+            </div>
+            <div id="quiz-area" class="hidden mt-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-semibold">Question <span id="q-index">1</span> / <span id="q-total">250</span></h2>
+                    <div id="timer" class="text-sm font-mono bg-gray-100 px-3 py-1 rounded">00:00</div>
+                </div>
+                <div id="question-card" class="bg-gray-50 p-4 rounded mb-4">
+                    <p id="question-text" class="font-medium"></p>
+                </div>
+                <div id="options" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+                <div class="mt-4 text-right">
+                    <button id="next-btn" class="bg-indigo-600 text-white px-4 py-2 rounded hidden">Next</button>
+                </div>
+            </div>
+            <div id="results" class="hidden mt-6 text-center"></div>
+        </div>
+    </main>
+
+    <script>
+        // Distribution mapping: topic key -> number of questions
+        const distribution = {
+            "Professionalism-Ethics": 3,
+            "Professional-Policing": 3,
+            "Fitness-Wellness-Stress-Management": 2,
+            "Professional-Policing-tcole-rules": 2,
+            "Multiculturalism-and-Human-Relations": 4,
+            "Racial-profiling": 3,
+            "US-Texas-Constitution-and-Rights": 12,
+            "Penal-Code": 54,
+            "Code-of-Criminal-Procedure": 5,
+            "Arrest-Search-Seizure": 20,
+            "Asset-Forfeiture": 2,
+            "Identity-Crimes": 2,
+            "Consular-Notification": 1,
+            "Civil-Process": 2,
+            "Health-Safety-Controlled-Substances": 3,
+            "Alcoholic-Beverage-Code": 2,
+            "Sexual-Assault-Family-Violence": 2,
+            "Missing-Exploited-Persons": 2,
+            "Child-Safety-Check-Alert": 1,
+            "Victims-of-Crime": 3,
+            "Human-Trafficking": 2,
+            "Traffic-Code-Crash-Investigation": 26,
+            "Intoxicated-Driver-SFST": 4,
+            "Written-Communication": 2,
+            "Verbal-Communication": 5,
+            "De-Escalation-Strategies": 4,
+            "Force-Theory": 16,
+            "Crisis-Intervention-Training": 8,
+            "Traumatic-Brain-Injury": 1,
+            "Arrest-and-Control": 8,
+            "Criminal-Investigations": 12,
+            "Juvenile-Offenders": 5,
+            "Professional-Police-Driving": 3,
+            "Patrol-Skills-Traffic-Stops": 6,
+            "Radio-Communications-TCIC-TLETS": 3,
+            "Civilian-Interaction-Training": 2,
+            "Deaf-and-Hard-of-Hearing": 2,
+            "Canine-Encounters": 2,
+            "Emergency-Medical-Assistance": 4,
+            "HazMat-ICS": 2
+        };
+
+        // Map distribution keys to quiz file paths in this repo
+        // fileMap may map a topic to a single filename or an array of filenames to increase pool size
+        const fileMap = {
+            "Professionalism-Ethics": [
+                "Civil-Process-Liability-Quiz.html",
+                "Force-Theory-Quiz.html",
+                "Juvenile-Offenders-Quiz.html",
+                "Human-Trafficking-Quiz.html",
+                "Alcoholic-Beverage-Code-Quiz.html",
+                "Arrest-Control-Procedure-Quiz.html"
+            ],
+            "Professional-Policing": [
+                "Professional-Policing-Quiz.html",
+                "AS&S-Quiz.html",
+                "Force-Theory-Quiz.html",
+                "Arrest-Control-Procedure-Quiz.html",
+                "Child-Safety-Check-Alert-Quiz.html",
+                "Criminal-Investigations-Quiz.html"
+            ],
+            "Fitness-Wellness-Stress-Management": [
+                "Fitness-Wellness-Stress-Management-Quiz.html",
+                "Crisis-Intervention-Training-Quiz.html",
+                "De-Escalation-Strategies-Quiz.html",
+                "Professional-Policing-Quiz.html",
+                "Health-Safety-Code-Quiz.html",
+                "Juvenile-Offenders-Quiz.html"
+            ],
+            "Professional-Policing-tcole-rules": ["Professional-Policing-Quiz.html"],
+            "Multiculturalism-and-Human-Relations": [
+                "Professional-Policing-Quiz.html",
+                "Crisis-Intervention-Training-Quiz.html",
+                "Force-Theory-Quiz.html",
+                "Health-Safety-Code-Quiz.html",
+                "Introductory-Spanish-Quiz.html"
+            ],
+            "Racial-profiling": [
+                "Criminal-Investigations-Quiz.html",
+                "Crisis-Intervention-Training-Quiz.html",
+                "Written-Communication-Quiz.html"
+            ],
+            "US-Texas-Constitution-and-Rights": [
+                "AS&S-Quiz.html",
+                "Civil-Process-Liability-Quiz.html",
+                "Force-Theory-Quiz.html",
+                "Asset-Forfeiture-Quiz.html",
+                "Professional-Policing-Quiz.html",
+                "Arrest-Control-Procedure-Quiz.html"
+            ],
+            "Penal-Code": [
+                "Identity-Crimes-Quiz.html",
+                "Health-Safety-Code-Quiz.html",
+                "Asset-Forfeiture-Quiz.html",
+                "AS&S-Quiz.html",
+                "Civil-Process-Liability-Quiz.html",
+                "Juvenile-Offenders-Quiz.html"
+            ],
+            "Code-of-Criminal-Procedure": [
+                "AS&S-Quiz.html",
+                "Asset-Forfeiture-Quiz.html",
+                "Missing-Exploited-Persons-Quiz.html",
+                "Sexual-Assault-Family-Violence-Quiz.html",
+                "Victims-of-Crime-Quiz.html",
+                "Health-Safety-Code-Quiz.html"
+            ],
+            "Arrest-Search-Seizure": [
+                "AS&S-Quiz.html",
+                "Asset-Forfeiture-Quiz.html",
+                "Arrest-Control-Procedure-Quiz.html",
+                "Criminal-Investigations-Quiz.html",
+                "Intoxicated-Driver-(SFST)-Quiz.html",
+                "Alcoholic-Beverage-Code-Quiz.html"
+            ],
+            "Asset-Forfeiture": [
+                "Asset-Forfeiture-Quiz.html",
+                "Force-Theory-Quiz.html",
+                "Missing-Exploited-Persons-Quiz.html",
+                "Human-Trafficking-Quiz.html"
+            ],
+            "Identity-Crimes": [
+                "Identity-Crimes-Quiz.html",
+                "Human-Trafficking-Quiz.html",
+                "Criminal-Investigations-Quiz.html",
+                "Missing-Exploited-Persons-Quiz.html",
+                "Alcoholic-Beverage-Code-Quiz.html",
+                "Asset-Forfeiture-Quiz.html"
+            ],
+            "Consular-Notification": [
+                "Consular-Notification-Quiz.html",
+                "Victims-of-Crime-Quiz.html",
+                "Child-Safety-Check-Alert-Quiz.html",
+                "Crisis-Intervention-Training-Quiz.html",
+                "Sexual-Assault-Family-Violence-Quiz.html"
+            ],
+            "Civil-Process": [],
+            "Health-Safety-Controlled-Substances": [
+                "Health-Safety-Code-Quiz.html",
+                "Crisis-Intervention-Training-Quiz.html",
+                "Asset-Forfeiture-Quiz.html",
+                "Human-Trafficking-Quiz.html",
+                "Child-Safety-Check-Alert-Quiz.html",
+                "Identity-Crimes-Quiz.html"
+            ],
+            "Alcoholic-Beverage-Code": [
+                "Alcoholic-Beverage-Code-Quiz.html",
+                "Fitness-Wellness-Stress-Management-Quiz.html",
+                "Asset-Forfeiture-Quiz.html",
+                "Intoxicated-Driver-(SFST)-Quiz.html",
+                "Arrest-Control-Procedure-Quiz.html",
+                "AS&S-Quiz.html"
+            ],
+            "Sexual-Assault-Family-Violence": [
+                "Sexual-Assault-Family-Violence-Quiz.html",
+                "Criminal-Investigations-Quiz.html",
+                "Professional-Policing-Quiz.html",
+                "Traumatic-Brain-Injury-Quiz.html",
+                "Arrest-Control-Procedure-Quiz.html",
+                "AS&S-Quiz.html"
+            ],
+            "Missing-Exploited-Persons": [
+                "Missing-Exploited-Persons-Quiz.html",
+                "Juvenile-Offenders-Quiz.html",
+                "Child-Safety-Check-Alert-Quiz.html",
+                "Criminal-Investigations-Quiz.html",
+                "Professional-Policing-Quiz.html",
+                "Human-Trafficking-Quiz.html"
+            ],
+            "Child-Safety-Check-Alert": ["Child-Safety-Check-Alert-Quiz.html"],
+            "Victims-of-Crime": [
+                "Human-Trafficking-Quiz.html",
+                "Sexual-Assault-Family-Violence-Quiz.html",
+                "Victims-of-Crime-Quiz.html",
+                "Missing-Exploited-Persons-Quiz.html",
+                "Identity-Crimes-Quiz.html",
+                "Criminal-Investigations-Quiz.html"
+            ],
+            "Human-Trafficking": [
+                "Human-Trafficking-Quiz.html",
+                "Missing-Exploited-Persons-Quiz.html",
+                "Child-Safety-Check-Alert-Quiz.html"
+            ],
+            "Traffic-Code-Crash-Investigation": [
+                "Human-Trafficking-Quiz.html",
+                "Traffic-Code-Crash-Investigation-Quiz.html",
+                "Missing-Exploited-Persons-Quiz.html",
+                "Criminal-Investigations-Quiz.html",
+                "Child-Safety-Check-Alert-Quiz.html",
+                "Professional-Policing-Quiz.html"
+            ],
+            "Intoxicated-Driver-SFST": [
+                "Intoxicated-Driver-(SFST)-Quiz.html",
+                "Alcoholic-Beverage-Code-Quiz.html",
+                "Traffic-Code-Crash-Investigation-Quiz.html",
+                "Human-Trafficking-Quiz.html"
+            ],
+            "Written-Communication": [
+                "Written-Communication-Quiz.html",
+                "Identity-Crimes-Quiz.html",
+                "Juvenile-Offenders-Quiz.html",
+                "Child-Safety-Check-Alert-Quiz.html",
+                "Sexual-Assault-Family-Violence-Quiz.html",
+                "Force-Theory-Quiz.html"
+            ],
+            "Verbal-Communication": [
+                "De-Escalation-Strategies-Quiz.html",
+                "Force-Theory-Quiz.html",
+                "Verbal-Communication-Quiz.html",
+                "Arrest-Control-Procedure-Quiz.html",
+                "Professional-Policing-Quiz.html",
+                "AS&S-Quiz.html"
+            ],
+            "De-Escalation-Strategies": [
+                "De-Escalation-Strategies-Quiz.html",
+                "Arrest-Control-Procedure-Quiz.html",
+                "Crisis-Intervention-Training-Quiz.html",
+                "Missing-Exploited-Persons-Quiz.html",
+                "Verbal-Communication-Quiz.html"
+            ],
+            "Force-Theory": [
+                "Force-Theory-Quiz.html",
+                "Arrest-Control-Procedure-Quiz.html",
+                "Human-Trafficking-Quiz.html",
+                "Missing-Exploited-Persons-Quiz.html",
+                "Juvenile-Offenders-Quiz.html",
+                "De-Escalation-Strategies-Quiz.html"
+            ],
+            "Crisis-Intervention-Training": [
+                "Professional-Policing-Quiz.html",
+                "Crisis-Intervention-Training-Quiz.html",
+                "Consular-Notification-Quiz.html",
+                "Verbal-Communication-Quiz.html",
+                "Alcoholic-Beverage-Code-Quiz.html",
+                "Civil-Process-Liability-Quiz.html"
+            ],
+            "Traumatic-Brain-Injury": [
+                "Traumatic-Brain-Injury-Quiz.html",
+                "Crisis-Intervention-Training-Quiz.html"
+            ],
+            "Arrest-and-Control": ["Arrest-Control-Procedure-Quiz.html"],
+            "Criminal-Investigations": [
+                "Criminal-Investigations-Quiz.html",
+                "AS&S-Quiz.html",
+                "Sexual-Assault-Family-Violence-Quiz.html",
+                "Human-Trafficking-Quiz.html",
+                "Identity-Crimes-Quiz.html",
+                "Asset-Forfeiture-Quiz.html"
+            ],
+            "Juvenile-Offenders": [
+                "Juvenile-Offenders-Quiz.html",
+                "Child-Safety-Check-Alert-Quiz.html",
+                "Missing-Exploited-Persons-Quiz.html",
+                "Criminal-Investigations-Quiz.html",
+                "Professional-Policing-Quiz.html",
+                "Traumatic-Brain-Injury-Quiz.html"
+            ],
+            "Professional-Police-Driving": [
+                "Traffic-Code-Crash-Investigation-Quiz.html",
+                "AS&S-Quiz.html",
+                "Intoxicated-Driver-(SFST)-Quiz.html",
+                "Alcoholic-Beverage-Code-Quiz.html",
+                "Arrest-Control-Procedure-Quiz.html",
+                "Consular-Notification-Quiz.html"
+            ],
+            "Patrol-Skills-Traffic-Stops": [
+                "Health-Safety-Code-Quiz.html",
+                "Traffic-Code-Crash-Investigation-Quiz.html",
+                "AS&S-Quiz.html",
+                "Force-Theory-Quiz.html",
+                "Civil-Process-Liability-Quiz.html",
+                "Consular-Notification-Quiz.html"
+            ],
+            "Radio-Communications-TCIC-TLETS": [
+                "Professional-Policing-Quiz.html",
+                "Child-Safety-Check-Alert-Quiz.html",
+                "Missing-Exploited-Persons-Quiz.html",
+                "Traffic-Code-Crash-Investigation-Quiz.html",
+                "AS&S-Quiz.html",
+                "Criminal-Investigations-Quiz.html"
+            ],
+            "Civilian-Interaction-Training": [
+                "Professional-Policing-Quiz.html",
+                "Juvenile-Offenders-Quiz.html",
+                "Crisis-Intervention-Training-Quiz.html",
+                "Asset-Forfeiture-Quiz.html",
+                "Alcoholic-Beverage-Code-Quiz.html",
+                "Human-Trafficking-Quiz.html"
+            ],
+            "Deaf-and-Hard-of-Hearing": [],
+            "Canine-Encounters": [
+                "Asset-Forfeiture-Quiz.html",
+                "Force-Theory-Quiz.html",
+                "Traffic-Code-Crash-Investigation-Quiz.html"
+            ],
+            "Emergency-Medical-Assistance": [
+                "Identity-Crimes-Quiz.html",
+                "Professional-Policing-Quiz.html",
+                "De-Escalation-Strategies-Quiz.html",
+                "AS&S-Quiz.html",
+                "Criminal-Investigations-Quiz.html",
+                "Force-Theory-Quiz.html"
+            ],
+            "HazMat-ICS": [
+                "De-Escalation-Strategies-Quiz.html",
+                "Professional-Policing-Quiz.html",
+                "Crisis-Intervention-Training-Quiz.html",
+                "Fitness-Wellness-Stress-Management-Quiz.html",
+                "Health-Safety-Code-Quiz.html",
+                "Verbal-Communication-Quiz.html"
+            ]
+        };
+
+        const statusEl = document.getElementById('status');
+        const buildBtn = document.getElementById('build-btn');
+        const quizArea = document.getElementById('quiz-area');
+        const startArea = document.getElementById('start-area');
+        const qIndexEl = document.getElementById('q-index');
+        const qTotalEl = document.getElementById('q-total');
+        const questionText = document.getElementById('question-text');
+        const optionsEl = document.getElementById('options');
+        const nextBtn = document.getElementById('next-btn');
+        const resultsEl = document.getElementById('results');
+        const timerEl = document.getElementById('timer');
+
+        let allPool = {}; // key -> array of questions
+        let assembled = [];
+        let current = 0;
+        let score = 0;
+        let timer;
+        let seconds = 0;
+
+        function tick() {
+            seconds++;
+            const m = String(Math.floor(seconds/60)).padStart(2,'0');
+            const s = String(seconds%60).padStart(2,'0');
+            timerEl.textContent = `${m}:${s}`;
+        }
+
+        // Fetch consolidated JSON built by the repo build script
+        async function fetchAllQuizJson() {
+            try {
+                const res = await fetch('all_quiz_data.json');
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const data = await res.json();
+                return data; // mapping filename -> array
+            } catch (e) {
+                console.error('Failed to fetch all_quiz_data.json', e);
+                return null;
+            }
+        }
+
+        function pickRandom(arr, n) {
+            const copy = arr.slice();
+            const out = [];
+            while (out.length < n && copy.length) {
+                const i = Math.floor(Math.random() * copy.length);
+                out.push(copy.splice(i,1)[0]);
+            }
+            return out;
+        }
+
+        buildBtn.addEventListener('click', async () => {
+            startArea.classList.add('hidden');
+            statusEl.textContent = 'Status: Loading quiz sources...';
+
+            // load consolidated JSON and populate allPool using fileMap
+            statusEl.textContent = 'Loading consolidated quiz JSON...';
+            const allJson = await fetchAllQuizJson();
+            if (!allJson) { statusEl.textContent = 'Failed to load quiz JSON. See console.'; return; }
+            const keys = Object.keys(distribution);
+            for (let key of keys) {
+                const mapped = fileMap[key];
+                if (!mapped) {
+                    console.warn('Missing mapping for', key);
+                    allPool[key] = [];
+                    continue;
+                }
+                const files = Array.isArray(mapped) ? mapped : [mapped];
+                const combined = [];
+                for (const f of files) {
+                    const data = allJson[f];
+                    if (!data) { console.warn('No data for file', f); continue; }
+                    // attach source so dedupe can be scoped per-file if desired
+                    combined.push(...data.map(q => ({...q, __source: f})));
+                }
+                allPool[key] = combined;
+            }
+
+            statusEl.textContent = 'Status: Assembling 250 questions per distribution...';
+
+            // assemble with shortage reporting and deduplication
+            assembled = [];
+            const shortageReport = [];
+            for (let key of keys) {
+                const need = distribution[key];
+                const pool = (allPool[key] || []).slice();
+                if (pool.length === 0) {
+                    shortageReport.push({ topic: key, requested: need, available: 0 });
+                    continue;
+                }
+                if (pool.length >= need) {
+                    assembled.push(...pickRandom(pool, need));
+                } else {
+                    assembled.push(...pool.slice());
+                    shortageReport.push({ topic: key, requested: need, available: pool.length });
+                    // fill remaining later from global pool
+                }
+            }
+
+            // deduplicate assembled by question text only within the same source file
+            const seenBySource = {};
+            assembled = assembled.filter(q => {
+                const key = (q.question || q.prompt || '').trim();
+                const src = q.__source || '__unknown__';
+                if (!key) return false;
+                seenBySource[src] = seenBySource[src] || new Set();
+                if (seenBySource[src].has(key)) return false; // duplicate inside same file
+                seenBySource[src].add(key);
+                return true;
+            });
+
+            // if assembled < 250 because of missing topics, fill from any available quizzes
+            const totalNeeded = 250;
+            if (assembled.length < totalNeeded) {
+                statusEl.textContent = `Only assembled ${assembled.length} unique questions; filling remaining from available pools...`;
+                const flat = Object.values(allPool).flat();
+                // filter out duplicates
+                const flatFiltered = flat.filter(q => !seen.has((q.question||q.prompt||'').trim()));
+                while (assembled.length < totalNeeded && flatFiltered.length) {
+                    const i = Math.floor(Math.random() * flatFiltered.length);
+                    const q = flatFiltered.splice(i,1)[0];
+                    const key = (q.question||q.prompt||'').trim();
+                    if (!key) continue;
+                    assembled.push(q);
+                    seen.add(key);
+                }
+            }
+
+            // report shortages in console and status
+            if (shortageReport.length) {
+                console.warn('Shortages detected:', shortageReport);
+                statusEl.textContent = `Warning: some topics had fewer available questions than requested. See console for details.`;
+            }
+
+            // Trim or shuffle to exactly 250
+            // shuffle assembled
+            for (let i = assembled.length -1; i>0; i--) {
+                const j = Math.floor(Math.random()*(i+1));
+                [assembled[i], assembled[j]] = [assembled[j], assembled[i]];
+            }
+            assembled = assembled.slice(0, totalNeeded);
+
+            qTotalEl.textContent = assembled.length;
+            statusEl.textContent = 'Status: Practice test ready. Click Start.';
+
+            // show quiz UI
+            quizArea.classList.remove('hidden');
+            startArea.classList.remove('hidden');
+            startArea.innerHTML = '<button id="start-test" class="bg-green-600 text-white px-6 py-2 rounded font-bold">Start Test</button>';
+            document.getElementById('start-test').addEventListener('click', startTest);
+        });
+
+        function startTest() {
+            startArea.classList.add('hidden');
+            statusEl.textContent = 'Status: Test in progress';
+            current = 0; score = 0; seconds = 0;
+            timer = setInterval(tick, 1000);
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            if (!assembled[current]) { showResults(); return; }
+            qIndexEl.textContent = current+1;
+            const q = assembled[current];
+            questionText.textContent = q.question || q.prompt || 'Question text missing';
+            optionsEl.innerHTML = '';
+            const opts = q.options ? q.options.slice() : [];
+            // shuffle options
+            for (let i = opts.length-1; i>0; i--) {
+                const j = Math.floor(Math.random()*(i+1)); [opts[i], opts[j]] = [opts[j], opts[i]];
+            }
+            opts.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'answer-option w-full p-3 text-left bg-white border rounded shadow-sm';
+                btn.textContent = opt;
+                btn.addEventListener('click', () => selectAnswer(btn, opt, q));
+                optionsEl.appendChild(btn);
+            });
+            nextBtn.classList.add('hidden');
+        }
+
+        function selectAnswer(btn, opt, q) {
+            // disable all
+            optionsEl.querySelectorAll('button').forEach(b => b.disabled = true);
+            // highlight correct/incorrect
+            const correct = q.answer || q.correctAnswer || q.correct;
+            const buttons = Array.from(optionsEl.querySelectorAll('button'));
+            buttons.forEach(b => {
+                if (b.textContent === correct) {
+                    b.classList.add('bg-emerald-100','border-emerald-300');
+                }
+            });
+            if (opt === correct) { score++; btn.classList.add('bg-emerald-100'); }
+            else { btn.classList.add('bg-rose-100'); }
+            nextBtn.classList.remove('hidden');
+            nextBtn.onclick = () => {
+                current++;
+                if (current >= assembled.length) showResults(); else renderQuestion();
+            };
+        }
+
+        function showResults() {
+            clearInterval(timer);
+            quizArea.classList.add('hidden');
+            resultsEl.classList.remove('hidden');
+            resultsEl.innerHTML = `<h3 class=\"text-2xl font-bold\">Test Complete</h3>
+                <p class=\"mt-3\">Score: ${score} / ${assembled.length} (${Math.round((score/assembled.length)*100)}%)</p>
+                <p class=\"mt-2\">Time: ${timerEl.textContent}</p>
+                <p class=\"mt-4 text-sm text-gray-600\">You can reload this page to build another randomized 250-question practice test.</p>`;
+            statusEl.textContent = 'Status: Completed';
+        }
+    </script>
+</body>
+</html>
