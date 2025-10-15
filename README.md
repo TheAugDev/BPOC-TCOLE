@@ -46,3 +46,15 @@ Notes & recommendations
 
 Contact
 - If you'd like, I can: add multi-file topic mapping, expose a download for a prebuilt exam, or add a small server-side script to produce printable PDFs of assembled exams.
+
+Deployment
+----------
+This repository now includes a GitHub Actions workflow that regenerates the assembled practice test and publishes the `dist/` folder to the `gh-pages` branch automatically when you push to `main`.
+
+Recommended workflow for maintainers:
+- Locally regenerate + validate before pushing (this also helps when working offline):
+  - npm install
+  - npm run predeploy   # runs assembler, copies to dist, and validates
+- Push to `main`. The `deploy-pages` workflow will run `npm run predeploy` and publish `dist/` to the `gh-pages` branch.
+
+If you previously committed `dist/assembled_250.json` to `main`, it is safe to remove that commit and rely on the `gh-pages` deployment. The CI workflow will ensure `dist/assembled_250.json` is available on the `gh-pages` branch after each push.
