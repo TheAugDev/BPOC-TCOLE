@@ -453,8 +453,11 @@
 
             // Try a set of candidate URLs so the page works when deployed under different bases
             const attempts = [];
+            // Try multiple locations for the assembled file — some deployments put the
+            // file at site root (assembled_250.json) while others keep it under dist/.
             const relDist = 'dist/assembled_250.json';
             attempts.push(relDist);
+            attempts.push('assembled_250.json');
             try {
                 const basePath = location.pathname.replace(/\/[^\/]*$/, '');
                 const absDist = `${location.origin}${basePath}/dist/assembled_250.json`;
