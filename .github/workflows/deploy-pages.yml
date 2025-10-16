@@ -22,6 +22,23 @@ jobs:
         env:
           BANK_SEED: ${{ github.run_number }}
         run: npm run predeploy
+      - name: Mirror dist into main/docs (for Pages configured to use main/docs)
+        if: github.ref == 'refs/heads/main'
+        run: |
+          set -e
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # copy dist into a temp branch, update docs/ in main if there are changes
+          git checkout --quiet main
+          mkdir -p docs
+          rsync -a --delete ./dist/ ./docs/ || (Get-ChildItem -Recurse -Force ./dist | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path -Path ./docs -ChildPath ($_.FullName.Substring((Get-Item .).FullName.Length).TrimStart('\'))) -Force } ; exit 0)
+          if [ -n "$(git status --porcelain docs)" ]; then
+            git add docs
+            git commit -m "ci: update docs/ with generated dist [skip ci]" || true
+            git push origin main
+          else
+            echo "No changes to docs/"
+          fi
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
