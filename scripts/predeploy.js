@@ -21,6 +21,21 @@ try {
   console.log('Copied build/assembled_250.json -> dist/assembled_250.json');
 } catch (err) { fail('Failed to copy assembled file: '+err.message); }
 
+// Copy top-level HTML pages into dist so they are published to gh-pages root
+try {
+  const htmlFiles = ['TCOLE-Practice-Test.html','index.html'];
+  for (const f of htmlFiles) {
+    const s = path.join(ROOT, f);
+    const d = path.join(ROOT, 'dist', f);
+    if (fs.existsSync(s)) {
+      fs.copyFileSync(s, d);
+      console.log('Copied', f, '-> dist/');
+    }
+  }
+} catch (e) {
+  console.warn('Failed to copy HTML files into dist:', e && e.message);
+}
+
 // generate multiple prebuilt banks for faster client loads
 try {
   console.log('Generating prebuilt banks...');
