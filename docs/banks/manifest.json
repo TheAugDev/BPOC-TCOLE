@@ -1,0 +1,21 @@
+{
+  "bankCount": 6,
+  "banks": [
+    "bank_1.json",
+    "bank_2.json",
+    "bank_3.json",
+    "bank_4.json",
+    "bank_5.json",
+    "bank_6.json"
+  ],
+  "generatedAt": "2025-10-16T00:45:09.563Z",
+  "seed": "test-seed-42",
+  "bankSeeds": {
+    "bank_1.json": "test-seed-42:1",
+    "bank_2.json": "test-seed-42:2",
+    "bank_3.json": "test-seed-42:3",
+    "bank_4.json": "test-seed-42:4",
+    "bank_5.json": "test-seed-42:5",
+    "bank_6.json": "test-seed-42:6"
+  }
+}
