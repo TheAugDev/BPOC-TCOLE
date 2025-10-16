@@ -39,6 +39,26 @@ jobs:
           else
             echo "No changes to docs/"
           fi
+      - name: Mirror dist into repository root (assembled_250.json + banks/) for root Pages
+        if: github.ref == 'refs/heads/main'
+        run: |
+          set -e
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout --quiet main
+          # copy assembled file to repo root
+          cp -f dist/assembled_250.json assembled_250.json || true
+          # copy banks directory to repo root/banks
+          rm -rf banks || true
+          mkdir -p banks
+          rsync -a dist/banks/ banks/
+          if [ -n "$(git status --porcelain assembled_250.json banks)" ]; then
+            git add assembled_250.json banks
+            git commit -m "ci: copy dist into repo root for Pages [skip ci]" || true
+            git push origin main
+          else
+            echo "No changes to root files"
+          fi
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
