@@ -396,15 +396,28 @@
         // Fetch consolidated JSON built by the repo build script or the distribution assembled file.
         // On GitHub Pages we publish dist/assembled_250.json; prefer that and fall back to all_quiz_data.json.
         async function fetchAllQuizJson() {
-            // First try the banks manifest so the client can discover available prebuilt banks
+            // First try the banks manifest so the client can discover available prebuilt banks.
+            // Try both `dist/banks/manifest.json` and `banks/manifest.json` because CI publishes
+            // the contents of `dist/` to the site root; some setups keep `dist/` as a folder.
             try {
-                const manifestUrl = 'dist/banks/manifest.json';
-                const mRes = await tryFetchUrl(manifestUrl);
+                const manifestCandidates = ['dist/banks/manifest.json', 'banks/manifest.json'];
+                let mRes = null;
+                for (const mUrl of manifestCandidates) {
+                    mRes = await tryFetchUrl(mUrl);
+                    if (mRes && mRes.data && Array.isArray(mRes.data.banks) && mRes.data.banks.length) { break; }
+                    mRes = null;
+                }
                 if (mRes && mRes.data && Array.isArray(mRes.data.banks) && mRes.data.banks.length) {
                     const banks = mRes.data.banks;
                     const pickName = banks[Math.floor(Math.random()*banks.length)];
-                    const bankUrl = `dist/banks/${pickName}`;
-                    const r = await tryFetchUrl(bankUrl);
+                    // try both dist path and root path for the chosen bank file
+                    const bankCandidates = [`dist/banks/${pickName}`, `banks/${pickName}`];
+                    let r = null;
+                    for (const b of bankCandidates) {
+                        r = await tryFetchUrl(b);
+                        if (r && r.data && Array.isArray(r.data)) break;
+                        r = null;
+                    }
                     if (r && r.data && Array.isArray(r.data)) {
                         console.info('Loaded prebuilt bank from', r.url);
                         const payload = r.data;
@@ -423,9 +436,9 @@
                             const bf = document.getElementById('bank-file');
                             const bs = document.getElementById('bank-seed');
                             if (bf) bf.textContent = r.url.replace(/^.*\//, '');
-                            // try to read the manifest to surface the seed if available
+                            // try to read the manifest to surface the seed if available (try both paths)
                             try {
-                                const man = await fetch('dist/banks/manifest.json').then(x=>x.json()).catch(()=>null);
+                                const man = await (await fetch(manifestCandidates[0]).catch(()=>null))?.json?.() || await (await fetch(manifestCandidates[1]).catch(()=>null))?.json?.() || null;
                                 if (man && man.bankSeeds && man.bankSeeds[bf.textContent]) {
                                     if (bs) bs.textContent = `(seed: ${man.bankSeeds[bf.textContent]})`;
                                 } else {
