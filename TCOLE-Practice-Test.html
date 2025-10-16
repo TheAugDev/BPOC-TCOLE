@@ -19,6 +19,7 @@
             <h1 class="text-2xl font-bold mb-2">TCOLE Practice Test — 250 Questions</h1>
             <p class="text-sm text-gray-600 mb-4">This page aggregates all topic quizzes and builds a 250-question practice exam according to the requested distribution. It may take a few seconds to load all sources.</p>
             <div id="status" class="text-sm text-gray-700 mb-4">Status: Preparing...</div>
+            <div id="bank-info" class="text-xs text-gray-500 mb-4 hidden">Loaded bank: <span id="bank-file">-</span> <span id="bank-seed" class="ml-2">(seed: -)</span></div>
             <div id="data-banner" class="hidden mb-4 p-3 rounded border border-red-200 bg-red-50 text-sm text-red-800">
                 <strong>Data not available.</strong>
                 <div id="data-banner-msg" class="mt-2"></div>
@@ -416,6 +417,22 @@
                         window.__lastQuizFetchAttempts = window.__lastQuizFetchAttempts || [];
                         window.__lastQuizFetchUrl = r.url;
                         window.__lastLoadedKeys = Object.keys(map);
+                        try {
+                            const info = document.getElementById('bank-info');
+                            if (info) info.classList.remove('hidden');
+                            const bf = document.getElementById('bank-file');
+                            const bs = document.getElementById('bank-seed');
+                            if (bf) bf.textContent = r.url.replace(/^.*\//, '');
+                            // try to read the manifest to surface the seed if available
+                            try {
+                                const man = await fetch('dist/banks/manifest.json').then(x=>x.json()).catch(()=>null);
+                                if (man && man.bankSeeds && man.bankSeeds[bf.textContent]) {
+                                    if (bs) bs.textContent = `(seed: ${man.bankSeeds[bf.textContent]})`;
+                                } else {
+                                    if (bs) bs.textContent = '(seed: none)';
+                                }
+                            } catch (e) { if (bs) bs.textContent = '(seed: unknown)'; }
+                        } catch (e) { /* ignore UI errors */ }
                         return map;
                     }
                 }
