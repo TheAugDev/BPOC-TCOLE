@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HAZMAT Awareness Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+        .answer-option {
+            transition: all 0.2s ease-in-out;
+        }
+        .answer-option:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .correct {
+            background-color: #D1FAE5 !important;
+            border-color: #10B981 !important;
+            color: #065F46 !important;
+        }
+        .incorrect {
+            background-color: #FEE2E2 !important;
+            border-color: #EF4444 !important;
+            color: #991B1B !important;
+        }
+        .progress-bar-fill {
+            transition: width 0.3s ease-in-out;
+        }
+        .review-correct {
+            color: #059669;
+        }
+        .review-incorrect {
+            color: #e11d48;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="quiz-app" class="quiz-container p-4 sm:p-8">
+        
+        <!-- Start Screen -->
+        <div id="start-screen" class="text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Hazardous Materials Awareness Quiz</h1>
+            <p class="text-lg text-gray-600 mb-8">A comprehensive quiz based on the "Basic Peace Officer Course | Chapter 42" handout to prepare for HAZMAT incidents.</p>
+            <button id="start-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Start Quiz</button>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen" class="hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold">Question <span id="question-number"></span> of <span id="total-questions"></span></h2>
+                <div id="timer" class="text-lg font-mono bg-gray-200 px-3 py-1 rounded-md">00:00</div>
+            </div>
+            
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+                <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full progress-bar-fill" style="width: 0%"></div>
+            </div>
+
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+                <p id="question-text" class="text-xl font-medium mb-8 min-h-[6rem]"></p>
+                <div id="answer-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Options injected by JS -->
+                </div>
+            </div>
+             <div id="rationale-box" class="hidden mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h3 class="font-bold text-blue-800">Rationale:</h3>
+                <p id="rationale-text" class="text-blue-700"></p>
+                <p class="text-sm text-blue-600 mt-2">Source: <span id="rationale-source"></span></p>
+            </div>
+            <button id="next-btn" class="hidden w-full bg-blue-600 text-white font-bold py-3 px-8 rounded-lg mt-8 hover:bg-blue-700 transition-colors shadow-md">Next Question</button>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen" class="hidden text-center bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">Quiz Complete!</h1>
+            <p class="text-lg text-gray-600 mb-6">Here's how you did:</p>
+            <div class="flex flex-col sm:flex-row justify-around items-center my-8 gap-8 sm:gap-0">
+                <div>
+                    <p id="score-percentage" class="text-5xl font-bold text-green-600">0%</p>
+                    <p class="text-gray-500">Score</p>
+                </div>
+                 <div>
+                    <p class="text-5xl font-bold text-blue-600"><span id="correct-answers">0</span>/<span id="total-answered">0</span></p>
+                    <p class="text-gray-500">Correct Answers</p>
+                </div>
+                 <div>
+                    <p id="final-time" class="text-5xl font-bold text-gray-700">00:00</p>
+                    <p class="text-gray-500">Time Taken</p>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="restart-btn" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-md">Try Again</button>
+                <button id="review-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md">Review Answers</button>
+            </div>
+        </div>
+        
+        <!-- Review Screen -->
+        <div id="review-screen" class="hidden bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6">Answer Review</h1>
+            <div id="review-container" class="space-y-6">
+                <!-- Review content injected by JS -->
+            </div>
+            <button id="back-to-results-btn" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-800 transition-colors shadow-md mt-8">Back to Results</button>
+        </div>
+
+    </div>
+
+    <script>
+        const quizData = [
+            { question: "What is the stated goal of the training unit for a first responder?", answer: "To safely recognize the hazard and perform the first-responder role for life safety.", options: ["To certify officers as HAZMAT technicians.", "To train officers in advanced decontamination procedures.", "To safely recognize the hazard and perform the first-responder role for life safety.", "To teach officers how to command a large-scale incident."], rationale: "The Unit Goal is stated at the very beginning: 'Safely recognize the immediate hazard and effectively perform the first-responder role focusing on preservation of life safety.'", page: "Page 1" },
+            { question: "The current approach to hazardous materials response, applicable to many manmade and natural disasters, is carried under the umbrella of what theory?", answer: "'All hazards training'", options: ["'CBRNE response'", "'Incident Command System'", "'All hazards training'", "'Unified command'"], rationale: "The text states the current approach 'is carried under the umbrella of \"all hazards training\"' which can be applied to nearly all manmade hazards and many natural disasters.", page: "Page 1" },
+            { question: "What is the U.S. Department of Transportation (DOT) definition of a hazardous material?", answer: "A substance capable of posing an unreasonable risk to health, safety, or property when transported.", options: ["Any chemical that can cause a fire or explosion.", "A substance capable of posing an unreasonable risk to health, safety, or property when transported.", "A material that is radioactive, biological, or chemical in nature.", "Any liquid that is flammable or corrosive."], rationale: "The DOT defines a hazardous material as 'A substance or material capable of posing an unreasonable risk to health, safety, or property when transported in commerce.'", page: "Page 1" },
+            { question: "How many hazard classes has the U.S. Department of Transportation (DOT) identified for hazardous materials?", answer: "Nine", options: ["Five", "Seven", "Nine", "Twelve"], rationale: "The DOT has identified nine hazard classes based on the dangers posed in transportation.", page: "Page 1" },
+            { question: "What does the acronym CBRNE stand for in the context of hazardous materials?", answer: "Chemical, Biological, Radiation, Nuclear, Explosive", options: ["Chemical, Biological, Radiation, Nuclear, Explosive", "Corrosive, Blasting, Radioactive, Noxious, Energetic", "Combustible, Biological, Radiological, Natural, Engineered", "Chemical, Bacterial, Radiological, Nuclear, Environmental"], rationale: "CBRNE is a simplified definition for hazardous materials, breaking it down into: Chemical, Biological, Radiation, Nuclear, Explosive.", page: "Pages 1-2" },
+            { question: "Nerve Agents and Vesicants are examples of which category of toxic substance?", answer: "Chemical Warfare Agents", options: ["Agricultural Chemicals", "Toxic Industrial Materials", "Riot Control Agents", "Chemical Warfare Agents"], rationale: "The text provides Chemical Warfare Agents as a category of toxic substances, with examples including Nerve Agents and Vesicants.", page: "Page 2" },
+            { question: "How is an 'acute' exposure different from a 'chronic' exposure?", answer: "Acute is a short term/high dose event, while chronic is a long term/low dose exposure.", options: ["Acute is a long term/low dose event, while chronic is a short term/high dose exposure.", "Acute exposure only applies to chemicals, while chronic applies to biological agents.", "Acute is a short term/high dose event, while chronic is a long term/low dose exposure.", "There is no difference; the terms are used interchangeably."], rationale: "Acute is defined as a 'Short term/high dose event with harmful consequences,' whereas Chronic is 'Long term/low dose exposure with harmful consequences.'", page: "Page 2" },
+            { question: "What is the primary hazard of an 'oxidizer'?", answer: "It can cause other materials to burn or burn at a higher temperature.", options: ["It is highly flammable on its own.", "It is a strong acid that corrodes tissue.", "It can cause other materials to burn or burn at a higher temperature.", "It releases toxic fumes when exposed to air."], rationale: "Oxidizers are chemicals that do not burn on their own, but when combined with other chemicals, they can cause them to burn or burn more intensely.", page: "Page 2" },
+            { question: "Oxygen and Hydrogen Peroxide are examples of which type of hazardous material?", answer: "Oxidizers", options: ["Flammable Gasses", "Corrosives", "Oxidizers", "Biological Toxins"], rationale: "The document lists Oxygen and Hydrogen Peroxide as examples of oxidizers.", page: "Page 2" },
+            { question: "Which of the following is an example of a biological 'pathogen'?", answer: "Bacteria such as Anthrax or viruses like Smallpox.", options: ["A biological toxin like Ricin.", "A corrosive acid like Sulfuric Acid.", "Bacteria such as Anthrax or viruses like Smallpox.", "An industrial chemical like Chlorine."], rationale: "Pathogens are disease-causing organisms. The text provides examples like Bacteria (Anthrax) and Viruses (Smallpox).", page: "Page 3" },
+            { question: "What is the primary significance of controlling plant and animal pathogens like Foot and Mouth Disease?", answer: "Economic significance and preventing their spread.", options: ["They are highly lethal to humans.", "They can be used to create explosives.", "Economic significance and preventing their spread.", "They are difficult to decontaminate."], rationale: "The instructor note explains the 'economic significance and need for avoiding the spread of plant and animal pathogens.'", page: "Page 3" },
+            { question: "According to the infection control section, what is essential for preparing officers to respond to HAZMAT incidents?", answer: "Well-designed plans and staff education", options: ["Advanced tactical training", "Well-designed plans and staff education", "Having Level A PPE in every vehicle", "A direct line to federal agencies"], rationale: "The text states that 'Well-designed plans and staff education will prepare officers to reduce the probability of such incidents and to be able to respond appropriately and quickly.'", page: "Page 3" },
+            { question: "Which of the following is a type of ionizing radiation mentioned in the text?", answer: "Gamma Rays", options: ["Microwaves", "Infrared Rays", "Gamma Rays", "Radio Waves"], rationale: "The text lists Alpha Particles, Beta Particles, Gamma Rays, X-Ray, and Neutron Particles as types of ionizing radiation.", page: "Page 3" },
+            { question: "Which type of radiation particle is the largest and has the least penetrating power?", answer: "Alpha Particles", options: ["Gamma Rays", "Beta Particles", "Neutron Particles", "Alpha Particles"], rationale: "While the document lists the types, general knowledge confirms Alpha particles are the largest and least penetrating, often stopped by skin or paper.", page: "Page 3" },
+            { question: "Which of the following is NOT an example of a common explosive listed in the text?", answer: "Chlorine", options: ["Black Powder", "C4", "ANFO", "Chlorine"], rationale: "The list of common explosives includes Black Powder, PETN, TNT/Dynamite, C4, and ANFO. Chlorine is a toxic industrial chemical.", page: "Page 3" },
+            { question: "What is the definition of 'Toxicology'?", answer: "The study of adverse effects of chemicals or physical agents on living organisms.", options: ["The study of poisons and their antidotes.", "The classification of hazardous materials.", "The study of adverse effects of chemicals or physical agents on living organisms.", "The science of decontamination procedures."], rationale: "Toxicology is defined as the 'study of adverse effects of chemicals or physical agents on living organisms.'", page: "Page 4" },
+            { question: "What does the toxicology term 'IDLH' stand for?", answer: "Immediately Dangerous to Life and Health", options: ["Individual Dose Limit - Hazardous", "Immediately Dangerous to Life and Health", "Internal Damage from Lethal Hazard", "Industrial Danger Level for Humans"], rationale: "IDLH stands for 'Immediately Dangerous to Life and Health,' referring to an exposure likely to cause death, permanent adverse health effects, or prevent escape.", page: "Page 4" },
+            { question: "What is the definition of Lethal Concentration (LC50)?", answer: "The dose required to kill half the members of a tested population.", options: ["The level a worker can be exposed to for a lifetime without adverse effects.", "The dose required to kill half the members of a tested population.", "An exposure likely to cause death or prevent escape.", "The amount of radiation a person is exposed to."], rationale: "Lethal Concentration (LC50) is the dose required to kill half the members of a tested population after a specified test duration.", page: "Page 4" },
+            { question: "What is an MSDS (Material Safety Data Sheet)?", answer: "A document with information on health effects and safe handling procedures for chemicals.", options: ["A manifest for shipping hazardous materials.", "A permit for transporting radioactive substances.", "A document with information on health effects and safe handling procedures for chemicals.", "A report detailing the outcome of a HAZMAT incident."], rationale: "An MSDS is defined as 'A document that contains information on the potential health effects of exposure to chemicals... and on safe working procedures when handling chemical products.'", page: "Page 4" },
+            { question: "Which of the following is considered a primary route of exposure for CBRNE materials?", answer: "Inhalation", options: ["Contemplation", "Inhalation", "Observation", "Meditation"], rationale: "The document lists four common routes of exposure: Inhalation, Absorption, Ingestion, and Injection.", page: "Page 4" },
+            { question: "A puncture or cut with a contaminated object is an example of which route of exposure?", answer: "Injection", options: ["Absorption", "Ingestion", "Inhalation", "Injection"], rationale: "Injection is a route of exposure that can occur via a puncture or cut/abrasion.", page: "Page 4" },
+            { question: "Besides death and physical disability, what is another significant health impact of a CBRNE incident?", answer: "Psychological stress / PTSD", options: ["Improved immune response", "Economic prosperity", "Psychological stress / PTSD", "Increased property values"], rationale: "The document lists 'Psychological stress' and 'Post-Traumatic Stress Disorders' as potential Health Impacts.", page: "Page 4" },
+            { question: "Disruption of traffic and budget strains on government are examples of what type of CBRNE incident impact?", answer: "Infrastructure Impacts", options: ["Health Impacts", "Environmental Impacts", "Property Impacts", "Infrastructure Impacts"], rationale: "These are listed under 'Infrastructure Impacts', which also includes reduction in services and an overwhelmed healthcare system.", page: "Page 5" },
+            { question: "What does the 'R' in the RAIN acronym for safeguarding lives at a CBRNE event stand for?", answer: "Recognize", options: ["Respond", "Remove", "Recognize", "Rescue"], rationale: "The RAIN principle stands for: R: Recognize, A: Avoid, I: Isolate, N: Notify.", page: "Page 5" },
+            { question: "According to the RAIN principle, what is the first step you should take at a potential HAZMAT scene?", answer: "Recognize the presence of a CBRNE threat.", options: ["Notify the appropriate response agency.", "Isolate the threat and immediate area.", "Recognize the presence of a CBRNE threat.", "Avoid contamination/exposure to the threat."], rationale: "The first step in the RAIN acronym is 'R' for Recognize the presence of a threat.", page: "Page 5" },
+            { question: "When trying to avoid exposure at a HAZMAT incident, where should you position yourself?", answer: "Uphill and upwind from the incident.", options: ["Downhill and downwind from the incident.", "As close as possible to get a good view.", "Uphill and upwind from the incident.", "Directly next to the incident commander's vehicle."], rationale: "To avoid exposure, you should stay 'uphill, upwind from the incident' and use distance and physical barriers for protection.", page: "Page 5" },
+            { question: "When isolating a HAZMAT scene, besides setting a perimeter, what else should responders establish?", answer: "Safe travel routes for the public", options: ["A media briefing area", "A decontamination corridor for themselves", "Safe travel routes for the public", "An equipment cache point"], rationale: "The 'Isolate' section states responders should 'Establish safe travel routes for the public.'", page: "Page 5" },
+            { question: "Which of the following is an on-site source of information about hazardous materials being transported?", answer: "Shipping manifests and placards.", options: ["News reports from the scene.", "Social media posts from witnesses.", "The driver's personal logbook.", "Shipping manifests and placards."], rationale: "On-site information can be obtained from shipping manifests, placards, labels, and interviews with the driver or witnesses.", page: "Pages 5-6" },
+            { question: "Besides reading placards and manifests, how can a first responder obtain on-site information about a hazardous material?", answer: "By interviewing the driver or witnesses.", options: ["By searching the internet for the truck's company.", "By calling the local news station.", "By waiting for a specialized team to arrive.", "By interviewing the driver or witnesses."], rationale: "The document lists 'Interviews' with the driver, witnesses, and others as a source of on-site information.", page: "Page 6" },
+            { question: "What is the highest level of Personal Protective Equipment (PPE), described as 'fully encapsulated'?", answer: "Level A", options: ["Level D", "Level C", "Level B", "Level A"], rationale: "Level A PPE is the highest level, described as 'fully encapsulated'. Level D is the lowest (a standard uniform).", page: "Page 6" },
+            { question: "For law enforcement first responders, what is the generally recommended level of PPE they should use, unless escaping a hazard?", answer: "Gloves and a particulate/droplet mask", options: ["A fully encapsulated Level A suit.", "A Self-Contained Breathing Apparatus (SCBA).", "Gloves and a particulate/droplet mask", "Chemical resistant clothing."], rationale: "The text advises that law enforcement responders should not use PPE above 'gloves and particulate/droplet mask,' except to escape or at the direction of incident command.", page: "Page 6" },
+            { question: "Using hand wipes or soap and water after a potential exposure is an example of what?", answer: "Practical decontamination", options: ["Level C decontamination", "Technical decontamination", "Practical decontamination", "Final decontamination"], rationale: "The text lists 'Hand wipes, soap and water, antibacterial gels, antiviral wipes, etc.' under the heading 'Practical decontamination'.", page: "Page 6" },
+            { question: "The decontamination concept of 'Dilute' would most likely involve using what substance?", answer: "Water", options: ["Sand", "Water", "Bleach", "Absorbent pads"], rationale: "'Dilute' as a decontamination concept means to lower the concentration of a substance, which is typically done with a neutral solvent like water.", page: "Page 7" },
+            { question: "Which of the following is NOT one of the five listed Decontamination Concepts?", answer: "Evaporate", options: ["Remove", "Dilute", "Isolate", "Evaporate"], rationale: "The five decontamination concepts listed are 'End the Exposure!', Remove, Dilute, Absorb, Neutralize, and Isolate.", page: "Page 7" },
+            { question: "What is the purpose of the National Incident Management System (NIMS)?", answer: "To guide all levels of government and the private sector to work together during incidents.", options: ["To provide a response plan for specific types of disasters.", "To guide all levels of government and the private sector to work together during incidents.", "To manage only large-scale federal emergencies.", "To replace the Incident Command System (ICS)."], rationale: "NIMS is a systematic, proactive approach to guide departments and agencies at all levels of government, nongovernmental organizations, and the private sector to work together seamlessly and manage incidents.", page: "Page 7" },
+            { question: "What is the Incident Command System (ICS)?", answer: "A standardized on-scene emergency management system.", options: ["A federal agency that responds to disasters.", "A communication protocol for police radios.", "A standardized on-scene emergency management system.", "A document listing all available emergency resources."], rationale: "ICS is a standardized on-scene emergency management of resources during incidents, used by various jurisdictions and agencies to organize field-level operations.", page: "Page 7" },
+            { question: "ICS is designed to enable incident management by integrating facilities, equipment, personnel, procedures, and what else?", answer: "Communications", options: ["Funding", "Media relations", "Communications", "Legal counsel"], rationale: "The definition of ICS lists it as integrating 'a combination of facilities, equipment, personnel, procedures, and communications'.", page: "Page 7" },
+            { question: "Which of the following is NOT a component of NIMS?", answer: "Incident Response Plan", options: ["Preparedness", "Resource Management", "Command and Management", "Incident Response Plan"], rationale: "The NIMS components are Preparedness, Communications and Information Management, Resource Management, Command and Management, and Ongoing Management and Maintenance. NIMS itself is not a response plan.", page: "Page 11" },
+            { question: "Which of these is an example of a flammable liquid?", answer: "Gasoline", options: ["Gasoline", "Magnesium", "Propane", "Hydrogen Peroxide"], rationale: "The document lists Gasoline, Diesel fuel, and Alcohol as examples of flammable liquids.", page: "Page 2" },
+            { question: "What is a key characteristic of corrosive materials?", answer: "They may attack and destroy living tissue.", options: ["They burn at extremely high temperatures.", "They may attack and destroy living tissue.", "They cause other materials to ignite.", "They are living organisms that cause disease."], rationale: "Corrosives/Acids are defined as chemical materials that may attack and destroy living tissue, such as skin.", page: "Page 2" },
+            { question: "Botulinum Toxin is an example of what type of hazardous material?", answer: "A Biological Toxin", options: ["A Human Pathogen", "A Chemical Warfare Agent", "A Flammable Solid", "A Biological Toxin"], rationale: "The document lists Ricin and Botulinum Toxin as examples of Biological Toxins.", page: "Page 3" },
+            { question: "The term LD50 is an indication of the _______ of a given substance.", answer: "lethality", options: ["flammability", "lethality", "corrosivity", "radioactivity"], rationale: "Lethal Dose (LD50) is defined as 'An indication of the lethality of a given substance or type of radiation.'", page: "Page 4" },
+            { question: "Secondary ingestion as a route of exposure could occur by:", answer: "Transferring a contaminant to the mouth via an object like a pen.", options: ["Eating or drinking a contaminated product directly.", "Breathing in aerosolized droplets.", "A chemical soaking through the skin.", "Transferring a contaminant to the mouth via an object like a pen."], rationale: "Secondary ingestion is defined as transferring a contaminated product to the mouth, usually through an inanimate object. An example given is a ballpoint pen.", page: "Page 4" },
+            { question: "Damage to potable water sources and loss of productive lands are examples of which type of CBRNE incident impact?", answer: "Property and Environment Impacts", options: ["Health Impacts", "Property and Environment Impacts", "Infrastructure Impacts", "Psychological Impacts"], rationale: "The document lists these under 'Property and Environment Impacts'.", page: "Pages 4-5" },
+            { question: "The 'A' in the RAIN acronym stands for:", answer: "Avoid", options: ["Assess", "Approach", "Alert", "Avoid"], rationale: "The 'A' in RAIN stands for 'Avoid contamination/exposure to the threat.'", page: "Page 5" },
+            { question: "The 'I' in the RAIN acronym stands for:", answer: "Isolate", options: ["Identify", "Inform", "Isolate", "Investigate"], rationale: "The 'I' in RAIN stands for 'Isolate the threat and immediate area.'", page: "Page 5" },
+            { question: "The 'N' in the RAIN acronym stands for:", answer: "Notify", options: ["Neutralize", "Navigate", "Nullify", "Notify"], rationale: "The 'N' in RAIN stands for 'Notify the appropriate response agency.'", page: "Page 5" },
+            { question: "Which is the correct order of actions according to the RAIN principle?", answer: "Recognize, Avoid, Isolate, Notify", options: ["Notify, Recognize, Isolate, Avoid", "Recognize, Isolate, Avoid, Notify", "Recognize, Avoid, Isolate, Notify", "Avoid, Recognize, Notify, Isolate"], rationale: "The correct sequence is Recognize, Avoid, Isolate, Notify.", page: "Page 5" },
+            { question: "Which level of PPE consists of an Air-purifying respirator and chemical resistant clothing?", answer: "Level C", options: ["Level A", "Level B", "Level C", "Level D"], rationale: "Level C is described as 'Air-purifying respirator, chemical resistant clothing, double-layered gloves, etc.'", page: "Page 6" },
+            { question: "What does Level B PPE add to Level C equipment?", answer: "SCBA (Self-Contained Breathing Apparatus)", options: ["A fully encapsulated suit", "SCBA (Self-Contained Breathing Apparatus)", "A standard police uniform", "Reinforced boots"], rationale: "Level B is defined as SCBA + Level C.", page: "Page 6" },
+            { question: "The principle of using 'Time, distance/direction, and shielding/barriers' is a practical guideline for what?", answer: "Safely operating in a HAZMAT zone.", options: ["Decontaminating a victim.", "Interviewing a witness.", "Safely operating in a HAZMAT zone.", "Setting up the Incident Command post."], rationale: "These are listed under 'Practical Guidelines for Law Enforcement First Responders' to minimize exposure.", page: "Page 6" },
+            { question: "What is the primary benefit of NIMS?", answer: "It provides a unified approach and standardized command structure.", options: ["It guarantees federal funding for all incidents.", "It provides a specific response plan for every type of hazard.", "It eliminates the need for mutual aid agreements.", "It provides a unified approach and standardized command structure."], rationale: "The benefits listed include a 'unified approach, standardized command structure, emphasis on preparedness, mutual aid, and resource management.'", page: "Page 7" },
+            { question: "NIMS is applicable to:", answer: "All threats and hazards, regardless of cause, size, location, or complexity.", options: ["Only terrorist attacks and natural disasters.", "Only incidents requiring a federal response.", "All threats and hazards, regardless of cause, size, location, or complexity.", "Only planned events like parades and protests."], rationale: "NIMS is designed to 'manage incidents involving all threats and hazards—regardless of cause, size, location, or complexity.'", page: "Page 7" },
+            { question: "Which of the following is something that NIMS is NOT?", answer: "A response plan", options: ["A response plan", "A systematic approach to incident management", "Scalable and flexible", "Applicable to all hazards"], rationale: "The fact sheet explicitly states that NIMS is NOT 'A response plan'.", page: "Page 11" },
+            { question: "According to the NIMS fact sheet, which statement is FALSE?", answer: "NIMS is only used during large-scale incidents.", options: ["NIMS is a comprehensive, nationwide approach.", "NIMS is only used during large-scale incidents.", "NIMS is scalable and applicable for all incidents.", "NIMS creates a common operating picture."], rationale: "The fact sheet explicitly states that NIMS is NOT 'Only used during large-scale incidents.'", page: "Page 11" },
+            { question: "Chlorine, Acetone, and Benzene are examples of what type of chemical material?", answer: "Toxic Industrial Materials", options: ["Chemical Warfare Agents", "Agricultural Chemicals", "Toxic Industrial Materials", "Corrosives"], rationale: "The document lists Chlorine, Acetone, and Benzene as examples of Toxic Industrial Materials/Chemicals.", page: "Page 2" },
+            { question: "Fentanyl and Cocaine can be considered what type of hazardous material?", answer: "A toxic/poisonous substance", options: ["A flammable gas", "A biological pathogen", "A radioactive material", "A toxic/poisonous substance"], rationale: "The text includes 'Some controlled substances (Fentanyl, Cocaine, Anesthetics, etc.)' under the category of Toxic/Poisonous Substances.", page: "Page 2" },
+            { question: "Which material is an example of a flammable solid that may react violently with water?", answer: "Magnesium", options: ["Gasoline", "Propane", "Magnesium", "Hydrogen Peroxide"], rationale: "The text lists Magnesium, Aluminum powder, Zinc, and Sodium as flammable solids and notes that some 'react violently when in contact with water'.", page: "Page 2" },
+            { question: "Which of the following is an example of a biological human pathogen that is a virus?", answer: "Smallpox", options: ["Anthrax", "Plague", "Ricin", "Smallpox"], rationale: "Under Human Pathogens, Smallpox (Variola Major) is listed as an example of a virus, while Anthrax and Plague are listed as bacteria.", page: "Page 3" },
+            { question: "What does TLV (Threshold Limit Value) represent in toxicology?", answer: "The level a worker can be exposed to day after day without adverse health effects.", options: ["A dose that is immediately lethal to 50% of a population.", "The level a worker can be exposed to day after day without adverse health effects.", "The maximum legal concentration allowed in the air.", "The time it takes for a chemical to dissipate."], rationale: "TLV is the 'Level to which it is believed a worker can be exposed day after day for a working lifetime without adverse health effects.'", page: "Page 4" },
+            { question: "Aerosols are a primary concern for which route of exposure?", answer: "Inhalation", options: ["Ingestion", "Injection", "Inhalation", "Absorption"], rationale: "Aerosols (dry and/or wet particles/droplets that behave like a gas) are described under the 'Inhalation' route of exposure.", page: "Page 4" },
+            { question: "Which part of the body is vulnerable to chemical absorption but less so to biological threats unless there is an open wound?", answer: "Skin", options: ["Eyes", "Skin", "Nostrils", "Lungs"], rationale: "Under 'Absorption,' the text notes that 'Skin: Vulnerable to many chemicals but, not vulnerable to many biological threats unless there is an open wound'.", page: "Page 4" },
+            { question: "An overwhelmed healthcare system is an example of what kind of CBRNE incident impact?", answer: "Infrastructure Impacts", options: ["Health Impacts", "Property Impacts", "Environmental Impacts", "Infrastructure Impacts"], rationale: "The document lists 'Overwhelmed health care system' as one of the Infrastructure Impacts.", page: "Page 5" },
+            { question: "When using the RAIN principle, what is one of the key components of the 'Recognize' step?", answer: "Assessment of hazard level and casualties.", options: ["Setting a perimeter.", "Waiting for qualified assistance.", "Assessment of hazard level and casualties.", "Using soap and water for decontamination."], rationale: "The 'Recognize' step includes Observations, Assessment (Hazard level, casualties, etc.), Plan, Communicate, and Respond.", page: "Page 5" },
+            { question: "What is the purpose of establishing a perimeter during the 'Isolate' phase of RAIN?", answer: "To limit the spread of contamination.", options: ["To trap the hazardous material.", "To provide a clear path for the media.", "To limit the spread of contamination.", "To create a staging area for equipment."], rationale: "Isolating the area by setting a perimeter helps 'Limit spread of contamination when moving people that are potentially contaminated.'", page: "Page 5" },
+            { question: "What is the key element of the 'Notify' phase of the RAIN principle?", answer: "Wait for qualified assistance outside the perimeter.", options: ["Enter the hot zone to rescue victims.", "Begin decontamination procedures immediately.", "Wait for qualified assistance outside the perimeter.", "Attempt to neutralize the material yourself."], rationale: "The 'Notify' step instructs responders to 'Stay outside of designated perimeter. Remain upwind. Wait for qualified assistance.'", page: "Page 5" },
+            { question: "Which document should be referenced for placard and label information at a HAZMAT scene?", answer: "Emergency Response Guidebook (ERG)", options: ["The officer's field guide.", "The Texas Penal Code.", "Emergency Response Guidebook (ERG)", "The department's policy manual."], rationale: "The instructor note mentions having the Emergency Response Guidebook (ERG) available for 'placard and label information.'", page: "Page 5" },
+            { question: "What does 'donning' and 'doffing' refer to in the context of PPE?", answer: "Putting on and taking off the equipment.", options: ["Cleaning and storing the equipment.", "Putting on and taking off the equipment.", "Certifying and inspecting the equipment.", "Sharing and borrowing the equipment."], rationale: "Donning and doffing are standard terms for putting on and taking off protective gear, as implied by the discussion of 'safe donning and doffing of Nitrile gloves'.", page: "Page 6" },
+            { question: "Which decontamination concept involves using materials like soil or sand to soak up a hazardous liquid?", answer: "Absorb", options: ["Dilute", "Neutralize", "Isolate", "Absorb"], rationale: "Absorb is one of the five decontamination concepts, and it involves soaking up the material.", page: "Page 7" },
+            { question: "What is the FEMA course IS-100.c primarily about?", answer: "Introduction to the Incident Command System (ICS).", options: ["Advanced HAZMAT chemistry.", "Introduction to the Incident Command System (ICS).", "Tactical response to active shooters.", "Emergency vehicle operations."], rationale: "FEMA's IS-100 course is a well-known introduction to the Incident Command System, which aligns with the context of the chapter.", page: "Page 8" },
+            { question: "The 'all hazards training' approach is designed to be applicable to:", answer: "Nearly all manmade hazards and many natural disasters.", options: ["Only chemical spills.", "Only terrorist attacks.", "Nearly all manmade hazards and many natural disasters.", "Only barricaded suspect situations."], rationale: "The text states this approach 'can be applied to nearly all situations caused by manmade hazards as well as many natural disaster scenarios.'", page: "Page 1" },
+            { question: "According to NIMS, who should have a clear understanding of the system besides first responders?", answer: "Elected and appointed officials", options: ["The general public", "Elected and appointed officials", "Only federal employees", "International relief organizations"], rationale: "The NIMS Audience section states, 'Elected and appointed officials and policy makers...must also have a clear understanding of NIMS'.", page: "Page 10" },
+            { question: "What is one of the key benefits of NIMS?", answer: "It enhances organizational and technological interoperability.", options: ["It provides funding for new equipment.", "It replaces local emergency plans.", "It enhances organizational and technological interoperability.", "It is only used for large-scale incidents."], rationale: "The fact sheet lists 'Enhances organizational and technological interoperability and cooperation' as a key benefit.", page: "Page 10" }
+        ];
+
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const reviewScreen = document.getElementById('review-screen');
+        
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const reviewBtn = document.getElementById('review-btn');
+        const backToResultsBtn = document.getElementById('back-to-results-btn');
+
+        const questionNumberEl = document.getElementById('question-number');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const progressBar = document.getElementById('progress-bar');
+        const questionTextEl = document.getElementById('question-text');
+        const answerOptionsEl = document.getElementById('answer-options');
+        const rationaleBox = document.getElementById('rationale-box');
+        const rationaleText = document.getElementById('rationale-text');
+        const rationaleSource = document.getElementById('rationale-source');
+        
+        const scorePercentageEl = document.getElementById('score-percentage');
+        const correctAnswersEl = document.getElementById('correct-answers');
+        const totalAnsweredEl = document.getElementById('total-answered');
+        const finalTimeEl = document.getElementById('final-time');
+        const timerEl = document.getElementById('timer');
+        const reviewContainer = document.getElementById('review-container');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timerInterval;
+        let secondsElapsed = 0;
+        let userAnswers = [];
+        let shuffledQuizData = [];
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        startBtn.addEventListener('click', startQuiz);
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', startQuiz);
+        reviewBtn.addEventListener('click', showReview);
+        backToResultsBtn.addEventListener('click', () => {
+            reviewScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+        });
+
+        function startTimer() {
+            secondsElapsed = 0;
+            timerEl.textContent = '00:00';
+            timerInterval = setInterval(() => {
+                secondsElapsed++;
+                const minutes = Math.floor(secondsElapsed / 60).toString().padStart(2, '0');
+                const seconds = (secondsElapsed % 60).toString().padStart(2, '0');
+                timerEl.textContent = `${minutes}:${seconds}`;
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function startQuiz() {
+            shuffledQuizData = [...quizData];
+            shuffleArray(shuffledQuizData);
+            shuffledQuizData.forEach(q => shuffleArray(q.options));
+
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            startScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            nextBtn.classList.add('hidden');
+            startTimer();
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            rationaleBox.classList.add('hidden');
+            answerOptionsEl.innerHTML = '';
+            const currentQuestion = shuffledQuizData[currentQuestionIndex];
+            
+            questionNumberEl.textContent = currentQuestionIndex + 1;
+            totalQuestionsEl.textContent = shuffledQuizData.length;
+            questionTextEl.textContent = currentQuestion.question;
+
+            const progress = ((currentQuestionIndex) / shuffledQuizData.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('answer-option', 'w-full', 'p-4', 'text-left', 'bg-white', 'border-2', 'border-gray-300', 'rounded-lg', 'hover:bg-gray-50', 'hover:border-blue-500', 'disabled:opacity-75', 'disabled:cursor-not-allowed');
+                button.addEventListener('click', () => selectAnswer(button, option, currentQuestion));
+                answerOptionsEl.appendChild(button);
+            });
+        }
+
+        function selectAnswer(button, selectedOption, currentQuestion) {
+            const { answer, rationale, page } = currentQuestion;
+            userAnswers[currentQuestionIndex] = selectedOption;
+
+            const buttons = answerOptionsEl.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === answer) {
+                    btn.classList.add('correct');
+                }
+            });
+
+            if (selectedOption === answer) {
+                score++;
+                button.classList.add('correct');
+            } else {
+                button.classList.add('incorrect');
+            }
+
+            rationaleText.textContent = rationale;
+            rationaleSource.textContent = page;
+            rationaleBox.classList.remove('hidden');
+            nextBtn.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < shuffledQuizData.length) {
+                nextBtn.classList.add('hidden');
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            stopTimer();
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+
+            const percentage = Math.round((score / shuffledQuizData.length) * 100);
+            scorePercentageEl.textContent = `${percentage}%`;
+            correctAnswersEl.textContent = score;
+            totalAnsweredEl.textContent = shuffledQuizData.length;
+            finalTimeEl.textContent = timerEl.textContent;
+            
+            progressBar.style.width = '100%';
+        }
+
+        function showReview() {
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.remove('hidden');
+            reviewContainer.innerHTML = '';
+
+            shuffledQuizData.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === question.answer;
+
+                const reviewItem = document.createElement('div');
+                reviewItem.classList.add('border', 'p-4', 'rounded-lg');
+                reviewItem.classList.add(isCorrect ? 'bg-green-50' : 'bg-red-50');
+
+                let userAnswerHTML = '';
+                if (isCorrect) {
+                    userAnswerHTML = `<p>Your answer: <span class="font-semibold review-correct">${userAnswer} (Correct)</span></p>`;
+                } else {
+                    userAnswerHTML = `
+                        <p>Your answer: <span class="font-semibold review-incorrect">${userAnswer}</span></p>
+                        <p>Correct answer: <span class="font-semibold review-correct">${question.answer}</span></p>
+                    `;
+                }
+
+                reviewItem.innerHTML = `
+                    <p class="font-bold mb-2">${index + 1}. ${question.question}</p>
+                    ${userAnswerHTML}
+                    <p class="text-sm text-gray-600 mt-2"><em><strong>Rationale:</strong> ${question.rationale} (Source: ${question.page})</em></p>
+                `;
+                reviewContainer.appendChild(reviewItem);
+            });
+        }
+    </script>
+</body>
+</html>
+

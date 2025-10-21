@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Guide: Implied Consent (DWI)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --header-bg: #1f2937;
+            --bg-color: #f3f4f6;
+            --tab-active-bg: #3b82f6;
+            --tab-active-text: #ffffff;
+            --card-bg: #ffffff;
+            --text-color: #111827;
+            --link-color: #2563eb;
+            --consequence-suspension: #fef08a; /* Yellow */
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://rsms.me/inter/inter.css');
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab.active {
+            background-color: var(--tab-active-bg);
+            color: var(--tab-active-text);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tab {
+            transition: all 0.3s ease-in-out;
+        }
+        .consequence-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .consequence-suspension { background-color: var(--consequence-suspension); color: #92400e;}
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="bg-gray-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">
+                <i class="fas fa-car mr-2"></i>Implied Consent (DWI)
+            </h1>
+            <p class="text-sm text-gray-300">Transportation Code Ch. 724 | TCOLE Prep</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-4 md:p-6">
+        <!-- Tab Navigation -->
+        <div class="mb-6 bg-white rounded-lg shadow-md overflow-x-auto">
+            <nav id="tabs" class="flex flex-row space-x-1 p-2">
+                <button data-tab="consent" class="tab active flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-check-circle mr-2"></i> <span class="hidden md:inline">Implied Consent</span>
+                </button>
+                <button data-tab="mandatory" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-exclamation-triangle mr-2"></i> <span class="hidden md:inline">Mandatory Draws</span>
+                </button>
+                <button data-tab="procedures" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-vial mr-2"></i> <span class="hidden md:inline">Procedures</span>
+                </button>
+                <button data-tab="consequences" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-id-card mr-2"></i> <span class="hidden md:inline">Consequences</span>
+                </button>
+                <button data-tab="knowledge-check" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-question-circle mr-2"></i> <span class="hidden md:inline">Knowledge Check</span>
+                </button>
+                <button data-tab="resources" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-link mr-2"></i> <span class="hidden md:inline">Resources</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Tab Content -->
+        <div id="tab-contents">
+            <!-- Implied Consent Tab -->
+            <div id="consent" class="tab-content active space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Consent to Taking of Specimen (<a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.011" target="_blank" class="text-blue-600 hover:underline">TC 724.011</a>)</h2>
+                     <div class="mt-2 pl-4 border-l-4 border-gray-200">
+                        <p class="text-sm font-semibold">Legal Definition:</p>
+                        <p class="text-sm text-gray-700">If a person is arrested for an offense arising out of acts alleged to have been committed while the person was operating a motor vehicle in a public place, or a watercraft, while intoxicated, or an offense under Section 106.041, Alcoholic Beverage Code, the person is deemed to have consented... to submit to the taking of one or more specimens of the person's breath or blood for analysis to determine the alcohol concentration or the presence in the person's body of a controlled substance, drug, dangerous drug, or other substance.</p>
+                        <h4 class="font-semibold text-sm mt-2">Elements Checklist:</h4>
+                        <ul class="list-disc list-inside text-sm text-gray-700">
+                            <li>Person is arrested for an intoxication-related offense (DWI, BWI, etc.).</li>
+                            <li>The offense involved operating a motor vehicle in a public place or a watercraft.</li>
+                            <li>By operating the vehicle/watercraft, the person is *deemed* to have consented to provide a breath or blood specimen.</li>
+                        </ul>
+                        <p class="text-sm mt-2"><strong>Practical Example:</strong> A driver is lawfully arrested for DWI after failing sobriety tests. At the station, the officer reads the statutory warnings and requests a breath sample. The driver's prior act of driving on a public road means they have already legally "consented" to this request. A refusal will now carry administrative penalties.</p>
+                    </div>
+                </div>
+                
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Information Provided by Officer (DIC-24 Warning) (<a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.015" target="_blank" class="text-blue-600 hover:underline">TC 724.015</a>)</h2>
+                     <div class="mt-2 pl-4 border-l-4 border-gray-200">
+                        <p class="text-sm font-semibold">Legal Definition:</p>
+                        <p class="text-sm text-gray-700">Before requesting a person to submit to the taking of a specimen, the officer shall inform the person orally and in writing that: (1) if the person refuses, the refusal may be admissible in a subsequent prosecution; (2) if the person refuses, the person's license to operate a motor vehicle will be automatically suspended for not less than 180 days; (3) if the person has a commercial driver's license, refusal will result in disqualification for at least one year; (4) if the officer determines that the person is a resident without a license, the department will deny to the person the issuance of a license for not less than 180 days; (5) if the person is 21 years of age or older and submits to the taking of a specimen and an analysis of the specimen shows the person had an alcohol concentration of 0.08 or more, the person's license will be automatically suspended for not less than 90 days; and (6) if the person is younger than 21 and has any detectable amount of alcohol in the person's system, the person's license will be suspended for not less than 60 days.</p>
+                        <h4 class="font-semibold text-sm mt-2">Elements Checklist (What the Officer Must Say):</h4>
+                        <ul class="list-disc list-inside text-sm text-gray-700">
+                            <li>Must be provided both orally and in writing.</li>
+                            <li>Inform of consequences for **refusing** (admissible in court, 180-day suspension).</li>
+                            <li>Inform of consequences for **failing** (90-day suspension for BAC >= 0.08 for adults).</li>
+                            <li>Inform of specific consequences for minors and CDL holders.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mandatory Blood Draws Tab -->
+            <div id="mandatory" class="tab-content space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Taking of Specimen (Mandatory Blood Draw) (<a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.012" target="_blank" class="text-blue-600 hover:underline">TC 724.012</a>)</h2>
+                     <div class="mt-2 pl-4 border-l-4 border-gray-200">
+                        <p class="text-sm font-semibold">Legal Definition:</p>
+                        <p class="text-sm text-gray-700">A peace officer SHALL require the taking of a specimen of the person's breath or blood under any of the following circumstances if the officer arrests the person for an offense involving the operation of a motor vehicle or watercraft and the person refuses the officer's request to submit to the taking of a specimen voluntarily...</p>
+                        <h4 class="font-semibold text-sm mt-2">Elements Checklist (When is a draw MANDATORY after a refusal?):</h4>
+                        <ul class="list-disc list-inside text-sm text-gray-700">
+                            <li>The person was operating a motor vehicle or watercraft.</li>
+                            <li>The person was arrested for an intoxication-related offense.</li>
+                            <li>The person refused to provide a specimen voluntarily.</li>
+                            <li>**AND one of the following conditions exists:**
+                                <ul class="list-disc list-inside ml-6">
+                                    <li>As a result of the accident, another person has died or suffered serious bodily injury.</li>
+                                    <li>As a result of the accident, another person has suffered bodily injury and been transported to a hospital.</li>
+                                    <li>The offense was DWI with Child Passenger (<a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.49.htm#49.045" target="_blank" class="text-blue-600 hover:underline">PC 49.045</a>).</li>
+                                    <li>The person has previous convictions for certain intoxication offenses (e.g., two prior DWIs, one prior Intoxication Manslaughter).</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <p class="text-sm mt-2"><strong>Practical Example:</strong> An officer arrests a driver for DWI after a crash where the other driver was transported to the hospital with a broken arm (bodily injury). The arrested driver refuses to provide a breath sample. Because the crash resulted in a bodily injury requiring transport to a hospital, the officer shall require a blood draw and can use reasonable force to obtain it without a warrant.</p>
+                    </div>
+                </div>
+
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Prohibition on Taking Specimen (<a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.013" target="_blank" class="text-blue-600 hover:underline">TC 724.013</a>)</h2>
+                     <div class="mt-2 pl-4 border-l-4 border-gray-200">
+                        <p class="text-sm font-semibold">Legal Definition:</p>
+                        <p class="text-sm text-gray-700">Except as provided by Section 724.012(b) [Mandatory Blood Draw], a specimen may not be taken if a person refuses to submit to the taking of a specimen designated by a peace officer.</p>
+                        <h4 class="font-semibold text-sm mt-2">Elements Checklist:</h4>
+                        <ul class="list-disc list-inside text-sm text-gray-700">
+                            <li>A person is arrested for an intoxication offense.</li>
+                            <li>The officer requests a specimen.</li>
+                            <li>The person refuses.</li>
+                            <li>**AND** none of the mandatory blood draw conditions from TC 724.012 exist.</li>
+                            <li>Result: The officer cannot take the specimen and must proceed with the license suspension process for the refusal.</li>
+                        </ul>
+                        <p class="text-sm mt-2"><strong>Practical Example:</strong> An officer arrests a driver for DWI after a traffic stop for speeding. There was no crash, no child passenger, and the driver has no prior DWI convictions. The driver refuses to provide a breath sample. The officer cannot force a blood draw; their only recourse is the administrative license suspension for the refusal.</p>
+                    </div>
+                </div>
+
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Person Incapable of Refusal (<a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.014" target="_blank" class="text-blue-600 hover:underline">TC 724.014</a>)</h2>
+                     <div class="mt-2 pl-4 border-l-4 border-gray-200">
+                        <p class="text-sm font-semibold">Legal Definition:</p>
+                        <p class="text-sm text-gray-700">A person who is dead, unconscious, or otherwise incapable of refusal is considered not to have withdrawn the consent provided by Section 724.011. A specimen may be taken from such a person.</p>
+                        <p class="text-sm mt-2"><strong>Practical Example:</strong> An officer arrives at a single-vehicle rollover crash and finds the driver unconscious but alive. The officer smells a strong odor of alcohol coming from the driver. The driver is transported to the hospital. A blood specimen can be taken at the hospital for analysis because the driver is incapable of refusal.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Procedures Tab -->
+            <div id="procedures" class="tab-content space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Procedures for Taking & Analyzing Specimens</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="font-semibold">Breath Specimen (<a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.016" target="_blank" class="text-blue-600 hover:underline">TC 724.016</a>)</h3>
+                             <div class="mt-2 pl-4 border-l-4 border-gray-200">
+                                <p class="text-sm font-semibold">Legal Definition:</p>
+                                <p class="text-sm text-gray-700">A breath specimen must be taken by an individual who is certified by the department to operate the breath analysis instrument. The analysis must be performed under rules of the department.</p>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold">Blood Specimen (<a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.017" target="_blank" class="text-blue-600 hover:underline">TC 724.017</a>)</h3>
+                            <div class="mt-2 pl-4 border-l-4 border-gray-200">
+                                <p class="text-sm font-semibold">Legal Definition:</p>
+                                <p class="text-sm text-gray-700">Only a physician, qualified technician, chemist, registered professional nurse, or licensed vocational nurse may take a blood specimen... The person who takes the specimen may do so on the request or order of a peace officer. The person who takes a blood specimen under this chapter is not liable for damages arising from the request for the specimen if the request is made or the order is issued by a peace officer.</p>
+                                <h4 class="font-semibold text-sm mt-2">Elements Checklist:</h4>
+                                <ul class="list-disc list-inside text-sm text-gray-700">
+                                    <li>Only specified medical personnel can take a blood sample.</li>
+                                    <li>Medical personnel who take a specimen at the request of an officer are exempt from civil liability.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold">Furnishing Information to Accused (<a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.018" target="_blank" class="text-blue-600 hover:underline">TC 724.018</a>)</h3>
+                             <div class="mt-2 pl-4 border-l-4 border-gray-200">
+                                <p class="text-sm font-semibold">Legal Definition:</p>
+                                <p class="text-sm text-gray-700">On the request of a person who has given a specimen at the request of a peace officer, full information concerning the analysis of the specimen shall be made available to the person or the person's attorney.</p>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold">Admissibility Rules</h3>
+                             <div class="mt-2 pl-4 border-l-4 border-gray-200 text-sm">
+                                <p class="mb-2"><strong>Admissibility of Refusal in Civil Action (<a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.019" target="_blank" class="text-blue-600 hover:underline">TC 724.019</a>):</strong> A person's refusal to submit to a specimen is NOT admissible in a civil action (like a lawsuit over a car crash).</p>
+                                <p class="mb-2"><strong>Admissibility of Refusal of Additional Test (<a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.063" target="_blank" class="text-blue-600 hover:underline">TC 724.063</a>):</strong> If a person submits to one test, their refusal to submit to an additional requested test is admissible in court.</p>
+                                <p><strong>Admissibility of Certificate of Analysis (<a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.064" target="_blank" class="text-blue-600 hover:underline">TC 724.064</a>):</strong> The results of a breath test, as shown on an analysis certificate, are admissible in a criminal trial.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Consequences Tab -->
+            <div id="consequences" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Administrative License Revocation (ALR) (<a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.035" target="_blank" class="text-blue-600 hover:underline">TC 724.035</a>)</h2>
+                    <p class="text-sm text-gray-700 mb-4">The ALR program is a civil administrative process that is separate from the criminal case. The length of the driver's license suspension depends on the circumstances.</p>
+                    <div class="grid md:grid-cols-2 gap-6">
+                         <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="font-semibold text-lg text-red-600 mb-2">Consequences for REFUSING a Specimen</h3>
+                             <p class="text-sm mt-2 font-semibold">Refusal is Admissible in Court (<a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.061" target="_blank" class="text-blue-600 hover:underline">TC 724.061</a>)</p>
+                             <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                                <li><strong>1st Refusal:</strong> <span class="consequence-badge consequence-suspension">180-day license suspension</span></li>
+                                <li><strong>2nd or 3rd Refusal</strong> (if previous was within 10 years): <span class="consequence-badge consequence-suspension">2-year license suspension</span></li>
+                            </ul>
+                         </div>
+                         <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="font-semibold text-lg text-green-600 mb-2">Consequences for FAILING a Specimen (BAC >= 0.08)</h3>
+                             <p class="text-sm mt-2 font-semibold">For adults (21+):</p>
+                             <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                                <li><strong>1st Failure:</strong> <span class="consequence-badge consequence-suspension">90-day license suspension</span></li>
+                                <li><strong>Subsequent Failure</strong> (if previous was within 10 years): <span class="consequence-badge consequence-suspension">1-year license suspension</span></li>
+                            </ul>
+                            <p class="text-sm mt-4 font-semibold">For minors (< 21) with any detectable amount of alcohol:</p>
+                             <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                                 <li><strong>1st Failure:</strong> <span class="consequence-badge consequence-suspension">60-day license suspension</span></li>
+                             </ul>
+                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Knowledge Check Tab -->
+            <div id="knowledge-check" class="tab-content">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Knowledge Check</h2>
+                    <p class="mb-6 text-gray-600">Test your understanding of the material.</p>
+                    <div id="quiz-container" class="space-y-8">
+                        <!-- Questions will be dynamically inserted here -->
+                    </div>
+                    <div class="mt-8 text-center">
+                        <button id="check-answers-btn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors">Check Answers</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resources Tab -->
+            <div id="resources" class="tab-content">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Statutory Resources</h2>
+                    <p class="mb-6 text-gray-600">Quick links to the Texas Transportation Code chapter referenced in this guide.</p>
+                    <div id="resources-list" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-sm">
+                        <!-- Links will be dynamically inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('#tabs button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                });
+            });
+
+            // --- QUIZ DATA ---
+            const quizData = [
+                {
+                    question: "1. Under TC 724.011, a person arrested for DWI is deemed to have consented to provide a specimen by what action?",
+                    options: ["By answering the officer's questions", "By signing a form at the station", "By operating a motor vehicle in a public place", "By having a Texas driver's license"],
+                    answer: "By operating a motor vehicle in a public place",
+                    explanation: "Implied consent is based on the act of driving on a public road in Texas."
+                },
+                {
+                    question: "2. An officer arrests a driver for DWI. The driver refuses to provide a breath specimen. The crash resulted in another person being transported to the hospital with a broken leg. What must the officer do?",
+                    options: ["Release the driver", "Get a search warrant for blood", "Honor the refusal and only file for license suspension", "Require the taking of a blood specimen"],
+                    answer: "Require the taking of a blood specimen",
+                    explanation: "TC 724.012 makes a blood draw mandatory after a refusal if the crash resulted in bodily injury to another person who was transported to a hospital."
+                },
+                {
+                    question: "3. What is the administrative license suspension period for a first-time DWI offender (age 21+) who REFUSES to provide a specimen?",
+                    options: ["90 days", "180 days", "1 year", "2 years"],
+                    answer: "180 days",
+                    explanation: "Under TC 724.015, the officer must warn the person that a first refusal will result in a 180-day license suspension."
+                },
+                {
+                    question: "4. What is the administrative license suspension period for a first-time DWI offender (age 21+) who FAILS a breath test (BAC >= 0.08)?",
+                    options: ["90 days", "180 days", "1 year", "No suspension, just criminal charges"],
+                    answer: "90 days",
+                    explanation: "The statutory warning (TC 724.015) specifies a 90-day suspension for a first-time failure for an adult."
+                },
+                {
+                    question: "5. A driver is found unconscious after a crash, and the officer has probable cause to believe they are intoxicated. According to TC 724.014, can a blood specimen be taken?",
+                    options: ["No, a warrant is always required", "No, the person must be conscious to give consent", "Yes, because a person incapable of refusal has not withdrawn consent", "Yes, but only if a family member gives consent"],
+                    answer: "Yes, because a person incapable of refusal has not withdrawn consent",
+                    explanation: "TC 724.014 states that an unconscious person is considered not to have withdrawn their implied consent, allowing a specimen to be taken."
+                },
+                {
+                    question: "6. Which of the following individuals is NOT authorized to take a blood specimen under TC 724.017?",
+                    options: ["A physician", "A licensed vocational nurse", "A paramedic", "A qualified technician"],
+                    answer: "A paramedic",
+                    explanation: "TC 724.017 lists specific authorized personnel. While paramedics are highly trained, they are not on this statutory list."
+                },
+                {
+                    question: "7. Which of the following situations makes a blood draw mandatory after a DWI arrest and refusal?",
+                    options: ["The driver was involved in a minor fender-bender with no injuries", "The driver has one prior DWI conviction from 12 years ago", "The driver was arrested for DWI with a 14-year-old child in the car", "The driver was speeding 30 mph over the limit"],
+                    answer: "The driver was arrested for DWI with a 14-year-old child in the car",
+                    explanation: "An arrest for DWI with a Child Passenger (under 15 years old) is one of the conditions listed in TC 724.012 that triggers a mandatory blood draw after a refusal."
+                },
+                {
+                    question: "8. The statutory warnings (DIC-24) required by TC 724.015 must be provided to the suspect in what manner?",
+                    options: ["Orally only", "In writing only", "Orally and in writing", "Only if the suspect asks for them"],
+                    answer: "Orally and in writing",
+                    explanation: "The statute explicitly states the officer 'shall inform the person orally and in writing' of the required warnings."
+                },
+                {
+                    question: "9. Is a person's refusal to provide a specimen admissible as evidence in their criminal DWI trial?",
+                    options: ["Yes, the refusal can be used against them", "No, it is only for administrative purposes", "Only if the judge allows it", "Only if there was a crash involved"],
+                    answer: "Yes, the refusal can be used against them",
+                    explanation: "TC 724.061 states that a person's refusal to submit to the taking of a specimen may be introduced into evidence at the person's trial."
+                },
+                 {
+                    question: "10. Medical personnel who draw blood at the request of a peace officer under Chapter 724 are:",
+                    options: ["Liable for any injuries that occur", "Exempt from civil liability for damages arising from the request", "Required to have their own liability insurance", "Considered agents of the police"],
+                    answer: "Exempt from civil liability for damages arising from the request",
+                    explanation: "TC 724.017(c) provides a 'safe harbor' by stating that authorized medical personnel are not liable for damages if they take the specimen at the request or order of a peace officer."
+                },
+                {
+                    question: "11. A driver is arrested for DWI with no crash or prior convictions. The driver refuses to provide a breath sample. According to TC 724.013, can the officer take a blood specimen?",
+                    options: ["Yes, if they get a warrant", "Yes, by using reasonable force", "No, a specimen may not be taken", "Only if a supervisor approves it"],
+                    answer: "No, a specimen may not be taken",
+                    explanation: "TC 724.013 prohibits taking a specimen after a refusal if none of the mandatory conditions from 724.012 exist. The officer must get a warrant in this situation."
+                },
+                {
+                    question: "12. What is the license suspension period for a driver who refuses a breath test for a second time, with the first refusal occurring 5 years ago?",
+                    options: ["180 days", "90 days", "1 year", "2 years"],
+                    answer: "2 years",
+                    explanation: "TC 724.035(b) mandates a 2-year suspension for a second refusal if the person has a prior alcohol-related law enforcement contact within the preceding 10 years."
+                },
+                {
+                    question: "13. A 19-year-old driver is arrested for DWI and provides a breath sample showing a BAC of 0.04. What is the administrative license suspension period?",
+                    options: ["30 days", "60 days", "90 days", "180 days"],
+                    answer: "60 days",
+                    explanation: "Under TC 724.015, a person younger than 21 with any detectable amount of alcohol in their system faces a license suspension of not less than 60 days."
+                },
+                {
+                    question: "14. After an arrested person provides a blood sample, who is entitled to receive full information about the analysis of that sample upon request?",
+                    options: ["Only the prosecuting attorney", "The person or the person's attorney", "The arresting officer's supervisor", "Any member of the public"],
+                    answer: "The person or the person's attorney",
+                    explanation: "TC 724.018 guarantees that the accused person or their attorney can get full information concerning the analysis of their specimen."
+                },
+                {
+                    question: "15. A person's refusal to provide a specimen of breath or blood IS NOT admissible in which type of legal proceeding?",
+                    options: ["A criminal DWI trial", "An ALR hearing", "A civil action", "A parole hearing"],
+                    answer: "A civil action",
+                    explanation: "TC 724.019 explicitly states that a person's refusal is not admissible in a civil action, such as a lawsuit to determine fault in a car crash."
+                }
+            ];
+
+            const quizContainer = document.getElementById('quiz-container');
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'quiz-question';
+                let optionsHtml = q.options.map(option => `
+                    <label class="block"><input type="radio" name="q${index}" value="${option}" class="mr-2">${option}</label>
+                `).join('');
+                questionDiv.innerHTML = `
+                    <p class="font-semibold mb-2">${q.question}</p>
+                    <div class="space-y-2">${optionsHtml}</div>
+                    <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                `;
+                quizContainer.appendChild(questionDiv);
+            });
+
+            document.getElementById('check-answers-btn').addEventListener('click', () => {
+                quizData.forEach((q, index) => {
+                    const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                    const feedback = document.querySelectorAll('.feedback')[index];
+                    feedback.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+                    if (selected && selected.value === q.answer) {
+                        feedback.textContent = `Correct! ${q.explanation}`;
+                        feedback.classList.add('bg-green-100', 'text-green-800');
+                    } else {
+                        feedback.textContent = `Incorrect. The correct answer is "${q.answer}". ${q.explanation}`;
+                        feedback.classList.add('bg-red-100', 'text-red-800');
+                    }
+                });
+            });
+
+            // --- RESOURCES LIST ---
+            const resources = [
+                { name: "TC 724.011 - Consent", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.011" },
+                { name: "TC 724.012 - Mandatory Draw", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.012" },
+                { name: "TC 724.013 - Prohibition", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.013" },
+                { name: "TC 724.014 - Incapable of Refusal", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.014" },
+                { name: "TC 724.015 - Statutory Warning", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.015" },
+                { name: "TC 724.016 - Breath Specimen", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.016" },
+                { name: "TC 724.017 - Blood Specimen", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.017" },
+                { name: "TC 724.018 - Furnishing Info", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.018" },
+                { name: "TC 724.019 - Admissibility (Civil)", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.019" },
+                { name: "TC 724.035 - Suspension Periods", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.035" },
+                { name: "TC 724.061 - Admissibility of Refusal", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.061" },
+                { name: "TC 724.063 - Refusal of Add'l Test", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.063" },
+                { name: "TC 724.064 - Admissibility of Analysis", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.064" },
+                { name: "PC 49.045 - DWI w/ Child", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.49.htm#49.045" },
+            ];
+            const resourcesList = document.getElementById('resources-list');
+            resources.sort((a, b) => a.name.localeCompare(b.name));
+            resources.forEach(res => {
+                const link = document.createElement('a');
+                link.href = res.url;
+                link.target = '_blank';
+                link.className = 'text-blue-600 hover:underline';
+                link.textContent = res.name;
+                resourcesList.appendChild(link);
+            });
+        });
+    </script>
+</body>
+</html>
+

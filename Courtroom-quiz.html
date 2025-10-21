@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courtroom Testimony Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .correct {
+            background-color: #d1fae5; /* green-100 */
+            border-color: #10b981; /* green-500 */
+            color: #065f46; /* green-800 */
+        }
+        .incorrect {
+            background-color: #fee2e2; /* red-100 */
+            border-color: #ef4444; /* red-500 */
+            color: #991b1b; /* red-800 */
+        }
+        .rationale {
+            background-color: #f3f4f6; /* gray-100 */
+            border-left: 4px solid #6b7280; /* gray-500 */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 flex items-center justify-center min-h-screen p-4">
+
+    <div id="quiz-container" class="max-w-4xl w-full mx-auto">
+        <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+
+            
+<div id="start-screen">
+                <h1 class="text-3xl font-bold text-center text-gray-900 mb-2">Courtroom Testimony Quiz</h1>
+                <p class="text-center text-gray-500 mb-8">An interactive study tool based on the Courtroom Testimony Handout.</p>
+                <p class="text-lg mb-6 text-center">This quiz contains an exhaustive set of questions covering the handout. Test your knowledge, review detailed rationales with source pages, and time your performance. Click "Start Quiz" to begin.</p>
+                <button id="start-btn" class="w-full bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-indigo-700 transition-colors duration-300 text-lg">Start Quiz</button>
+            </div>
+
+            
+<div id="quiz-screen" class="hidden">
+                <div class="flex justify-between items-center mb-4">
+                    <div id="question-counter" class="text-sm font-semibold text-gray-600"></div>
+                    <div id="timer" class="text-sm font-semibold text-gray-600">Time: 00:00</div>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+                    <div id="progress-bar" class="bg-indigo-600 h-2.5 rounded-full" style="width: 0%"></div>
+                </div>
+                <div id="question-card" class="mb-6">
+                    <h2 id="question-text" class="text-xl font-semibold mb-5 text-gray-900"></h2>
+                    <div id="options-container" class="space-y-3"></div>
+                </div>
+                <div id="rationale-container" class="hidden mt-6"></div>
+                <button id="next-btn" class="w-full bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-indigo-700 transition-colors duration-300 disabled:bg-gray-400 mt-4" disabled>Next Question</button>
+            </div>
+
+            
+<div id="result-screen" class="hidden text-center">
+                <h2 class="text-2xl font-bold mb-2 text-gray-900">Quiz Complete!</h2>
+                <p class="text-lg text-gray-600 mb-4">You answered <span id="correct-count" class="font-bold"></span> out of <span id="total-count" class="font-bold"></span> questions correctly.</p>
+                <p class="text-5xl font-bold my-4 text-indigo-600" id="final-score"></p>
+                <p class="text-md text-gray-500 mb-8">Total Time Taken: <span id="total-time" class="font-bold"></span></p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <button id="restart-btn" class="w-full sm:w-auto bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-indigo-700 transition-colors duration-300">Try Again</button>
+                    <button id="review-btn" class="w-full sm:w-auto bg-gray-200 text-gray-800 font-bold py-3 px-6 rounded-lg hover:bg-gray-300 transition-colors duration-300">Review Answers</button>
+                </div>
+            </div>
+
+        </div>
+
+        
+<div id="review-section" class="hidden mt-8 bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+             <h2 class="text-2xl font-bold text-center mb-6">Answer Review</h2>
+             <div id="review-container" class="space-y-6"></div>
+             <button id="back-to-results-btn" class="w-full mt-8 bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-indigo-700 transition-colors duration-300">Back to Results</button>
+        </div>
+    </div>
+
+    <script>
+        // --- DOM Elements ---
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultScreen = document.getElementById('result-screen');
+        const reviewSection = document.getElementById('review-section');
+        
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const reviewBtn = document.getElementById('review-btn');
+        const backToResultsBtn = document.getElementById('back-to-results-btn');
+
+        const questionCounter = document.getElementById('question-counter');
+        const timerEl = document.getElementById('timer');
+        const progressBar = document.getElementById('progress-bar');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const rationaleContainer = document.getElementById('rationale-container');
+        
+        const finalScore = document.getElementById('final-score');
+        const correctCount = document.getElementById('correct-count');
+        const totalCount = document.getElementById('total-count');
+        const totalTime = document.getElementById('total-time');
+
+        const reviewContainer = document.getElementById('review-container');
+
+        // --- Quiz Data with References ---
+        const quizData = [
+            {
+                question: "Which type of court typically handles Class C offenses, traffic tickets, and city ordinance violations?",
+                options: ["Municipal Court", "County Court", "District Court", "Federal Court"],
+                answer: "Municipal Court",
+                explanation: "Municipal Courts are specified as the venue for Class C offenses, traffic violations, and city ordinance issues.",
+                reference: "Handout Page 1"
+            },
+            {
+                question: "Which type of court typically handles Class A & B Misdemeanors, such as DWI or Family Violence?",
+                options: ["Justice of the Peace Court", "County Court", "District Court", "Federal Court"],
+                answer: "County Court",
+                explanation: "The handout specifies that County Courts handle Class A and B Misdemeanors, giving examples like DWI and Family Violence.",
+                reference: "Handout Page 1"
+            },
+            {
+                question: "Which type of court typically handles Felony Cases?",
+                options: ["Municipal Court", "County Court", "District Court", "Federal Court"],
+                answer: "District Court",
+                explanation: "The handout clearly designates District Courts as the venue for felony-level cases.",
+                reference: "Handout Page 1"
+            },
+            {
+                question: "According to the handout, what is the foundation for success in court?",
+                options: ["Knowing the judge personally", "Good work in the field", "Hiring an expensive lawyer", "Speaking loudly"],
+                answer: "Good work in the field",
+                explanation: "The document states 'Good work in the field = success in court', emphasizing the importance of proper crime scene, evidence, and interview handling.",
+                reference: "Handout Page 1"
+            },
+            {
+                question: "What is a key way to mitigate courtroom challenges during the investigation phase?",
+                options: ["Memorize the law books", "Document everything you did at the scene and afterwards", "Avoid collecting too much evidence", "Interview only one witness"],
+                answer: "Document everything you did at the scene and afterwards",
+                explanation: "To prepare for courtroom challenges, the handout advises officers to thoroughly document all actions taken during and after the initial investigation.",
+                reference: "Handout Page 1"
+            },
+            {
+                question: "Which of the following is NOT a key step in preparing for trial?",
+                options: ["Read your reports and review videos", "Meet with the defense attorney", "Review technical information like photos and lab reports", "Anticipate potential questions"],
+                answer: "Meet with the defense attorney",
+                explanation: "Preparation involves meeting with the prosecutor, not the defense attorney. Other key steps include reviewing all reports, videos, and technical data.",
+                reference: "Handout Page 2"
+            },
+            {
+                question: "What can a lack of preparation for trial lead to?",
+                options: ["A guaranteed promotion", "Humiliation and a poor appearance", "A shorter work day", "Praise from the judge"],
+                answer: "Humiliation and a poor appearance",
+                explanation: "The handout warns that a lack of preparation could lead to humiliation and a poor appearance in court.",
+                reference: "Handout Page 2"
+            },
+            {
+                question: "What is a primary purpose of a Pre-Trial Conference with the prosecutor?",
+                options: ["To negotiate a plea deal directly with the defendant", "To receive payment for testifying", "To identify strengths, issues, and defense challenges in the case", "To select the jury"],
+                answer: "To identify strengths, issues, and defense challenges in the case",
+                explanation: "The pre-trial conference is used to discuss evidence, identify strengths and weaknesses of the case, and anticipate challenges from the defense.",
+                reference: "Handout Page 2"
+            },
+            {
+                question: "Which of these is NOT listed as a quality of a credible officer's demeanor?",
+                options: ["Cool, calm, and collected", "Knowledgeable", "Argumentative", "Likeable"],
+                answer: "Argumentative",
+                explanation: "A credible officer should be articulate, impartial, and non-argumentative. Being argumentative diminishes credibility.",
+                reference: "Handout Page 2"
+            },
+            {
+                question: "What faculty of an officer is described as 'paramount' for courtroom testimony?",
+                options: ["Physical strength", "Driving record", "Ability to verbally communicate", "Firearms proficiency"],
+                answer: "Ability to verbally communicate",
+                explanation: "The document explicitly states, 'Your ability to verbally communicate will be paramount.'",
+                reference: "Handout Page 2"
+            },
+            {
+                question: "When your name is called to testify, what should you do?",
+                options: ["Look at the accused to show you are not intimidated", "Enter the courtroom confidently and walk directly to the witness stand", "Wait outside until the bailiff fetches you", "Ask the prosecutor for last-minute instructions"],
+                answer: "Enter the courtroom confidently and walk directly to the witness stand",
+                explanation: "The handout instructs to enter confidently and walk directly to the witness stand, and to not look at the accused or the jury at that moment.",
+                reference: "Handout Page 3"
+            },
+            {
+                question: "What should you do immediately after taking the oath on the witness stand?",
+                options: ["Sit down immediately", "Look at the jury and smile", "Remain standing and wait for instructions from the judge", "Introduce yourself to the court"],
+                answer: "Remain standing and wait for instructions from the judge",
+                explanation: "The correct procedure is to remain standing after the oath until the judge instructs you to be seated.",
+                reference: "Handout Page 3"
+            },
+            {
+                question: "What is the legal term for the jury selection process mentioned in the court procedure?",
+                options: ["Voir dire", "Jury deliberation", "Opening statements", "Arraignment"],
+                answer: "Voir dire",
+                explanation: "'Voir dire' is listed as the term for the jury selection phase that occurs before the trial begins.",
+                reference: "Handout Page 3"
+            },
+            {
+                question: "During which phase of the trial is an officer usually first called to testify?",
+                options: ["During jury selection", "During the defense's case", "During the initial phase when the prosecution presents its evidence", "During closing arguments"],
+                answer: "During the initial phase when the prosecution presents its evidence",
+                explanation: "The handout specifies that the officer is first called to testify during the initial phase of the trial when the prosecution presents evidence of the defendant's guilt.",
+                reference: "Handout Page 3"
+            },
+            {
+                question: "If a defense attorney objects to a question and the judge rules 'Sustained', what should the officer do?",
+                options: ["Answer the question anyway", "Ask the judge to reconsider", "Do not answer the question", "Rephrase the answer"],
+                answer: "Do not answer the question",
+                explanation: "A 'Sustained' ruling means the objection is upheld, and the officer may not answer the question.",
+                reference: "Handout Page 3"
+            },
+            {
+                question: "If a defense attorney objects to a question and the judge rules 'Overruled', what should the officer do?",
+                options: ["Do not answer the question", "Ask the prosecutor for clarification", "Answer the question", "Object to the judge's ruling"],
+                answer: "Answer the question",
+                explanation: "An 'Overruled' decision means the objection is denied, and the witness may proceed with answering the question.",
+                reference: "Handout Page 3"
+            },
+            {
+                question: "What is the purpose of Redirect Examination?",
+                options: ["To introduce a new witness", "To allow the defense to ask more questions", "To allow the prosecutor to clarify statements made during cross-examination", "To allow the judge to ask questions"],
+                answer: "To allow the prosecutor to clarify statements made during cross-examination",
+                explanation: "Redirect Examination is used by the prosecutor to repair any damage or clarify points that arose during the defense's cross-examination.",
+                reference: "Handout Page 3"
+            },
+            {
+                question: "What is the primary goal of the defense counsel during cross-examination?",
+                options: ["To help the prosecutor make their case", "To diminish the officer's credibility and establish reasonable doubt", "To ask for the officer's personal opinion", "To speed up the trial"],
+                answer: "To diminish the officer's credibility and establish reasonable doubt",
+                explanation: "The defense counsel's goals during cross-examination include diminishing credibility, critiquing tactics, offering alternatives, and establishing reasonable doubt.",
+                reference: "Handout Page 4"
+            },
+            {
+                question: "When a defense attorney asks a question, what should an officer do to allow the prosecutor time to object?",
+                options: ["Answer as quickly as possible", "Look at the prosecutor expectantly", "Pause long enough before answering", "Ask the attorney to repeat the question every time"],
+                answer: "Pause long enough before answering",
+                explanation: "The handout advises witnesses to pause long enough after a question from the defense to give their own attorney (the prosecutor) time to raise an objection.",
+                reference: "Handout Page 4"
+            },
+            {
+                question: "Which 'Principle of Witnessmanship' states that a witness should be brief, to the point, and not volunteer information?",
+                options: ["Honesty", "Brevity", "Clarity", "Objectivity"],
+                answer: "Brevity",
+                explanation: "The principle of Brevity advises witnesses to be brief, not to volunteer information, and not to argue with the attorney.",
+                reference: "Handout Page 4 & 10"
+            },
+            {
+                question: "Which 'Principle of Witnessmanship' involves presenting an impartial and conscientious picture of a public servant?",
+                options: ["Honesty", "Brevity", "Clarity", "Objectivity"],
+                answer: "Objectivity",
+                explanation: "Objectivity requires the officer to be courteous, answer directly, and remain poised to avoid being portrayed as prejudicial.",
+                reference: "Handout Page 4 & 10"
+            },
+            {
+                question: "According to the principles of witnessmanship, how should an officer handle insults, badgering, and innuendos from a defense attorney?",
+                options: ["By ignoring them and maintaining emotional control", "By responding with a witty comeback", "By reporting the attorney to the judge", "By refusing to answer any more questions"],
+                answer: "By ignoring them and maintaining emotional control",
+                explanation: "The principle of Emotional Control states that an officer should ignore such tactics, as a display of anger can diminish credibility.",
+                reference: "Handout Page 4 & 10"
+            },
+            {
+                question: "What is the difference between the statements 'I don't know' and 'I don't remember'?",
+                options: ["They mean the same thing", "'I don't know' means facts weren't observed, while 'I don't remember' means the witness is unsure", "'I don't remember' is not an acceptable answer", "'I don't know' implies incompetence"],
+                answer: "'I don't know' means facts weren't observed, while 'I don't remember' means the witness is unsure",
+                explanation: "The handout distinguishes between the two: 'I don't know' is for facts not directly observed, while 'I don't remember' indicates uncertainty about something that may have been observed.",
+                reference: "Handout Page 5"
+            },
+            {
+                question: "What happens if an officer uses their notes while testifying?",
+                options: ["They are given a bonus for good preparation", "The notes are subject to cross-examination and admission into evidence", "The judge will declare a mistrial", "They can only be used during direct examination"],
+                answer: "The notes are subject to cross-examination and admission into evidence",
+                explanation: "The handout clearly states that once notes are used by a witness, they become subject to cross-examination and can be admitted into evidence.",
+                reference: "Handout Page 5 & 9"
+            },
+            {
+                question: "A chart or diagram used to help the jury understand evidence or arguments is an example of what?",
+                options: ["Illustrative evidence", "Physical evidence", "Testimonial evidence", "Demonstrative evidence"],
+                answer: "Illustrative evidence",
+                explanation: "Illustrative evidence is defined as an aid (like a chart or map) that is not evidence itself but helps the trier of fact understand other evidence or arguments.",
+                reference: "Handout Page 5"
+            },
+            {
+                question: "A video of the crime being committed, offered to prove a disputed fact, is an example of what kind of evidence?",
+                options: ["Illustrative evidence", "Physical evidence", "Hearsay evidence", "Demonstrative evidence"],
+                answer: "Demonstrative evidence",
+                explanation: "Demonstrative evidence is defined as substantive evidence, such as a video or audio recording, offered to prove a fact by demonstration.",
+                reference: "Handout Page 5"
+            },
+            {
+                question: "Which of the following is NOT listed as one of the five basic tasks of a judge?",
+                options: ["Preside over proceedings", "Instruct the jury on the law", "Determine the defendant's guilt in a jury trial", "Sentence convicted defendants"],
+                answer: "Determine the defendant's guilt in a jury trial",
+                explanation: "In a jury trial, the jury determines the facts and decides the case (guilt or innocence). The judge only does this in bench trials.",
+                reference: "Handout Page 5"
+            },
+            {
+                question: "What must the prosecutor be able to establish and prove for every offense?",
+                options: ["The defendant's motive", "Every element of the offense", "The defendant's prior criminal history", "That the defendant is a bad person"],
+                answer: "Every element of the offense",
+                explanation: "The handout states the prosecutor 'Must be able to establish and prove every element of the offense.'",
+                reference: "Handout Page 6"
+            },
+            {
+                question: "A defense attorney using rapid-fire questioning to confuse a witness is employing which tactic?",
+                options: ["Offensive", "Friendly", "Condescending", "Badgering / Belligerent"],
+                answer: "Offensive",
+                explanation: "The 'Offensive' tactic is described as using rapid-fire questions to confuse the witness and get inconsistent answers.",
+                reference: "Handout Page 6"
+            },
+            {
+                question: "A defense attorney being ultra-benevolent to the point of ridicule to make a witness seem inept is using which tactic?",
+                options: ["Offensive", "Friendly", "Condescending", "Badgering / Belligerent"],
+                answer: "Condescending",
+                explanation: "The 'Condescending' tactic is described as an overly benevolent or patronizing approach intended to make the witness appear foolish or inept.",
+                reference: "Handout Page 6"
+            },
+            {
+                question: "A defense attorney being overly courteous to lull a witness into a false sense of security is using which tactic?",
+                options: ["Offensive", "Friendly", "Condescending", "Badgering / Belligerent"],
+                answer: "Friendly",
+                explanation: "The 'Friendly' tactic involves being overly nice to make the witness let their guard down and potentially give answers favorable to the defense.",
+                reference: "Handout Page 6 & 7"
+            },
+            {
+                question: "What is the recommended way to respond to the 'Badgering / Belligerent' defense tactic?",
+                options: ["Shout back at the attorney", "Request a different attorney", "Ignore the actions, stay calm, and give the prosecutor time to object", "Leave the witness stand"],
+                answer: "Ignore the actions, stay calm, and give the prosecutor time to object",
+                explanation: "The handout advises the officer to ignore the badgering, remain calm, speak deliberately, and allow the prosecutor time to make objections.",
+                reference: "Handout Page 7"
+            },
+            {
+                question: "Which person can NOT be excluded from the courtroom under TRE 614 ('The Rule')?",
+                options: ["An expert witness", "A character witness", "A party to the case who is a natural person (e.g., the defendant)", "An investigating officer who is not a party representative"],
+                answer: "A party to the case who is a natural person (e.g., the defendant)",
+                explanation: "The rule explicitly does not authorize excluding a party (like the plaintiff, victim, or defendant) who is a natural person.",
+                reference: "Handout Page 7"
+            },
+            {
+                question: "What is the potential consequence of an officer staying in the courtroom after witnesses have been excluded?",
+                options: ["A fine", "Being held in contempt of court", "Being rendered ineligible to testify", "A stern warning from the judge"],
+                answer: "Being rendered ineligible to testify",
+                explanation: "Staying in the courtroom when witnesses are excluded may make the officer ineligible to testify, which can threaten the outcome of the case.",
+                reference: "Handout Page 7 & 8"
+            },
+            {
+                question: "Under CCP 36.03, a victim can be excluded from the courtroom if they are to testify and what other condition is met?",
+                options: ["The defendant requests it", "The prosecutor requests it", "The court determines their testimony would be materially affected by hearing other testimony", "They are related to the defendant"],
+                answer: "The court determines their testimony would be materially affected by hearing other testimony",
+                explanation: "A victim who is also a witness can only be excluded if a court finds that hearing other testimonies would materially affect their own.",
+                reference: "Handout Page 8"
+            },
+            {
+                question: "According to CCP 36.06, what are witnesses placed under 'the rule' instructed NOT to do?",
+                options: ["Eat lunch in the courthouse", "Speak to their own attorney", "Converse with each other or any other person about the case", "Use the restroom without permission"],
+                answer: "Converse with each other or any other person about the case",
+                explanation: "Witnesses under the rule are instructed not to converse with each other or anyone else about the case, except by permission of the court.",
+                reference: "Handout Page 8"
+            },
+            {
+                question: "What is an officer who is 'under the rule' required to do after they have finished testifying?",
+                options: ["Remain on the witness stand", "Sit in the gallery", "Leave the courtroom again", "Discuss their testimony with the jury"],
+                answer: "Leave the courtroom again",
+                explanation: "The procedure for being 'under the rule' includes leaving the courtroom, staying close by, not discussing the case, and leaving again after testifying.",
+                reference: "Handout Page 8"
+            },
+            {
+                question: "What is one of the main benefits of maintaining a professional demeanor and appearance in court?",
+                options: ["It guarantees a conviction", "It may enhance the reputation of the officer and the department", "It allows the officer to leave early", "It intimidates the defense attorney"],
+                answer: "It may enhance the reputation of the officer and the department",
+                explanation: "The handout states that the demeanor and appearance of officers in court can either enhance or diminish the reputation of both the individual officer and their department.",
+                reference: "Handout Page 9"
+            },
+            {
+                question: "Failure to carefully study reports, interviews, and notes before testifying can often result in what?",
+                options: ["A shorter cross-examination", "Praise from the prosecutor", "Misstatements, omissions, and contradictions", "A promotion"],
+                answer: "Misstatements, omissions, and contradictions",
+                explanation: "The handout warns that failure to prepare will often result in misstatements, omissions, and contradictions during testimony.",
+                reference: "Handout Page 9"
+            },
+            {
+                question: "When can an officer use notes to refresh their memory during testimony?",
+                options: ["Any time they want", "Only if the prosecutor approves beforehand", "If they had firsthand knowledge of their preparation and they were made contemporaneously to the investigation", "Only if the notes were typed"],
+                answer: "If they had firsthand knowledge of their preparation and they were made contemporaneously to the investigation",
+                explanation: "The use of notes is permitted if the witness was personally involved in their creation and they were made at or near the time of the event.",
+                reference: "Handout Page 9"
+            },
+            {
+                question: "What is the proper courtroom attire for a plain clothes officer?",
+                options: ["Casual street clothes", "Their old patrol uniform", "Professional business attire", "Anything clean"],
+                answer: "Professional business attire",
+                explanation: "The handout specifies 'professional business attire' for plain clothes officers testifying in court.",
+                reference: "Handout Page 10"
+            },
+            {
+                question: "While taking the oath, where should a witness keep their right hand?",
+                options: ["On the Bible", "At their side", "At shoulder level, with fingers extended", "Behind their back"],
+                answer: "At shoulder level, with fingers extended",
+                explanation: "The proper procedure is to keep the right hand at shoulder level with fingers extended until the oath is complete.",
+                reference: "Handout Page 10"
+            },
+            {
+                question: "After taking the oath and being seated, what are the first things a prosecutor will typically ask an officer?",
+                options: ["Their opinion of the defendant", "Their name, occupation, and department", "How fast they drove to the scene", "If they are nervous"],
+                answer: "Their name, occupation, and department",
+                explanation: "The prosecutor begins by asking for the officer's name, occupation, and department to introduce them to the court.",
+                reference: "Handout Page 10"
+            },
+            {
+                question: "If given the opportunity to explain police procedure, how should an officer present the information?",
+                options: ["As quickly as possible", "Using complex legal jargon", "As if they are training the jury on that procedure", "By deferring to the prosecutor"],
+                answer: "As if they are training the jury on that procedure",
+                explanation: "The handout suggests that performing as if you are training the jury on a procedure will gain credibility.",
+                reference: "Handout Page 10"
+            },
+            {
+                question: "What are the key elements of the offense of Perjury under Sec. 37.02?",
+                options: ["Making a false statement accidentally", "Making a false statement under oath with intent to deceive", "Telling a white lie that is not under oath", "Forgetting a minor detail during testimony"],
+                answer: "Making a false statement under oath with intent to deceive",
+                explanation: "Perjury requires a false statement made under oath, with intent to deceive, and with knowledge of the statement's meaning.",
+                reference: "Handout Page 10"
+            },
+            {
+                question: "What is the penalty for Perjury as defined in Section 37.02?",
+                options: ["Class C Misdemeanor", "Class A Misdemeanor", "Third-Degree Felony", "State Jail Felony"],
+                answer: "Class A Misdemeanor",
+                explanation: "Section 37.02(b) explicitly states that an offense under this section is a Class A misdemeanor.",
+                reference: "Handout Page 10"
+            },
+            {
+                question: "What is the penalty for Aggravated Perjury under Section 37.03?",
+                options: ["Class A Misdemeanor", "State Jail Felony", "Third-Degree Felony", "First-Degree Felony"],
+                answer: "Third-Degree Felony",
+                explanation: "Section 37.03(b) states that Aggravated Perjury is a felony of the third degree.",
+                reference: "Handout Page 11"
+            },
+            {
+                question: "In the scenario where a police applicant makes a false statement on a notarized background form, what offense has been committed?",
+                options: ["Aggravated Perjury", "No offense", "Tampering with a Government Record", "Perjury"],
+                answer: "Perjury",
+                explanation: "This is Perjury because it is a false statement made under oath (on an official, notarized document) with intent to deceive. It is not Aggravated Perjury because it was not made during an 'official proceeding' like a trial.",
+                reference: "Handout Page 10 & 11"
+            },
+            {
+                question: "A person commits Aggravated Perjury if they commit Perjury and the false statement is made during an official proceeding and is also what?",
+                options: ["Embarrassing", "Recorded on video", "Material", "About someone else"],
+                answer: "Material",
+                explanation: "Aggravated Perjury requires the false statement to be made during an official proceeding AND be material, meaning it could have affected the outcome.",
+                reference: "Handout Page 11"
+            },
+            {
+                question: "In the scenario where a jailhouse snitch gives false testimony during a criminal trial, what offense has been committed?",
+                options: ["Perjury", "Contempt of Court", "Aggravated Perjury", "Obstruction of Justice"],
+                answer: "Aggravated Perjury",
+                explanation: "This is Aggravated Perjury because the false statement was made under oath, during an official proceeding (a criminal trial), and was material (it could have affected the outcome).",
+                reference: "Handout Page 11"
+            },
+            {
+                question: "Under Section 37.04, when is a statement considered 'material'?",
+                options: ["Only if it's admissible under the rules of evidence", "If it is longer than 10 words", "If it could have affected the course or outcome of the official proceeding", "If the declarant believed it was important"],
+                answer: "If it could have affected the course or outcome of the official proceeding",
+                explanation: "A statement is material if it could have influenced the course or outcome of the proceeding, regardless of its admissibility.",
+                reference: "Handout Page 11"
+            }
+        ];
+        
+        // --- State Variables ---
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let userAnswers = [];
+        let timerInterval;
+        let secondsElapsed = 0;
+
+        // --- Functions ---
+        function startQuiz() {
+            startScreen.classList.add('hidden');
+            resultScreen.classList.add('hidden');
+            reviewSection.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            
+            // Shuffle the questions for a new quiz experience each time
+            quizData.sort(() => Math.random() - 0.5);
+
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            secondsElapsed = 0;
+            
+            showQuestion();
+            startTimer();
+        }
+        
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                secondsElapsed++;
+                const minutes = Math.floor(secondsElapsed / 60).toString().padStart(2, '0');
+                const seconds = (secondsElapsed % 60).toString().padStart(2, '0');
+                timerEl.textContent = `Time: ${minutes}:${seconds}`;
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+        
+        function showQuestion() {
+            resetState();
+            const currentQuestion = quizData[currentQuestionIndex];
+            questionText.innerText = currentQuestion.question;
+            questionCounter.innerText = `Question ${currentQuestionIndex + 1} of ${quizData.length}`;
+            progressBar.style.width = `${((currentQuestionIndex + 1) / quizData.length) * 100}%`;
+            
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement('button');
+                button.innerText = option;
+                button.classList.add('w-full', 'text-left', 'p-4', 'border-2', 'border-gray-300', 'rounded-lg', 'transition-colors', 'duration-200', 'hover:bg-indigo-100', 'hover:border-indigo-400');
+                button.addEventListener('click', () => selectAnswer(button, option));
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        function resetState() {
+            nextBtn.disabled = true;
+            nextBtn.innerText = 'Next Question';
+            rationaleContainer.classList.add('hidden');
+            rationaleContainer.innerHTML = '';
+            while (optionsContainer.firstChild) {
+                optionsContainer.removeChild(optionsContainer.firstChild);
+            }
+        }
+
+        function selectAnswer(button, selectedOption) {
+            const currentQuestion = quizData[currentQuestionIndex];
+            const correct = selectedOption === currentQuestion.answer;
+
+            userAnswers.push({
+                question: currentQuestion.question,
+                selected: selectedOption,
+                correctAnswer: currentQuestion.answer,
+                isCorrect: correct,
+                explanation: currentQuestion.explanation,
+                reference: currentQuestion.reference
+            });
+
+            if (correct) {
+                score++;
+                button.classList.add('correct');
+            } else {
+                button.classList.add('incorrect');
+            }
+            
+            Array.from(optionsContainer.children).forEach(child => {
+                child.disabled = true;
+                if (child.innerText === currentQuestion.answer) {
+                    child.classList.add('correct', 'font-bold');
+                }
+            });
+
+            showRationale(currentQuestion);
+
+            nextBtn.disabled = false;
+            if (currentQuestionIndex === quizData.length - 1) {
+                nextBtn.innerText = 'Show Results';
+            }
+        }
+        
+        function showRationale(question) {
+            rationaleContainer.innerHTML = `
+                <div class="rationale p-4 rounded-lg">
+                    <h3 class="font-bold text-lg mb-2">Rationale</h3>
+                    <p class="mb-2">${question.explanation}</p>
+                    <p class="text-sm font-semibold text-gray-600">Source: ${question.reference}</p>
+                </div>
+            `;
+            rationaleContainer.classList.remove('hidden');
+        }
+
+        function handleNextButton() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            stopTimer();
+            quizScreen.classList.add('hidden');
+            resultScreen.classList.remove('hidden');
+            
+            const percentage = quizData.length > 0 ? Math.round((score / quizData.length) * 100) : 0;
+            finalScore.innerText = `${percentage}%`;
+            correctCount.innerText = score;
+            totalCount.innerText = quizData.length;
+            
+            const minutes = Math.floor(secondsElapsed / 60).toString().padStart(2, '0');
+            const seconds = (secondsElapsed % 60).toString().padStart(2, '0');
+            totalTime.innerText = `${minutes}:${seconds}`;
+        }
+        
+        function showReview() {
+            resultScreen.classList.add('hidden');
+            reviewSection.classList.remove('hidden');
+            reviewContainer.innerHTML = ''; 
+            
+            // Sort answers back to original question order for logical review if needed
+            // For now, it shows in the order they were answered
+            userAnswers.forEach((answer, index) => {
+                const card = document.createElement('div');
+                card.classList.add('border-b', 'pb-4', 'mb-4', 'border-gray-200');
+                
+                const isCorrect = answer.isCorrect;
+                const resultClass = isCorrect ? 'text-green-600' : 'text-red-600';
+                const resultText = isCorrect ? 'Correct' : 'Incorrect';
+
+                let optionsHtml = '';
+                const originalQuestion = quizData.find(q => q.question === answer.question);
+                
+                originalQuestion.options.forEach(option => {
+                    let styleClass = 'border-transparent';
+                    if (option === answer.correctAnswer) {
+                        styleClass = 'correct font-bold';
+                    } else if (option === answer.selected) {
+                        styleClass = 'incorrect';
+                    }
+                    optionsHtml += `<li class="p-2 rounded-md ${styleClass}">${option}</li>`;
+                });
+
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="text-lg font-semibold text-gray-800">Question ${index + 1}</h3>
+                        <span class="font-bold ${resultClass}">${resultText}</span>
+                    </div>
+                    <p class="font-medium text-gray-700 mb-4">${answer.question}</p>
+                    <ul class="space-y-2 text-sm list-none p-0 mb-4">${optionsHtml}</ul>
+                    <div class="rationale p-3 rounded-md">
+                        <p class="font-semibold">Rationale:</p>
+                        <p>${answer.explanation}</p>
+                        <p class="text-sm font-semibold text-gray-500 mt-2">Source: ${answer.reference}</p>
+                    </div>
+                `;
+                reviewContainer.appendChild(card);
+            });
+        }
+        
+        function showResultsScreenFromReview() {
+             reviewSection.classList.add('hidden');
+             resultScreen.classList.remove('hidden');
+        }
+
+        // --- Event Listeners ---
+        startBtn.addEventListener('click', startQuiz);
+        nextBtn.addEventListener('click', handleNextButton);
+        restartBtn.addEventListener('click', startQuiz);
+        reviewBtn.addEventListener('click', showReview);
+        backToResultsBtn.addEventListener('click', showResultsScreenFromReview);
+
+    </script>
+</body>
+</html>
+

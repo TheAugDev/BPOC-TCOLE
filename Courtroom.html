@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Guide: Courtroom Testimony</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --header-bg: #1f2937;
+            --bg-color: #f3f4f6;
+            --tab-active-bg: #3b82f6;
+            --tab-active-text: #ffffff;
+            --card-bg: #ffffff;
+            --text-color: #111827;
+            --link-color: #2563eb;
+            --punishment-misdemeanor-a: #fef08a; /* Yellow */
+            --punishment-felony-3: #fca5a5;  /* Red */
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://rsms.me/inter/inter.css');
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab.active {
+            background-color: var(--tab-active-bg);
+            color: var(--tab-active-text);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tab {
+            transition: all 0.3s ease-in-out;
+        }
+        .punishment-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .punishment-misdemeanor-a { background-color: var(--punishment-misdemeanor-a); color: #92400e; }
+        .punishment-felony-3 { background-color: var(--punishment-felony-3); color: #991b1b; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="bg-gray-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">
+                <i class="fas fa-balance-scale mr-2"></i>Courtroom Testimony
+            </h1>
+            <p class="text-sm text-gray-300">TCOLE Preparation</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-4 md:p-6">
+        <!-- Tab Navigation -->
+        <div class="mb-6 bg-white rounded-lg shadow-md overflow-x-auto">
+            <nav id="tabs" class="flex flex-row space-x-1 p-2">
+                <button data-tab="preparation" class="tab active flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-user-tie mr-2"></i> <span class="hidden md:inline">Preparation & Demeanor</span>
+                </button>
+                <button data-tab="procedure" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-gavel mr-2"></i> <span class="hidden md:inline">Court Procedure</span>
+                </button>
+                <button data-tab="testimony" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-microphone-alt mr-2"></i> <span class="hidden md:inline">Effective Testimony</span>
+                </button>
+                <button data-tab="offenses" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-exclamation-triangle mr-2"></i> <span class="hidden md:inline">Related Offenses</span>
+                </button>
+                <button data-tab="knowledge-check" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-question-circle mr-2"></i> <span class="hidden md:inline">Knowledge Check</span>
+                </button>
+                <button data-tab="resources" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-link mr-2"></i> <span class="hidden md:inline">Resources</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Tab Content -->
+        <div id="tab-contents">
+            <!-- Preparation & Demeanor Tab -->
+            <div id="preparation" class="tab-content active space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Preparing for Testimony</h2>
+                    <p class="text-sm text-gray-700 mb-2">Good work in the field leads to success in court. Your reputation and the department's can be enhanced or diminished by your appearance and testimony.</p>
+                    <h4 class="font-semibold mt-3">Elements Checklist (Preparation Steps):</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Review Case Materials:</strong> Read all your reports and watch all associated videos.</li>
+                        <li><strong>Meet with the Prosecutor:</strong> Discuss evidence, conclusions, strengths, and weaknesses of the case.</li>
+                        <li><strong>Review Technical Information:</strong> Go over photos, lab reports, and your original notes.</li>
+                        <li><strong>Anticipate Questions:</strong> Plan your responses to likely questions from both the prosecution and defense.</li>
+                        <li><strong>Use of Notes:</strong> You may use notes to refresh your memory if they were prepared at or near the time of the investigation. However, if used, they are subject to cross-examination and may be admitted into evidence.</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Courtroom Demeanor & Appearance</h2>
+                    <p class="text-sm text-gray-700 mb-2">First impressions are critical. Your appearance and conduct will be examined and will impact your credibility.</p>
+                    <div class="grid md:grid-cols-2 gap-6 text-sm">
+                        <div>
+                            <h4 class="font-semibold">Appearance:</h4>
+                             <ul class="list-disc list-inside">
+                                <li><strong>Attire:</strong> Wear a dress uniform or professional business attire.</li>
+                                <li><strong>Arrival:</strong> Enter the courtroom confidently. Walk directly to the witness stand. Do not look at the accused or the jury.</li>
+                             </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Demeanor:</h4>
+                             <ul class="list-disc list-inside">
+                                <li>Be cool, calm, collected, and knowledgeable.</li>
+                                <li>Remain articulate, impartial, and non-argumentative.</li>
+                                <li>Be prepared and know the facts of the case.</li>
+                             </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Court Procedure Tab -->
+            <div id="procedure" class="tab-content space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Courtroom Roles</h2>
+                     <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+                        <p><strong>Judge/Magistrate:</strong> Presides over the trial, rules on evidence, instructs the jury.</p>
+                        <p><strong>Prosecutor:</strong> Represents "The State" and must prove every element of the offense.</p>
+                        <p><strong>Defense Counsel:</strong> Represents the defendant.</p>
+                        <p><strong>Court Reporter:</strong> Transcribes the official record of the proceedings.</p>
+                        <p><strong>Bailiff:</strong> Maintains order in the courtroom.</p>
+                        <p><strong>Jury:</strong> The trier of fact.</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Phases of a Trial</h2>
+                    <ol class="list-decimal list-inside text-sm space-y-2">
+                        <li><strong>Jury Selection (Voir Dire):</strong> Attorneys question potential jurors.</li>
+                        <li><strong>Opening Statements:</strong> Attorneys for each side outline their case.</li>
+                        <li><strong>Direct Examination:</strong> The prosecutor elicits facts from their witness (you).</li>
+                        <li><strong>Cross Examination:</strong> The defense counsel questions the witness.</li>
+                        <li><strong>Redirect / Re-cross Examination:</strong> The attorneys may ask follow-up questions to clarify points. This cycle can continue several times.</li>
+                        <li><strong>Closing Arguments:</strong> Attorneys summarize their cases.</li>
+                        <li><strong>Jury Deliberation & Finding:</strong> The jury decides the verdict.</li>
+                    </ol>
+                     <p class="text-sm mt-4"><strong>Handling Objections:</strong> If an attorney objects to a question, you must stop talking immediately and wait for the judge to rule. The judge will say either "Sustained" (you may not answer) or "Overruled" (you may answer).</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">The "Rule" - Exclusion of Witnesses (<a href="https://www.txcourts.gov/media/1457351/tx-rules-of-evidence-updated-with-amendments-effective-612023.pdf" target="_blank" class="text-blue-600 hover:underline">TRE 614</a>, <a href="https://statutes.capitol.texas.gov/Docs/CR/htm/CR.36.htm#36.03" target="_blank" class="text-blue-600 hover:underline">CCP 36.03</a>)</h2>
+                    <p class="text-sm font-semibold">Legal Definition:</p>
+                    <p class="text-sm text-gray-700">At a party's request, the court must order witnesses excluded so that they cannot hear other witnesses' testimony. This is often called "invoking the rule."</p>
+                    <h4 class="font-semibold text-sm mt-2">Elements Checklist (What to do when "under the rule"):</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>Leave the courtroom immediately when instructed.</li>
+                        <li>Stay close to the courtroom so you can be called when it is your turn.</li>
+                        <li>Do not discuss the case or anyone's testimony with other witnesses or jurors.</li>
+                        <li>Do not read any report of or comment upon the testimony in the case.</li>
+                        <li>After testifying, leave the courtroom again unless instructed otherwise.</li>
+                    </ul>
+                    <p class="text-sm mt-2"><strong>Practical Example:</strong> At the start of a trial, the defense attorney says, "Your honor, we invoke the rule." The judge then orders all witnesses in the case, including all police officers who will testify, to leave the courtroom and wait in the hallway. The officers must not talk to each other about what they are going to say on the stand.</p>
+                </div>
+
+            </div>
+
+            <!-- Effective Testimony Tab -->
+            <div id="testimony" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Principles of Witnessmanship</h2>
+                    <p class="text-sm text-gray-700 mb-2">These principles help maintain your credibility on the stand.</p>
+                    <div class="space-y-3 text-sm">
+                        <p><strong>Honesty:</strong> Display a sincere interest in accuracy. Present a modest demeanor.</p>
+                        <p><strong>Brevity:</strong> Be brief and to the point. Do not volunteer information or argue with attorneys.</p>
+                        <p><strong>Clarity:</strong> Avoid errors, inconsistencies, and confusion, as they undermine your credibility.</p>
+                        <p><strong>Objectivity:</strong> Present an impartial, conscientious picture. Be courteous to both attorneys.</p>
+                        <p><strong>Emotional Control:</strong> Ignore insults, badgering, and innuendos. A display of anger diminishes credibility.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Responding to Questions</h2>
+                    <p class="text-sm text-gray-700 mb-2">Answer only the questions you are qualified to answer and stay within the limits of your known information.</p>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>"I don't know":</strong> Use this when the facts were not observed directly. It is a complete answer.</li>
+                        <li><strong>"I don't remember" / "That is all I can recall":</strong> Use these statements when you are unsure or have exhausted your memory on a point.</li>
+                        <li><strong>Avoid Speculation:</strong> Stick to the facts. If asked for an opinion, ensure it is based on facts and make the distinction clear.</li>
+                        <li><strong>Pause Before Answering:</strong> When the defense attorney asks a question, pause long enough to give the prosecutor time to object.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Defense Attorney Tactics</h2>
+                    <p class="text-sm text-gray-700 mb-2">The defense's goal is often to challenge your credibility and create reasonable doubt. Be prepared for these common tactics.</p>
+                     <div class="space-y-3 text-sm">
+                        <p><strong>Offensive:</strong> Rapid-fire questions intended to confuse you. Your Response: Stay calm, take time to consider each question, and ask for it to be repeated if necessary.</p>
+                        <p><strong>Condescending:</strong> An overly benevolent or patronizing tone to make you seem inept. Your Response: Ask for improperly phrased questions to be repeated, then answer in a confident, decisive manner.</p>
+                        <p><strong>Friendly:</strong> An overly courteous approach to lull you into a false sense of security. Your Response: Stay alert and remember their goal is to diminish your testimony.</p>
+                        <p><strong>Badgering / Belligerent:</strong> An aggressive approach intended to provoke you into losing emotional control. Your Response: Ignore the behavior, stay calm, speak deliberately, and give the prosecutor time to object.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Offenses Tab -->
+            <div id="offenses" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Perjury (<a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.37.htm#37.02" target="_blank" class="text-blue-600 hover:underline">PC 37.02</a>)</h2>
+                    <div class="mt-2 pl-4 border-l-4 border-gray-200">
+                        <p class="text-sm font-semibold">Legal Definition:</p>
+                        <p class="text-sm text-gray-700">A person commits an offense if, with intent to deceive and with knowledge of the statement's meaning, he makes a false statement under oath or swears to the truth of a false statement previously made and the statement is required or authorized by law to be made under oath.</p>
+                        <p class="text-sm mt-2 font-semibold">Punishment Level:</p>
+                        <p class="text-sm text-gray-700"><span class="punishment-badge punishment-misdemeanor-a">Class A Misdemeanor</span>.</p>
+                        <h4 class="font-semibold text-sm mt-2">Elements Checklist:</h4>
+                        <ul class="list-disc list-inside text-sm text-gray-700">
+                            <li>A person</li>
+                            <li>With intent to deceive and knowledge of the meaning</li>
+                            <li>Makes a false statement under oath (or swears to a previous false statement)</li>
+                            <li>The statement is required or authorized by law to be made under oath.</li>
+                        </ul>
+                        <p class="text-sm mt-2"><strong>Practical Example:</strong> During the police hiring process, an applicant signs an official background statement, sworn before a notary, falsely claiming they have no criminal record above a Class C misdemeanor. An investigator discovers a prior conviction for DWI, a Class B Misdemeanor.</p>
+                    </div>
+                </div>
+
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Aggravated Perjury (<a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.37.htm#37.03" target="_blank" class="text-blue-600 hover:underline">PC 37.03</a>)</h2>
+                    <div class="mt-2 pl-4 border-l-4 border-gray-200">
+                        <p class="text-sm font-semibold">Legal Definition:</p>
+                        <p class="text-sm text-gray-700">A person commits an offense if he commits perjury as defined in Section 37.02, and the false statement is made during or in connection with an official proceeding AND is material.</p>
+                        <p class="text-sm mt-2 font-semibold">Punishment Level:</p>
+                        <p class="text-sm text-gray-700"><span class="punishment-badge punishment-felony-3">Felony of the 3rd Degree</span>.</p>
+                        <h4 class="font-semibold text-sm mt-2">Elements Checklist:</h4>
+                        <ul class="list-disc list-inside text-sm text-gray-700">
+                            <li>Commits the offense of Perjury, AND</li>
+                            <li>The false statement is made during or in connection with an official proceeding (e.g., a trial, grand jury hearing), AND</li>
+                            <li>The statement is "material" (it could have affected the course or outcome of the proceeding, per <a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.37.htm#37.04" target="_blank" class="text-blue-600 hover:underline">PC 37.04</a>).</li>
+                        </ul>
+                        <p class="text-sm mt-2"><strong>Practical Example:</strong> During a murder trial, a jailhouse informant testifies under oath that the defendant confessed to him. It is later discovered through jail records that the informant and the defendant were never housed together and could not have had contact. The false testimony was material because it could have directly influenced the jury's verdict.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Knowledge Check Tab -->
+            <div id="knowledge-check" class="tab-content">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Knowledge Check</h2>
+                    <p class="mb-6 text-gray-600">Test your understanding of the material.</p>
+                    <div id="quiz-container" class="space-y-8">
+                        <!-- Questions will be dynamically inserted here -->
+                    </div>
+                    <div class="mt-8 text-center">
+                        <button id="check-answers-btn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors">Check Answers</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resources Tab -->
+            <div id="resources" class="tab-content">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Statutory Resources</h2>
+                    <p class="mb-6 text-gray-600">Quick links to the Texas Codes and Rules referenced in this guide.</p>
+                    <div id="resources-list" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-sm">
+                        <!-- Links will be dynamically inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('#tabs button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                });
+            });
+
+            // --- QUIZ DATA ---
+            const quizData = [
+                {
+                    question: "1. An officer is testifying and the defense attorney begins asking a series of rapid-fire questions without giving the officer time to think. This tactic is known as:",
+                    options: ["Condescending", "Friendly", "Offensive", "Badgering"],
+                    answer: "Offensive",
+                    explanation: "The 'Offensive' tactic uses rapid-fire questioning to confuse the witness and procure inconsistent answers. The proper response is to remain calm and take your time."
+                },
+                {
+                    question: "2. During direct examination, the defense attorney objects to a question. The judge says, 'Sustained.' What should the officer do?",
+                    options: ["Answer the question anyway", "Ask the judge to explain the ruling", "Remain silent and do not answer", "Ask the prosecutor to rephrase the question"],
+                    answer: "Remain silent and do not answer",
+                    explanation: "A 'sustained' objection means the judge agrees with the objection, and the witness may not answer the question."
+                },
+                {
+                    question: "3. The legal rule that requires witnesses to be excluded from the courtroom so they cannot hear other testimony is known as:",
+                    options: ["The Hearsay Rule", "The Best Evidence Rule", "Invoking 'The Rule'", "A Motion to Suppress"],
+                    answer: "Invoking 'The Rule'",
+                    explanation: "Invoking 'The Rule' (TRE 614, CCP 36.03) is the process of excluding witnesses from the courtroom."
+                },
+                {
+                    question: "4. An officer knowingly makes a false statement under oath during a trial, and that statement could have affected the outcome of the case. What is the most serious offense the officer has committed?",
+                    options: ["Perjury", "Aggravated Perjury", "Tampering with Governmental Record", "Official Oppression"],
+                    answer: "Aggravated Perjury",
+                    explanation: "Because the false statement was made during an official proceeding (a trial) and was material, the offense is elevated from Perjury to Aggravated Perjury, a 3rd Degree Felony."
+                },
+                {
+                    question: "5. Which of the following is NOT one of the 'Principles of Witnessmanship'?",
+                    options: ["Honesty", "Brevity", "Emotional Control", "Speculation"],
+                    answer: "Speculation",
+                    explanation: "Officers should avoid speculation and stick to the facts. The principles are Honesty, Brevity, Clarity, Objectivity, and Emotional Control."
+                },
+                {
+                    question: "6. An officer realizes they cannot remember a specific detail while testifying. What is the most appropriate response?",
+                    options: ["'I don't know.'", "Make up a plausible detail.", "'That is all I can recall.'", "Refuse to answer the question."],
+                    answer: "'That is all I can recall.'",
+                    explanation: "If you have exhausted your memory on a point, stating 'That is all I can recall' is an appropriate and honest response. 'I don't know' implies the facts were never observed."
+                },
+                {
+                    question: "7. The defense attorney is being overly courteous and friendly, trying to lull an officer into a false sense of security. This tactic is known as:",
+                    options: ["Offensive", "Condescending", "Friendly", "Badgering"],
+                    answer: "Friendly",
+                    explanation: "The 'Friendly' tactic is used to get the witness to lower their guard and potentially give answers that favor the defense."
+                },
+                 {
+                    question: "8. An officer preparing for trial should do all of the following EXCEPT:",
+                    options: ["Read their reports and review videos", "Meet with the prosecutor", "Memorize a script provided by the prosecutor", "Anticipate potential questions"],
+                    answer: "Memorize a script provided by the prosecutor",
+                    explanation: "An officer should be familiar with the facts but must testify from their own memory and knowledge, not a script. This ensures authenticity and credibility."
+                },
+                {
+                    question: "9. A witness who violates 'the rule' by discussing the case with another witness can be punished for:",
+                    options: ["Perjury", "Contempt of Court", "Tampering with a Witness", "No offense, just a warning"],
+                    answer: "Contempt of Court",
+                    explanation: "Under CCP 36.06, a witness who violates the court's instructions while 'under the rule' shall be punished for contempt of court."
+                },
+                {
+                    question: "10. Making a false statement on a sworn police academy application, which is authorized by law to be made under oath, constitutes what offense?",
+                    options: ["Aggravated Perjury", "No offense", "A violation of agency policy only", "Perjury"],
+                    answer: "Perjury",
+                    explanation: "This is a false statement made under oath, which is required by law, but not during an official proceeding. This fits the definition of Perjury, a Class A Misdemeanor."
+                }
+            ];
+
+            const quizContainer = document.getElementById('quiz-container');
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'quiz-question';
+                let optionsHtml = q.options.map(option => `
+                    <label class="block"><input type="radio" name="q${index}" value="${option}" class="mr-2">${option}</label>
+                `).join('');
+                questionDiv.innerHTML = `
+                    <p class="font-semibold mb-2">${q.question}</p>
+                    <div class="space-y-2">${optionsHtml}</div>
+                    <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                `;
+                quizContainer.appendChild(questionDiv);
+            });
+
+            document.getElementById('check-answers-btn').addEventListener('click', () => {
+                quizData.forEach((q, index) => {
+                    const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                    const feedback = document.querySelectorAll('.feedback')[index];
+                    feedback.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+                    if (selected && selected.value === q.answer) {
+                        feedback.textContent = `Correct! ${q.explanation}`;
+                        feedback.classList.add('bg-green-100', 'text-green-800');
+                    } else {
+                        feedback.textContent = `Incorrect. The correct answer is "${q.answer}". ${q.explanation}`;
+                        feedback.classList.add('bg-red-100', 'text-red-800');
+                    }
+                });
+            });
+
+            // --- RESOURCES LIST ---
+            const resources = [
+                { name: "PC 37.02 - Perjury", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.37.htm#37.02" },
+                { name: "PC 37.03 - Agg. Perjury", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.37.htm#37.03" },
+                { name: "PC 37.04 - Materiality", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.37.htm#37.04" },
+                { name: "CCP 36.03 - Invocation of Rule", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.36.htm#36.03" },
+                { name: "CCP 36.05 - Not to Hear Testimony", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.36.htm#36.05" },
+                { name: "CCP 36.06 - Instructed by Court", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.36.htm#36.06" },
+                { name: "TRE 614 - Exclusion of Witnesses", url: "https://www.txcourts.gov/media/1457351/tx-rules-of-evidence-updated-with-amendments-effective-612023.pdf" },
+            ];
+            const resourcesList = document.getElementById('resources-list');
+            resources.sort((a, b) => a.name.localeCompare(b.name));
+            resources.forEach(res => {
+                const link = document.createElement('a');
+                link.href = res.url;
+                link.target = '_blank';
+                link.className = 'text-blue-600 hover:underline';
+                link.textContent = res.name;
+                resourcesList.appendChild(link);
+            });
+        });
+    </script>
+</body>
+</html>
+

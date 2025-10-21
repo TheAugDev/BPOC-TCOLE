@@ -3,29 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Study Guide: Intoxicated Driver & SFST</title>
+    <title>SFST Participant Manual Interactive Guide</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
     <style>
         :root {
             --header-bg: #1f2937;
             --bg-color: #f3f4f6;
-            --tab-active-bg: #991b1b; /* Red for this guide */
+            --tab-active-bg: #3b82f6;
             --tab-active-text: #ffffff;
             --card-bg: #ffffff;
             --text-color: #111827;
-            --link-color: #991b1b;
-            --punishment-felony3: #f97316;
-            --punishment-felony2: #ef4444;
-            --punishment-felony1: #dc2626;
-            --punishment-classA: #f59e0b;
-            --punishment-classB: #fbbf24;
-            --punishment-classC: #d1d5db;
+            --link-color: #2563eb;
+            --accuracy-high: #10b981; /* Green */
+            --accuracy-mid: #f59e0b;  /* Amber */
+            --accuracy-low: #ef4444;   /* Red */
         }
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
             font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
         }
         @import url('https://rsms.me/inter/inter.css');
         .tab-content { display: none; }
@@ -38,291 +36,672 @@
         .tab {
             transition: all 0.3s ease-in-out;
         }
-        .punishment-badge {
-            display: inline-block;
+        .accuracy-badge {
             padding: 0.25rem 0.75rem;
             border-radius: 9999px;
             font-weight: 600;
             color: white;
-            font-size: 0.8rem;
+            display: inline-block;
         }
-        .punishment-badge.text-black { color: #111827; }
-        .f1 { background-color: var(--punishment-felony1); }
-        .f2 { background-color: var(--punishment-felony2); }
-        .f3 { background-color: var(--punishment-felony3); }
-        .ma { background-color: var(--punishment-classA); }
-        .mb { background-color: var(--punishment-classB); }
-        .mc { background-color: var(--punishment-classC); }
+        .accuracy-high { background-color: var(--accuracy-high); }
+        .accuracy-mid { background-color: var(--accuracy-mid); }
+        .accuracy-low { background-color: var(--accuracy-low); }
+        .statute-link {
+            color: var(--link-color);
+            font-weight: 500;
+            text-decoration: underline;
+        }
+        .statute-link:hover {
+            color: #1d4ed8;
+        }
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+         .checklist-item:last-child {
+            border-bottom: none;
+        }
     </style>
 </head>
 <body class="antialiased">
 
-    <header class="bg-gray-800 text-white p-4 shadow-md">
+    <header class="bg-gray-800 text-white p-4 shadow-md sticky top-0 z-10">
         <div class="container mx-auto flex justify-between items-center">
             <h1 class="text-2xl font-bold">
-                <i class="fas fa-car-side mr-2"></i>Intoxicated Driver & SFST
+                <i class="fa-solid fa-car-on mr-2"></i>SFST Participant Manual Guide
             </h1>
-            <p class="text-sm text-gray-300">BPOC Chapter 23 | TCOLE Preparation</p>
+            <p class="text-sm text-gray-300 hidden md:block">A Comprehensive Guide for New Officers</p>
         </div>
     </header>
 
     <main class="container mx-auto p-4 md:p-6">
-        <div class="mb-6 bg-white rounded-lg shadow-md overflow-x-auto">
+        <div class="mb-6 bg-white rounded-lg shadow-md overflow-x-auto sticky top-[72px] z-10">
             <nav id="tabs" class="flex flex-row space-x-1 p-2">
-                <button data-tab="dwi-investigation" class="tab active flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-red-100">
-                    <i class="fas fa-search mr-2"></i> <span class="hidden md:inline">DWI Investigation</span>
+                <button data-tab="overview" class="tab active flex-shrink-0 flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-book-open mr-2"></i> <span class="hidden md:inline">Overview</span>
                 </button>
-                 <button data-tab="related-offenses" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-red-100">
-                    <i class="fas fa-car-crash mr-2"></i> <span class="hidden md:inline">Related Offenses</span>
+                 <button data-tab="legal" class="tab flex-shrink-0 flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-gavel mr-2"></i> <span class="hidden md:inline">Legal</span>
                 </button>
-                <button data-tab="chemical-tests" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-red-100">
-                    <i class="fas fa-vial mr-2"></i> <span class="hidden md:inline">Chemical Tests</span>
+                <button data-tab="phases" class="tab flex-shrink-0 flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-list-ol mr-2"></i> <span class="hidden md:inline">Detection Phases</span>
                 </button>
-                <button data-tab="enforcement-procedure" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-red-100">
-                    <i class="fas fa-file-alt mr-2"></i> <span class="hidden md:inline">Enforcement & Procedure</span>
+                <button data-tab="hgn" class="tab flex-shrink-0 flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-eye mr-2"></i> <span class="hidden md:inline">HGN</span>
                 </button>
-                <button data-tab="knowledge-check" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-red-100">
+                <button data-tab="wat" class="tab flex-shrink-0 flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-shoe-prints mr-2"></i> <span class="hidden md:inline">Walk & Turn</span>
+                </button>
+                 <button data-tab="ols" class="tab flex-shrink-0 flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-balance-scale-left mr-2"></i> <span class="hidden md:inline">One-Leg Stand</span>
+                </button>
+                 <button data-tab="drugs" class="tab flex-shrink-0 flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-pills mr-2"></i> <span class="hidden md:inline">Drugged Driving</span>
+                </button>
+                 <button data-tab="field-notes" class="tab flex-shrink-0 flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fa-solid fa-note-sticky mr-2"></i> <span class="hidden md:inline">Field Notes</span>
+                </button>
+                 <button data-tab="proficiency" class="tab flex-shrink-0 flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fa-solid fa-star mr-2"></i> <span class="hidden md:inline">Proficiency Tools</span>
+                </button>
+                <button data-tab="notes" class="tab flex-shrink-0 flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-file-pen mr-2"></i> <span class="hidden md:inline">Reporting & Testimony</span>
+                </button>
+                <button data-tab="knowledge-check" class="tab flex-shrink-0 flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
                     <i class="fas fa-question-circle mr-2"></i> <span class="hidden md:inline">Knowledge Check</span>
                 </button>
-                <button data-tab="resources" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-red-100">
+                 <button data-tab="glossary" class="tab flex-shrink-0 flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-book-medical mr-2"></i> <span class="hidden md:inline">Glossary</span>
+                </button>
+                <button data-tab="resources" class="tab flex-shrink-0 flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
                     <i class="fas fa-link mr-2"></i> <span class="hidden md:inline">Resources</span>
                 </button>
             </nav>
         </div>
 
         <div id="tab-contents">
-            <div id="dwi-investigation" class="tab-content active space-y-6">
+            <div id="overview" class="tab-content active space-y-6">
                 <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Driving While Intoxicated (DWI) - <a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.49.htm#49.04" target="_blank" class="text-red-800 hover:underline">PC §49.04</a></h2>
-                    <p class="text-sm"><strong>Legal Definition:</strong> A person commits an offense if the person is intoxicated while operating a motor vehicle in a public place.</p>
-                    <h4 class="font-semibold mt-4 text-sm">Punishment Levels:</h4>
-                    <div class="mt-2 space-y-2 text-sm">
-                        <div class="flex items-center">
-                            <span class="punishment-badge mb text-black mr-3 w-40 text-center">Class B Misdemeanor</span>
-                            <span>Standard first offense.</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="punishment-badge ma text-black mr-3 w-40 text-center">Class A Misdemeanor</span>
-                            <span>If BAC is 0.15 or more (first offense).</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="punishment-badge f3 mr-3 w-40 text-center">State Jail Felony</span>
-                            <span>If a passenger is younger than 15 years old.</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="punishment-badge f3 mr-3 w-40 text-center">3rd Degree Felony</span>
-                            <span>If the person has two or more previous DWI convictions.</span>
-                        </div>
-                    </div>
-                    <h4 class="font-semibold mt-4 text-sm">"Intoxicated" Defined (PC §49.01):</h4>
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">SFST Development and Validation</h2>
+                    <p class="text-sm text-gray-700 mb-2">NHTSA-sponsored research began in 1975 to identify the most effective roadside tests for DWI. From an initial pool of six common tests, three emerged as the most reliable and accurate.</p>
+                    <h4 class="font-semibold mt-3">Original Research Objectives:</h4>
                     <ul class="list-disc list-inside text-sm text-gray-700">
-                        <li>Not having the normal use of mental or physical faculties by reason of the introduction of alcohol, a controlled substance, a drug, a dangerous drug, a combination of two or more of those substances, or any other substance into the body; OR</li>
-                        <li>Having an alcohol concentration of 0.08 or more.</li>
+                         <li>Evaluate currently used physical coordination tests to determine their relationship to intoxication.</li>
+                         <li>Develop more sensitive tests that would provide more reliable evidence of impairment.</li>
+                         <li>Standardize the administration and scoring of these tests.</li>
                     </ul>
-                     <p class="text-sm mt-4 p-3 bg-red-50 rounded-md"><strong>Practical Example:</strong> An officer stops a car for swerving. The driver has slurred speech, red glassy eyes, and a strong odor of alcohol. The driver is intoxicated because they do not have the normal use of their mental and physical faculties, regardless of their BAC. If a breath test later shows a 0.10 BAC, they are also intoxicated *per se*.</p>
-                </div>
-
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h2 class="text-xl font-bold mb-4 border-b pb-2">NHTSA DWI Detection Phases</h2>
-                    <p class="text-sm">The National Highway Traffic Safety Administration (NHTSA) provides a systematic approach to identifying intoxicated drivers, broken into three phases. Each phase builds on the last to develop probable cause for arrest.</p>
-                    <h4 class="font-semibold mt-4 text-sm">Phase One: Vehicle in Motion</h4>
-                    <ul class="list-disc list-inside text-sm text-gray-700">
-                        <li><strong>Goal:</strong> Observe the vehicle in operation to determine if reasonable suspicion exists to initiate a traffic stop.</li>
-                        <li><strong>Key Cues:</strong> Weaving, drifting, swerving, turning with a wide radius, driving without headlights at night, speeding or driving unusually slow, and braking erratically.</li>
+                    <h4 class="font-semibold mt-3">Standardized Elements:</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Standardized Administrative Procedures:</strong> How the tests are administered.</li>
+                        <li><strong>Standardized Clues:</strong> The specific, observable indicators of impairment.</li>
+                        <li><strong>Standardized Criteria:</strong> The number of clues required to indicate likely impairment.</li>
                     </ul>
-                     <p class="text-sm mt-4 p-3 bg-red-50 rounded-md"><strong>Practical Example:</strong> At 2 AM, an officer observes a vehicle drifting from the center line to the shoulder line multiple times. This "weaving" provides the officer with reasonable suspicion that the driver may be intoxicated, justifying a traffic stop.</p>
-                    <h4 class="font-semibold mt-4 text-sm">Phase Two: Personal Contact</h4>
-                    <ul class="list-disc list-inside text-sm text-gray-700">
-                        <li><strong>Goal:</strong> After the stop, observe and speak with the driver to determine if there is sufficient cause to ask them to exit the vehicle for further testing.</li>
-                        <li><strong>Key Cues:</strong> Odor of alcoholic beverage, slurred speech, red/glassy/watery eyes, fumbling with license/insurance, soiled clothing, admission of drinking.</li>
-                    </ul>
-                     <p class="text-sm mt-4 p-3 bg-red-50 rounded-md"><strong>Practical Example:</strong> Upon contacting the driver from the previous example, the officer smells a strong odor of alcohol from within the car and notices the driver's eyes are red and glassy. The officer asks the driver to step out for sobriety tests.</p>
-                    <h4 class="font-semibold mt-4 text-sm">Phase Three: Pre-Arrest Screening (SFSTs)</h4>
-                    <ul class="list-disc list-inside text-sm text-gray-700">
-                        <li><strong>Goal:</strong> Administer Standardized Field Sobriety Tests (SFSTs) to determine if there is probable cause to arrest for DWI.</li>
-                        <li><strong>The Three Tests:</strong> Horizontal Gaze Nystagmus (HGN), Walk and Turn, and One-Leg Stand.</li>
-                    </ul>
-                     <p class="text-sm mt-4 p-3 bg-red-50 rounded-md"><strong>Practical Example:</strong> The officer administers the SFSTs. The driver shows 6/6 clues on HGN, steps off the line multiple times on the Walk and Turn, and puts their foot down three times on the One-Leg Stand. Based on the totality of circumstances (driving, physical cues, and SFST performance), the officer develops probable cause and arrests the driver for DWI.</p>
-                </div>
-            </div>
-            
-            <div id="related-offenses" class="tab-content space-y-6">
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Intoxication Assault - <a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.49.htm#49.07" target="_blank" class="text-red-800 hover:underline">PC §49.07</a></h2>
-                    <p class="text-sm"><strong>Legal Definition:</strong> A person commits an offense if the person, by accident or mistake...while operating a...motor vehicle in a public place while intoxicated, by reason of that intoxication causes serious bodily injury to another.</p>
-                    <h4 class="font-semibold mt-4 text-sm">Punishment Level:</h4>
-                    <div class="mt-2 space-y-2 text-sm">
-                        <div class="flex items-center">
-                            <span class="punishment-badge f3 mr-3 w-40 text-center">3rd Degree Felony</span>
-                            <span>Standard offense level.</span>
-                        </div>
-                    </div>
-                    <h4 class="font-semibold mt-4 text-sm">Elements Checklist:</h4>
-                    <ul class="list-disc list-inside text-sm text-gray-700">
-                        <li>A person is operating a motor vehicle in a public place.</li>
-                        <li>The person is intoxicated.</li>
-                        <li>By reason of that intoxication, they cause serious bodily injury (SBI) to another person.</li>
-                        <li>"Serious Bodily Injury" means injury that creates a substantial risk of death or that causes serious permanent disfigurement or protracted loss or impairment of the function of any bodily member or organ.</li>
-                    </ul>
-                     <p class="text-sm mt-4 p-3 bg-red-50 rounded-md"><strong>Practical Example:</strong> An intoxicated driver runs a stop sign and T-bones another car. The driver of the other car suffers a compound leg fracture. Because the intoxicated operation of the vehicle caused an injury that results in protracted loss of function of a limb, the intoxicated driver has committed Intoxication Assault.</p>
                 </div>
                 
                 <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Intoxication Manslaughter - <a href="https://statutes.capitol.texas.gov/Docs/PE/htm/PE.49.htm#49.08" target="_blank" class="text-red-800 hover:underline">PC §49.08</a></h2>
-                    <p class="text-sm"><strong>Legal Definition:</strong> A person commits an offense if the person...operates a motor vehicle in a public place...is intoxicated and by reason of that intoxication causes the death of another by accident or mistake.</p>
-                    <h4 class="font-semibold mt-4 text-sm">Punishment Level:</h4>
-                    <div class="mt-2 space-y-2 text-sm">
-                        <div class="flex items-center">
-                            <span class="punishment-badge f2 mr-3 w-40 text-center">2nd Degree Felony</span>
-                            <span>Standard offense level.</span>
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Key Field Validation Studies</h2>
+                     <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold">Original SCRI Laboratory Accuracy (1977)</h4>
+                            <p class="text-sm text-gray-700">The initial lab research found the following individual test accuracies for detecting a 0.10 BAC: HGN: <strong>77%</strong>, Walk and Turn: <strong>68%</strong>, One Leg Stand: <strong>65%</strong>.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold"><a href="#" data-resource="Colorado (1995) SFST Validation Study" class="statute-link">Colorado SFST Validation Study (1995)</a></h4>
+                            <p class="text-sm text-gray-700">Found <strong>86% correct arrest/release decisions</strong>. 93% of those arrested had a BAC of 0.05 or higher.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold"><a href="#" data-resource="Florida (1997) SFST Validation Study" class="statute-link">Florida SFST Field Validation Study (1997)</a></h4>
+                            <p class="text-sm text-gray-700">Validated the SFSTs at the 0.08 BAC limit, finding <strong>95% correct arrest decisions</strong>.</p>
+                        </div>
+                         <div>
+                            <h4 class="font-semibold"><a href="#" data-resource="San Diego (1998) SFST Validation Study" class="statute-link">San Diego SFST Validation Study (1998)</a></h4>
+                            <p class="text-sm text-gray-700">The most current primary research, finding <strong>91% correct arrest decisions</strong> at the 0.08 BAC limit.</p>
                         </div>
                     </div>
-                    <h4 class="font-semibold mt-4 text-sm">Elements Checklist:</h4>
-                    <ul class="list-disc list-inside text-sm text-gray-700">
-                        <li>A person is operating a motor vehicle in a public place.</li>
-                        <li>The person is intoxicated.</li>
-                        <li>By reason of that intoxication, they cause the death of another person.</li>
-                    </ul>
-                     <p class="text-sm mt-4 p-3 bg-red-50 rounded-md"><strong>Practical Example:</strong> An intoxicated driver is speeding and loses control, crossing the center line and hitting an oncoming car head-on. The driver of the other car is killed. The intoxicated driver has committed Intoxication Manslaughter.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Physiology of Alcohol & Deterrence</h2>
+                    <div class="grid md:grid-cols-2 gap-6 text-sm">
+                        <div>
+                            <h4 class="font-semibold">Alcohol Physiology</h4>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li><strong>Absorption:</strong> 20% through stomach wall, 80% through small intestine (pylorus muscle). Food slows this process.</li>
+                                <li><strong>Distribution:</strong> Alcohol is distributed via the blood to tissues in proportion to their water content. (Avg. Male: 68% water, Avg. Female: 55% water).</li>
+                                <li><strong>Elimination:</strong> The liver metabolizes most alcohol at an average rate of **0.015 BAC per hour**. Nothing can speed this up.</li>
+                                <li><strong>Mellanby Effect:</strong> A person feels *more* impaired while their BAC is rising than they do at the same BAC level while it is falling.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">General Deterrence</h4>
+                             <ul class="list-disc list-inside space-y-1">
+                                <li><strong>Concept:</strong> Deterrence is based on the driving public's fear of being arrested.</li>
+                                <li><strong>Fort Lauderdale Study:</strong> Showed officers failed to detect 78% of DWI violators they contacted (arresting only 22% of drivers with BACs between 0.10-0.20).</li>
+                                 <li><strong>Stockton Study:</strong> A targeted enforcement effort increased DWI arrests by 500% and decreased nighttime crashes by 34%, proving deterrence works.</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div id="chemical-tests" class="tab-content space-y-6">
+            <div id="legal" class="tab-content space-y-6">
                 <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Consent to Taking of Specimen (Implied Consent) - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.011" target="_blank" class="text-red-800 hover:underline">TC §724.011</a></h2>
-                    <p class="text-sm"><strong>Legal Definition:</strong> If a person is arrested for an offense arising out of acts alleged to have been committed while the person was operating a motor vehicle in a public place...while intoxicated...the person is deemed to have consented...to submit to the taking of one or more specimens of the person's breath or blood for analysis...</p>
-                    <h4 class="font-semibold mt-4 text-sm">Key Concepts:</h4>
-                    <ul class="list-disc list-inside text-sm text-gray-700">
-                        <li>Applies to any offense under Penal Code Ch. 49 (DWI, BWI, Intox Assault, etc.).</li>
-                        <li>By driving on a Texas road, a person gives their "implied consent."</li>
-                        <li>An officer is not asking for consent, but asking a person to comply with the consent already given by law.</li>
-                        <li>A person can still withdraw this consent by refusing, which triggers other consequences.</li>
-                    </ul>
-                     <p class="text-sm mt-4 p-3 bg-red-50 rounded-md"><strong>Practical Example:</strong> A boater is stopped for Boating While Intoxicated (BWI). Upon arrest, the officer requests a breath test. The boater is subject to the implied consent law just like a driver on a highway and faces the same consequences for refusal.</p>
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">DWI vs. Per Se Statutes</h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="font-semibold">DWI (Driving While Impaired/Influenced)</h3>
+                            <p class="text-sm text-gray-700">This statute makes it illegal to operate a vehicle while under the influence of alcohol and/or drugs. The focus is on the driver's impairment.</p>
+                            <ul class="list-disc list-inside text-sm mt-2">
+                                <li>Requires proof of impairment through observations (driving, personal contact, SFSTs).</li>
+                                <li>A chemical test result is powerful, but just one piece of additional evidence.</li>
+                                <li>A person can be convicted of DWI even with a BAC below the legal limit if impairment can be proven.</li>
+                            </ul>
+                        </div>
+                         <div>
+                            <h3 class="font-semibold">Illegal Per Se</h3>
+                            <p class="text-sm text-gray-700">This statute makes it illegal to operate a vehicle with a blood alcohol concentration (BAC) at or above a prohibited level (e.g., 0.08).</p>
+                             <ul class="list-disc list-inside text-sm mt-2">
+                                <li>The focus is solely on the BAC number.</li>
+                                <li>The chemical test is the presumptive evidence.</li>
+                                <li>The prosecution does not need to prove the driver was actually impaired, only that their BAC was over the limit.</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                     <h2 class="text-xl font-bold mb-4 border-b pb-2">Implied Consent & Legal Presumptions</h2>
+                     <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                             <h3 class="font-semibold">Implied Consent Law</h3>
+                             <p class="text-sm text-gray-700">By operating a motor vehicle on a public roadway, a driver is deemed to have already given their consent to submit to a chemical test upon a valid arrest for DWI.</p>
+                             <ul class="list-disc list-inside text-sm mt-2">
+                                <li>Its purpose is to encourage submission to chemical tests.</li>
+                                <li>Refusal to submit typically results in administrative penalties, such as driver's license suspension or revocation.</li>
+                             </ul>
+                        </div>
+                         <div>
+                            <h3 class="font-semibold">Legal Presumptions (Example)</h3>
+                            <p class="text-sm text-gray-700">These define the presumptive weight of chemical test evidence. A typical structure is:</p>
+                            <ul class="list-disc list-inside text-sm mt-2">
+                                <li>**0.08 or more:** Presumed to be under the influence.</li>
+                                <li>**0.05 to 0.079:** No presumption either way; other evidence is critical.</li>
+                                <li>**Less than 0.05:** Presumed *not* to be under the influence (but can be overcome by other evidence).</li>
+                            </ul>
+                         </div>
+                     </div>
+                </div>
                  <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Prohibition on Taking Specimen if Person Refuses - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.013" target="_blank" class="text-red-800 hover:underline">TC §724.013</a></h2>
-                    <p class="text-sm"><strong>Legal Definition:</strong> Except as provided by Section 724.012(b), a specimen may not be taken if a person refuses to submit to the taking of a specimen designated by a peace officer.</p>
-                    <h4 class="font-semibold mt-4 text-sm">Key Concepts:</h4>
-                    <ul class="list-disc list-inside text-sm text-gray-700">
-                        <li>If a person refuses a chemical test, the officer cannot force them to provide one.</li>
-                        <li>The officer's only recourse is to seek a search warrant for the person's blood.</li>
-                        <li>The only exception is the "Mandatory Blood Draw" statute (TC §724.012), which applies in cases of death or SBI.</li>
-                    </ul>
-                     <p class="text-sm mt-4 p-3 bg-red-50 rounded-md"><strong>Practical Example:</strong> An officer arrests a driver for a standard, no-crash DWI. The driver refuses to provide a breath sample after the statutory warning is read. The officer cannot physically force the driver to blow. Instead, the officer must begin the process of writing an affidavit to obtain a search warrant from a judge to have the driver's blood drawn.</p>
-                </div>
-
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Information Provided Before Requesting Specimen (DIC-24) - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.015" target="_blank" class="text-red-800 hover:underline">TC §724.015</a></h2>
-                    <p class="text-sm"><strong>Legal Definition:</strong> Before requesting a specimen, an officer must inform the person orally and in writing of the consequences of refusing or failing a test. This is known as the "Statutory Warning."</p>
-                    <h4 class="font-semibold mt-4 text-sm">Elements of the Warning:</h4>
-                    <ul class="list-disc list-inside text-sm text-gray-700">
-                        <li>A refusal can be used against them in court.</li>
-                        <li>A refusal results in a 180-day license suspension.</li>
-                        <li>Failing the test (0.08 BAC or more) results in a 90-day license suspension.</li>
-                    </ul>
-                     <p class="text-sm mt-4 p-3 bg-red-50 rounded-md"><strong>Practical Example:</strong> After arrest, an officer reads the DIC-24 form verbatim to the suspect. After hearing the warnings about license suspensions, the driver, who was initially hesitant, agrees to provide a breath sample.</p>
-                </div>
-
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Taking of Specimen (Mandatory Blood Draw) - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.012" target="_blank" class="text-red-800 hover:underline">TC §724.012</a></h2>
-                    <p class="text-sm"><strong>Legal Definition:</strong> A peace officer SHALL require the taking of a specimen if they reasonably believe a crash caused by an intoxicated driver resulted in the death or serious bodily injury of another person.</p>
-                    <h4 class="font-semibold mt-4 text-sm">Elements Checklist:</h4>
-                    <ul class="list-disc list-inside text-sm text-gray-700">
-                        <li>The person is under arrest for an intoxication offense (DWI, Intoxication Assault/Manslaughter).</li>
-                        <li>The person was operating a vehicle involved in a crash.</li>
-                        <li>The officer reasonably believes the crash resulted in Death or Serious Bodily Injury to another person.</li>
-                        <li>In these cases, the officer does not need a warrant to take blood, even if refused. (Other mandatory draw situations also exist, e.g., for repeat offenders).</li>
-                    </ul>
-                     <p class="text-sm mt-4 p-3 bg-red-50 rounded-md"><strong>Practical Example:</strong> An intoxicated driver causes a crash resulting in SBI. The driver is arrested and refuses consent for blood. Because the crash resulted in SBI, the officer can use the "mandatory blood draw" provision and transport the suspect to a hospital to have their blood drawn without a warrant.</p>
-                </div>
-
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Person Incapable of Refusal - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.014" target="_blank" class="text-red-800 hover:underline">TC §724.014</a></h2>
-                    <p class="text-sm"><strong>Legal Definition:</strong> A person who is dead, unconscious, or otherwise incapable of refusal is considered not to have withdrawn the consent provided by Section 724.011.</p>
-                    <h4 class="font-semibold mt-4 text-sm">Key Concepts:</h4>
-                    <ul class="list-disc list-inside text-sm text-gray-700">
-                        <li>This applies to suspects who are arrested for an intoxication-related offense.</li>
-                        <li>If the person cannot communicate a refusal due to injury, extreme intoxication, or being unconscious, their implied consent remains valid.</li>
-                        <li>A specimen may be taken without a warrant in these circumstances.</li>
-                    </ul>
-                     <p class="text-sm mt-4 p-3 bg-red-50 rounded-md"><strong>Practical Example:</strong> A driver is found passed out behind the wheel of a crashed vehicle, clearly intoxicated and unresponsive. Officers arrest him for DWI. Because he is unconscious and incapable of refusing, his implied consent stands. Officers can transport him to the hospital for a blood draw based on this statute.</p>
-                </div>
-
-                 <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Rules for Taking Breath & Blood Specimens - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.016" target="_blank" class="text-red-800 hover:underline">TC §724.016 & .017</a></h2>
-                    <p class="text-sm"><strong>Legal Definition:</strong> The law sets specific requirements for how chemical specimens must be taken to be admissible in court.</p>
-                    <h4 class="font-semibold mt-4 text-sm">Key Concepts:</h4>
-                    <ul class="list-disc list-inside text-sm text-gray-700">
-                        <li><strong>Breath Specimen (TC §724.016):</strong> Must be taken by a person certified by DPS to operate a breath testing instrument.</li>
-                        <li><strong>Blood Specimen (TC §724.017):</strong> Only a physician, qualified technician, chemist, registered professional nurse, or licensed vocational nurse may take a blood specimen at the request of a peace officer. The location must be a sanitary place.</li>
-                        <li><strong>Additional Analysis (TC §724.019):</strong> A person who provides a specimen has the right to request their own independent analysis by a qualified person of their choosing.</li>
-                    </ul>
-                     <p class="text-sm mt-4 p-3 bg-red-50 rounded-md"><strong>Practical Example:</strong> Following a DWI arrest and warrant, an officer takes the suspect to a local hospital for a blood draw. The officer ensures that the person drawing the blood is a registered nurse to comply with the statute. The officer also informs the suspect of their right to have their own expert test the blood sample later.</p>
+                     <h2 class="text-xl font-bold mb-4 border-b pb-2">Case Law Principles</h2>
+                     <p class="text-sm text-gray-700">The admissibility of SFST evidence, particularly HGN, is a common point of legal challenge. While specific case law varies by state, the prevailing trend is to accept SFSTs as valid evidence of impairment, provided a proper foundation is laid.</p>
+                      <h4 class="font-semibold mt-3">Common Defense Challenges:</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Scientific Validity:</strong> Defense may challenge the scientific reliability of the tests. Prosecutors counter this with the extensive NHTSA-sponsored research.</li>
+                        <li><strong>Relationship to BAC:</strong> HGN cannot be used to prove a specific BAC level (e.g., "6 clues means 0.12"). It is evidence of impairment, not a BAC measurement tool.</li>
+                        <li><strong>Officer Training & Application:</strong> The defense will challenge whether the officer was properly trained and administered the tests according to standardized procedures. Your training and adherence to the manual are your best defense.</li>
+                     </ul>
                 </div>
             </div>
 
-            <div id="enforcement-procedure" class="tab-content space-y-6">
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h2 class="text-xl font-bold mb-4 border-b pb-2">DWI Enforcement Forms</h2>
-                    <p class="text-sm">Properly completing and submitting administrative and evidentiary forms is a critical part of a DWI arrest.</p>
-                    <h4 class="font-semibold mt-4 text-sm">Key Forms:</h4>
-                    <ul class="list-disc list-inside text-sm text-gray-700">
-                        <li><strong>DIC-23 (Peace Officer's Sworn Report):</strong> The officer's affidavit of probable cause for the arrest, detailing the facts and circumstances of the stop and investigation. It is a required document for the administrative license revocation (ALR) hearing.</li>
-                        <li><strong>DIC-24 (Statutory Warning):</strong> The form that is read to the suspect which details the consequences of refusing or failing a chemical test. The officer must document that it was read and whether the suspect consented or refused.</li>
-                        <li><strong>DIC-25 (Notice of Suspension):</strong> If a suspect refuses or fails a test, this form is served on them. It acts as their official notice of suspension and serves as their temporary driving permit for a limited time.</li>
-                        <li><strong>THP-51 (Mandatory Blood Draws Form):</strong> A form used to document the statutory authority and circumstances justifying a mandatory blood specimen collection.</li>
-                    </ul>
-                </div>
-
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Case Law: Curtis v. State</h2>
-                    <p class="text-sm"><strong>Key Holding:</strong> The Texas Court of Criminal Appeals held that an officer's observation of a vehicle weaving within its own lane can be sufficient grounds to establish reasonable suspicion for a traffic stop, especially when considering the officer's training and experience in DWI enforcement.</p>
-                    <h4 class="font-semibold mt-4 text-sm">Elements Checklist:</h4>
-                    <ul class="list-disc list-inside text-sm text-gray-700">
-                        <li>An officer observes a vehicle failing to maintain a single marked lane (weaving).</li>
-                        <li>The officer's training and experience lead them to believe this driving behavior is indicative of intoxication.</li>
-                        <li>Based on the totality of the circumstances, the traffic stop is considered reasonable and lawful.</li>
-                    </ul>
-                     <p class="text-sm mt-4 p-3 bg-red-50 rounded-md"><strong>Practical Example:</strong> An officer trained in SFST is on patrol and sees a car ahead weave within its lane three times over a quarter-mile. The officer does not observe the car cross any lines, but based on their training that this is a common cue for intoxicated driving, they initiate a traffic stop. The stop is legally justified under *Curtis v. State*.</p>
-                </div>
-
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Allowing Dangerous Driver to Borrow Motor Vehicle - <a href="https://statutes.capitol.texas.gov/Docs/TN/htm/TN.705.htm#705.001" target="_blank" class="text-red-800 hover:underline">TC §705.001</a></h2>
-                    <p class="text-sm"><strong>Legal Definition:</strong> A person commits an offense if the person: (1) is the owner of a motor vehicle; (2) knows that the person who will operate the vehicle is an unlicensed driver; and (3) permits that person to operate the vehicle on a highway.</p>
-                    <h4 class="font-semibold mt-4 text-sm">Punishment Level:</h4>
-                    <div class="mt-2 space-y-2 text-sm">
-                        <div class="flex items-center">
-                            <span class="punishment-badge mc text-black mr-3 w-40 text-center">Class C Misdemeanor</span>
-                            <span>Standard offense level.</span>
+            <div id="phases" class="tab-content space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">The Three Phases of DWI Detection</h2>
+                    <p class="text-sm text-gray-700">The SFSTs are part of a systematic, three-phase process designed to gather evidence of impairment and build probable cause for a DWI arrest. Each phase presents opportunities to observe indicators of impairment and requires a key decision.</p>
+                    <div class="grid md:grid-cols-3 gap-6 text-center mt-4">
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <i class="fas fa-car-side text-3xl text-blue-500 mb-2"></i>
+                            <h3 class="font-bold">Phase One: Vehicle in Motion</h3>
+                            <p class="text-sm italic">Decision: Should I stop the vehicle?</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <i class="fas fa-user-friends text-3xl text-blue-500 mb-2"></i>
+                            <h3 class="font-bold">Phase Two: Personal Contact</h3>
+                            <p class="text-sm italic">Decision: Should the driver exit?</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <i class="fas fa-tasks text-3xl text-blue-500 mb-2"></i>
+                            <h3 class="font-bold">Phase Three: Pre-Arrest Screening</h3>
+                            <p class="text-sm italic">Decision: Is there probable cause to arrest?</p>
                         </div>
                     </div>
-                    <h4 class="font-semibold mt-4 text-sm">Elements Checklist:</h4>
-                    <ul class="list-disc list-inside text-sm text-gray-700">
-                        <li>A person owns a motor vehicle.</li>
-                        <li>They know the person they are lending it to does not have a valid license.</li>
-                        <li>They permit that person to operate the vehicle on a highway.</li>
-                    </ul>
-                     <p class="text-sm mt-4 p-3 bg-red-50 rounded-md"><strong>Practical Example:</strong> John knows his 15-year-old nephew only has a learner's permit and is not legally allowed to drive alone. John lets his nephew take his car to the store by himself anyway. If the nephew is stopped, not only can he be cited, but John can also be cited for Allowing a Dangerous Driver to Borrow his Vehicle.</p>
                 </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Phase One: Vehicle in Motion</h2>
+                     <p class="text-sm text-gray-700 mb-4">This phase involves observing driving behaviors and the stopping sequence. The main decision is whether there is reasonable suspicion to initiate a traffic stop.</p>
+                    <h4 class="font-semibold">Automobile Driving Cues (NHTSA):</h4>
+                    <div class="grid md:grid-cols-2 gap-x-8 gap-y-4 text-sm mt-2">
+                        <div>
+                            <h5 class="font-bold">Problems Maintaining Lane Position <span class="text-xs font-normal text-gray-500">(p=.50–.75)</span></h5>
+                            <ul class="list-disc list-inside"><li>Weaving / Weaving across lanes, Straddling a lane line, Drifting, Swerving, Turning with a wide radius, Almost striking object.</li></ul>
+                        </div>
+                        <div>
+                            <h5 class="font-bold">Speed and Braking Problems <span class="text-xs font-normal text-gray-500">(p=.45–.70)</span></h5>
+                             <ul class="list-disc list-inside"><li>Stopping problems, Unnecessary acceleration/deceleration, Varying speed, Slow speed (10+ mph under).</li></ul>
+                        </div>
+                        <div>
+                           <h5 class="font-bold">Vigilance Problems <span class="text-xs font-normal text-gray-500">(p=.55–.65)</span></h5>
+                            <ul class="list-disc list-inside"><li>Driving without headlights, Failure to signal, Driving in opposing lanes, Slow response to signals.</li></ul>
+                        </div>
+                        <div>
+                           <h5 class="font-bold">Judgment Problems <span class="text-xs font-normal text-gray-500">(p=.35–.90)</span></h5>
+                            <ul class="list-disc list-inside"><li>Following too closely, Improper lane change, Illegal turn, Driving on other than roadway, Appearing to be impaired.</li></ul>
+                        </div>
+                    </div>
+                     <h4 class="font-semibold mt-4">Motorcycle Impairment Cues (NHTSA):</h4>
+                     <div class="grid md:grid-cols-2 gap-x-8 gap-y-2 text-sm mt-2">
+                         <div>
+                             <h5 class="font-bold">Excellent Cues (≥50% Probability)</h5>
+                             <ul class="list-disc list-inside"><li>Drifting during turn, Trouble with dismount, Trouble with balance at stop, Turning problems, Weaving.</li></ul>
+                         </div>
+                         <div>
+                            <h5 class="font-bold">Good Cues (30-50% Probability)</h5>
+                            <ul class="list-disc list-inside"><li>Erratic movements, No lights at night, Recklessness, Following too closely, Evasion, Wrong way.</li></ul>
+                         </div>
+                     </div>
+                </div>
+
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Phase Two: Personal Contact</h2>
+                    <div class="mt-4">
+                        <h4 class="font-semibold">Elements Checklist (Sensory & Exit Clues)</h4>
+                        <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                            <li><strong>Sight Clues:</strong> Bloodshot eyes, soiled clothing, fumbling fingers, open containers, unusual actions.</li>
+                            <li><strong>Hearing Clues:</strong> Slurred speech, admission of drinking, inconsistent responses, abusive language.</li>
+                            <li><strong>Smell Clues:</strong> Odor of alcoholic beverages, marijuana, cover-up odors.</li>
+                            <li><strong>Exit Sequence Clues:</strong> Can't follow instructions, leaves car in gear, "climbs" out of vehicle, leans against car for support.</li>
+                        </ul>
+                    </div>
+                    <div class="mt-4">
+                        <h4 class="font-semibold">Pre-Exit Sobriety Tests (Optional Divided Attention Tasks)</h4>
+                        <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                           <li><strong>Alphabet Test:</strong> Ask the subject to recite a portion of the alphabet (e.g., "from E to P").</li>
+                           <li><strong>Count Down Test:</strong> Ask the subject to count backwards between two non-round numbers (e.g., "from 68 to 53").</li>
+                           <li><strong>Finger Count Test:</strong> Ask the subject to touch thumb to each fingertip while counting up (1, 2, 3, 4) and then back down (4, 3, 2, 1).</li>
+                        </ul>
+                    </div>
+                 </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Phase Three: Pre-Arrest Screening & The Arrest Decision</h2>
+                    <p class="text-sm text-gray-700 mb-2">This phase consists of administering the SFSTs and culminates in the arrest decision, based on the totality of the evidence gathered.</p>
+                    <h4 class="font-semibold mt-3">Preliminary Breath Test (PBT)</h4>
+                    <p class="text-sm text-gray-700">A PBT is an optional tool to confirm the presence of alcohol. It should be administered *after* the SFSTs.</p>
+                     <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                        <li><strong>Purpose:</strong> To associate the observed physical and mental impairment with alcohol. It is NOT the sole basis for arrest.</li>
+                        <li><strong>Factors Causing HIGH Results:</strong> Residual mouth alcohol (must wait 15-20 mins), breath contaminants.</li>
+                        <li><strong>Factors Causing LOW Results:</strong> Breath sample cooling, improper breath sample (not deep-lung air).</li>
+                     </ul>
+                     <h4 class="font-semibold mt-4">The Arrest Decision</h4>
+                     <p class="text-sm text-gray-700">The decision to arrest is based on ALL evidence from all three phases: the driving, the personal contact, and the SFSTs. It is a culmination of the entire process.</p>
+                </div>
+            </div>
+
+            <div id="hgn" class="tab-content space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex justify-between items-start">
+                        <h2 class="text-xl font-bold mb-4 border-b pb-2">Horizontal Gaze Nystagmus (HGN)</h2>
+                        <div class="text-right">
+                           <span class="accuracy-badge accuracy-high">88% Accurate</span>
+                           <p class="text-xs text-gray-500 mt-1">at 0.08 BAC</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold">Quick Reference</h4>
+                        <p class="text-sm text-gray-700 bg-blue-50 p-3 rounded-lg"><strong>Test Type:</strong> Involuntary Eye Reflex | <strong>Total Clues:</strong> 6 | <strong>Decision Point:</strong> 4 or more clues</p>
+                    </div>
+                    <div class="mt-4">
+                        <h4 class="font-semibold">Elements Checklist (3 Clues per Eye)</h4>
+                        <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                            <li><strong>Lack of Smooth Pursuit:</strong> Do the eyes jerk or bounce as they follow a moving stimulus?</li>
+                            <li><strong>Distinct & Sustained Nystagmus at Maximum Deviation:</strong> When the eye is held at maximum deviation for a minimum of 4 seconds, is the jerking distinct and sustained?</li>
+                            <li><strong>Onset of Nystagmus Prior to 45 Degrees:</strong> Does the eye begin jerking before it reaches a 45-degree angle from the center?</li>
+                        </ul>
+                    </div>
+                     <div class="mt-4">
+                        <h4 class="font-semibold">Practical Example</h4>
+                        <p class="text-sm text-gray-700 bg-gray-100 p-3 rounded-lg">An officer administers HGN. In the driver's left eye, the officer observes a lack of smooth pursuit and distinct nystagmus at maximum deviation. In the right eye, the officer observes all three clues. The officer has observed a total of <strong>5 clues</strong> (2 in the left, 3 in the right). This is above the decision point of 4 clues and is a strong indicator of impairment.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Types of Nystagmus</h2>
+                    <div class="grid md:grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <h4 class="font-semibold">Vestibular Nystagmus</h4>
+                             <p class="text-xs">Caused by movement/action to the vestibular (inner ear) system. Not a factor in a properly administered HGN test.</p>
+                             <ul class="list-disc list-inside mt-1"><li>Rotational, Post-Rotational, Caloric, Positional Alcohol Nystagmus (PAN).</li></ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Neural Nystagmus</h4>
+                             <p class="text-xs">Caused by neural activity. HGN test procedures are designed to isolate for Gaze Nystagmus.</p>
+                             <ul class="list-disc list-inside mt-1"><li>Optokinetic, Physiological, Gaze (HGN, VGN, Resting).</li></ul>
+                        </div>
+                         <div class="md:col-span-2">
+                            <h4 class="font-semibold">Pathological Nystagmus</h4>
+                            <p class="text-xs">Caused by medical conditions like brain tumors or inner ear diseases. This is why the initial medical assessment (pupil size, equal tracking) is crucial. These conditions are rare in the driving population.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">HGN Administrative Procedures</h2>
+                    <ol class="list-decimal list-inside text-sm space-y-2">
+                        <li><strong>Check for Eyeglasses/Contacts:</strong> Instruct subject to remove glasses.</li>
+                        <li><strong>Verbal Instructions:</strong> Tell subject: "Feet together, arms at your sides, head still. Follow the stimulus with your eyes only."</li>
+                        <li><strong>Position Stimulus:</strong> 12-15 inches in front of nose, slightly above eye level.</li>
+                        <li><strong>Medical Assessment:</strong> Check for Equal Pupil Size and Resting Nystagmus.</li>
+                        <li><strong>Medical Assessment:</strong> Check for Equal Tracking of both eyes.</li>
+                        <li><strong>Check for Lack of Smooth Pursuit:</strong> Two-second pass from center to side. Check left eye, then right. Repeat.</li>
+                        <li><strong>Check for Distinct & Sustained Nystagmus:</strong> Hold at maximum deviation for a minimum of 4 seconds. Check left eye, then right. Repeat.</li>
+                        <li><strong>Check for Onset Prior to 45 Degrees:</strong> Four-second pass from center to 45-degree point. Check left eye, then right. Repeat.</li>
+                        <li><strong>Total the Clues:</strong> Document the total number of clues observed out of 6.</li>
+                        <li><strong>Check for Vertical Gaze Nystagmus (VGN):</strong> Elevate stimulus to maximum upward gaze and hold for 4 seconds.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div id="wat" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                     <div class="flex justify-between items-start">
+                        <h2 class="text-xl font-bold mb-4 border-b pb-2">Walk and Turn (WAT)</h2>
+                         <div class="text-right">
+                           <span class="accuracy-badge accuracy-mid">79% Accurate</span>
+                           <p class="text-xs text-gray-500 mt-1">at 0.08 BAC</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold">Quick Reference</h4>
+                        <p class="text-sm text-gray-700 bg-blue-50 p-3 rounded-lg"><strong>Test Type:</strong> Divided Attention | <strong>Total Clues:</strong> 8 | <strong>Decision Point:</strong> 2 or more clues</p>
+                    </div>
+                    <div class="mt-4">
+                        <h4 class="font-semibold">Elements Checklist (2 Instruction, 6 Walking)</h4>
+                        <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                            <li><strong>(Instruction Stage) Cannot Keep Balance:</strong> Steps off the line or breaks the heel-to-toe stance while listening to instructions.</li>
+                            <li><strong>(Instruction Stage) Starts Too Soon:</strong> Begins walking before told to do so.</li>
+                            <li><strong>(Walking Stage) Stops While Walking:</strong> Pauses for several seconds.</li>
+                            <li><strong>(Walking Stage) Misses Heel-to-Toe:</strong> Leaves > 1/2 inch gap.</li>
+                            <li><strong>(Walking Stage) Steps Off the Line:</strong> Foot comes completely off the line.</li>
+                            <li><strong>(Walking Stage) Uses Arms to Balance:</strong> Raises arms > 6 inches from sides.</li>
+                            <li><strong>(Walking Stage) Improper Turn:</strong> Loses balance, removes pivot foot, or turns incorrectly.</li>
+                            <li><strong>(Walking Stage) Incorrect Number of Steps:</strong> Takes more or fewer than 9 steps.</li>
+                        </ul>
+                    </div>
+                     <div class="mt-4">
+                        <h4 class="font-semibold">Practical Example</h4>
+                        <p class="text-sm text-gray-700 bg-gray-100 p-3 rounded-lg">During the instruction stage, a driver breaks their heel-to-toe stance (1 Clue). They then take 10 steps on the first pass (1 Clue), make an improper turn (1 Clue), and stop while walking on the way back (1 Clue). Total clues observed: <strong>4</strong>. This is above the decision point of 2 clues.</p>
+                    </div>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">WAT Conditions, Limitations, and Instructions</h2>
+                     <h4 class="font-semibold">Test Conditions & Limitations</h4>
+                     <p class="text-sm text-gray-700 mb-2">Requires a reasonably dry, hard, level, non-slippery surface with a real or imaginary line.</p>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                         <li><strong>Age:</strong> Individuals over 65 may have difficulty.</li>
+                         <li><strong>Health:</strong> People with back, leg, or inner ear problems may have difficulty.</li>
+                         <li><strong>Footwear:</strong> Subjects wearing heels > 2 inches high should be given the opportunity to remove them.</li>
+                     </ul>
+                      <h4 class="font-semibold mt-4">Standardized Instructions (Verbatim)</h4>
+                      <div class="text-sm text-gray-700 bg-gray-50 p-4 rounded-lg space-y-2">
+                        <p><strong>Instruction Stage:</strong> "Place your left foot on the line... heel of your right foot against the toe of the left foot... arms down at your sides... Do not start to walk until told to do so. Do you understand...?"</p>
+                        <p><strong>Walking Stage:</strong> "When I tell you to start, take nine heel-to-toe steps on the line, turn, and take nine heel-to-toe steps back... When you turn, keep the front foot on the line, and turn by taking a series of small steps with the other foot, like this. (Demonstrate)... keep your arms at your sides, watch your feet... count your steps out loud... don't stop... Do you understand...?"</p>
+                    </div>
+                 </div>
+            </div>
+
+            <div id="ols" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                     <div class="flex justify-between items-start">
+                        <h2 class="text-xl font-bold mb-4 border-b pb-2">One-Leg Stand (OLS)</h2>
+                         <div class="text-right">
+                           <span class="accuracy-badge accuracy-mid">83% Accurate</span>
+                            <p class="text-xs text-gray-500 mt-1">at 0.08 BAC</p>
+                        </div>
+                    </div>
+                     <div>
+                        <h4 class="font-semibold">Quick Reference</h4>
+                        <p class="text-sm text-gray-700 bg-blue-50 p-3 rounded-lg"><strong>Test Type:</strong> Divided Attention | <strong>Total Clues:</strong> 4 | <strong>Decision Point:</strong> 2 or more clues</p>
+                    </div>
+                    <div class="mt-4">
+                        <h4 class="font-semibold">Elements Checklist (Total 4 Clues)</h4>
+                        <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                            <li><strong>Sways While Balancing:</strong> Noticeable side-to-side or back-and-forth body movement.</li>
+                            <li><strong>Uses Arms to Balance:</strong> Raises arms more than 6 inches from their sides.</li>
+                            <li><strong>Hops:</strong> Leaves the standing foot to maintain balance.</li>
+                            <li><strong>Puts Foot Down:</strong> The raised foot touches the ground one or more times during the 30-second test.</li>
+                        </ul>
+                    </div>
+                     <div class="mt-4">
+                        <h4 class="font-semibold">Practical Example</h4>
+                        <p class="text-sm text-gray-700 bg-gray-100 p-3 rounded-lg">An officer instructs a driver to begin the OLS test. During the 30-second test, the driver sways visibly (1 clue) and puts their foot down at the 15-second mark (1 clue). The driver has exhibited <strong>2 clues</strong>. This meets the decision point and indicates impairment.</p>
+                    </div>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">OLS Conditions, Limitations, and Instructions</h2>
+                     <h4 class="font-semibold">Test Conditions & Limitations</h4>
+                     <p class="text-sm text-gray-700 mb-2">Requires a reasonably dry, hard, level, non-slippery surface.</p>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                         <li><strong>Age:</strong> Individuals over 65 may have difficulty.</li>
+                         <li><strong>Weight:</strong> People 50 or more pounds overweight may have difficulty.</li>
+                         <li><strong>Health:</strong> People with back, leg, or inner ear problems may have difficulty.</li>
+                         <li><strong>Footwear:</strong> Subjects wearing heels > 2 inches high should be given the opportunity to remove them.</li>
+                     </ul>
+                      <h4 class="font-semibold mt-4">Standardized Instructions (Verbatim)</h4>
+                      <div class="text-sm text-gray-700 bg-gray-50 p-4 rounded-lg space-y-2">
+                        <p><strong>Instruction Stage:</strong> "Please stand with your feet together and your arms down at the sides... Do not start... until I tell you to do so. Do you understand...?"</p>
+                        <p><strong>Balance & Counting Stage:</strong> "When I tell you to start, raise either leg... approximately six inches off the ground, keeping your foot parallel to the ground... keep both legs straight... arms at your side... count out loud... 'one thousand one, one thousand two...' until told to stop... keep watching the raised foot. Do you understand?"</p>
+                    </div>
+                 </div>
+            </div>
+
+            <div id="drugs" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                     <h2 class="text-xl font-bold mb-4 border-b pb-2">Introduction to Drugged Driving</h2>
+                     <p class="text-sm text-gray-700">The SFSTs can reveal impairment from drugs other than alcohol. This section provides a brief overview of the seven drug categories and their most common indicators. This does NOT qualify you as a Drug Recognition Expert (DRE).</p>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                     <h2 class="text-xl font-bold mb-4 border-b pb-2">Seven Drug Categories & Key Indicators</h2>
+                     <div class="overflow-x-auto text-sm">
+                         <table class="w-full table-auto">
+                             <thead class="bg-gray-100 font-semibold">
+                                 <tr>
+                                     <th class="p-2 text-left">Category</th>
+                                     <th class="p-2 text-left">Common Examples</th>
+                                     <th class="p-2 text-center">HGN</th>
+                                     <th class="p-2 text-center">VGN</th>
+                                     <th class="p-2 text-center">Pupil Size</th>
+                                 </tr>
+                             </thead>
+                             <tbody class="divide-y">
+                                 <tr class="hover:bg-gray-50">
+                                     <td class="p-2 font-semibold">CNS Depressants</td>
+                                     <td class="p-2">Alcohol, Barbiturates, Xanax</td>
+                                     <td class="p-2 text-center text-green-600 font-bold">Present</td>
+                                     <td class="p-2 text-center text-green-600 font-bold">Present (High Dose)</td>
+                                     <td class="p-2 text-center">Normal</td>
+                                 </tr>
+                                 <tr class="hover:bg-gray-50">
+                                     <td class="p-2 font-semibold">CNS Stimulants</td>
+                                     <td class="p-2">Cocaine, Methamphetamine</td>
+                                     <td class="p-2 text-center text-red-600 font-bold">Absent</td>
+                                     <td class="p-2 text-center text-red-600 font-bold">Absent</td>
+                                     <td class="p-2 text-center">Dilated</td>
+                                 </tr>
+                                 <tr class="hover:bg-gray-50">
+                                     <td class="p-2 font-semibold">Hallucinogens</td>
+                                     <td class="p-2">LSD, Psilocybin, MDMA</td>
+                                     <td class="p-2 text-center text-red-600 font-bold">Absent</td>
+                                     <td class="p-2 text-center text-red-600 font-bold">Absent</td>
+                                     <td class="p-2 text-center">Dilated</td>
+                                 </tr>
+                                  <tr class="hover:bg-gray-50">
+                                     <td class="p-2 font-semibold">Dissociative Anesthetics</td>
+                                     <td class="p-2">PCP, Ketamine, DXM</td>
+                                     <td class="p-2 text-center text-green-600 font-bold">Present</td>
+                                     <td class="p-2 text-center text-green-600 font-bold">Present</td>
+                                     <td class="p-2 text-center">Normal</td>
+                                 </tr>
+                                  <tr class="hover:bg-gray-50">
+                                     <td class="p-2 font-semibold">Narcotic Analgesics</td>
+                                     <td class="p-2">Heroin, Morphine, Fentanyl</td>
+                                     <td class="p-2 text-center text-red-600 font-bold">Absent</td>
+                                     <td class="p-2 text-center text-red-600 font-bold">Absent</td>
+                                     <td class="p-2 text-center">Constricted</td>
+                                 </tr>
+                                 <tr class="hover:bg-gray-50">
+                                     <td class="p-2 font-semibold">Inhalants</td>
+                                     <td class="p-2">Toluene, Nitrous Oxide, Aerosols</td>
+                                     <td class="p-2 text-center text-green-600 font-bold">Present</td>
+                                     <td class="p-2 text-center text-green-600 font-bold">Present (High Dose)</td>
+                                     <td class="p-2 text-center">Normal</td>
+                                 </tr>
+                                  <tr class="hover:bg-gray-50">
+                                     <td class="p-2 font-semibold">Cannabis</td>
+                                     <td class="p-2">Marijuana, Hashish, Synthetics</td>
+                                     <td class="p-2 text-center text-red-600 font-bold">Absent</td>
+                                     <td class="p-2 text-center text-red-600 font-bold">Absent</td>
+                                     <td class="p-2 text-center">Dilated (May be Normal)</td>
+                                 </tr>
+                             </tbody>
+                         </table>
+                     </div>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                     <h2 class="text-xl font-bold mb-4 border-b pb-2">Medical Conditions Mimicking Impairment</h2>
+                     <p class="text-sm text-gray-700">Always be aware that certain medical conditions can produce signs similar to drug or alcohol impairment. If you suspect a medical issue, summon medical aid immediately.</p>
+                     <ul class="list-disc list-inside text-sm mt-2 text-gray-700">
+                         <li><strong>Head Trauma:</strong> Can cause confusion, disorientation, unequal pupils, and poor balance.</li>
+                         <li><strong>Stroke:</strong> May result in slurred speech, confusion, and facial droop.</li>
+                         <li><strong>Diabetes:</strong> A diabetic emergency (hypoglycemia) can cause confusion, unsteadiness, and a sweet odor on the breath (sometimes mistaken for alcohol).</li>
+                         <li><strong>Conjunctivitis (Pink Eye):</strong> Causes red, watery eyes.</li>
+                         <li><strong>Multiple Sclerosis & Other Neurological Issues:</strong> Can cause nystagmus and coordination problems.</li>
+                     </ul>
+                 </div>
+            </div>
+            
+            <div id="field-notes" class="tab-content space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Field Note-Taking Guide</h2>
+                    <p class="text-sm text-gray-700">This guide is a tool to ensure you document all necessary information during a DWI investigation. Your notes should be clear, concise, and descriptive. They will be the foundation for your report and testimony.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-lg font-semibold mb-2">WAT Note-Taking Conventions</h3>
+                    <img src="https://placehold.co/600x150/e2e8f0/4a5568?text=Walk+and+Turn+Diagram" alt="Walk and Turn Diagram" class="mx-auto rounded-lg mb-4">
+                    <ul class="list-disc list-inside text-sm text-gray-700 space-y-2">
+                        <li><strong>Stops Walking:</strong> At the step where the subject stops, draw a vertical line from the toe and write an "S".</li>
+                        <li><strong>Misses Heel-to-Toe:</strong> At the step where the gap occurs, draw a vertical line from the toe and write an "M".</li>
+                        <li><strong>Steps Off Line:</strong> Draw a line from the footprint diagram at an angle, showing the direction the foot stepped off.</li>
+                        <li><strong>Incorrect Steps:</strong> If more than 9, draw extra footprints. If fewer than 9, cross out the missing footprints.</li>
+                    </ul>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                     <h3 class="text-lg font-semibold mb-2">OLS Note-Taking Conventions</h3>
+                     <p class="text-sm text-gray-700">In the OLS section of your notes:</p>
+                     <ul class="list-disc list-inside text-sm text-gray-700 space-y-2 mt-2">
+                        <li>Indicate which leg the subject chose to raise (L or R).</li>
+                        <li><strong>Puts Foot Down:</strong> Each time the subject puts their foot down, write the number they were on in their count (e.g., 1012, 1019, 1025). This is more descriptive than just tally marks.</li>
+                        <li>Use checkmarks or numbers to indicate the occurrence of Sways, Uses Arms, and Hops.</li>
+                     </ul>
+                </div>
+            </div>
+
+            <div id="proficiency" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">SFST Proficiency Examination Checklist</h2>
+                    <p class="text-sm text-gray-700 mb-4">Use this checklist to practice and self-assess your administration of the SFST battery. To pass, you must be able to explain and proficiently complete every step.</p>
+                    
+                    <div id="proficiency-checklist" class="space-y-4">
+                        <!-- Checklists will be generated by JS -->
+                    </div>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Maintaining an SFST Log</h2>
+                     <p class="text-sm text-gray-700">An SFST log is a critical tool for documenting your experience and proficiency. It is highly recommended by IACP and NHTSA and can be invaluable in establishing your credibility in court.</p>
+                     <h4 class="font-semibold mt-3">Essential Components of an SFST Log:</h4>
+                      <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                        <li>Date of SFST administration</li>
+                        <li>Subject's name/identifier</li>
+                        <li>Results of each test (number of clues)</li>
+                        <li>Your classification based on SFSTs (BAC +/- .08)</li>
+                        <li>Final action (Arrest / No Arrest)</li>
+                        <li>Subject's measured BAC (if available)</li>
+                      </ul>
+                 </div>
+            </div>
+
+            <div id="notes" class="tab-content space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Processing, Reporting, & Testimony</h2>
+                    <p class="text-sm text-gray-700 mb-2">The arrest is not the end of the process. Proper processing, clear report writing, and professional testimony are essential for a successful prosecution.</p>
+                    <h4 class="font-semibold mt-3">Post-Arrest Processing Sequence:</h4>
+                    <ol class="list-decimal list-inside text-sm text-gray-700">
+                        <li>Inform driver they are under arrest, pat down/frisk, and handcuff.</li>
+                        <li>Secure defendant in patrol vehicle and secure their vehicle/property.</li>
+                        <li>Transport to appropriate facility.</li>
+                        <li>Read Implied Consent rights and request chemical test.</li>
+                        <li>Administer evidentiary test (or log refusal).</li>
+                        <li>Read Miranda rights before post-arrest questioning.</li>
+                        <li>Complete all required reports.</li>
+                    </ol>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                     <h2 class="text-xl font-bold mb-4 border-b pb-2">Sample Narrative Report: The Case of "Jarod Primo"</h2>
+                     <p class="text-sm text-gray-700 mb-4">This sample report demonstrates the block outline format and the level of detail required to "paint a picture" for the prosecutor and court.</p>
+                     <div class="text-xs bg-gray-50 p-4 rounded-lg border space-y-2">
+                        <p><strong>First Observations:</strong> On XX-XX-XX at approximately 9:00 p.m., I was patrolling northbound on State Road 113... I observed a white sport utility vehicle traveling ahead of me... I noticed the S/V drift outside of its travel lane to the left, crossing the line divider the entire width of its left side tires. The vehicle corrected its path, returned to the right lane, and then drifted to the left again... As I moved closer to the vehicle, I noticed there was no license plate displayed on the rear of the S/V. I signaled for the vehicle to stop by activating my emergency lights. The driver did not respond for approximately 700-800 feet, so I activated an audible siren... the driver reacted... and exited the freeway... At the foot of the ramp the S/V did not stop at the stop sign or signal his turn but rolled through it...</p>
+                        <p><strong>Observations After the Stop:</strong> I approached the S/V on the passenger side... I immediately noticed the driver had red, bloodshot, watery eyes. I advised him of the reasons for the stop... I requested his driver’s license, registration, and insurance. The driver handed me a visa credit card... He did not attempt to produce his registration or insurance card... I noticed his speech was slurred when he was speaking to me and I detected the odor of an alcoholic beverage that was greater when he spoke... I asked him how much alcohol he had consumed tonight, and he replied, “Just a couple of drinks.”... When he stepped from the vehicle he was unsteady on his feet and staggered slightly as he walked towards the front of the vehicle...</p>
+                         <p><strong>Field Sobriety Tests:</strong> This evaluation was performed on the west shoulder of CR 100 Drive... The evaluation surface was level packed dirt... HGN: I observed lack of smooth pursuit, distinct and sustained nystagmus at maximum deviation, and an onset of nystagmus prior to 45 degrees in both of Primo’s eyes... WAT: (Instruction Stage) Lost balance (feet broke apart) and swayed noticeably from side to side. (Walking Stage) Raised left arm over 6 inches away from body to assist with balance at steps 3 and 5... Missed heel to toe once... Turn: Primo only took one step during the turn instead of several small steps as instructed... OLS: Primo raised his right foot... He put his foot down on counts 1010 and 1014. He used his arms for balance... and was swaying... He hopped on 1013. He counted to 1014 during the thirty seconds of the test.</p>
+                         <p><strong>Arrest:</strong> Based on the following information, I formed the opinion that Primo was driving under the influence: Driving at night with no license plate, Weaving out of his lane..., Failing to stop for stop sign..., divided attention problems while retrieving his license..., His red, bloodshot, watery eyes and slurred speech, His admissions..., Staggering after exiting vehicle, Odor of alcoholic beverage..., signs of impairment as he performed the SFSTs. I arrested Primo for driving under the influence... at 9:20 p.m. He provided two breath samples of 0.095 and 0.092...</p>
+                     </div>
+                 </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                     <h2 class="text-xl font-bold mb-4 border-b pb-2">Trial Tips & Courtroom Decorum</h2>
+                     <div class="grid md:grid-cols-2 gap-6 text-sm">
+                         <div>
+                            <h4 class="font-semibold">Preparation</h4>
+                             <ul class="list-disc list-inside space-y-1">
+                                 <li>Review your entire report and notes before court.</li>
+                                 <li>Mentally organize the testimony chronologically (Phase 1, 2, 3).</li>
+                                 <li>Have a pre-trial conference with the prosecutor. Discuss strengths, weaknesses, and potential defense questions.</li>
+                             </ul>
+                         </div>
+                         <div>
+                             <h4 class="font-semibold">On the Stand</h4>
+                             <ul class="list-disc list-inside space-y-1">
+                                 <li>**TELL THE TRUTH.** Your credibility is paramount.</li>
+                                 <li>Listen carefully to the full question before answering. It's okay to say "I don't know" or "I don't recall."</li>
+                                 <li>Speak loudly, clearly, and in plain language. Avoid jargon.</li>
+                                 <li>Look at the judge or jury when you answer, not the attorney.</li>
+                                 <li>Remain professional and courteous, even during cross-examination. Do not argue.</li>
+                                 <li>Testify to what you observed; do not say the subject "passed" or "failed" the tests.</li>
+                             </ul>
+                         </div>
+                     </div>
+                 </div>
             </div>
 
             <div id="knowledge-check" class="tab-content">
                  <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h2 class="text-2xl font-bold mb-4">Knowledge Check</h2>
-                    <p class="mb-6 text-gray-600">Test your understanding of the material.</p>
+                    <h2 class="text-2xl font-bold mb-4">Comprehensive Knowledge Check</h2>
+                    <p class="mb-6 text-gray-600">Test your understanding of all material. These questions are designed to be challenging and reflect what you may be asked in a practical exam.</p>
                     <div id="quiz-container" class="space-y-8"></div>
                     <div class="mt-8 text-center">
-                        <button id="check-answers-btn" class="bg-red-700 text-white font-bold py-2 px-6 rounded-lg hover:bg-red-800 transition-colors">Check Answers</button>
+                        <button id="check-answers-btn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors">Check Answers</button>
                     </div>
+                </div>
+            </div>
+            
+            <div id="glossary" class="tab-content">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Glossary of Terms</h2>
+                    <div id="glossary-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-sm"></div>
                 </div>
             </div>
 
             <div id="resources" class="tab-content">
                 <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h2 class="text-2xl font-bold mb-4">Statutory & Organizational Resources</h2>
-                    <p class="mb-6 text-gray-600">Quick links to the laws and organizations referenced in this guide.</p>
+                    <h2 class="text-2xl font-bold mb-4">Research & Resources</h2>
+                    <p class="mb-6 text-gray-600">Links to key research studies and NHTSA publications referenced in the SFST curriculum.</p>
                     <div id="resources-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm"></div>
                 </div>
             </div>
@@ -333,82 +712,262 @@
         document.addEventListener('DOMContentLoaded', function() {
             const tabs = document.querySelectorAll('#tabs button');
             const tabContents = document.querySelectorAll('.tab-content');
+            
+            const savedTab = localStorage.getItem('activeSFSTTab') || 'overview';
+            
+            tabs.forEach(t => t.classList.remove('active'));
+            tabContents.forEach(c => c.classList.remove('active'));
+            
+            const activeTabButton = document.querySelector(`button[data-tab="${savedTab}"]`);
+            const activeTabContent = document.getElementById(savedTab);
+            
+            if (activeTabButton && activeTabContent) {
+                activeTabButton.classList.add('active');
+                activeTabContent.classList.add('active');
+            } else {
+                 document.querySelector('button[data-tab="overview"]').classList.add('active');
+                 document.getElementById('overview').classList.add('active');
+            }
 
             tabs.forEach(tab => {
                 tab.addEventListener('click', () => {
+                    const tabId = tab.dataset.tab;
                     tabs.forEach(t => t.classList.remove('active'));
                     tabContents.forEach(c => c.classList.remove('active'));
                     tab.classList.add('active');
-                    document.getElementById(tab.dataset.tab).classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                    localStorage.setItem('activeSFSTTab', tabId);
                 });
             });
-
-            const quizData = [
-                { question: "1. What are the three phases of DWI detection as defined by NHTSA?", options: ["The Stop, The Contact, The Arrest", "Observation, Interaction, Testing", "Vehicle in Motion, Personal Contact, Pre-Arrest Screening", "Suspicion, Probable Cause, Arrest"], answer: "Vehicle in Motion, Personal Contact, Pre-Arrest Screening", explanation: "The three standardized phases are Vehicle in Motion, Personal Contact, and Pre-Arrest Screening (SFSTs)." },
-                { question: "2. A driver is arrested for DWI after a crash that caused the death of another person. The driver refuses to provide a blood sample. What must an officer do?", options: ["Honor the refusal and release the driver.", "Get a search warrant for the blood.", "Take the driver's blood based on the mandatory blood draw statute.", "Ask for a breath sample instead."], answer: "Take the driver's blood based on the mandatory blood draw statute.", explanation: "Under TC §724.012, an officer SHALL require a specimen if the DWI arrest involves a crash where someone has died or suffered serious bodily injury. This is a statutory exception to the warrant requirement." },
-                { question: "3. The legal principle that every person who operates a motor vehicle on a public roadway in Texas has already agreed to provide a breath or blood sample upon a lawful DWI arrest is known as:", options: ["Statutory Warning", "Reasonable Suspicion", "Probable Cause", "Implied Consent"], answer: "Implied Consent", explanation: "TC §724.011 establishes the principle of Implied Consent. The act of driving itself is what constitutes consent." },
-                { question: "4. Which form must be read to a DWI suspect before requesting a chemical test, outlining the administrative penalties for refusal or failure?", options: ["DIC-23 (Sworn Report)", "DIC-24 (Statutory Warning)", "DIC-25 (Notice of Suspension)", "THP-51 (Mandatory Blood Draw Form)"], answer: "DIC-24 (Statutory Warning)", explanation: "The DIC-24 form contains the statutory warnings required by TC §724.015 and must be read to the suspect before requesting a specimen." },
-                { question: "5. A driver is arrested for DWI (1st Offense) with a 0.16 BAC. What is the most serious offense they have committed?", options: ["Class B Misdemeanor DWI", "Class A Misdemeanor DWI", "State Jail Felony DWI", "3rd Degree Felony DWI"], answer: "Class A Misdemeanor DWI", explanation: "Under PC §49.04(d), a first-offense DWI is enhanced to a Class A Misdemeanor if the operator's alcohol concentration is 0.15 or more." },
-                { question: "6. An officer observes a vehicle weaving within its lane but never crossing the line. Based on their training, the officer believes the driver may be intoxicated and initiates a stop. This stop is justified by what case law?", options: ["Miranda v. Arizona", "Terry v. Ohio", "Curtis v. State", "Graham v. Connor"], answer: "Curtis v. State", explanation: "Curtis v. State specifically addresses this issue, holding that weaving within a lane can be sufficient for reasonable suspicion when viewed in light of an officer's training and experience." },
-                { question: "7. A person who refuses to provide a breath sample after being arrested for DWI faces an automatic driver's license suspension of at least:", options: ["30 days", "90 days", "180 days", "1 year"], answer: "180 days", explanation: "The statutory warning (DIC-24) states that a refusal to provide a specimen will result in a license suspension of not less than 180 days." },
-                { question: "8. Which of the following is NOT one of the three standardized field sobriety tests?", options: ["Horizontal Gaze Nystagmus", "Walk and Turn", "Alphabet Recital (A-Z)", "One-Leg Stand"], answer: "Alphabet Recital (A-Z)", explanation: "The three tests validated by NHTSA are HGN, Walk and Turn, and One-Leg Stand. Other tests like the alphabet recital are not standardized and carry less weight." },
-                { question: "9. An officer serves a DIC-25 (Notice of Suspension) on a DWI suspect. What is the purpose of this form?", options: ["To get a sworn statement from the officer.", "To warn the suspect of the consequences.", "To act as the official suspension notice and a temporary license.", "To request a blood sample."], answer: "To act as the official suspension notice and a temporary license.", explanation: "The DIC-25 is served on a person who refuses or fails a chemical test. It notifies them that their license is suspended and also serves as a temporary permit to drive for a specific period." },
-                { question: "10. Bob knows his friend Bill's driver's license is suspended. He lets Bill borrow his car to go to the store. Bill gets stopped by the police. Besides Bill being arrested for DWLI, what offense has Bob committed?", options: ["No offense, he wasn't driving.", "Hindering Apprehension", "Allowing Dangerous Driver to Borrow Motor Vehicle", "Conspiracy to Commit DWLI"], answer: "Allowing Dangerous Driver to Borrow Motor Vehicle", explanation: "Under TC §705.001, Bob, as the owner, committed an offense by knowingly permitting an unlicensed person to operate his vehicle on a highway." },
-                { question: "11. An intoxicated driver causes a crash that results in a broken arm for the other driver. What is the most appropriate charge?", options: ["DWI", "Aggravated Assault with a Deadly Weapon", "Intoxication Assault", "Intoxication Manslaughter"], answer: "Intoxication Assault", explanation: "A broken bone constitutes a 'protracted loss or impairment of the function of any bodily member,' which meets the definition of Serious Bodily Injury under the Penal Code. Therefore, Intoxication Assault (PC §49.07) is the correct charge." },
-                { question: "12. An officer finds a driver unconscious behind the wheel after a single-vehicle crash. The driver smells strongly of alcohol. Under TC §724.014, can the officer get a blood sample?", options: ["No, the driver cannot give consent.", "Yes, because being unconscious means consent is not withdrawn.", "No, a warrant is always required for blood.", "Yes, but only if the driver's family agrees."], answer: "Yes, because being unconscious means consent is not withdrawn.", explanation: "TC §724.014 (Person Incapable of Refusal) states that an unconscious person is considered not to have withdrawn their implied consent, so a specimen may be taken." },
-                { question: "13. What is the primary goal of Phase Two (Personal Contact) of the DWI investigation?", options: ["To decide if there's reasonable suspicion to stop the vehicle.", "To determine if there's probable cause to arrest.", "To decide whether to ask the driver to exit the vehicle for SFSTs.", "To issue a citation for the initial traffic violation."], answer: "To decide whether to ask the driver to exit the vehicle for SFSTs.", explanation: "During Phase Two, the officer uses their observations of the driver (sight, sound, smell) to determine if there is enough evidence of intoxication to proceed to the next phase, which is pre-arrest screening (SFSTs)." },
-                { question: "14. A driver is arrested for DWI with a 14-year-old child in the car. What is the highest offense level this can be charged as?", options: ["Class A Misdemeanor", "State Jail Felony", "3rd Degree Felony", "2nd Degree Felony"], answer: "State Jail Felony", explanation: "PC §49.045 enhances a DWI to a State Jail Felony if the vehicle is occupied by a passenger who is younger than 15 years of age." },
-                { question: "15. An intoxicated driver causes a crash that results in the death of their own passenger. What is the most appropriate charge?", options: ["DWI", "Murder", "Manslaughter", "Intoxication Manslaughter"], answer: "Intoxication Manslaughter", explanation: "PC §49.08 applies when an intoxicated operator causes the death of 'another,' which includes passengers in their own vehicle." },
-                { question: "16. For a DWI blood draw, who is legally qualified to take the specimen?", options: ["Any peace officer", "An EMT or paramedic", "A physician, qualified technician, RN, or LVN", "The suspect's personal doctor only"], answer: "A physician, qualified technician, RN, or LVN", explanation: "TC §724.017 specifies a limited list of medical professionals who are authorized to take a blood specimen at the request of a peace officer." },
-                { question: "17. A DWI suspect refuses a breath test. There are no mandatory draw conditions. What is the officer's next legal step to get a sample?", options: ["Release the suspect.", "Charge them with another crime.", "Obtain a search warrant for their blood.", "Hold them until they consent."], answer: "Obtain a search warrant for their blood.", explanation: "Under TC §724.013, if a person refuses and there are no exceptions, a specimen may not be taken. The officer's only recourse to compel a sample is to seek a search warrant from a neutral magistrate." },
-                { question: "18. After providing a blood sample, the suspect has a right to what?", options: ["An immediate release from custody.", "A free phone call.", "Have their own expert perform an additional analysis.", "Refuse to answer any more questions."], answer: "Have their own expert perform an additional analysis.", explanation: "TC §724.019 grants the person who provided a specimen the right to have a physician, chemist, or other qualified person of their own choosing perform an independent analysis on that specimen." }
+            
+            const resourcesData = [
+                 { name: "NHTSA: Horizontal Gaze Nystagmus - The Science and the Law", url: "https://www.nhtsa.gov/sites/nhtsa.gov/files/documents/horizontal_gaze_nystagmus-_the_science_and_the_law.pdf" },
+                { name: "San Diego (1998) SFST Validation Study", url: "https://www.nhtsa.gov/sites/nhtsa.dot.gov/files/808839.pdf" },
+                { name: "Florida (1997) SFST Validation Study", url: "https://rosap.ntl.bts.gov/view/dot/2513" },
+                { name: "Colorado (1995) SFST Validation Study", url: "https://rosap.ntl.bts.gov/view/dot/2512" },
+                { name: "NHTSA DWI Detection and SFST Training Resources", url: "https://www.nhtsa.gov/dwi-detection-and-standardized-field-sobriety-test-sfst-resources" }
             ];
 
-            const quizContainer = document.getElementById('quiz-container');
-            quizData.forEach((q, index) => {
-                const questionDiv = document.createElement('div');
-                questionDiv.className = 'quiz-question';
-                let optionsHtml = q.options.map(option => `
-                    <label class="block"><input type="radio" name="q${index}" value="${option}" class="mr-2">${option}</label>
-                `).join('');
-                questionDiv.innerHTML = `<p class="font-semibold mb-2">${q.question}</p><div class="space-y-2">${optionsHtml}</div><div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>`;
-                quizContainer.appendChild(questionDiv);
-            });
-
-            document.getElementById('check-answers-btn').addEventListener('click', () => {
-                quizData.forEach((q, index) => {
-                    const selected = document.querySelector(`input[name="q${index}"]:checked`);
-                    const feedback = document.querySelectorAll('.feedback')[index];
-                    feedback.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
-                    if (selected && selected.value === q.answer) {
-                        feedback.textContent = `Correct! ${q.explanation}`;
-                        feedback.classList.add('bg-green-100', 'text-green-800');
-                    } else {
-                        feedback.textContent = `Incorrect. The correct answer is "${q.answer}". ${q.explanation}`;
-                        feedback.classList.add('bg-red-100', 'text-red-800');
+            const resourcesList = document.getElementById('resources-list');
+            if (resourcesList) {
+                resourcesData.sort((a, b) => a.name.localeCompare(b.name));
+                resourcesData.forEach(res => {
+                    const linkDiv = document.createElement('div');
+                    linkDiv.className = "bg-gray-50 p-3 rounded-lg hover:bg-gray-100";
+                    const link = document.createElement('a');
+                    link.href = res.url;
+                    link.target = '_blank';
+                    link.rel = 'noopener noreferrer';
+                    link.className = 'text-blue-600 hover:underline font-semibold';
+                    link.innerHTML = `<i class="fas fa-external-link-alt mr-2"></i>${res.name}`;
+                    linkDiv.appendChild(link);
+                    resourcesList.appendChild(linkDiv);
+                });
+            }
+            
+            document.querySelectorAll('.statute-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const resourceName = this.getAttribute('data-resource');
+                    const resource = resourcesData.find(r => r.name === resourceName);
+                    if (resource) {
+                        window.open(resource.url, '_blank', 'noopener,noreferrer');
                     }
                 });
             });
 
-            const resources = [
-                { name: "TC Ch. 705 - Allowing Dangerous Driver to Borrow Vehicle", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.705.htm"},
-                { name: "TC Ch. 724 - Implied Consent", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm" },
-                { name: "Penal Code Ch. 49 - Intoxication and Alcoholic Beverage Offenses", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.49.htm" },
-                { name: "NHTSA DWI Detection & SFST Resources", url: "https://www.nhtsa.gov/dwi-detection-and-standardized-field-sobriety-test-sfst-resources"}
+            const glossaryData = [
+                { term: "Alveolar Breath", definition: "Breath from the deepest part of the lung." },
+                { term: "Blood Alcohol Concentration (BAC)", definition: "The percentage of alcohol in a person's blood." },
+                { term: "Clue", definition: "Something that leads to the solution of a problem." },
+                { term: "Cue", definition: "A reminder or prompting as a signal to do something. A suggestion or a hint." },
+                { term: "Divided Attention Test", definition: "A test which requires the subject to concentrate on both mental and physical tasks at the same time." },
+                { term: "DWI Detection Process", definition: "The entire process of identifying and gathering evidence to determine if a subject should be arrested for a DWI violation. (Phase One, Two, Three)." },
+                { term: "Horizontal Gaze Nystagmus (HGN)", definition: "Involuntary jerking of the eyes occurring as the eyes gaze to the side." },
+                { term: "Implied Consent Law", definition: "Suspected DWI drivers are deemed to have given their consent to submit to chemical testing." },
+                { term: "Nystagmus", definition: "An involuntary jerking of the eyes." },
+                { term: "Per Se", definition: "Used to describe a law which makes it illegal to drive while having a certain percentage of alcohol in the blood or breath." },
+                { term: "Probable Cause", definition: "More than mere suspicion; facts and circumstances sufficient to warrant a person of reasonable caution to believe that an offense has been or is being committed." },
+                { term: "Psychophysical Tests", definition: "Methods of investigating the mental (psycho-) and physical characteristics of a person suspected of alcohol or drug impairment." },
+                { term: "Reasonable Suspicion", definition: "Less than probable cause but more than mere suspicion; exists when an officer can articulate that criminal activity is afoot." },
+                { term: "Standardized Field Sobriety Tests (SFST)", definition: "HGN, Walk and Turn, and One Leg Stand." },
+                { term: "Vertical Gaze Nystagmus (VGN)", definition: "An involuntary jerking of the eyes (up and down) which occurs when the eyes gaze upward at maximum elevation." }
             ];
-            const resourcesList = document.getElementById('resources-list');
-            resources.sort((a, b) => a.name.localeCompare(b.name));
-            resources.forEach(res => {
-                const link = document.createElement('a');
-                link.href = res.url;
-                link.target = '_blank';
-                link.className = 'text-red-800 hover:underline';
-                link.textContent = res.name;
-                resourcesList.appendChild(link);
-            });
+
+            const glossaryList = document.getElementById('glossary-list');
+            if(glossaryList) {
+                glossaryData.sort((a,b) => a.term.localeCompare(b.term)).forEach(item => {
+                    const termDiv = document.createElement('div');
+                    termDiv.className = "bg-gray-50 p-4 rounded-lg";
+                    termDiv.innerHTML = `<h4 class="font-bold text-gray-800">${item.term}</h4><p class="text-gray-600">${item.definition}</p>`;
+                    glossaryList.appendChild(termDiv);
+                });
+            }
+            
+            const proficiencyData = {
+                "Horizontal Gaze Nystagmus": [
+                    "Have subject remove glasses if worn.",
+                    "Gives proper verbal instructions.",
+                    "Stimulus held in proper position (12\"-15\" from nose, slightly above eye level).",
+                    "Check for equal pupil size and resting nystagmus.",
+                    "Check for equal tracking.",
+                    "Lack of Smooth Pursuit: Smooth 2-second pass from center to side. (Check L/R, Repeat).",
+                    "Distinct & Sustained Nystagmus at Maximum Deviation: Hold for min. 4 seconds. (Check L/R, Repeat).",
+                    "Onset of Nystagmus Prior to 45 Degrees: Slow 4-second pass to 45°. (Check L/R, Repeat).",
+                    "Total the clues.",
+                    "Check for Vertical Gaze Nystagmus. (Repeat)."
+                ],
+                "Walk and Turn": [
+                    "Instructions given from a safe position.",
+                    "Tells subject to assume heel-to-toe stance and demonstrates.",
+                    "Tells subject not to begin until instructed and confirms understanding.",
+                    "Tells subject to take nine heel-to-toe steps and demonstrates.",
+                    "Explains and demonstrates turning procedure.",
+                    "Tells subject to return on the line taking nine heel-to-toe steps.",
+                    "Tells subject to count steps out loud.",
+                    "Tells subject to look at feet while walking.",
+                    "Tells subject not to raise arms from sides.",
+                    "Tells subject not to stop walking once they begin.",
+                    "Asks subject if all instructions are understood."
+                ],
+                "One Leg Stand": [
+                    "Instructions given from a safe position.",
+                    "Tells subject to stand straight, feet together, and hold arms at sides.",
+                    "Tells subject not to begin test until instructed and confirms understanding.",
+                    "Tells subject to raise one leg approx. 6\" from ground, foot parallel, and demonstrates.",
+                    "Tells subject to keep both legs straight and to look at elevated foot.",
+                    "Tells subject to count out loud ('one thousand one...') until told to stop, and demonstrates.",
+                    "Asks subject if all instructions are understood.",
+                    "Checks actual time subject holds leg up (Times for 30 seconds)."
+                ]
+            };
+
+            const checklistContainer = document.getElementById('proficiency-checklist');
+            if (checklistContainer) {
+                for (const test in proficiencyData) {
+                    const testSection = document.createElement('div');
+                    testSection.innerHTML = `<h3 class="text-lg font-semibold mb-2">${test}</h3>`;
+                    const list = document.createElement('div');
+                    proficiencyData[test].forEach((item, index) => {
+                        const itemDiv = document.createElement('div');
+                        itemDiv.className = 'checklist-item';
+                        itemDiv.innerHTML = `
+                            <input type="checkbox" id="${test.replace(/\s+/g, '-')}-${index}" class="form-checkbox h-5 w-5 text-blue-600 rounded">
+                            <label for="${test.replace(/\s+/g, '-')}-${index}" class="ml-3 text-sm text-gray-700">${item}</label>
+                        `;
+                        list.appendChild(itemDiv);
+                    });
+                    testSection.appendChild(list);
+                    checklistContainer.appendChild(testSection);
+                }
+            }
+
+
+            const quizData = [
+                // Questions 1-50: Comprehensive Review
+                 { question: "1. The concept of 'General Deterrence' is primarily based on what?", options: ["The severity of punishment", "The public's fear of being arrested", "Public service announcements", "The number of treatment facilities"], answer: "The public's fear of being arrested", explanation: "General Deterrence relies on creating a credible threat of arrest in the minds of the public to discourage impaired driving." },
+                { question: "2. The San Diego SFST Validation Study (1998) is the most current primary research. What was its finding on the percentage of correct ARREST decisions at a 0.08 BAC?", options: ["86%", "95%", "91%", "88%"], answer: "91%", explanation: "The San Diego study found a 91% correct arrest decision rate, providing strong validation for the SFST battery at the 0.08 BAC level." },
+                { question: "3. 'Standardized Criteria' refers to what specific element of the SFSTs?", options: ["The way the instructions are given", "The specific movements to look for", "The number of clues required for a decision point", "The location of the test"], answer: "The number of clues required for a decision point", explanation: "Standardized Criteria specifically refers to the decision points (e.g., 4 of 6 clues for HGN, 2 of 8 for WAT) that indicate likely impairment." },
+                { question: "4. What is the average rate at which the human body eliminates alcohol?", options: ["0.005 per hour", "0.015 per hour", "0.025 per hour", "It depends on what you drink"], answer: "0.015 per hour", explanation: "The liver metabolizes alcohol at a relatively fixed rate, which averages to a drop in BAC of about 0.015 per hour." },
+                { question: "5. What is the key principle regarding the standardized elements of the SFSTs?", options: ["They can be modified based on weather", "If any element is changed, the validity may be compromised", "Only the clues need to be standardized", "They are suggestions, not requirements"], answer: "If any element is changed, the validity may be compromised", explanation: "The scientific validity of the SFSTs depends on administering them in the prescribed, standardized manner every time." },
+                { question: "6. An officer smells the odor of an alcoholic beverage and sees an open container in the car. These observations belong to which phase of DWI detection?", options: ["Phase One", "Phase Two", "Phase Three", "Post-Arrest"], answer: "Phase Two", explanation: "These are sensory clues gathered during Phase Two: Personal Contact, specifically the face-to-face interview with the driver." },
+                { question: "7. The pre-exit 'Count Down' technique is most effective when the numbers are...", options: ["Easy to remember, like 30 to 20", "Counted forward, not backward", "Non-round, like 68 to 53", "Counted silently by the driver"], answer: "Non-round, like 68 to 53", explanation: "Using starting and stopping points that do not end in 0 or 5 makes the divided attention task more difficult for an impaired person." },
+                { question: "8. What is the main decision an officer must make during Phase One: Vehicle in Motion?", options: ["Whether to arrest the driver", "Whether to administer SFSTs", "Whether there is reasonable suspicion to stop the vehicle", "Whether to issue a citation"], answer: "Whether there is reasonable suspicion to stop the vehicle", explanation: "Phase One is about observing driving cues to establish the legal standard of reasonable suspicion required for a traffic stop." },
+                { question: "9. What is the primary purpose of administering a Preliminary Breath Test (PBT)?", options: ["To determine the exact BAC for court", "To be the sole basis for a DWI arrest", "To confirm the presence of alcohol as the cause of observed impairment", "It must be given before SFSTs"], answer: "To confirm the presence of alcohol as the cause of observed impairment", explanation: "The PBT's main purpose is to establish that alcohol is the reason for the impairment seen during the SFSTs and other observations. It is not the sole basis for arrest." },
+                { question: "10. A driver 'climbs' out of their vehicle, using the door for support. This clue is observed during which specific task?", options: ["Phase One: Vehicle Stop", "Phase Two: Interview", "Phase Two: Observation of the Exit", "Phase Three: SFST Administration"], answer: "Phase Two: Observation of the Exit", explanation: "Observing how a person gets out of their car is the second task within Phase Two: Personal Contact." },
+                { question: "11. An officer is checking for Onset of Nystagmus Prior to 45 Degrees. The stimulus is moved from the center to the side in 2 seconds. Is this correct procedure?", options: ["Yes, 2 seconds is the standard time.", "No, it should take at least 4 seconds to reach 45 degrees.", "Yes, as long as the officer sees the jerking.", "No, the stimulus should be moved as fast as possible."], answer: "No, it should take at least 4 seconds to reach 45 degrees.", explanation: "The stimulus must be moved slowly (taking at least 4 seconds to reach 45 degrees) to allow the officer to accurately pinpoint the angle of onset." },
+                { question: "12. A subject's pupils are noticeably unequal in size. What should the officer do?", options: ["Immediately arrest for drug impairment.", "Note the condition and proceed with HGN as it doesn't affect the test.", "Consider the possibility of a medical issue or injury and exercise caution.", "Ask the subject to close their eyes for 30 seconds to equalize them."], answer: "Consider the possibility of a medical issue or injury and exercise caution.", explanation: "Unequal pupil size is a potential indicator of a medical condition, head injury, or prosthetic eye. It's a critical part of the medical assessment prior to HGN." },
+                { question: "13. Nystagmus that is naturally present in everyone but is too small to be seen with the naked eye is called:", options: ["Optokinetic Nystagmus", "Pathological Nystagmus", "Vestibular Nystagmus", "Physiological Nystagmus"], answer: "Physiological Nystagmus", explanation: "Physiological Nystagmus is the natural, fine tremor of the eye that is not visible and will not be mistaken for HGN." },
+                { question: "14. For the HGN clue of 'Distinct and Sustained Nystagmus at Maximum Deviation' to be counted, the nystagmus must be present for a minimum of how many seconds?", options: ["2 seconds", "4 seconds", "10 seconds", "30 seconds"], answer: "4 seconds", explanation: "The jerking must be distinct and sustained for a minimum of 4 seconds. Less than that could be natural fatigue nystagmus, not an indicator of impairment." },
+                { question: "15. An officer observes VGN (Vertical Gaze Nystagmus) in a subject, but no clues of HGN. What might this indicate?", options: ["A very high dose of alcohol", "A medical condition", "The subject is faking the VGN", "This is a normal result for some people"], answer: "A medical condition", explanation: "VGN is typically associated with high doses of the same substances that cause HGN. If VGN is present but HGN is not, it could be indicative of a medical issue." },
+                { question: "16. During the Walk-and-Turn, a subject takes 8 steps down, turns correctly, and takes 9 steps back. How many clues are counted?", options: ["0", "1", "2", "3"], answer: "1", explanation: "The 'Incorrect number of steps' clue is counted only once, even if the wrong number is taken in both directions." },
+                { question: "17. A subject is given the WAT instructions and breaks the heel-to-toe stance twice to steady themselves but does not start early. How many clues?", options: ["0", "1", "2", "This cannot be determined"], answer: "1", explanation: "The clue 'Cannot keep balance while listening to instructions' is counted once, regardless of how many times the subject breaks the stance during the instruction phase." },
+                { question: "18. What is the minimum gap between the heel and toe to be marked as a 'Misses heel-to-toe' clue on the WAT?", options: ["Any gap at all", "More than 1/4 inch", "More than 1/2 inch", "More than 1 inch"], answer: "More than 1/2 inch", explanation: "The standardized criteria specify a gap of more than one-half inch is required to mark this clue." },
+                { question: "19. An officer fails to demonstrate the turn for the WAT test. How does this affect the test's validity?", options: ["It has no effect.", "It strengthens the evidence of impairment.", "It may compromise the validity of the test.", "It invalidates only the 'Improper turn' clue."], answer: "It may compromise the validity of the test.", explanation: "Failing to follow any of the standardized administrative procedures, such as demonstrating the turn, can compromise the scientific validity of the test." },
+                { question: "20. Which of these is NOT a specific limitation for the Walk-and-Turn test mentioned in the research?", options: ["Age over 65", "Back, leg, or inner ear problems", "Being 50+ pounds overweight", "Wearing heels over 2 inches"], answer: "Being 50+ pounds overweight", explanation: "Being 50+ pounds overweight is a specific limitation listed for the One-Leg Stand test, not the Walk-and-Turn test." },
+                { question: "21. For the One-Leg Stand, how long must the officer time the balance and counting stage?", options: ["15 seconds", "25 seconds", "30 seconds", "Until the subject puts their foot down"], answer: "30 seconds", explanation: "The officer must time the subject for 30 seconds. Research showed many impaired subjects could maintain balance for up to 25 seconds, making the 30-second mark a critical differentiator." },
+                { question: "22. On the OLS, a subject sways, raises their arms to shoulder height, and puts their foot down once at the 12-second mark. How many clues?", options: ["1", "2", "3", "4"], answer: "3", explanation: "The three observed clues are: Sways while balancing, Uses arms to balance (raised more than 6 inches), and Puts foot down." },
+                { question: "23. During the OLS, what should an officer do if the subject puts their foot down?", options: ["Stop the test immediately and record 4 clues.", "Tell them to pick their foot up and continue counting from where they left off.", "Tell them to start the test over from the beginning.", "Tell them to switch to the other foot."], answer: "Tell them to pick their foot up and continue counting from where they left off.", explanation: "Standardized procedure is to instruct the subject to resume the test and continue the count from the point it was interrupted. The test is only stopped if the subject cannot safely continue." },
+                { question: "24. The concept that safe driving requires multiple mental and physical abilities to be performed simultaneously is called:", options: ["Multi-tasking", "Divided Attention", "Psychophysical Ability", "Cognitive Function"], answer: "Divided Attention", explanation: "Divided attention is the core principle behind the WAT and OLS tests. They are designed to challenge a person's ability to focus on multiple things at once, a skill critical for safe driving." },
+                { question: "25. Which of the following is NOT one of the four standardized clues for the One-Leg Stand test?", options: ["Hopping", "Sways while balancing", "Starts too soon", "Uses arms to balance"], answer: "Starts too soon", explanation: "'Starts too soon' is a clue for the Walk-and-Turn test's instruction stage, not the One-Leg Stand." },
+                { question: "26. Why is it important to write descriptive field notes rather than just the number of clues?", options: ["It is required by law in every state.", "It helps to paint a clear picture of the impairment for the court.", "It is only necessary if you do not have video.", "It helps the driver remember what happened."], answer: "It helps to paint a clear picture of the impairment for the court.", explanation: "Descriptive notes provide specific, articulable facts that help the judge and jury understand the extent and nature of the driver's impairment beyond a simple score." },
+                { question: "27. What is the main decision an officer must make during Phase Three: Pre-Arrest Screening?", options: ["Should I stop the vehicle?", "Should the driver exit the vehicle?", "Is there probable cause to arrest for DWI?", "Should I issue a warning?"], answer: "Is there probable cause to arrest for DWI?", explanation: "Phase Three is the culmination of the investigation where the officer uses all gathered evidence, including the SFSTs, to determine if there is probable cause for arrest." },
+                { question: "28. An officer directs a subject to recite the alphabet starting with 'G' and stopping at 'W'. The subject starts at 'A' and continues to 'Z'. This is evidence of impairment gathered during which part of the detection process?", options: ["Phase One driving cues", "A pre-exit sobriety technique in Phase Two", "The One-Leg Stand test", "The HGN medical assessment"], answer: "A pre-exit sobriety technique in Phase Two", explanation: "The alphabet test is a non-standardized, pre-exit technique used in Phase Two to further assess divided attention before asking a subject to exit the vehicle." },
+                { question: "29. During the WAT, the subject takes 9 correct steps, but on the turn, they keep their front foot on the line but spin around without taking small steps. How should this be scored?", options: ["No clue, the front foot stayed on the line.", "One clue for Improper Turn.", "One clue for Stops while walking.", "One clue for Steps off line."], answer: "One clue for Improper Turn.", explanation: "An improper turn includes not following the instructions for the turn, such as spinning or pivoting, even if the lead foot remains on the line." },
+                { question: "30. A subject shows 2 clues on HGN, 1 clue on WAT, and 1 clue on OLS. The PBT result is 0.09. What is the most accurate statement?", options: ["The SFSTs indicate the subject is not impaired, but the PBT proves they are.", "The PBT result is invalid because the SFSTs didn't show enough clues.", "The totality of circumstances, including the PBT, supports impairment, even if SFST decision points weren't met.", "The officer must release the driver because no single test met the criteria for arrest."], answer: "The totality of circumstances, including the PBT, supports impairment, even if SFST decision points weren't met.", explanation: "The SFST decision points are guidelines, not absolute thresholds. An officer bases the arrest on all evidence. The PBT result helps confirm that alcohol is the source of the impairment indicated by the other clues." },
+                { question: "31. An officer is preparing to administer a PBT. The driver just used a mint-flavored breath spray. What must the officer do?", options: ["Administer the PBT immediately to get the strongest reading.", "Wait a minimum of 15-20 minutes before administering the PBT.", "Ask the driver to rinse their mouth with water, then test immediately.", "Do not administer the PBT as it is now contaminated."], answer: "Wait a minimum of 15-20 minutes before administering the PBT.", explanation: "Breath sprays contain alcohol and will cause 'residual mouth alcohol.' A 15-20 minute deprivation period is required to allow this to dissipate and ensure an accurate test." },
+                { question: "32. What is the name of the nystagmus that occurs when an impaired person is not sitting upright, causing fluid imbalance in the vestibular system?", options: ["Rotational Nystagmus", "Optokinetic Nystagmus", "Positional Alcohol Nystagmus (PAN)", "Pathological Nystagmus"], answer: "Positional Alcohol Nystagmus (PAN)", explanation: "PAN occurs when alcohol alters the specific gravity of inner-ear fluid, causing nystagmus when the head is in certain positions. It's why HGN is administered with the head upright." },
+                { question: "33. On the Walk-and-Turn test, the 'Uses Arms to Balance' clue is only marked if the arms are raised more than...", options: ["3 inches from the side", "6 inches from the side", "12 inches from the side", "Shoulder height"], answer: "6 inches from the side", explanation: "The standardized scoring requires the arms to be raised more than 6 inches from the side of the body to be counted as a clue." },
+                { question: "34. The entire DWI Detection Process culminates in what single decision?", options: ["Whether to give a PBT", "How many clues were observed", "The arrest/no arrest decision", "Whether to read Miranda rights"], answer: "The arrest/no arrest decision", explanation: "The entire process, from Phase One through Phase Three, is designed to gather sufficient probable cause to make the arrest decision." },
+                { question: "35. A driver is stopped for 'Varying Speed' and 'Failure to Signal.' These are examples of which two categories of Phase One driving cues?", options: ["Lane Position and Judgment", "Speed/Braking and Vigilance", "Judgment and Vigilance", "Lane Position and Speed/Braking"], answer: "Speed/Braking and Vigilance", explanation: "'Varying Speed' falls under Speed and Braking Problems, while 'Failure to Signal' is a classic example of a Vigilance Problem." },
+                { question: "36. An officer checks a subject's eyes and sees that the right eye tracks the stimulus, but the left eye does not move. This may indicate:", options: ["The subject is not paying attention.", "A high level of alcohol impairment.", "A neurological disorder or injury.", "The subject is blind in their left eye."], answer: "A neurological disorder or injury.", explanation: "Failure of the eyes to track together is a significant finding during the medical assessment that could point to a serious medical condition, not necessarily impairment." },
+                { question: "37. During the One-Leg Stand, a subject lowers their foot at a count of 'one thousand sixteen' and again at 'one thousand twenty-five'. How should this be documented in field notes?", options: ["Write 'Puts foot down twice'.", "Write the count numbers '1016' and '1025'.", "Check the 'Puts foot down' box twice.", "Circle the 'Puts foot down' clue."], answer: "Write the count numbers '1016' and '1025'.", explanation: "Standardized note-taking procedure is to record the specific count numbers when the foot is put down to provide the most detailed and accurate account of the subject's performance." },
+                { question: "38. Which of the three validated SFSTs is described as 'the most reliable' field sobriety test?", options: ["Walk and Turn", "One-Leg Stand", "Horizontal Gaze Nystagmus", "They are all equally reliable."], answer: "Horizontal Gaze Nystagmus", explanation: "HGN is consistently referred to as the most reliable and accurate of the three standardized tests due to its high accuracy rate and the involuntary nature of the clues." },
+                { question: "39. For VGN to be recorded, the jerking must be distinct, sustained, and observed for a minimum of four seconds at...", options: ["A 45-degree angle", "Maximum deviation to the side", "Maximum elevation (upward gaze)", "The center point"], answer: "Maximum elevation (upward gaze)", explanation: "VGN is specifically checked for when the eyes are held at maximum elevation (looking up) for at least four seconds." },
+                { question: "40. A subject is asked to count down from 58 to 41. They count '58, 57, 56, 55, 54, 53, 52, 51, 50, 49, 48, 47, 46, 45, 44, 43, 42, 41'. What, if any, errors were made?", options: ["No errors were made.", "The subject did not stop at 41.", "The subject counted too many numbers.", "The subject skipped a number."], answer: "No errors were made.", explanation: "This is a trick question to test attention to detail. The subject successfully completed the divided attention task as instructed without error." },
+                { question: "41. What is the key difference between the 'DWI/Under the Influence' statute and the 'Illegal Per Se' statute?", options: ["Per Se only applies to drugs.", "DWI requires proof of impairment, while Per Se only requires proof of BAC.", "DWI has higher penalties.", "Per Se is only used if the driver refuses a chemical test."], answer: "DWI requires proof of impairment, while Per Se only requires proof of BAC.", explanation: "The DWI statute focuses on demonstrating actual impairment through observations, while the Per Se statute makes having a BAC over the legal limit an offense in and of itself, regardless of observed impairment." },
+                { question: "42. A driver refuses to submit to a chemical test after a lawful DWI arrest. What is the most likely immediate consequence?", options: ["An additional criminal charge.", "Immediate conviction for DWI.", "Administrative license suspension/revocation.", "A mandatory blood draw."], answer: "Administrative license suspension/revocation.", explanation: "The Implied Consent law dictates that refusal to submit to a test carries administrative penalties against the driver's license, separate from the criminal DWI charge." },
+                { question: "43. Which drug category is unique in that it typically causes PUPIL CONSTRICTION?", options: ["CNS Depressants", "CNS Stimulants", "Hallucinogens", "Narcotic Analgesics"], answer: "Narcotic Analgesics", explanation: "Narcotic Analgesics (e.g., heroin, morphine, fentanyl) are the only category that consistently causes pupils to constrict." },
+                { question: "44. An officer observes HGN and VGN, but the subject's pupils appear normal. Which three drug categories could cause this combination of signs?", options: ["CNS Depressants, CNS Stimulants, Cannabis", "CNS Depressants, Dissociative Anesthetics, Inhalants", "Hallucinogens, Narcotic Analgesics, Cannabis", "CNS Stimulants, Hallucinogens, Inhalants"], answer: "CNS Depressants, Dissociative Anesthetics, Inhalants", explanation: "These three categories (the 'DID' drugs) are the only ones that cause both HGN and VGN. Pupil size is typically normal for all three." },
+                { question: "45. During courtroom testimony, who should the officer make eye contact with while answering questions from the defense attorney?", options: ["The defense attorney", "The prosecutor", "The judge or the jury", "The court reporter"], answer: "The judge or the jury", explanation: "The judge and/or jury are the finders of fact. Testimony should always be directed to them to build credibility and ensure they hear and understand the evidence." },
+                { question: "46. What is the most appropriate way for an officer to testify about a subject's performance on an SFST?", options: ["'The driver failed the test.'", "'The driver passed the test with two clues.'", "'I observed two clues of impairment, which indicates failure.'", "'I observed the driver step off the line and use their arms for balance.'"], answer: "'I observed the driver step off the line and use their arms for balance.'", explanation: "Officers should testify to the specific, objective facts they observed (the clues) and avoid subjective conclusions like 'pass' or 'fail'." },
+                { question: "47. Which of the following is an 'Excellent Cue' (≥50% probability) for detecting an impaired motorcyclist?", options: ["Following too closely", "Operating without lights at night", "Trouble with balance at a stop", "Recklessness"], answer: "Trouble with balance at a stop", explanation: "Trouble with balance at a stop is an Excellent Cue, highlighting the unique balance challenges of operating a motorcycle while impaired. The others are Good Cues." },
+                { question: "48. If a subject has a BAC of 0.15, what does the Mellanby Effect suggest about their perception of impairment?", options: ["They will feel equally impaired at all times.", "They will feel most impaired just before their BAC peaks, and less impaired as it falls.", "They will feel least impaired as their BAC is rising.", "It has no effect on perceived impairment."], answer: "They will feel most impaired just before their BAC peaks, and less impaired as it falls.", explanation: "The Mellanby Effect describes the phenomenon where the subjective feeling of intoxication is greater while BAC is rising and lessens as BAC falls, even if the BAC level is the same." },
+                { question: "49. A driver is arrested for DWI with a BAC of 0.06. Can they be convicted?", options: ["No, the BAC is below the 0.08 Per Se limit.", "Yes, if the officer's testimony and other evidence prove impairment beyond a reasonable doubt.", "Only if they were also under the influence of another drug.", "No, a BAC below 0.08 creates a legal presumption of sobriety."], answer: "Yes, if the officer's testimony and other evidence prove impairment beyond a reasonable doubt.", explanation: "Even below the Per Se limit, a driver can be convicted under the 'under the influence' portion of the DWI statute if the totality of the evidence (driving, SFSTs, etc.) proves impairment." },
+                { question: "50. Which of these is a key 'Trial Tip' for an officer before testifying?", options: ["Avoid talking to the prosecutor to remain unbiased.", "Memorize your report so you don't need to look at it.", "Review your report and have a pre-trial conference with the prosecutor.", "Wear all of your duty gear in the courtroom."], answer: "Review your report and have a pre-trial conference with the prosecutor.", explanation: "Thorough preparation, including reviewing all evidence and coordinating with the prosecutor, is essential for effective and credible testimony." },
+                { question: "51. What is the legal standard required for a law enforcement officer to make a traffic stop?", options: ["Proof beyond a reasonable doubt", "Probable Cause", "Reasonable Suspicion", "A mere hunch"], answer: "Reasonable Suspicion", explanation: "An officer needs reasonable suspicion—articulable facts that criminal activity is afoot—to justify a traffic stop. This is a lower standard than probable cause." },
+                { question: "52. If a driver successfully performs the Walk-and-Turn test by only exhibiting one clue, but then shows three clues on the One-Leg Stand test, what is the best course of action?", options: ["Release the driver, as they passed one test.", "Arrest the driver, as they failed the OLS.", "Continue the investigation, considering the totality of circumstances including performance on both tests.", "Administer the WAT test again to be sure."], answer: "Continue the investigation, considering the totality of circumstances including performance on both tests.", explanation: "The arrest decision is not based on a single test. The officer must consider all evidence, including clues from all tests, driving behavior, and personal observations." },
+                { question: "53. Which of the following is an example of a 'Vigilance Problem' driving cue?", options: ["Turning with a wide radius", "Following too closely", "Driving without headlights at night", "Varying speed"], answer: "Driving without headlights at night", explanation: "Vigilance relates to a driver's ability to pay attention to the tasks of driving. Forgetting to turn on headlights is a classic vigilance failure." },
+                { question: "54. An officer's field notes are subpoenaed for court. Why is it important that any shorthand used is consistent and describable?", options: ["So the defense attorney cannot understand them.", "So the officer can clearly explain their meaning during testimony.", "It is required for the notes to be considered evidence.", "It makes the report look more professional."], answer: "So the officer can clearly explain their meaning during testimony.", explanation: "If an officer cannot explain their own shorthand, it undermines their credibility and the reliability of their notes. Consistency is key to accurate recall and testimony." },
+                { question: "55. Which part of the body is responsible for metabolizing the vast majority of alcohol consumed?", options: ["Stomach", "Small Intestine", "Liver", "Kidneys"], answer: "Liver", explanation: "The liver is the primary organ for metabolizing alcohol, breaking it down at a steady rate through an enzymatic process." },
+                { question: "56. A subject's BAC is 0.16. Approximately how long will it take for their body to eliminate all of the alcohol?", options: ["About 5 hours", "About 8 hours", "Almost 11 hours", "16 hours"], answer: "Almost 11 hours", explanation: "Using the average elimination rate of 0.015 per hour, you can calculate the time: 0.16 / 0.015 = 10.67 hours." },
+                { question: "57. During the HGN test, an officer must check for which of the following *before* checking for the three clues?", options: ["Vertical Gaze Nystagmus", "Equal pupil size and equal tracking", "The subject's ability to count", "The subject's balance"], answer: "Equal pupil size and equal tracking", explanation: "The initial medical assessment for equal pupils and tracking is critical to rule out potential medical issues that could mimic nystagmus or affect the test." },
+                { question: "58. What is the purpose of having a subject count out loud during the Walk-and-Turn and One-Leg Stand tests?", options: ["To distract them from the physical task", "To test their memory of numbers", "To create a divided attention task", "To help the officer time the test"], answer: "To create a divided attention task", explanation: "Requiring the subject to simultaneously perform a physical task (balancing/walking) and a mental task (counting) is the essence of a divided attention test." },
+                { question: "59. Which of the seven drug categories will NOT cause HGN?", options: ["CNS Depressants", "Inhalants", "Narcotic Analgesics", "Dissociative Anesthetics"], answer: "Narcotic Analgesics", explanation: "Narcotic Analgesics, CNS Stimulants, Hallucinogens, and Cannabis do not cause HGN. The 'DID' drugs (Depressants, Inhalants, Dissociative Anesthetics) do." },
+                { question: "60. The 'Mellanby Effect' suggests that a driver may be most dangerous when:", options: ["Their BAC is rising, and they feel very drunk.", "Their BAC has peaked.", "Their BAC is falling, and they feel less impaired than they actually are.", "They have not eaten any food."], answer: "Their BAC is falling, and they feel less impaired than they actually are.", explanation: "The false sense of 'sobering up' while the BAC is still well above zero can lead to the dangerous decision to drive, even though impairment remains high." }
+            ];
+
+            const quizContainer = document.getElementById('quiz-container');
+            if (quizContainer) {
+                quizData.forEach((q, index) => {
+                    const questionDiv = document.createElement('div');
+                    questionDiv.className = 'quiz-question';
+                    let optionsHtml = q.options.map(option => `
+                        <label class="block"><input type="radio" name="q${index}" value="${option}" class="mr-2">${option}</label>
+                    `).join('');
+                    questionDiv.innerHTML = `
+                        <p class="font-semibold mb-2">${q.question}</p>
+                        <div class="space-y-2">${optionsHtml}</div>
+                        <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                    `;
+                    quizContainer.appendChild(questionDiv);
+                });
+            }
+
+            const checkAnswersBtn = document.getElementById('check-answers-btn');
+            if(checkAnswersBtn) {
+                checkAnswersBtn.addEventListener('click', () => {
+                    quizData.forEach((q, index) => {
+                        const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                        const feedback = document.querySelectorAll('.feedback')[index];
+                        feedback.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+                        if (selected && selected.value === q.answer) {
+                            feedback.textContent = `Correct! ${q.explanation}`;
+                            feedback.classList.add('bg-green-100', 'text-green-800');
+                        } else {
+                            const correctAnswerHtml = `<strong>${q.answer}</strong>`;
+                            feedback.innerHTML = `Incorrect. The correct answer is ${correctAnswerHtml}. ${q.explanation}`;
+                            feedback.classList.add('bg-red-100', 'text-red-800');
+                        }
+                    });
+                    const firstFeedback = document.querySelector('.feedback:not(.hidden)');
+                    if (firstFeedback) {
+                        firstFeedback.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                });
+            }
         });
     </script>
 </body>
 </html>
-
 

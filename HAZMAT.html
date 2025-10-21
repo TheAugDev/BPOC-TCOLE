@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Guide: HazMat Awareness & ICS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --header-bg: #1f2937;
+            --bg-color: #f3f4f6;
+            --tab-active-bg: #3b82f6;
+            --tab-active-text: #ffffff;
+            --card-bg: #ffffff;
+            --text-color: #111827;
+            --link-color: #2563eb;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://rsms.me/inter/inter.css');
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab.active {
+            background-color: var(--tab-active-bg);
+            color: var(--tab-active-text);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tab {
+            transition: all 0.3s ease-in-out;
+        }
+        .hazmat-placard {
+            width: 100px;
+            height: 100px;
+            border: 2px solid black;
+            transform: rotate(45deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 2rem auto;
+            position: relative;
+        }
+        .hazmat-placard-inner {
+            transform: rotate(-45deg);
+            text-align: center;
+            font-weight: bold;
+        }
+        .placard-1 { background-color: #ff6600; } /* Explosives */
+        .placard-2 { background-color: #ff0000; color: white; } /* Flammable Gas */
+        .placard-3 { background-color: #ff0000; color: white; } /* Flammable Liquid */
+        .placard-4-stripe { background: repeating-linear-gradient(45deg, white, white 10px, red 10px, red 20px); } /* Flammable Solid */
+        .placard-5 { background-color: #ffff00; } /* Oxidizer */
+        .placard-6 { background-color: #ffffff;} /* Poison */
+        .placard-7 { background-color: #ffff00; } /* Radioactive */
+        .placard-8-split {
+            background: linear-gradient(to bottom, white 50%, black 50%);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="bg-gray-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">
+                <i class="fas fa-biohazard mr-2"></i>HazMat Awareness & ICS
+            </h1>
+            <p class="text-sm text-gray-300">BPOC Chapter 42 | TCOLE Preparation</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-4 md:p-6">
+        <!-- Tab Navigation -->
+        <div class="mb-6 bg-white rounded-lg shadow-md overflow-x-auto">
+            <nav id="tabs" class="flex flex-row space-x-1 p-2">
+                <button data-tab="hazmat-cbrne" class="tab active flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-exclamation-triangle mr-2"></i> <span class="hidden md:inline">HazMat & CBRNE</span>
+                </button>
+                <button data-tab="toxicology" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-skull-crossbones mr-2"></i> <span class="hidden md:inline">Toxicology & Exposure</span>
+                </button>
+                <button data-tab="actions" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-running mr-2"></i> <span class="hidden md:inline">First Responder Actions</span>
+                </button>
+                <button data-tab="ppe-decon" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-user-shield mr-2"></i> <span class="hidden md:inline">PPE & Decon</span>
+                </button>
+                <button data-tab="nims-ics" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-sitemap mr-2"></i> <span class="hidden md:inline">NIMS & ICS</span>
+                </button>
+                <button data-tab="knowledge-check" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-question-circle mr-2"></i> <span class="hidden md:inline">Knowledge Check</span>
+                </button>
+                <button data-tab="resources" class="tab flex-1 md:flex-none flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg text-gray-600 hover:bg-blue-100">
+                    <i class="fas fa-link mr-2"></i> <span class="hidden md:inline">Resources</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Tab Content -->
+        <div id="tab-contents">
+            <!-- HazMat & CBRNE Tab -->
+            <div id="hazmat-cbrne" class="tab-content active space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Hazardous Materials (HAZMAT)</h2>
+                    <p class="text-sm font-semibold">Official DOT Definition:</p>
+                    <p class="text-sm text-gray-700">A substance or material capable of posing an unreasonable risk to health, safety, or property when transported in commerce. The term includes hazardous substances, hazardous wastes, marine pollutants, elevated temperature materials, and materials designated as hazardous in the Hazardous Materials Table (See <a href="https://www.ecfr.gov/current/title-49/subtitle-B/chapter-I/subchapter-C/part-172/subpart-B/section-172.101" target="_blank" class="text-blue-600 hover:underline">49 CFR 172.101</a>).</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">DOT Hazard Classes</h2>
+                    <p class="text-sm text-gray-700 mb-4">The DOT has identified nine hazard classes based on the dangers posed in transportation. These are often represented by placards.</p>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 text-center text-sm">
+                        <div><div class="hazmat-placard placard-1"><div class="hazmat-placard-inner"><i class="fas fa-bomb text-2xl"></i><p>1</p></div></div><p>Class 1: Explosives</p></div>
+                        <div><div class="hazmat-placard placard-2"><div class="hazmat-placard-inner"><i class="fas fa-fire text-2xl"></i><p>2</p></div></div><p>Class 2: Gases</p></div>
+                        <div><div class="hazmat-placard placard-3"><div class="hazmat-placard-inner"><i class="fas fa-fire-alt text-2xl"></i><p>3</p></div></div><p>Class 3: Flammable Liquids</p></div>
+                        <div><div class="hazmat-placard placard-4-stripe"><div class="hazmat-placard-inner"><i class="fas fa-fire text-2xl text-black"></i><p class="text-black">4</p></div></div><p>Class 4: Flammable Solids</p></div>
+                        <div><div class="hazmat-placard placard-5"><div class="hazmat-placard-inner"><i class="fas fa-circle-notch text-2xl"></i><p>5</p></div></div><p>Class 5: Oxidizers</p></div>
+                        <div><div class="hazmat-placard placard-6"><div class="hazmat-placard-inner"><i class="fas fa-skull-crossbones text-2xl"></i><p>6</p></div></div><p>Class 6: Poisons</p></div>
+                        <div><div class="hazmat-placard placard-7"><div class="hazmat-placard-inner"><i class="fas fa-radiation-alt text-2xl"></i><p>7</p></div></div><p>Class 7: Radioactive</p></div>
+                        <div><div class="hazmat-placard placard-8-split"><div class="hazmat-placard-inner"><i class="fas fa-burn text-2xl text-white"></i><p class="text-white">8</p></div></div><p>Class 8: Corrosives</p></div>
+                        <div><div class="hazmat-placard"><div class="hazmat-placard-inner"><p class="font-bold">MISC</p><p>9</p></div></div><p>Class 9: Miscellaneous</p></div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">CBRNE</h2>
+                    <p class="text-sm text-gray-700 mb-2">A simplified way to group hazardous materials that is useful for first responders.</p>
+                    <h4 class="font-semibold mt-3">Elements Checklist (The Components & Examples):</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Chemical:</strong> Toxic/Poisonous substances (e.g., chlorine, pesticides, nerve agents), Flammables (e.g., gasoline, propane), Oxidizers (e.g., oxygen, hydrogen peroxide), and Corrosives (e.g., sulfuric acid).</li>
+                        <li><strong>Biological:</strong> Living organisms or their toxins that cause injury or death (e.g., bacteria like Anthrax, viruses like Smallpox, biological toxins like Ricin).</li>
+                        <li><strong>Radiological:</strong> Materials that emit ionizing radiation (e.g., Alpha particles, Beta particles, Gamma rays).</li>
+                        <li><strong>Nuclear:</strong> Involves the fission or fusion of atoms, resulting in a powerful explosion and radiation.</li>
+                        <li><strong>Explosive:</strong> Materials that burn or decompose quickly, releasing a large amount of heat and gas (e.g., dynamite, C4, ANFO).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Toxicology & Exposure Tab -->
+            <div id="toxicology" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Basic Toxicology Terms</h2>
+                    <div class="space-y-3 text-sm">
+                        <p><strong>Toxicology:</strong> The study of adverse effects of chemicals or physical agents on living organisms.</p>
+                        <p><strong>Acute vs. Chronic Exposure:</strong> <strong>Acute</strong> is a short-term, high-dose event with harmful consequences. <strong>Chronic</strong> is a long-term, low-dose exposure with harmful consequences.</p>
+                        <p><strong>Threshold Limit Value (TLV):</strong> The level a worker can be exposed to day after day for a working lifetime without adverse health effects.</p>
+                        <p><strong>Immediately Dangerous to Life and Health (IDLH):</strong> Exposure likely to cause death, permanent adverse health effects, or prevent escape from such an environment.</p>
+                        <p><strong>Lethal Concentration (LC50):</strong> The concentration of a substance in the air required to kill half of a tested population.</p>
+                        <p><strong>Lethal Dose (LD50):</strong> The dose of a substance required to kill half of a tested population.</p>
+                        <p><strong>Material Safety Data Sheets (MSDS/SDS):</strong> A document with information on potential health effects and safe handling procedures for chemical products.</p>
+                        <p><strong>Radioactive Exposure:</strong> The level of radiation flux to which material or living tissue is exposed.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Common Routes of Exposure</h2>
+                    <h4 class="font-semibold mt-3">Elements Checklist:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Inhalation:</strong> Breathing in hazardous materials (gases, vapors, aerosols). The most common and rapid route.</li>
+                        <li><strong>Absorption:</strong> The material passes through skin, eyes, or mucous membranes.</li>
+                        <li><strong>Ingestion:</strong> Taking the material into the body through the mouth, either by eating/drinking a contaminated product (primary) or transferring it from a contaminated object (secondary).</li>
+                        <li><strong>Injection:</strong> The material enters the body through a puncture, cut, or abrasion.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Potential Effects of a CBRNE Incident</h2>
+                    <div class="grid md:grid-cols-3 gap-4 text-sm">
+                        <div><h4 class="font-semibold">Health Impacts:</h4><ul class="list-disc list-inside"><li>Death</li><li>Temporary impairment</li><li>Permanent disability</li><li>Psychological stress (PTSD)</li></ul></div>
+                        <div><h4 class="font-semibold">Property & Environment:</h4><ul class="list-disc list-inside"><li>Damage to water sources</li><li>Loss of productive lands</li><li>Destruction of food products</li><li>Inability to occupy structures</li></ul></div>
+                        <div><h4 class="font-semibold">Infrastructure Impacts:</h4><ul class="list-disc list-inside"><li>Disruption of transportation</li><li>Budget/resource strains</li><li>Reduction in services</li><li>Overwhelmed health care system</li></ul></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- First Responder Actions Tab -->
+            <div id="actions" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">The RAIN Principle</h2>
+                    <p class="text-sm text-gray-700 mb-2">The basic procedure for safeguarding lives at a CBRNE event.</p>
+                    <div class="space-y-3 text-sm">
+                        <div><p><strong><span class="font-bold text-blue-600">R</span>ecognize:</strong> Recognize the presence of a CBRNE threat.</p>
+                            <ul class="list-disc list-inside ml-6">
+                                <li><strong>Observations:</strong> Use your senses (odors, noises) and look for indicators (placards, signs, wind direction).</li>
+                                <li><strong>Assessment:</strong> Evaluate hazard level, casualties, and need for additional resources.</li>
+                                <li><strong>Plan:</strong> Formulate a response, exit strategy, and precautions.</li>
+                                <li><strong>Communicate:</strong> Relay information to dispatch, casualties, and others.</li>
+                                <li><strong>Respond:</strong> Establish perimeter, render first aid, and enable ICS.</li>
+                            </ul>
+                        </div>
+                        <p><strong><span class="font-bold text-blue-600">A</span>void:</strong> Avoid contamination and exposure. Stay uphill, upwind, and use distance and physical barriers. Be alert to changes in wind direction.</p>
+                        <p><strong><span class="font-bold text-blue-600">I</span>solate:</strong> Isolate the threat and the immediate area. Set and enforce a perimeter to limit the spread of contamination.</p>
+                        <p><strong><span class="font-bold text-blue-600">N</span>otify:</strong> Notify the appropriate response agency. Stay outside the perimeter and wait for qualified assistance.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Sources of On-Site Information</h2>
+                    <p class="text-sm text-gray-700 mb-2">Use these sources to identify the hazardous materials involved.</p>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Warnings and Indicators:</strong> Shipping manifests, placards, and container labels. The <a href="https://www.phmsa.dot.gov/training/hazmat/erg/emergency-response-guidebook-erg" target="_blank" class="text-blue-600 hover:underline">Emergency Response Guidebook (ERG)</a> is a key tool for interpreting these.</li>
+                        <li><strong>Interviews:</strong> Question the driver, witnesses, and victims about the materials.</li>
+                        <li><strong>Communications:</strong> Use TLETS to get information, and contact the shipper at the point-of-origin if possible.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- PPE & Decon Tab -->
+            <div id="ppe-decon" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Personal Protective Equipment (PPE)</h2>
+                    <p class="text-sm text-red-600 font-semibold mb-2">Warning: Only those trained in the use of PPE should attempt to use it. Law enforcement responders should not use any PPE above gloves and a particulate/droplet mask, except to escape a hazardous situation.</p>
+                    <h4 class="font-semibold mt-3">Levels of Personal Protection:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Level D:</strong> Basic work uniform, gloves, mask.</li>
+                        <li><strong>Level C:</strong> Air-purifying respirator, chemical-resistant clothing, double-layered gloves.</li>
+                        <li><strong>Level B:</strong> Self-Contained Breathing Apparatus (SCBA) + Level C protection.</li>
+                        <li><strong>Level A:</strong> Fully encapsulated, vapor-tight suit. Highest level of protection.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Decontamination (Decon) Concepts</h2>
+                    <p class="text-sm font-semibold mb-2">The goal is to "End the Exposure!"</p>
+                    <h4 class="font-semibold mt-3">Elements Checklist (Decon Methods):</h4>
+                     <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li><strong>Remove:</strong> Remove the contaminated clothing and items.</li>
+                        <li><strong>Dilute:</strong> Flush with large quantities of water.</li>
+                        <li><strong>Absorb:</strong> Use absorbent materials like sand or clay.</li>
+                        <li><strong>Neutralize:</strong> Use chemicals to make the substance less harmful (for trained personnel only).</li>
+                        <li><strong>Isolate:</strong> Contain the contaminated items.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- NIMS & ICS Tab -->
+            <div id="nims-ics" class="tab-content space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">National Incident Management System (NIMS)</h2>
+                    <p class="text-sm font-semibold">FEMA Definition:</p>
+                    <p class="text-sm text-gray-700">A systematic, proactive approach to guide departments and agencies at all levels to work together seamlessly and manage incidents involving all threats and hazards.</p>
+                    <h4 class="font-semibold mt-3">Key Benefits:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700">
+                        <li>Provides a unified approach and standardized command structure.</li>
+                        <li>Emphasizes preparedness, mutual aid, and resource management.</li>
+                        <li>Scalable and flexible for all incidents.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Incident Command System (ICS)</h2>
+                    <p class="text-sm font-semibold">Definition:</p>
+                    <p class="text-sm text-gray-700">A standardized on-scene emergency management system designed to enable effective and efficient incident management by integrating facilities, equipment, personnel, procedures, and communications within a common organizational structure.</p>
+                    <p class="text-sm text-gray-700 mt-2">ICS is a key component of NIMS, used by public and private agencies to organize field-level operations.</p>
+                </div>
+            </div>
+
+            <!-- Knowledge Check Tab -->
+            <div id="knowledge-check" class="tab-content">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Knowledge Check</h2>
+                    <p class="mb-6 text-gray-600">Test your understanding of the material.</p>
+                    <div id="quiz-container" class="space-y-8">
+                        <!-- Questions will be dynamically inserted here -->
+                    </div>
+                    <div class="mt-8 text-center">
+                        <button id="check-answers-btn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors">Check Answers</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resources Tab -->
+            <div id="resources" class="tab-content">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">External Resources</h2>
+                    <p class="mb-6 text-gray-600">Quick links to external websites and resources referenced in this guide.</p>
+                    <div id="resources-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+                        <!-- Links will be dynamically inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('#tabs button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                });
+            });
+
+            // --- QUIZ DATA ---
+            const quizData = [
+                {
+                    question: "1. What does the 'I' in the RAIN principle stand for?",
+                    options: ["Identify", "Isolate", "Investigate", "Inform"],
+                    answer: "Isolate",
+                    explanation: "The RAIN principle stands for Recognize, Avoid, Isolate, and Notify. 'Isolate' means to set a perimeter around the threat and immediate area."
+                },
+                {
+                    question: "2. According to the DOT, how many primary hazard classes are there for materials transported in commerce?",
+                    options: ["5", "7", "9", "12"],
+                    answer: "9",
+                    explanation: "The Department of Transportation has identified nine hazard classes based on the dangers posed in transportation, such as explosives, gases, and corrosives."
+                },
+                {
+                    question: "3. Which level of Personal Protective Equipment (PPE) provides the highest level of protection, using a fully encapsulated suit?",
+                    options: ["Level D", "Level C", "Level B", "Level A"],
+                    answer: "Level A",
+                    explanation: "Level A PPE is a fully encapsulated, vapor-tight suit that provides the highest level of protection against gases, vapors, and splashes."
+                },
+                {
+                    question: "4. The standardized, on-scene emergency management system used to coordinate a response is known as:",
+                    options: ["RAIN", "CBRNE", "NIMS", "ICS"],
+                    answer: "ICS",
+                    explanation: "The Incident Command System (ICS) is the standardized on-scene system for managing incidents. NIMS is the larger, nationwide framework that includes ICS."
+                },
+                {
+                    question: "5. A first responder's primary actions at a HazMat scene should be to:",
+                    options: ["Neutralize the chemical spill", "Rescue victims inside the hot zone", "Recognize, avoid, isolate, and notify", "Take a sample of the material for testing"],
+                    answer: "Recognize, avoid, isolate, and notify",
+                    explanation: "The RAIN principle outlines the key duties for a first responder at the awareness level: recognize the threat, avoid it, isolate the area, and notify specialists."
+                },
+                {
+                    question: "6. Which route of exposure is generally the most common and rapid for hazardous materials?",
+                    options: ["Ingestion", "Absorption", "Injection", "Inhalation"],
+                    answer: "Inhalation",
+                    explanation: "Breathing in hazardous materials as a gas, vapor, or aerosol is typically the fastest and most common way a substance can enter the body."
+                },
+                {
+                    question: "7. You are first on scene to a truck crash and see a placard with a skull and crossbones and the number '6'. What type of hazard are you likely dealing with?",
+                    options: ["Explosive", "Corrosive", "Poison/Toxic", "Radioactive"],
+                    answer: "Poison/Toxic",
+                    explanation: "Class 6 hazards are Toxic and Infectious Substances, commonly identified by the skull and crossbones symbol."
+                },
+                {
+                    question: "8. The toxicological term for the dose of a substance required to kill half of a tested population is:",
+                    options: ["TLV", "IDLH", "LC50", "LD50"],
+                    answer: "LD50",
+                    explanation: "Lethal Dose (LD50) is the dose that kills 50% of a test population. Lethal Concentration (LC50) refers to the concentration in the air."
+                },
+                {
+                    question: "9. When approaching a HazMat incident, what are the two most important factors for your positioning?",
+                    options: ["Downhill and downwind", "Uphill and upwind", "Close and visible", "Far and hidden"],
+                    answer: "Uphill and upwind",
+                    explanation: "Staying uphill and upwind prevents hazardous liquids from flowing toward you and airborne materials from blowing toward you."
+                },
+                {
+                    question: "10. Which of the following is NOT a component of NIMS?",
+                    options: ["Command and Management", "A specific tactical response plan", "Resource Management", "Communications and Information Management"],
+                    answer: "A specific tactical response plan",
+                    explanation: "NIMS is a flexible framework and template for incident management, not a specific response plan for any given incident."
+                },
+                {
+                    question: "11. A long-term, low-dose exposure to a chemical that results in harmful consequences is defined as:",
+                    options: ["Acute exposure", "Chronic exposure", "IDLH", "TLV"],
+                    answer: "Chronic exposure",
+                    explanation: "Chronic exposure refers to harmful effects resulting from long-term, low-dose contact with a substance, as opposed to acute (short-term, high-dose) exposure."
+                },
+                 {
+                    question: "12. The 'R' in the CBRNE acronym stands for:",
+                    options: ["Reactive", "Respiratory", "Radiological", "Response"],
+                    answer: "Radiological",
+                    explanation: "CBRNE stands for Chemical, Biological, Radiological, Nuclear, and Explosive."
+                }
+            ];
+
+            const quizContainer = document.getElementById('quiz-container');
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'quiz-question';
+                let optionsHtml = q.options.map(option => `
+                    <label class="block"><input type="radio" name="q${index}" value="${option}" class="mr-2">${option}</label>
+                `).join('');
+                questionDiv.innerHTML = `
+                    <p class="font-semibold mb-2">${q.question}</p>
+                    <div class="space-y-2">${optionsHtml}</div>
+                    <div class="feedback hidden mt-2 p-2 rounded-lg text-sm"></div>
+                `;
+                quizContainer.appendChild(questionDiv);
+            });
+
+            document.getElementById('check-answers-btn').addEventListener('click', () => {
+                quizData.forEach((q, index) => {
+                    const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                    const feedback = document.querySelectorAll('.feedback')[index];
+                    feedback.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+                    if (selected && selected.value === q.answer) {
+                        feedback.textContent = `Correct! ${q.explanation}`;
+                        feedback.classList.add('bg-green-100', 'text-green-800');
+                    } else {
+                        feedback.textContent = `Incorrect. The correct answer is "${q.answer}". ${q.explanation}`;
+                        feedback.classList.add('bg-red-100', 'text-red-800');
+                    }
+                });
+            });
+
+            // --- RESOURCES LIST ---
+            const resources = [
+                { name: "49 CFR 171.8 - Definitions", url: "https://www.ecfr.gov/current/title-49/subtitle-B/chapter-I/subchapter-C/part-171/subpart-A/section-171.8" },
+                { name: "49 CFR 172.101 - HazMat Table", url: "https://www.ecfr.gov/current/title-49/subtitle-B/chapter-I/subchapter-C/part-172/subpart-B/section-172.101" },
+                { name: "Emergency Response Guidebook (ERG)", url: "https://www.phmsa.dot.gov/training/hazmat/erg/emergency-response-guidebook-erg" },
+                { name: "FEMA - NIMS", url: "https://www.fema.gov/emergency-managers/nims" },
+                { name: "FEMA IS-100.C", url: "https://training.fema.gov/is/courseoverview.aspx?code=IS-100.c" },
+                { name: "FEMA IS-200.C", url: "https://training.fema.gov/is/courseoverview.aspx?code=IS-200.c" },
+                { name: "FEMA IS-700.B", url: "https://training.fema.gov/is/courseoverview.aspx?code=IS-700.b" },
+            ];
+            const resourcesList = document.getElementById('resources-list');
+            resources.sort((a, b) => a.name.localeCompare(b.name));
+            resources.forEach(res => {
+                const link = document.createElement('a');
+                link.href = res.url;
+                link.target = '_blank';
+                link.className = 'text-blue-600 hover:underline';
+                link.textContent = res.name;
+                resourcesList.appendChild(link);
+            });
+        });
+    </script>
+</body>
+</html>
+
