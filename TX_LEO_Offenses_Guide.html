@@ -39,6 +39,24 @@
             margin-top: 0.75rem;
             margin-bottom: 0.25rem;
         }
+        /* Style for the reference content tables */
+        .ref-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        .ref-table th, .ref-table td {
+            border: 1px solid #cbd5e1; /* border-slate-300 */
+            padding: 0.75rem;
+            text-align: left;
+        }
+        .ref-table th {
+            background-color: #f1f5f9; /* bg-slate-100 */
+            font-weight: 600;
+        }
+        .ref-table tr:nth-child(even) {
+            background-color: #f8fafc; /* bg-slate-50 */
+        }
     </style>
 </head>
 <body class="bg-slate-100 text-slate-800">
@@ -53,6 +71,19 @@
                     <input type="text" id="search-input" placeholder="Search offenses..." class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
                 </div>
             </header>
+            
+            <!-- Static Navigation for Reference Page -->
+            <div class="mb-4 border-b border-t border-slate-300 py-4">
+                <ul>
+                    <li>
+                        <a href="#" class="block nav-item-static w-full text-left p-2 rounded-md hover:bg-slate-300 transition font-semibold" data-id="reference_page">
+                            Definitions & Punishments
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Dynamic Navigation List for Offenses -->
             <div id="nav-list" class="flex-grow overflow-y-auto">
             </div>
         </nav>
@@ -63,6 +94,210 @@
     </div>
 
     <script>
+        // --- REFERENCE PAGE CONTENT ---
+        const referencePageContent = `
+            <div class="space-y-6">
+                <div>
+                    <h2 class="text-3xl font-bold text-slate-800">Reference: Definitions & Punishments</h2>
+                    <p class="text-slate-600">Key legal standards and punishment ladders for Texas.</p>
+                </div>
+
+                <!-- Culpable Mental States -->
+                <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200">
+                    <h3 class="text-xl font-semibold text-slate-700 border-b pb-2 mb-3">Culpable Mental States (Mens Rea) - TPC §6.03</h3>
+                    <p class="text-slate-600 mb-4">The mental state (guilty mind) required to commit a crime. You must be able to articulate which one applies.</p>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-lg text-slate-800">1. Intentionally</h4>
+                            <p class="text-slate-600">A person acts intentionally...when it is their <strong>conscious objective or desire</strong> to engage in the conduct or cause the result.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg text-slate-800">2. Knowingly</h4>
+                            <p class="text-slate-600">A person acts knowingly...when they are <strong>aware of the nature of their conduct</strong>...or that the circumstances exist. A person acts knowingly...when they are <strong>aware that their conduct is reasonably certain</strong> to cause the result.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg text-slate-800">3. Recklessly</h4>
+                            <p class="text-slate-600">A person acts recklessly...when they are <strong>aware of but consciously disregard</strong> a substantial and unjustifiable risk that the circumstances exist or the result will occur. The risk's disregard must be a <strong>gross deviation</strong> from the standard of care an ordinary person would exercise.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg text-slate-800">4. Criminal Negligence</h4>
+                            <p class="text-slate-600">A person acts with criminal negligence...when they <strong>ought to be aware</strong> of a substantial and unjustifiable risk that the circumstances exist or the result will occur. The failure to perceive it must be a <strong>gross deviation</strong> from the standard of care an ordinary person would exercise.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Levels of Suspicion & Interactions -->
+                <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200">
+                    <h3 class="text-xl font-semibold text-slate-700 border-b pb-2 mb-3">Levels of Suspicion</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-lg text-slate-800">1. Mere Suspicion</h4>
+                            <p class="text-slate-600">A hunch or the feeling of intuition. While a useful skill, it is insufficient proof of any fact in court. It allows for computer checks, surveillance, and consensual encounters.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg text-slate-800">2. Reasonable Suspicion</h4>
+                            <p class="text-slate-600">Sufficient articulable facts and circumstances, and reasonable inferences drawn from those facts, that would lead a reasonable officer to conclude that criminal activity is afoot. This is the standard for an investigatory detention (Terry Stop). (See <i>Terry v. Ohio</i>).</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg text-slate-800">3. Probable Cause</h4>
+                            <p class="text-slate-600">Facts and circumstances within the officer's knowledge, and of which they have reasonably trustworthy information, sufficient to warrant a person of reasonable caution to believe that a crime has been or is being committed. This is the standard for arrest and search. (See <i>Brinegar v. United States</i>).</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg text-slate-800">4. Proof Beyond a Reasonable Doubt</h4>
+                            <p class="text-slate-600">The standard required to convict a person of a crime. All persons are presumed to be innocent and no person may be convicted of an offense unless each element of the offense is proved beyond a reasonable doubt. (See PC 2.01).</p>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-slate-700 border-b pb-2 mb-3 mt-6">Classifications of Interactions</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-lg text-slate-800">1. Consensual Encounters</h4>
+                            <p class="text-slate-600">An officer is free to approach and ask questions, but the person can refuse to identify themselves, refuse to cooperate, and simply walk away. The person must feel free to leave. (See <i>Florida v. Royer</i>).</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg text-slate-800">2. Investigatory Stops/Detentions (Terry Stop)</h4>
+                            <p class="text-slate-600">A temporary seizure of a person for investigation based on an officer's reasonable suspicion of criminal activity.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg text-slate-800">3. Arrests</h4>
+                            <p class="text-slate-600">Taking a person into custody for the purpose of charging them with a crime, based on an officer's establishment of probable cause.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Key Legal Definitions -->
+                <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200">
+                    <h3 class="text-xl font-semibold text-slate-700 border-b pb-2 mb-3">Key Legal Definitions (TPC §1.07)</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-lg text-slate-800">Bodily Injury</h4>
+                            <p class="text-slate-600">Physical pain, illness, or any impairment of physical condition.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg text-slate-800">Serious Bodily Injury</h4>
+                            <p class="text-slate-600">Bodily injury that creates a substantial risk of death or that causes death, serious permanent disfigurement, or protracted loss or impairment of the function of any bodily member or organ.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg text-slate-800">Deadly Weapon</h4>
+                            <p class="text-slate-600">(A) A firearm or anything manifestly designed, made, or adapted for the purpose of inflicting death or serious bodily injury; OR<br>(B) Anything that in the manner of its use or intended use is capable of causing death or serious bodily injury.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg text-slate-800">Habitation</h4>
+                            <p class="text-slate-600">A structure or vehicle that is adapted for the overnight accommodation of persons, and includes: (A) each separately secured or occupied portion of the structure... and (B) each structure appurtenant to or connected with the structure...</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg text-slate-800">Building</h4>
+                            <p class="text-slate-600">Any enclosed structure intended for use or occupation as a habitation or for some purpose of trade, manufacture, ornament, or use.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg text-slate-800">Vehicle</h4>
+                            <p class="text-slate-600">Any device in, on, or by which any person or property is or may be propelled, moved, or drawn in the normal course of commerce or transportation, except such devices as are classified as 'habitation.'</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Punishment Ladder -->
+                <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200">
+                    <h3 class="text-xl font-semibold text-slate-700 border-b pb-2 mb-3">Texas Punishment Ladder</h3>
+                    <table class="ref-table">
+                        <thead>
+                            <tr>
+                                <th>Offense Class</th>
+                                <th>Jail / Prison Time</th>
+                                <th>Fine</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>**Class C Misdemeanor**</td>
+                                <td>None</td>
+                                <td>Up to $500</td>
+                            </tr>
+                            <tr>
+                                <td>**Class B Misdemeanor**</td>
+                                <td>Up to 180 days</td>
+                                <td>Up to $2,000</td>
+                            </tr>
+                            <tr>
+                                <td>**Class A Misdemeanor**</td>
+                                <td>Up to 1 year</td>
+                                <td>Up to $4,000</td>
+                            </tr>
+                            <tr>
+                                <td>**State Jail Felony (SJF)**</td>
+                                <td>180 days to 2 years</td>
+                                <td>Up to $10,000</td>
+                            </tr>
+                            <tr>
+                                <td>**3rd Degree Felony**</td>
+                                <td>2 to 10 years</td>
+                                <td>Up to $10,000</td>
+                            </tr>
+                            <tr>
+                                <td>**2nd Degree Felony**</td>
+                                <td>2 to 20 years</td>
+                                <td>Up to $10,000</td>
+                            </tr>
+                            <tr>
+                                <td>**1st Degree Felony**</td>
+                                <td>5 to 99 years (Life)</td>
+                                <td>Up to $10,000</td>
+                            </tr>
+                            <tr>
+                                <td>**Capital Felony**</td>
+                                <td>Life without Parole or Death</td>
+                                <td>N/A</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Value Ladders -->
+                <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200">
+                    <h3 class="text-xl font-semibold text-slate-700 border-b pb-2 mb-3">Property Value Ladders (Theft & Criminal Mischief)</h3>
+                    <table class="ref-table">
+                        <thead>
+                            <tr>
+                                <th>Value of Property / Damage</th>
+                                <th>Offense Class</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Less than $100</td>
+                                <td>**Class C Misdemeanor**</td>
+                            </tr>
+                            <tr>
+                                <td>$100 to $749.99</td>
+                                <td>**Class B Misdemeanor**</td>
+                            </tr>
+                            <tr>
+                                <td>$750 to $2,499.99</td>
+                                <td>**Class A Misdemeanor**</td>
+                            </tr>
+                            <tr>
+                                <td>$2,500 to $29,999.99</td>
+                                <td>**State Jail Felony (SJF)**</td>
+                            </tr>
+                            <tr>
+                                <td>$30,000 to $149,999.99</td>
+                                <td>**3rd Degree Felony**</td>
+                            </tr>
+                            <tr>
+                                <td>$150,000 to $299,999.99</td>
+                                <td>**2nd Degree Felony**</td>
+                            </tr>
+                            <tr>
+                                <td>$300,000 or more</td>
+                                <td>**1st Degree Felony**</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        `;
+
+        // --- OFFENSE DATA ARRAY ---
         const offenses = [
             {
                 id: 1,
@@ -72,8 +307,8 @@
                 url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.22.htm#22.01",
                 penalCodeDef: "<p>A person commits an offense if the person:</p><ol class='list-decimal list-inside space-y-1'><li>**Intentionally, knowingly, or recklessly** causes **bodily injury** to another; OR</li><li>**Intentionally or knowingly** **threatens** another with **imminent bodily injury**; OR</li><li>**Intentionally or knowingly** causes **physical contact** with another when the person knows or should reasonably believe that the other will regard the contact as **offensive or provocative**.</li></ol>",
                 plainEnglish: "Intentionally causing physical pain to someone, threatening to hurt them, or touching them in an offensive way.",
-                baseLevel: "**Class A Misdemeanor** (for causing bodily injury).<br>**Class C Misdemeanor** (for a threat or offensive contact).",
-                enhancements: "**3rd Degree Felony:** If against a **public servant**, a family member where the actor **chokes** them, or if the actor has a prior family violence conviction.",
+                baseLevel: "**Class A Misdemeanor** (for bodily injury) (Arrest).<br>**Class C Misdemeanor** (for threat or offensive contact) (Citation).",
+                enhancements: "**Class C** -> **Class B:** If the offense is against a sports participant by a non-participant.<br>**Class A** -> **3rd Degree Felony:** If against a **public servant**, security officer, or EMS personnel, OR if against a family member by **impeding breath (choking)**, OR if the actor has a prior family violence conviction.",
                 exampleScenarios: "**(Class A - Bodily Injury):** During an argument over a parking spot, Suspect A punches Victim B in the face, causing a bloody nose and visible swelling.<br><br>** (Class C - Threat):** Suspect B gets in Victim C's face and screams, 'I'm going to knock you out!' while clenching his fists.<br><br>** (Class C - Offensive Contact):** During a heated discussion, Suspect D spits on Victim E.",
                 enhancementScenarios: "You are arresting a suspect for DWI who becomes combative and kicks you in the shin. This becomes **Assault on a Public Servant (3rd Degree Felony)**.<br><br>During a domestic dispute, a husband places his hands on his wife's neck and squeezes, impeding her breath. This is **Assault Family Violence by Impeding Breath/Circulation (3rd Degree Felony)**.",
                 officerResponse: "<div class='protocol-section'><h4>Initial Response & Mindset:</h4> Approach with caution, as assault calls can be volatile. Park a safe distance away and listen. Assess for multiple parties and potential weapons. Your mindset should be to de-escalate, separate parties, and ensure medical aid is rendered if necessary.<h4>On-Scene Investigation & Dialogue:</h4><p>Your goal is to determine which of the three types of assault occurred.</p><h5>Element-Specific Questions:</h5><ul><li><strong>(Bodily Injury)</strong> To Victim: 'Where did they touch you? Did it cause you any pain at all?' (Any level of pain satisfies this element).</li><li><strong>(Threat)</strong> To Victim: 'What were their exact words?' 'What were they doing with their hands/body?' 'Did you believe you were about to be physically hurt right then and there?'</li><li><strong>(Offensive Contact)</strong> To Victim: 'Did you give them permission to touch you?' 'How did it make you feel when they [spit on you, poked you]?'</li></ul><h5>Dialogue Examples:</h5><i>To Victim/Witness:</i><br>- 'Please tell me what happened, from the beginning.'<br>- 'Are you injured? Can I call EMS for you?'<br><br><i>To Compliant Suspect:</i><br>- 'I'm trying to get everyone's side of the story. What happened from your perspective?'<br>- 'They're saying you hit them. Is that true? Can you explain why?'<br><br><i>To Non-Compliant/Hostile Suspect:</i><br>- 'Sir/Ma'am, I need you to lower your voice and take a step back. I cannot help you if you are yelling.'<br>- 'Did you put your hands on this person? A simple yes or no.'<h4>Potential Force Considerations:</h4> Force should be proportional to the suspect's resistance. Verbal commands are primary. If the suspect is non-compliant but not actively aggressive, empty-hand control (escort holds) may be appropriate. If the suspect becomes actively resistant or assaultive, defensive tactics or less-lethal options (Taser) may be justified.</div>"
@@ -86,8 +321,8 @@
                 url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.22.htm#22.02",
                 penalCodeDef: "<p>A person commits an offense if the person commits assault as defined in §22.01 and the person:</p><ol class='list-decimal list-inside space-y-1'><li>Causes **serious bodily injury** to another; OR</li><li>**Uses or exhibits** a **deadly weapon** during the commission of the assault.</li></ol>",
                 plainEnglish: "An assault that causes very serious, lasting harm (like a broken bone) or involves a deadly weapon.",
-                baseLevel: "**2nd Degree Felony**.",
-                enhancements: "**1st Degree Felony:** If committed against a **public servant** or involves a deadly weapon *and* serious bodily injury to a family member.",
+                baseLevel: "**2nd Degree Felony** (Arrest).",
+                enhancements: "**1st Degree Felony:** If committed against a **public servant**, in retaliation against a witness/informant, or if it involves **family violence** AND a **deadly weapon**.",
                 exampleScenarios: "**(Serious Bodily Injury):** In a bar fight, Suspect A stomps on Victim B's head after he is on the ground, causing a concussion and a broken orbital bone.<br><br>** (Deadly Weapon):** During a road rage incident, Suspect C points a handgun at Victim D and threatens to shoot them.",
                 enhancementScenarios: "You respond to a family violence call. The suspect sees you arrive, retrieves a kitchen knife, and runs towards you shouting threats. This is **Aggravated Assault on a Public Servant (1st Degree Felony)**.",
                 officerResponse: "<div class='protocol-section'><h4>Initial Response & Mindset:</h4> Extreme vigilance. These calls involve a high potential for lethality. Wait for backup if possible. Use cover and concealment on approach. The primary mindset is officer safety and neutralizing the threat. Assume the weapon is still present until proven otherwise.<h4>On-Scene Investigation & Dialogue:</h4><p>Your goal is to establish the aggravating factor: SBI or a Deadly Weapon.</p><h5>Element-Specific Questions:</h5><ul><li><strong>(Serious Bodily Injury)</strong> To Victim/EMS: 'What is the injury? Is it a broken bone? Does it require surgery?' 'Did they lose consciousness?' 'Will this injury cause a permanent scar?'</li><li><strong>(Deadly Weapon)</strong> To Victim: 'What kind of weapon was it? Can you describe it?' 'How did they use it? Did they point it at you, swing it, or just hold it?' 'Did you believe it could cause you serious harm or death?'</li></ul><h5>Dialogue Examples:</h5><i>To Victim/Witness:</i><br>- 'Where is the weapon now?'<br>- 'What exactly did they say when they were holding the [weapon]?'<br><br><i>To Compliant Suspect (after securing the scene):</i><br>- 'I need to know where the weapon is right now for everyone's safety.'<br><br><i>To Non-Compliant/Hostile Suspect:</i><br>- 'Police! Drop the weapon! Do it now!'<br>- 'Get on the ground! Do not reach for anything!'<h4>Potential Force Considerations:</h4> If a deadly weapon is actively displayed or used, deadly force is authorized to protect officers or others from death or SBI. If the weapon has been discarded and the suspect is now resisting, force should match the current threat level. Commands must be loud, clear, and specific.</div>"
@@ -100,8 +335,8 @@
                 url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.29.htm#29.02",
                 penalCodeDef: "<p>A person commits an offense if, **in the course of committing theft** and with **intent to obtain or maintain control of the property**, he:</p><ol class='list-decimal list-inside space-y-1'><li>**Intentionally, knowingly, or recklessly** causes **bodily injury** to another; OR</li><li>**Intentionally or knowingly** **threatens or places another in fear** of **imminent bodily injury or death**.</li></ol>",
                 plainEnglish: "Stealing from a person by using force or fear.",
-                baseLevel: "**2nd Degree Felony**.",
-                enhancements: "This offense is enhanced to Aggravated Robbery based on specific elements.",
+                baseLevel: "**2nd Degree Felony** (Arrest).",
+                enhancements: "This offense becomes **Aggravated Robbery (1st Degree Felony)** if the actor: 1) Causes Serious Bodily Injury; 2) Uses or exhibits a deadly weapon; or 3) Causes BI or threatens a victim who is 65+ or disabled.",
                 exampleScenarios: "**(Bodily Injury):** Suspect A approaches Victim B on the street and shoves them to the ground (causing bodily injury) while snatching their purse.<br><br>** (Threat):** Suspect C enters a store, keeps a hand in his pocket implying a weapon, and tells the clerk, 'Give me everything in the register or you'll get hurt.' The clerk, in fear, complies.",
                 enhancementScenarios: "A suspect commits a robbery by threatening a 72-year-old victim, causing them to fall. This becomes **Aggravated Robbery (1st Degree Felony)** because the victim is over 65.",
                 officerResponse: "<div class='protocol-section'><h4>Initial Response & Mindset:</h4> High vigilance. Robbery suspects may be armed and desperate. Set up a perimeter and request additional units to search the area. Your mindset is to gather suspect information for a broadcast as quickly as possible while ensuring the victim is safe. Treat the scene as a crime scene.<h4>On-Scene Investigation & Dialogue:</h4><p>Your goal is to connect the theft to the assaultive act.</p><h5>Element-Specific Questions:</h5><ul><li><strong>(In Course of Theft)</strong> To Victim: 'Did they hit you *before*, *during*, or *after* they took your property?' 'Was the threat made in order for you to give them your wallet?'</li><li><strong>(Bodily Injury)</strong> To Victim: 'When they grabbed your purse, did it cause you any pain?'</li><li><strong>(Fear of Imminent BI/Death)</strong> To Victim: 'What were their exact words?' 'Based on their actions, did you believe they were about to hurt you if you didn't comply?'</li></ul><h5>Dialogue Examples:</h5><i>To Victim/Witness:</i><br>- 'Give me a quick description for the radio: what were they wearing, what did they look like?'<br>- 'Which way did they go?'<br><br><i>To Suspect (if located):</i><br>- From cover: 'Police! Show me your hands! Get on the ground!'<br><br><strong>Potential Force Considerations:</strong> The suspect has already shown a willingness to use force or threats. They should be considered a high risk. If located, challenge from cover if possible. Force used should be sufficient to overcome resistance, recognizing the suspect's elevated potential for violence.</div>"
@@ -114,8 +349,8 @@
                 url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.29.htm#29.03",
                 penalCodeDef: "<p>A person commits an offense if he commits robbery... and he:</p><ol class='list-decimal list-inside space-y-1'><li>Causes **serious bodily injury** to another; OR</li><li>**Uses or exhibits** a **deadly weapon**; OR</li><li>Causes bodily injury to, or threatens, a person who is **65 years of age or older** or a **disabled person**.</li></ol>",
                 plainEnglish: "A robbery that involves a deadly weapon, causes very serious harm, or targets an elderly or disabled person.",
-                baseLevel: "**1st Degree Felony**.",
-                enhancements: "This is already a 1st Degree Felony. Any additional bad acts (like murder) would result in separate, additional charges (e.g., Capital Murder).",
+                baseLevel: "**1st Degree Felony** (Arrest).",
+                enhancements: "This is already a 1st Degree Felony and a \"3g\" offense (requiring a higher portion of the sentence to be served). Any additional bad acts (like murder) would result in separate, additional charges (e.g., Capital Murder).",
                 exampleScenarios: "**(Deadly Weapon):** Suspect A enters a bank, displays a handgun, and demands money from the teller. The *exhibition* of the deadly weapon makes it aggravated.<br><br>** (Serious Bodily Injury):** Suspect B mugs a victim, punching them so hard they suffer a broken jaw (serious bodily injury) before taking their wallet.",
                 enhancementScenarios: "",
                 officerResponse: "<div class='protocol-section'><h4>Initial Response & Mindset:</h4> Highest level of vigilance. This is a call involving a known armed and dangerous felon. Officer safety is paramount. The mindset must be tactical and focused on containment and safe apprehension. Do not enter locations alone where the suspect may still be present. Wait for backup.<h4>On-Scene Investigation & Dialogue:</h4><p>Your goal is to establish the robbery elements plus the aggravating factor.</p><h5>Element-Specific Questions:</h5><ul><li><strong>(Deadly Weapon)</strong> To Victim: 'I know this is difficult, but can you describe the weapon in as much detail as you can? What color was it? Was it a pistol or a revolver?'</li><li><strong>(Serious Bodily Injury)</strong> To Victim/EMS: 'What is the full extent of your injuries? Is anything broken? Do the doctors say you need surgery?'</li><li><strong>(Age/Disability)</strong> To Victim: 'Can you confirm your date of birth for me?'</li></ul><h5>Dialogue Examples:</h5><i>To Victim/Witness:</i><br>- 'Get me the best possible suspect description for the radio right now.'<br><br><i>To Non-Compliant/Hostile Suspect:</i><br>- 'Police! Drop your weapon! I will shoot!'<br>- 'Do not move! If you reach for anything, you may be shot!'<br><br><strong>Potential Force Considerations:</strong> Suspect is considered armed and dangerous. If the suspect is encountered and presents a threat of death or serious bodily injury to anyone, deadly force is justified. All commands should be from a position of tactical advantage (cover). Use high-risk arrest procedures.</div>"
@@ -128,8 +363,8 @@
                 url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.31.htm#31.03",
                 penalCodeDef: "<p>A person commits an offense if he:</p><ul class='list-disc list-inside space-y-1'><li>**Unlawfully appropriates property**...</li><li>with **intent to deprive** the owner of property.</li></ul>",
                 plainEnglish: "Taking someone else's property with the plan to keep it from them.",
-                baseLevel: "**Class C Misdemeanor** (< $100).",
-                enhancements: "This is a \"value ladder\" offense.<br>**Class B:** $100 - $749<br>**Class A:** $750 - $2,499<br>**State Jail Felony:** $2,500 - $29,999 OR if it's a **firearm** OR if the actor has **2+ prior theft convictions**.",
+                baseLevel: "**Class C Misdemeanor** (< $100) (Citation).",
+                enhancements: "**Value Ladder:** See the 'Definitions & Punishments' page for the full ladder.<br>**State Jail Felony:** If value is $2,500-$30k OR if it's a **firearm** OR if the actor has **2+ prior theft convictions** OR if it's theft of certain metals (copper, etc.) valued at < $20k.",
                 exampleScenarios: "**(Class C):** A person shoplifts a $25 phone charger from a retail store.<br><br>** (Class A):** A person steals a high-end bicycle valued at $800 from an unlocked garage.",
                 enhancementScenarios: "You arrest a suspect for shoplifting $60 worth of merchandise (a Class B Misdemeanor). A criminal history check reveals two prior theft convictions. The charge is enhanced to **Theft w/ 2+ Priors (State Jail Felony)**.<br><br>A suspect steals a pistol from an unlocked vehicle. Regardless of the gun's value, this is **Theft of a Firearm (State Jail Felony)**.",
                 officerResponse: "<div class='protocol-section'><h4>Initial Response & Mindset:</h4> Generally a lower-risk call. Mindset should be investigatory and focused on evidence. Is the suspect still on scene (e.g., shoplifter in custody)? If not, what evidence is available (video, witnesses)?<h4>On-Scene Investigation & Dialogue:</h4><p>Your goal is to establish ownership, value, and intent.</p><h5>Element-Specific Questions:</h5><ul><li><strong>(Unlawfully Appropriates)</strong> To Victim: 'Did you give this person permission to take your property?' To Suspect: 'Did you have permission to take this?'</li><li><strong>(Intent to Deprive)</strong> To Loss Prevention: 'Did the suspect pass all points of sale without attempting to pay?' To Suspect: 'Did you intend to pay for these items?'</li><li><strong>(Value)</strong> To Victim/Store: 'What is the exact retail value of the items taken? Can I get a receipt?'</li></ul><h5>Dialogue Examples:</h5><i>To Compliant Suspect:</i><br>- 'Loss prevention says you have items you didn't pay for. Where are they?'<br><br><i>To Non-Compliant/Hostile Suspect:</i><br>- 'I have reason to believe you have stolen property. I am detaining you.'<br>- 'Stop arguing. We can see on the video what happened.'<br><br><strong>Potential Force Considerations:</strong> Typically minimal. If a suspect resists, force must be proportional to their actions.</div>"
@@ -142,8 +377,8 @@
                 url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.30.htm#30.02",
                 penalCodeDef: "<p>A person commits an offense if, **without the effective consent** of the owner, the person:</p><ol class='list-decimal list-inside space-y-1'><li>**Enters** a **habitation** or a **building** (not then open to the public), with **intent to commit** a felony, theft, or an assault; OR</li><li>**Remains concealed** in a building or habitation, with **intent to commit** a felony, theft, or an assault; OR</li><li>**Enters** a building or habitation and **does commit or attempt to commit** a felony, theft, or an assault.</li></ol>",
                 plainEnglish: "Entering a home or closed building without permission to commit another crime inside.",
-                baseLevel: "**State Jail Felony** (for a Building).<br>**2nd Degree Felony** (for a Habitation/Home).",
-                enhancements: "**1st Degree Felony:** If the actor enters a **habitation** and intends to commit a felony *other than* theft (e.g., assault, murder).",
+                baseLevel: "**State Jail Felony** (for a Building) (Arrest).<br>**2nd Degree Felony** (for a Habitation/Home) (Arrest).",
+                enhancements: "**1st Degree Felony:** If the actor enters a **habitation** and commits or intends to commit a felony *other than* theft (e.g., sexual assault, murder).<br>**Class A Misdemeanor:** Burglary of a Coin-Operated Machine.",
                 exampleScenarios: "**(Building - SJF):** A person breaks the back window of a closed dentist's office with the intent to steal computers.<br><br>** (Habitation - 2nd Degree):** A person kicks in the front door of a house with the intent to steal a TV.",
                 enhancementScenarios: "A man breaks into his ex-girlfriend's apartment with the intent to assault her. This is **Burglary of a Habitation with Intent to Commit Assault (1st Degree Felony)**.",
                 officerResponse: "<div class='protocol-section'><h4>Initial Response & Mindset:</h4> High vigilance, especially for in-progress calls. Treat as high-risk until confirmed otherwise. Suspects may be armed and desperate to escape. Wait for backup. Set up a perimeter. Mindset is tactical: contain and apprehend.<h4>On-Scene Investigation & Dialogue:</h4><p>Your goal is to establish unlawful entry and the suspect's intent.</p><h5>Element-Specific Questions:</h5><ul><li><strong>(Entry)</strong> To Victim: 'Can you show me the point of entry? Was this window broken/door forced open?'</li><li><strong>(Without Consent)</strong> To Victim: 'Does anyone else have a key? Did you give anyone permission to be inside today?'</li><li><strong>(Intent)</strong> To Victim: 'Is anything missing? Was anything disturbed, like jewelry boxes or electronics?' This helps infer intent to commit theft.</li></ul><h5>Dialogue Examples:</h5><i>To Compliant Suspect (post-arrest):</i><br>- 'How did you get inside the building?'<br>- 'What were you looking for inside?'<br><br><i>To Non-Compliant/Hostile Suspect (during incident):</i><br>- 'Police! We have the building surrounded! Come out with your hands up!'<br><br><strong>Potential Force Considerations:</strong> Confronting a burglary suspect inside a structure is extremely dangerous. Announce your presence. Be prepared for potential deadly force encounters if the suspect is armed or confronts you violently.</div>"
@@ -156,8 +391,8 @@
                 url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.30.htm#30.04",
                 penalCodeDef: "<p>A person commits an offense if, **without the effective consent** of the owner, he:</p><ul class='list-disc list-inside space-y-1'><li>**Breaks into** or **enters** a **vehicle** (or any part of a vehicle)...</li><li>with **intent to commit** any felony or theft.</li></ul>",
                 plainEnglish: "Breaking into or reaching into someone's car to steal something.",
-                baseLevel: "**Class A Misdemeanor**.",
-                enhancements: "**State Jail Felony:** If the actor has **2+ prior B.O.V. convictions**.",
+                baseLevel: "**Class A Misdemeanor** (Arrest).",
+                enhancements: "**State Jail Felony:** If the actor has **2+ prior B.O.V. convictions**.<br>**3rd Degree Felony:** If the vehicle is a rail car.",
                 exampleScenarios: "A suspect smashes a car window to steal a backpack left on the seat.<br><br>A different suspect 'checks doors' in a parking lot, finds an unlocked car, opens the door, and steals change from the center console. (The 'entry' is complete just by opening the door).",
                 enhancementScenarios: "You catch a suspect who just broke into a truck. His record shows two prior convictions for B.O.V. He is now charged with a **State Jail Felony**.",
                 officerResponse: "<div class='protocol-section'><h4>Initial Response & Mindset:</h4> Be aware of your surroundings, especially in parking lots or at night. Suspects often work in groups and may have lookouts. The mindset is observational and stealthy on approach if the call is in-progress.<h4>On-Scene Investigation & Dialogue:</h4><p>Your goal is to establish unlawful entry into the vehicle and intent.</p><h5>Element-Specific Questions:</h5><ul><li><strong>(Entry)</strong> To Victim: 'Was your vehicle locked?' 'Is the window broken or was the door pried open?' 'Did they just reach into the open bed of your truck?'</li><li><strong>(Without Consent)</strong> To Victim: 'Did you give this person permission to be in your car?'</li><li><strong>(Intent)</strong> To Victim: 'What items are missing from inside?'</li></ul><h5>Dialogue Examples:</h5><i>To Compliant Suspect:</i><br>- 'A witness saw you inside that car. Can you tell me what you were doing?'<br><br><i>To Non-Compliant/Hostile Suspect:</i><br>- 'Stop! Police! Show me your hands!'<br>- 'You are being detained for burglary. Do not resist.'<br><br><strong>Potential Force Considerations:</strong> Typically low. Suspects may flee. Be aware they may have burglary tools or weapons on them. Force is usually limited to compliant or resistant handcuffing.</div>"
@@ -170,8 +405,8 @@
                 url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.31.htm#31.07",
                 penalCodeDef: "<p>A person commits an offense if he:</p><ul class='list-disc list-inside space-y-1'><li>**Intentionally or knowingly operates** another's **motor-propelled vehicle**...</li><li>**without the effective consent** of the owner.</li></ul>",
                 plainEnglish: "\"Joyriding.\" Taking someone's car without permission, but not necessarily intending to keep it forever.",
-                baseLevel: "**State Jail Felony**.",
-                enhancements: "No common enhancements.",
+                baseLevel: "**State Jail Felony** (Arrest).",
+                enhancements: "**3rd Degree Felony:** If the actor has **2+ prior UUMV convictions** or if the vehicle is used in the commission of another felony.",
                 exampleScenarios: "A teenager finds a car left running at a gas station, jumps in, and drives it around town for two hours before dumping it.<br><br>A person borrows a friend's car for 'an hour' but intentionally keeps it for three days, ignoring the owner's calls to return it.",
                 enhancementScenarios: "",
                 officerResponse: "<div class='protocol-section'><h4>Initial Response & Mindset:</h4> A stop on a stolen vehicle is always high-risk. Wait for backup, plan the stop, and use high-risk stop procedures. If responding to a report, the mindset is investigatory.<h4>On-Scene Investigation & Dialogue:</h4><p>Your goal is to establish the suspect was operating the vehicle without the owner's consent.</p><h5>Element-Specific Questions:</h5><ul><li><strong>(Operates)</strong> To Witness: 'Did you see the suspect actually driving the car?'</li><li><strong>(Without Consent)</strong> To Victim: 'Did you give anyone permission to drive your car?' 'If you loaned it to them, what were the specific terms for its return?' 'Have you made attempts to get it back?'</li></ul><h5>Dialogue Examples:</h5><i>To Suspect (during high-risk stop):</i><br>- 'Driver, turn off the vehicle and throw the keys out the window!'<br>- 'Step out of the car slowly with your hands up!'<br><br><strong>Potential Force Considerations:</strong> A traffic stop on a vehicle reported as stolen is a felony stop. Officers should use cover, issue loud commands, and have lethal force ready. Suspects may flee in the vehicle or on foot, and may be armed. The potential for a significant use of force is high.</div>"
@@ -184,8 +419,8 @@
                 url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.28.htm#28.03",
                 penalCodeDef: "<p>A person commits an offense if, **without the effective consent** of the owner, he **intentionally or knowingly** **damages or destroys** the tangible property of the owner.</p>",
                 plainEnglish: "Intentionally damaging or destroying someone else's property.",
-                baseLevel: "**Class C Misdemeanor** (loss < $100).",
-                enhancements: "This is a \"value ladder\" offense, same as theft.",
+                baseLevel: "**Class C Misdemeanor** (loss < $100) (Citation).",
+                enhancements: "**Value Ladder:** See 'Definitions & Punishments' page. <br>**State Jail Felony:** If damage is $2,500-$30k OR if it's against a **place of worship, school, or home** (loss $750-$30k).",
                 exampleScenarios: "**(Class C):** A person intentionally scratches a single line on someone's car door with a key (a 'keying'). The repair cost is $75.<br><br>** (Class B):** A suspect gets angry and throws a rock through a home's window, which costs $300 to replace.",
                 enhancementScenarios: "A suspect gets in a fight with his roommate and punches a hole in the drywall ($200 damage). He then goes outside and throws a rock through his roommate's $1,000 TV. The total loss is over $750, making the combined act a **Class A Misdemeanor**.",
                 officerResponse: "<div class='protocol-section'><h4>Initial Response & Mindset:</h4> Often linked to another issue like a domestic dispute. Assess the emotional state of the parties involved. The mindset is investigatory and focused on de-escalation.<h4>On-Scene Investigation & Dialogue:</h4><p>Your goal is to establish intent to damage and the value of the damage.</p><h5>Element-Specific Questions:</h5><ul><li><strong>(Intentionally/Knowingly)</strong> To Witness: 'Did it look like they damaged it on purpose or was it an accident?' To Suspect: 'Were you angry when this happened?'</li><li><strong>(Damage Value)</strong> To Victim: 'Do you have a receipt for this item or an estimate for the repair cost?'</li><li><strong>(Without Consent)</strong> To Victim: 'Did you give them permission to break your property?'</li></ul><h5>Dialogue Examples:</h5><i>To Compliant Suspect:</i><br>- 'The homeowner says you broke this window. Can you tell me what happened?'<br><br><i>To Non-Compliant/Hostile Suspect:</i><br>- 'Sir, I see the damage and I have a witness. Yelling at me isn't helping.'<br><br><strong>Potential Force Considerations:</strong> Generally low. The act itself is over. If the suspect is still on scene and agitated, de-escalation is key. Force would only be necessary if they become assaultive.</div>"
@@ -198,8 +433,8 @@
                 url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.49.htm#49.04",
                 penalCodeDef: "<p>A person commits an offense if the person is **intoxicated** while **operating** a **motor vehicle** in a **public place**.</p>",
                 plainEnglish: "Driving in public while drunk or high.",
-                baseLevel: "**Class B Misdemeanor**.",
-                enhancements: "**Class A Misdemeanor:** If BAC is **0.15 or higher**.<br>**State Jail Felony:** If there is a **child passenger under 15**.<br>**3rd Degree Felony:** If the actor has **2+ prior DWI convictions**.<br>**Intoxication Assault (3rd/2nd Degree Felony):** If it causes bodily injury / serious bodily injury.<br>**Intoxication Manslaughter (2nd Degree Felony):** If it causes death.",
+                baseLevel: "**Class B Misdemeanor** (Arrest).",
+                enhancements: "**Class A Misdemeanor:** If BAC is **0.15 or higher**.<br>**State Jail Felony:** If there is a **child passenger under 15**.<br>**3rd Degree Felony:** If the actor has **2+ prior DWI convictions**.<br>**Intoxication Assault (3rd Degree Felony):** If it causes SBI.<br>**Intoxication Manslaughter (2nd Degree Felony):** If it causes death.",
                 exampleScenarios: "You pull a driver over for speeding. You smell alcohol, conduct SFSTs (Standardized Field Sobriety Tests), and determine he is intoxicated. He provides a breath sample of 0.10.",
                 enhancementScenarios: "You stop a car for swerving. The driver is clearly intoxicated. When you look in the back, you see his 5-year-old son in a car seat. This is **DWI with Child Passenger (State Jail Felony)**.",
                 officerResponse: "<div class='protocol-section'><h4>Initial Response & Mindset:</h4> Officer safety is a high priority on traffic stops. Watch for traffic. Intoxicated subjects can be unpredictable. The mindset is systematic and procedural. Follow your training for the stop, the SFSTs, and the arrest.<h4>On-Scene Investigation & Dialogue:</h4><p>Your goal is to establish the elements of intoxication and operation in a public place.</p><h5>Element-Specific Questions:</h5><ul><li><strong>(Operating)</strong> 'Were you the person driving this car?' (Or note observations of them in driver's seat, car running, etc.)</li><li><strong>(Public Place)</strong> 'Where were you coming from?' (Note the public roadway you are on).</li><li><strong>(Intoxicated)</strong> 'How much have you had to drink tonight?' 'Are you willing to perform some tests so I can make sure you're okay to drive?' Your observations (smell, red eyes, slurred speech, SFST performance) are the key evidence.</li></ul><h5>Dialogue Examples:</h5><i>To Suspect (Compliant):</i><br>- 'Good evening. The reason I stopped you is for [traffic violation]. Have you had anything to drink tonight?'<br><br><i>To Suspect (Non-Compliant/Hostile):</i><br>- 'Sir, I need you to stay in the vehicle. The law requires you to provide your license and insurance.'<br>- 'Your refusal to perform the tests can be used as evidence against you. I am asking you one more time to step out of the car.'<br><br><strong>Potential Force Considerations:</strong> Many DWI arrests are compliant. However, intoxication can lower inhibitions and lead to resistance. Be prepared for anything from passive resistance (going limp) to active aggression.</div>"
@@ -212,8 +447,8 @@
                 url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.49.htm#49.02",
                 penalCodeDef: "<p>A person commits an offense if the person appears in a **public place** while **intoxicated** to the degree that the person may **endanger** the person or another.</p>",
                 plainEnglish: "Being drunk or high in public to the point where you are a danger to yourself or others.",
-                baseLevel: "**Class C Misdemeanor**.",
-                enhancements: "No common enhancements.",
+                baseLevel: "**Class C Misdemeanor** (Citation or arrest/release to sober party).",
+                enhancements: "**Class B Misdemeanor:** If the actor has **2+ prior PI convictions**.",
                 exampleScenarios: "You are dispatched to a 'man down' call and find a person passed out on the sidewalk in front of a bar. They are a danger to themselves.<br><br>You respond to a disturbance and find a man yelling at other pedestrians. He is heavily intoxicated and trying to start fights, making him a danger to others.",
                 enhancementScenarios: "",
                 officerResponse: "<div class='protocol-section'><h4>Initial Response & Mindset:</h4> This is often a community care-taking function. The mindset is to ensure safety—the subject's and the public's. Be aware of the potential for sudden mood swings and aggression.<h4>On-Scene Investigation & Dialogue:</h4><p>Your goal is to establish intoxication and the danger element.</p><h5>Element-Specific Questions:</h5><ul><li><strong>(Intoxicated)</strong> 'How much have you had to drink tonight?' (Combine with observations of unsteadiness, slurred speech, etc.)</li><li><strong>(Endanger Self/Another)</strong> Observe and articulate: 'The subject was stumbling into a busy roadway.' 'The subject was attempting to start fights with strangers.' 'The subject was passed out on a public sidewalk, unable to care for their own safety.'</li></ul><h5>Dialogue Examples:</h5><i>To Compliant Suspect:</i><br>- 'Sir/Ma'am, are you okay? How much have you had to drink?'<br>- 'For your safety, I can't let you stay here. Do you have a sober friend who can pick you up?'<br><br><i>To Non-Compliant/Hostile Suspect:</i><br>- 'Sir, you are in a public place and intoxicated. Your behavior is alarming other people.'<br>- 'You are a danger to yourself and others. You are under arrest.'<br><br><strong>Potential Force Considerations:</strong> Usually low. Force may be needed if they become combative, usually requiring empty-hand control to safely escort or handcuff them for transport.</div>"
@@ -226,8 +461,8 @@
                 url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.42.htm#42.01",
                 penalCodeDef: "<p>A person commits an offense if he **intentionally or knowingly** engages in certain acts, including:</p><ul class='list-disc list-inside space-y-1'><li>(a)(1) using \"fighting words\";</li><li>(a)(5) making unreasonable noise; or</li><li>(a)(6) fighting with another in a public place.</li></ul>",
                 plainEnglish: "Causing a public disturbance by fighting, making \"fighting words,\" or making unreasonable noise.",
-                baseLevel: "**Class C Misdemeanor**.",
-                enhancements: "**Class B Misdemeanor:** If the actor **discharges a firearm** in a public place.",
+                baseLevel: "**Class C Misdemeanor** (Citation).",
+                enhancements: "**Class B Misdemeanor:** If the actor **discharges a firearm** in a public place or if the act is committed within 300 ft of a funeral.",
                 exampleScenarios: "**(Fighting):** Two people are in a mutual fistfight in a public park.<br><br>** (Unreasonable Noise):** A person is on a street corner at 2 AM screaming at the top of their lungs for no reason, waking up all the nearby apartment residents.",
                 enhancementScenarios: "A man gets drunk and decides to fire his pistol into the air in the middle of his residential street. This is **Disorderly Conduct - Discharging Firearm (Class B Misdemeanor)**.",
                 officerResponse: "<div class='protocol-section'><h4>Initial Response & Mindset:</h4> Assess the situation. Is it a noise complaint or an active fight? The mindset should be to restore order and peace. Be prepared for crowds and multiple parties who may be hostile.<h4>On-Scene Investigation & Dialogue:</h4><p>Your goal is to establish the specific act that breached the peace.</p><h5>Element-Specific Questions:</h5><ul><li><strong>(Fighting Words)</strong> To Witness: 'What were the exact words used? How did the other person react? Did it seem like it was about to become a physical fight right then?'</li><li><strong>(Unreasonable Noise)</strong> To Complainant: 'How long has this noise been going on? How is it disturbing you?' (Consider time of day and location).</li><li><strong>(Fighting)</strong> To Witness: 'Who was involved in the fight? Was it mutual or was one person defending themselves?'</li></ul><h5>Dialogue Examples:</h5><i>To Non-Compliant/Hostile Suspect:</i><br>- 'Police! Separate! Stop fighting now or you will both be arrested!'<br>- 'This is your final warning. Stop yelling or you will be arrested for Disorderly Conduct.'<br><br><strong>Potential Force Considerations:</strong> If dealing with a fight, physical force to separate and detain the primary aggressors may be necessary. For other types of DC, a citation is often sufficient.</div>"
@@ -240,8 +475,8 @@
                 url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.30.htm#30.05",
                 penalCodeDef: "<p>A person commits an offense if the person **enters or remains on** property... **without effective consent** and the person:</p><ol class='list-decimal list-inside space-y-1'><li>Had **notice** that the entry was forbidden; OR</li><li>Received **notice to depart** but **failed to do so**.</li></ol>",
                 plainEnglish: "Being on someone's property after you've been told to leave or when there are clear signs telling you to stay out.",
-                baseLevel: "**Class B Misdemeanor**.",
-                enhancements: "**Class A Misdemeanor:** If the trespass is at a **habitation** or if the actor carries a **deadly weapon**.",
+                baseLevel: "**Class B Misdemeanor** (Arrest).",
+                enhancements: "**Class A Misdemeanor:** If the trespass is at a **habitation** or if the actor carries a **deadly weapon**.<br>**Class C Misdemeanor:** If trespassing on agricultural land within 100ft of the boundary.",
                 exampleScenarios: "You are dispatched to a 7-Eleven. The clerk points out a man who was previously given a 'Criminal Trespass Warning' (CTW) and told not to come back. The man is now back inside. You confirm the warning is valid and arrest him.<br><br>A property owner tells a group of people to leave his land. They refuse. You arrive and give them a lawful order to leave, and they still refuse.",
                 enhancementScenarios: "You get a call about a man in a homeowner's backyard. You find him in the yard, and he has a large knife on his belt. Because he had a **deadly weapon** while trespassing in a **habitation**'s curtilage, it's a **Class A Misdemeanor**.",
                 officerResponse: "<div class='protocol-section'><h4>Initial Response & Mindset:</h4> Determine the nature of the location. Is the suspect still present? The mindset is to confirm the elements: Did the suspect have notice? Did they refuse to leave? Be prepared to act as the lawful authority giving notice.<h4>On-Scene Investigation & Dialogue:</h4><p>Your goal is to establish that the suspect had 'notice' and refused to leave.</p><h5>Element-Specific Questions:</h5><ul><li><strong>(Notice)</strong> To Complainant: 'Are there 'No Trespassing' signs posted?' 'Have you or anyone else from this property told this person to leave before?' 'Is there a Trespass Warning on file for them?'</li><li><strong>(Failure to Depart)</strong> To Suspect (after you give warning): 'I have given you a lawful order to leave the property. Why are you still here?'</li></ul><h5>Dialogue Examples:</h5><i>To Compliant Suspect:</i><br>- 'The manager wants you to leave the property. You can gather your things and go, and we won't have an issue.'<br><br><i>To Non-Compliant/Hostile Suspect:</i><br>- 'You have been given a lawful order to depart and you have refused. You are under arrest for Criminal Trespass. Put your hands behind your back.'<br><br><strong>Potential Force Considerations:</strong> Low. Most suspects leave after a warning from an officer. If an arrest is made, it's for non-compliance and requires only basic handcuffing techniques.</div>"
@@ -254,8 +489,8 @@
                 url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.42.htm#42.062",
                 penalCodeDef: "<p>A person commits an offense if the person **intentionally or knowingly** **prevents or interferes** with another individual's ability to **place an emergency call**.</p>",
                 plainEnglish: "Taking, breaking, or holding a phone to stop someone from calling 9-1-1.",
-                baseLevel: "**Class A Misdemeanor**.",
-                enhancements: "No common enhancements.",
+                baseLevel: "**Class A Misdemeanor** (Arrest).",
+                enhancements: "**State Jail Felony:** If the actor has **2+ prior convictions** for this offense.",
                 exampleScenarios: "You respond to a 9-1-1 hang-up. The victim states her husband slapped her, and when she tried to call 9-1-1, he grabbed her phone and threw it against the wall, breaking it.<br><br>During a family fight, the suspect grabs the victim's arms to physically prevent them from dialing 9-1-1.",
                 enhancementScenarios: "",
                 officerResponse: "<div class='protocol-section'><h4>Initial Response & Mindset:</h4> This offense almost always occurs during another crime, usually family violence. Treat the call as a family violence call (high vigilance). The mindset is to secure the scene first, then investigate all facets of the incident.<h4>On-Scene Investigation & Dialogue:</h4><p>Your goal is to establish the intentional act of interference.</p><h5>Element-Specific Questions:</h5><ul><li><strong>(Interference)</strong> To Victim: 'At any point did you try to call 911 or for help?' 'What *specifically* did the suspect do that stopped you?' 'Did they take your phone, unplug it, or physically hold you?'</li><li><strong>(Intent)</strong> To Suspect: 'She says you took her phone when she tried to call the police. Why did you do that?'</li></ul><h5>Dialogue Examples:</h5><i>To Victim:</i><br>- 'Where is your phone now?' (This question often locates a hidden or broken phone, which is key evidence).<br><br><strong>Potential Force Considerations:</strong> The force used will be dictated by the primary offense (e.g., the assault). The suspect has already shown a willingness to physically interfere to avoid capture, which may indicate a higher likelihood of resistance.</div>"
@@ -268,8 +503,8 @@
                 url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.25.htm#25.07",
                 penalCodeDef: "<p>A person commits an offense if, in violation of a court order, the person **intentionally or knowingly** commits prohibited acts, such as:</p><ul class='list-disc list-inside space-y-1'><li>Communicating with a protected person;</li><li>Going to or near a protected person or place;</li><li>Possessing a firearm.</li></ul>",
                 plainEnglish: "Contacting a protected person or going to their house/work when a judge has ordered you to stay away.",
-                baseLevel: "**Class A Misdemeanor**.",
-                enhancements: "This is a **mandatory arrest** offense in Texas if you have probable cause for certain violations.",
+                baseLevel: "**Class A Misdemeanor** (Mandatory Arrest).",
+                enhancements: "**3rd Degree Felony:** If the actor has **2+ prior convictions** for this offense OR if the actor commits **assault or stalking** during the violation.",
                 exampleScenarios: "A victim calls 9-1-1 stating her ex-boyfriend (the 'Respondent') is banging on her front door. You arrive, identify him, and confirm through dispatch that she (the 'Petitioner') has an **active, served** final protective order against him that prohibits him from being within 200 yards of her residence.",
                 enhancementScenarios: "A suspect violates a protective order by going to the victim's house and then assaults them. This becomes a **3rd Degree Felony**.",
                 officerResponse: "<div class='protocol-section'><h4>Initial Response & Mindset:</h4> Procedural and cautious. The suspect has already been identified by a court as a potential threat. Mindset is to confirm the order's validity and then take required action. These suspects can be volatile.<h4>On-Scene Investigation & Dialogue:</h4><p>Your goal is to confirm the order is valid, served, and a specific condition was violated.</p><h5>Element-Specific Questions:</h5><ul><li><strong>(Valid Order)</strong> To Dispatch: 'Can you confirm a valid, served protective order between [Respondent] and [Petitioner]?' 'Is it an Emergency Protective Order or a final PO?'</li><li><strong>(Violation)</strong> To Victim: 'Which part of the order did they violate?' 'Was it a text message, did they come to the house, did they have someone else contact you?'</li></ul><h5>Dialogue Examples:</h5><i>To Suspect:</i><br>- 'Are you aware that there is an active protective order against you that prohibits you from being here?'<br>- 'Due to the violation of this court order, you are under arrest. Do not resist.'<br><br><strong>Potential Force Considerations:</strong> Force is often minimal. However, since the situation often involves domestic history, be prepared for emotional and sometimes physically volatile reactions to the mandatory arrest.</div>"
@@ -282,7 +517,7 @@
                 url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.38.htm#38.03",
                 penalCodeDef: "<p>A person commits an offense if he **intentionally prevents or obstructs** a person he knows is a peace officer... from effecting an **arrest, search, or transportation**... by **using force against the peace officer**.</p>",
                 plainEnglish: "Using *force* (not just pulling away) to stop a cop from arresting, searching, or transporting you.",
-                baseLevel: "**Class A Misdemeanor**.",
+                baseLevel: "**Class A Misdemeanor** (Arrest).",
                 enhancements: "**3rd Degree Felony:** If a **deadly weapon** is used.",
                 exampleScenarios: "You are attempting to handcuff a suspect, and he grabs your wrists and shoves you backward to break free.<br><br>You are placing a handcuffed suspect in your patrol car, and he braces his feet against the door frame and kicks at you to prevent being put inside.",
                 enhancementScenarios: "While you attempt to arrest a suspect, they pull a knife from their pocket. This act elevates the charge to a **3rd Degree Felony**.",
@@ -296,8 +531,8 @@
                 url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.38.htm#38.04",
                 penalCodeDef: "<p>A person commits an offense if he **intentionally flees** from a person he **knows is a peace officer**... attempting to lawfully **arrest or detain** him.</p>",
                 plainEnglish: "Running or driving away from a cop who is trying to stop you.",
-                baseLevel: "**Class A Misdemeanor** (fleeing on foot).",
-                enhancements: "**3rd Degree Felony:** If the actor uses a **vehicle**.<br>**2nd Degree Felony:** If evading in a vehicle causes someone's **death**.",
+                baseLevel: "**Class A Misdemeanor** (fleeing on foot) (Arrest).",
+                enhancements: "**State Jail Felony:** If the actor has a prior evading conviction.<br>**3rd Degree Felony:** If the actor uses a **vehicle** OR causes **SBI** to another.<br>**2nd Degree Felony:** If evading in a vehicle causes someone's **death**.",
                 exampleScenarios: "**(On Foot):** You tell a suspect, 'Stop! Police! You're being detained!' He looks at you, then takes off running on foot.",
                 enhancementScenarios: "You attempt to pull over a car for speeding. The driver sees your lights, accelerates, and a pursuit begins. The driver is committing **Evading Arrest/Detention with a Vehicle (3rd Degree Felony)**.",
                 officerResponse: "<div class='protocol-section'><h4>Initial Response & Mindset:</h4> For foot pursuits, maintain visual and communicate. For vehicle pursuits, it's a constant risk assessment: Is this pursuit worth the danger to the public? Follow department policy.<h4>On-Scene Investigation & Dialogue:</h4><p>Your goal is to establish the suspect knew you were a peace officer and that you were attempting to detain them.</p><h5>Element-Specific Questions (for your report and post-capture):</h5><ul><li><strong>(Knows is a Peace Officer)</strong> 'Was I in a marked patrol car? Was I in full uniform? Did I identify myself as 'Police'?'</li><li><strong>(Intentionally Flees)</strong> To Suspect: 'You saw my lights and heard my siren, why didn't you stop?'</li><li><strong>(Lawful Detention)</strong> 'What was my initial probable cause or reasonable suspicion for the stop?' (e.g., traffic violation, matching suspect description).</li></ul><h5>Dialogue Examples (during pursuit):</h5>- (To radio) 'Starting a foot pursuit, suspect is a white male, red shirt, last seen running eastbound...'<br><br><strong>Potential Force Considerations:</strong> Fleeing can increase the justification for force upon capture. This may include PIT maneuvers (if authorized), a Taser, or tackling a fleeing suspect. The force must be reasonable based on the totality of circumstances.</div>"
@@ -310,8 +545,8 @@
                 url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.38.htm#38.15",
                 penalCodeDef: "<p>A person commits an offense if the person with **criminal negligence** **interrupts, disrupts, impedes, or interferes** with a peace officer... while the officer is **performing a duty**.</p>",
                 plainEnglish: "Negligently getting in the way and physically preventing an officer from doing their job.",
-                baseLevel: "**Class B Misdemeanor**.",
-                enhancements: "No common enhancements.",
+                baseLevel: "**Class B Misdemeanor** (Arrest).",
+                enhancements: "**State Jail Felony:** If the actor uses a vehicle or vessel during the commission of the offense in a disaster area after an evacuation order.",
                 exampleScenarios: "You are conducting a DWI investigation on the side of the road, and the suspect's friend keeps walking up to you, yelling, and getting in between you and the suspect, despite your commands to stay back.",
                 enhancementScenarios: "",
                 officerResponse: "<div class='protocol-section'><h4>Initial Response & Mindset:</h4> De-escalation and crowd control. The goal is to get the interfering party to comply so you can continue your original duty. This charge is a last resort after verbal warnings have failed.<h4>On-Scene Investigation & Dialogue:</h4><p>Your goal is to articulate how their physical actions interrupted a specific, lawful duty.</p><h5>Element-Specific Questions (for your report):</h5><ul><li><strong>(Performing a Duty)</strong> 'What specific duty was I performing?' (e.g., 'Interviewing a witness,' 'Securing a crime scene,' 'Arresting a suspect').</li><li><strong>(Interference)</strong> 'What were their physical actions?' (e.g., 'They stood in the doorway, blocking my path,' 'They repeatedly stepped between me and the person I was trying to talk to'). Speech alone is not enough.</li></ul><h5>Dialogue Examples:</h5><i>To Interfering Party:</i><br>- 'Sir, I understand you're concerned, but I need you to step back to the sidewalk so I can finish my investigation.'<br>- 'This is your final warning. You are interfering with my duties. If you do not step back now, you will be arrested.'<br><br><strong>Potential Force Considerations:</strong> Very low. If arrest is necessary, it's for non-compliance and usually only requires basic handcuffing techniques.</div>"
@@ -324,8 +559,8 @@
                 url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.22.htm#22.07",
                 penalCodeDef: "<p>A person commits an offense if he **threatens to commit any offense involving violence**... with **intent** to:</p><ol class='list-decimal list-inside space-y-1'><li>Cause a **reaction** by an official agency organized to deal with emergencies; OR</li><li>Place any person in **fear of imminent serious bodily injury**.</li></ol>",
                 plainEnglish: "Threatening a violent act to make someone call 9-1-1 or to make them fear for their life.",
-                baseLevel: "**Class B Misdemeanor** (fear of imminent SBI).<br>**Class A Misdemeanor** (cause official reaction).",
-                enhancements: "**3rd Degree Felony:** If the threat is against a public servant or causes evacuation of a building.",
+                baseLevel: "**Class B Misdemeanor** (fear of imminent SBI) (Arrest).<br>**Class A Misdemeanor** (cause official reaction) (Arrest).",
+                enhancements: "**State Jail Felony:** If against a **public servant** or a **family member**.<br>**3rd Degree Felony:** If it causes evacuation/lockdown of a building, or is against a judge.",
                 exampleScenarios: "**(Class B):** A suspect holds a baseball bat and tells a victim, 'I'm going to break your skull.' This places the victim in fear of *imminent serious bodily injury*.<br><br>** (Class A):** A man texts his ex-girlfriend, 'If you don't come back, I'm going to shoot your dad.' She calls 9-1-1, which is a 'reaction by an official agency.'",
                 enhancementScenarios: "A person calls a school and says, 'There is a bomb in the cafeteria.' This is a **Terroristic Threat (3rd Degree Felony)** because it interrupts the use of a public building.",
                 officerResponse: "<div class='protocol-section'><h4>Initial Response & Mindset:</h4> Take all threats seriously until proven otherwise. Assess the immediacy of the threat. The mindset is to ensure the safety of the potential victim and the public.<h4>On-Scene Investigation & Dialogue:</h4><p>Your goal is to establish the specific intent behind the threat.</p><h5>Element-Specific Questions:</h5><ul><li><strong>(Intent to Cause Reaction)</strong> To Victim: 'Why did you feel the need to call 911 after they said that?' 'Did they tell you they wanted you to call the police?'</li><li><strong>(Intent to Cause Fear of Imminent SBI)</strong> To Victim: 'What were their exact words?' 'Based on their tone and actions, did you believe they were about to seriously hurt you right at that moment?' 'Did they have a weapon?'</li></ul><h5>Dialogue Examples:</h5><i>To Suspect:</i><br>- 'Why did you say that? What did you want to happen?'<br><br><strong>Potential Force Considerations:</strong> Depends entirely on the context. If the suspect is present and armed, it becomes an Aggravated Assault or Deadly Conduct call. If the threat was made remotely, force is not a factor.</div>"
@@ -338,8 +573,8 @@
                 url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.46.htm#46.02",
                 penalCodeDef: "<p>(Post-Constitutional Carry) A person commits an offense if they carry a handgun and are:</p><ul class='list-disc list-inside space-y-1'><li>Younger than 21 years of age; OR</li><li>Prohibited from possessing a firearm by a felony or family violence conviction; OR</li><li>A member of a criminal street gang; OR</li><li>Carrying in a prohibited place (e.g., bar, school, airport).</li></ul>",
                 plainEnglish: "Illegally carrying a handgun, generally committed by someone who is legally barred from doing so (felon, too young, etc.) or is in a restricted location.",
-                baseLevel: "**Class A Misdemeanor**.",
-                enhancements: "**Unlawful Possession of a Firearm by a Felon (TPC §46.04)** is a **3rd Degree Felony**.",
+                baseLevel: "**Class A Misdemeanor** (Arrest).",
+                enhancements: "**Unlawful Possession of a Firearm by a Felon (TPC §46.04)** is a **3rd Degree Felony**.<br>**3rd Degree Felony:** If carrying in a prohibited place like a school, polling place, or racetrack.",
                 exampleScenarios: "You respond to a disturbance at a bar (a '51%' location where guns are prohibited). You find a man who is not otherwise committing a crime, but he has a handgun in his waistband.<br><br>You stop a 19-year-old for a traffic violation and find a handgun in their vehicle.",
                 enhancementScenarios: "During a consensual encounter, you identify a man who you know from prior dealings to be a convicted felon. You see the imprint of a handgun in his pocket. He is committing **Unlawful Possession of a Firearm by a Felon (3rd Degree Felony)**.",
                 officerResponse: "<div class='protocol-section'><h4>Initial Response & Mindset:</h4> High vigilance. Any encounter with a firearm requires tactical awareness. Mindset is focused on officer safety and control of the weapon. Do not lose sight of the suspect's hands.<h4>On-Scene Investigation & Dialogue:</h4><p>Your goal is to establish the person is in a prohibited category or place.</p><h5>Element-Specific Questions:</h5><ul><li><strong>(Prohibited Person)</strong> To Suspect: 'How old are you?' To Dispatch: 'Run a criminal history for this individual, check for felony convictions or family violence findings.'</li><li><strong>(Prohibited Place - TPC 46.03)</strong> Observe and articulate: 'The subject was inside the main bar area, past the 51% sign.' 'The subject was carrying inside a high school.'</li></ul><h5>Dialogue Examples:</h5><i>To Compliant Suspect:</i><br>- 'I see you have a handgun. For my safety, I'm going to remove it while we talk. Do not reach for it.'<br>- 'Can I see your ID? I need to verify you are legally allowed to carry this.'<br><br><i>To Non-Compliant/Hostile Suspect:</i><br>- 'Sir, I can see the gun in your waistband. Keep your hands where I can see them.'<br>- 'Do not touch that weapon! If you reach for it, I will see it as a threat!'<br><br><strong>Potential Force Considerations:</strong> The presence of a firearm elevates the risk. If the person makes any move toward the weapon after being told not to, you must be prepared to use appropriate force, potentially including deadly force, to stop the threat.</div>"
@@ -352,8 +587,8 @@
                 url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.22.htm#22.05",
                 penalCodeDef: "<p>A person commits an offense if he:</p><ol class='list-decimal list-inside space-y-1'><li>**Recklessly** engages in conduct that places another in **imminent danger of serious bodily injury**; OR</li><li>**Knowingly** **discharges a firearm at or in the direction of** one or more individuals or a habitation, building, or vehicle...</li></ol>",
                 plainEnglish: "Doing something so reckless it could get someone seriously hurt, OR knowingly shooting a gun at or towards people, houses, or cars.",
-                baseLevel: "**Class A Misdemeanor** (reckless conduct).<br>**3rd Degree Felony** (discharging firearm).",
-                enhancements: "This is the charge for pointing a gun at someone *without* a verbal threat. A threat would make it Aggravated Assault.",
+                baseLevel: "**Class A Misdemeanor** (reckless conduct) (Arrest).<br>**3rd Degree Felony** (discharging firearm) (Arrest).",
+                enhancements: "**3rd Degree Felony:** If reckless conduct is committed by discharging a firearm, it becomes the 3rd Degree Felony offense. Discharging at a habitation, building, or vehicle is also a 3rd Degree Felony.",
                 exampleScenarios: "**(Class A):** A suspect, during an argument, points a handgun at the ground near the victim's feet.<br><br>** (3rd Degree Felony):** You are dispatched to a 'shots fired' call. A witness states the suspect shot a handgun into the air in a dense apartment complex.",
                 enhancementScenarios: "",
                 officerResponse: "<div class='protocol-section'><h4>Initial Response & Mindset:</h4> High vigilance. If a firearm was discharged, treat the area as a crime scene. The mindset is to stop the dangerous behavior and investigate.<h4>On-Scene Investigation & Dialogue:</h4><p>Your goal is to establish either reckless endangerment or the knowing discharge of a firearm.</p><h5>Element-Specific Questions:</h5><ul><li><strong>(Reckless Conduct)</strong> To Victim: 'What were they doing?' 'How did their actions put you in danger of being seriously hurt?' 'Did you think they were going to accidentally shoot you?'</li><li><strong>(Discharging Firearm)</strong> To Witness: 'Where was the person standing when they fired?' 'Which direction did they shoot? Was it towards any people, houses, or cars?' 'Did they seem to be aiming at something specific?'</li></ul><h5>Dialogue Examples:</h5><i>To Suspect:</i><br>- 'We have reports of you shooting a gun. Where is the firearm now?'<br><br><strong>Potential Force Considerations:</strong> If the suspect is still armed or discharging a weapon, the response is tactical and deadly force is a consideration. If the act is over, force is based on the suspect's behavior upon your arrival.</div>"
@@ -366,8 +601,8 @@
                 url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.115",
                 penalCodeDef: "<p>A person commits an offense if the person **intentionally or knowingly** **possesses** a **controlled substance**.</p>",
                 plainEnglish: "Knowingly having illegal drugs on you or under your control.",
-                baseLevel: "Varies by **Penalty Group (PG)** and **Weight**.<br>**PG 1 (Cocaine, Meth, Heroin):** < 1 gram = **State Jail Felony**.<br>**Possession of Marihuana (POM):** < 2 ounces = **Class B Misdemeanor**.",
-                enhancements: "Offense level increases if in a **Drug-Free Zone**.",
+                baseLevel: "Varies by **Penalty Group (PG)** and **Weight** (Arrest).<br>**PG 1 (Cocaine, Meth, Heroin):** < 1 gram = **State Jail Felony**.<br>**Possession of Marihuana (POM):** < 2 ounces = **Class B Misdemeanor**.",
+                enhancements: "Offense level increases if in a **Drug-Free Zone** (e.g., school, park).<br>Weight increases the offense level (e.g., PG1 1-4g = 3rd Degree; 4-200g = 2nd Degree).",
                 exampleScenarios: "**(SJF):** During a traffic stop, you find a small baggie of methamphetamine (0.5g) in the driver's pocket.<br><br>** (Class B):** You respond to a suspicious vehicle and find two people smoking a joint. You find a plastic baggie containing 1.5 oz of marijuana in the center console.",
                 enhancementScenarios: "You arrest a suspect for POM (3 oz, a Class A Misdemeanor). You later find out the arrest was made in a park, 500 feet from an elementary school. The charge is enhanced to a **State Jail Felony** (POM in a Drug-Free Zone).",
                 officerResponse: "<div class='protocol-section'><h4>Initial Response & Mindset:</h4> This is usually discovered during another encounter. Mindset is officer safety first (weapons?) and evidence preservation second. Don't handle suspected fentanyl without proper PPE.<h4>On-Scene Investigation & Dialogue:</h4><p>Your goal is to establish 'knowing' possession.</p><h5>Element-Specific Questions (for your report):</h5><ul><li><strong>(Knowing Possession)</strong> 'Where was the substance located?' 'Was it in plain view?' 'Did the suspect make any furtive movements to hide or discard it?' 'Did the suspect make any spontaneous statements about it?' Articulate facts that show the suspect knew the substance was there.</li></ul><h5>Dialogue Examples:</h5><i>To Compliant Suspect:</i><br>- 'I smell marijuana. Is there anything illegal in the car I should know about?'<br>- 'Whose backpack is this? I'm going to search it based on the odor.'<br><br><i>To Non-Compliant/Hostile Suspect:</i><br>- 'Sir, I see a baggie of what appears to be cocaine on your passenger seat. Step out of the car.'<br><br><strong>Potential Force Considerations:</strong> Generally low. However, people with drugs are frequently armed. Search incident to arrest thoroughly.</div>"
@@ -380,8 +615,8 @@
                 url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.125",
                 penalCodeDef: "<p>A person commits an offense if the person **intentionally or knowingly** **possesses**... an item of **drug paraphernalia** with the **intent to use it**.</p>",
                 plainEnglish: "Knowingly having an item (pipe, bong, syringe) intended for drug use.",
-                baseLevel: "**Class C Misdemeanor**.",
-                enhancements: "No common enhancements.",
+                baseLevel: "**Class C Misdemeanor** (Citation).",
+                enhancements: "**Class A Misdemeanor:** If the person delivers paraphernalia to a person under 18 who is at least 3 years younger.",
                 exampleScenarios: "During a traffic stop, you find a glass 'meth pipe' with residue in the center console.<br><br>You find a marijuana grinder and a 'bong' in a person's backpack during a lawful search.",
                 enhancementScenarios: "",
                 officerResponse: "<div class='protocol-section'><h4>Initial Response & Mindset:</h4> Same as POCS. Mindset is safety (needles?) and evidence. This is a citable offense; arrest is rarely necessary.<h4>On-Scene Investigation & Dialogue:</h4><p>Your goal is to establish possession and intent to use.</p><h5>Element-Specific Questions:</h5><ul><li><strong>(Possession & Intent)</strong> To Suspect: 'What is this pipe used for?' The presence of residue is strong evidence of its intended use. Is the item designed for or commonly used for drugs?</li></ul><h5>Dialogue Examples:</h5><i>To Suspect:</i><br>- 'I'm going to issue you a citation for this paraphernalia. I need to see your ID.'<br><br><strong>Potential Force Considerations:</strong> Extremely low. A citation is the standard enforcement action.</div>"
@@ -394,8 +629,8 @@
                 url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.22.htm#22.011",
                 penalCodeDef: "<p>A person commits an offense if the person intentionally or knowingly causes the **penetration** of the anus, sexual organ, or mouth of another person by any means, **without that person's consent**.</p>",
                 plainEnglish: "Forcing or coercing someone to engage in any act of sexual penetration when they do not or *cannot* consent.",
-                baseLevel: "**2nd Degree Felony**.",
-                enhancements: "Patrol's role is critical. 1. Victim Safety, 2. Evidence Preservation, 3. Scene Security, 4. Notification of Detectives.",
+                baseLevel: "**2nd Degree Felony** (Arrest).",
+                enhancements: "Becomes **Aggravated Sexual Assault (1st Degree Felony)** if: 1) Causes SBI; 2) Uses/exhibits a deadly weapon; 3) Victim is < 14 or 65+.",
                 exampleScenarios: "You respond to a hospital to meet a victim who states they were at a party, became heavily intoxicated, and woke up to a person they did not know sexually assaulting them. The victim could not consent due to intoxication.",
                 enhancementScenarios: "A suspect holds a knife to a victim's throat to compel them to submit to a sexual act. This becomes **Aggravated Sexual Assault (1st Degree Felony)** because a deadly weapon was used.",
                 officerResponse: "<div class='protocol-section'><h4>Initial Response & Mindset:</h4> Victim-centered approach. Your mindset is to ensure the victim is physically safe and feels secure. Empathy and professionalism are paramount. Primary goal is evidence preservation for detectives.<h4>On-Scene Investigation & Dialogue:</h4><p>Your goal is to get a basic outcry while preserving evidence. Do NOT conduct an in-depth interview.</p><h5>Element-Specific Questions:</h5><ul><li><strong>(Penetration)</strong> To Victim: 'Can you tell me briefly what happened?' (Let them describe the act in their own words. Your report should quote them directly if possible).</li><li><strong>(Without Consent)</strong> To Victim: 'Did you say no?' 'Were you in any way forced or threatened?' 'Were you intoxicated or unconscious to a point where you could not have said yes?'</li></ul><h5>Dialogue Examples:</h5><i>To Victim:</i><br>- 'You are in a safe place now. My name is Officer [Name], and I'm here to help.'<br>- 'It is very important that you try not to shower, change clothes, or use the restroom until a SANE nurse can see you.'<br><br><strong>Potential Force Considerations:</strong> Force is only a factor if the suspect is still on scene and resists arrest. The suspect should be considered a high-risk felon.</div>"
@@ -408,8 +643,8 @@
                 url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.22.htm#22.021",
                 penalCodeDef: "<p>A person commits an offense if they commit sexual assault... and additional factors are present, such as:</p><ul class='list-disc list-inside space-y-1'><li>Causing **serious bodily injury**;</li><li>Using a **deadly weapon**;</li><li>The victim is **younger than 14** or **65 or older**.</li></ul>",
                 plainEnglish: "A sexual assault that involves a weapon, serious harm, or is committed against a child or an elderly person.",
-                baseLevel: "**1st Degree Felony**.",
-                enhancements: "Any Sexual Assault committed against a victim younger than 14 years old is **automatically** Aggravated Sexual Assault. This is a crucial distinction.",
+                baseLevel: "**1st Degree Felony** (Arrest).",
+                enhancements: "This is already a 1st Degree Felony. Any Sexual Assault committed against a victim younger than 14 years old is **automatically** Aggravated Sexual Assault. This is a crucial distinction.",
                 exampleScenarios: "A suspect breaks into a home and sexually assaults a 70-year-old victim.<br><br>A suspect kidnaps a victim, takes them to another location, and sexually assaults them while threatening to kill them.",
                 enhancementScenarios: "",
                 officerResponse: "<div class='protocol-section'><h4>Initial Response & Mindset:</h4> Same as Sexual Assault, but with an even higher level of vigilance. A deadly weapon may still be present. The suspect has demonstrated a capacity for extreme violence. The mindset is safety, evidence, and containment.<h4>On-Scene Investigation & Dialogue:</h4><p>Your goal is to establish the aggravating factor in your initial report for detectives.</p><h5>Element-Specific Questions:</h5><ul><li><strong>(Aggravating Factors)</strong> To Victim: 'Did they have a weapon? Can you describe it?' 'Did they threaten you with death or kidnapping?' 'Aside from the assault, were you injured in any other way?' 'Can you confirm your date of birth?'</li></ul><h5>Dialogue Examples:</h5><i>To Victim:</i><br>- Follow the victim-centered approach. Be gentle but thorough to establish the aggravating elements for your report.<br><br><strong>Potential Force Considerations:</strong> The suspect is a violent felon who has used or threatened extreme violence. If confronted, they pose a significant threat. Be prepared for a high level of resistance and the potential for a deadly force encounter.</div>"
@@ -422,8 +657,8 @@
                 url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.21.htm#21.08",
                 penalCodeDef: "<p>A person commits an offense if he **exposes his anus or any part of his genitals**:</p><ul class='list-disc list-inside space-y-1'><li>With **intent to arouse or gratify the sexual desire** of any person, AND</li><li>He is **reckless** about whether another is present who will be **offended or alarmed**.</li></ul>",
                 plainEnglish: "Exposing your genitals in public for sexual gratification.",
-                baseLevel: "**Class B Misdemeanor**.",
-                enhancements: "No common enhancements.",
+                baseLevel: "**Class B Misdemeanor** (Arrest).",
+                enhancements: "**Class A Misdemeanor:** If the actor has **2+ prior convictions** for this offense.",
                 exampleScenarios: "You are called to a public library for a report of a man sitting at a table masturbating underneath a newspaper, where other patrons can see him.",
                 enhancementScenarios: "",
                 officerResponse: "<div class='protocol-section'><h4>Initial Response & Mindset:</h4> Approach with awareness that this behavior can be a precursor to more serious offenses. Mindset is to locate the individual and conduct the investigation discreetly to avoid further alarming the public.<h4>On-Scene Investigation & Dialogue:</h4><p>Your goal is to establish the intent to arouse and the recklessness of the exposure.</p><h5>Element-Specific Questions:</h5><ul><li><strong>(Intent to Arouse)</strong> To Witness: 'What was the person doing while they were exposed? Were they looking at anyone? Were they masturbating?'</li><li><strong>(Reckless)</strong> To Witness: 'Was it obvious that other people were around and could see them?'</li><li><strong>(Offended/Alarmed)</strong> To Witness: 'How did seeing this make you feel?'</li></ul><h5>Dialogue Examples:</h5><i>To Compliant Suspect:</i><br>- 'We have a report of someone exposing themselves in this area. Can you tell me what you were doing?'<br><br><strong>Potential Force Considerations:</strong> Extremely low. Suspects are generally compliant.</div>"
@@ -436,8 +671,8 @@
                 url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.22.htm#22.041",
                 penalCodeDef: "<p>A person commits an offense if he... by act or omission, engages in conduct that **places a child younger than 15 years in imminent danger of death, bodily injury, or physical or mental impairment**.</p>",
                 plainEnglish: "Putting a child under 15 in an unreasonably risky situation.",
-                baseLevel: "**State Jail Felony**.",
-                enhancements: "In addition to any arrest, a report to Child Protective Services (CPS) is mandatory.",
+                baseLevel: "**State Jail Felony** (Arrest).",
+                enhancements: "**3rd Degree Felony:** If the actor's conduct is intentional/knowing and causes SBI.<br>**2nd Degree Felony:** If reckless conduct causes SBI.<br>In addition to any arrest, a report to Child Protective Services (CPS) is mandatory.",
                 exampleScenarios: "You respond to a DWI crash and find the intoxicated driver had their 8-year-old child in the front seat.<br><br>You are dispatched to a home where two adults are unconscious from a drug overdose, leaving their 4-year-old child unattended in a house with accessible narcotics.",
                 enhancementScenarios: "",
                 officerResponse: "<div class='protocol-section'><h4>Initial Response & Mindset:</h4> The child's welfare is the absolute top priority. The mindset is to secure the child's safety first and then investigate the criminal offense. This is both a criminal and a civil (CPS) investigation.<h4>On-Scene Investigation & Dialogue:</h4><p>Your goal is to articulate the specific, imminent danger.</p><h5>Element-Specific Questions (for your report):</h5><ul><li><strong>(Conduct)</strong> 'What was the specific act or omission by the guardian?' (e.g., 'Driving while intoxicated,' 'Leaving narcotics accessible').</li><li><strong>(Imminent Danger)</strong> 'What specific danger did that conduct create for the child?' (e.g., 'Danger of injury from a car crash,' 'Danger of accidental overdose').</li><li><strong>(Child < 15)</strong> Confirm the child's age.</li></ul><h5>Dialogue Examples:</h5><i>To Suspect:</i><br>- 'Do you realize that your actions put your child in incredible danger?'<br><br><strong>Potential Force Considerations:</strong> Force is usually directed at the adult suspects if they resist arrest for this or other offenses. The primary focus is the safe handling and placement of the child victim.</div>"
@@ -450,8 +685,8 @@
                 url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.32.htm#32.21",
                 penalCodeDef: "<p>A person commits an offense if he **forges a writing** with **intent to defraud or harm another**.</p>",
                 plainEnglish: "Creating, signing, or altering a document to trick someone.",
-                baseLevel: "**Class A Misdemeanor** (check).<br>**State Jail Felony** (money).",
-                enhancements: "**3rd Degree Felony** for government documents (e.g., driver's license).",
+                baseLevel: "**Class A Misdemeanor** (if writing is a check) (Arrest).<br>**State Jail Felony** (if writing is money, stock, bond) (Arrest).",
+                enhancements: "**3rd Degree Felony** for government documents (e.g., driver's license, U.S. currency).<br>Enhanced one level up if the victim is 65+.",
                 exampleScenarios: "A suspect steals a check from a mailbox, writes their own name on the 'pay to' line, and cashes it at a bank.<br><br>A person uses a computer to create a fake doctor's note to get out of work.",
                 enhancementScenarios: "A suspect creates a fake Texas Driver's License with their picture but someone else's name. This is **Forgery of a Government Instrument (3rd Degree Felony)**.",
                 officerResponse: "<div class='protocol-section'><h4>Initial Response & Mindset:</h4> Purely investigatory. Collect all documents. The mindset is detail-oriented: who created it, who passed it, who suffered a loss?<h4>On-Scene Investigation & Dialogue:</h4><p>Your goal is to establish the document is fake and was used to defraud.</p><h5>Element-Specific Questions:</h5><ul><li><strong>(Forges a Writing)</strong> To Victim: 'Is this your signature? Did you authorize anyone to sign for you?' To Document Examiner: 'Can you confirm this document has been altered?'</li><li><strong>(Intent to Defraud)</strong> To Victim: 'Did you lose any money or property because of this document?' To Suspect: 'Did you receive money or goods by using this check?'</li></ul><h5>Dialogue Examples:</h5><i>To Compliant Suspect:</i><br>- 'We're investigating a forged check. Can you tell me where you got this?'<br><br><strong>Potential Force Considerations:</strong> Non-existent in the context of the offense itself.</div>"
@@ -464,8 +699,8 @@
                 url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.32.htm#32.51",
                 penalCodeDef: "<p>A person commits an offense if the person, with the **intent to harm or defraud another**, obtains, possesses, transfers, or uses an item of... **identifying information** of another person without consent.</p>",
                 plainEnglish: "Possessing or using someone else's personal or financial info without permission to commit fraud.",
-                baseLevel: "**State Jail Felony** (< 5 items).",
-                enhancements: "The level increases with the number of items possessed.",
+                baseLevel: "**State Jail Felony** (< 5 items) (Arrest).",
+                enhancements: "**3rd Degree Felony:** 5 to 9 items.<br>**2nd Degree Felony:** 10 to 49 items.<br>**1st Degree Felony:** 50 or more items.<br>Enhanced one level up if the victim is 65+.",
                 exampleScenarios: "During a traffic stop, you find a wallet in the suspect's car that contains three different credit cards and a driver's license belonging to three different people. The suspect has no legitimate reason to possess them.",
                 enhancementScenarios: "An investigation reveals a suspect possesses a list of 20 names, dates of birth, and social security numbers. Because the number of items is between 10 and 50, the offense is a **2nd Degree Felony**.",
                 officerResponse: "<div class='protocol-section'><h4>Initial Response & Mindset:</h4> This is often discovered during other encounters. The mindset is to be observant and recognize indicators of identity theft. Secure all items as evidence.<h4>On-Scene Investigation & Dialogue:</h4><p>Your goal is to establish possession without consent and fraudulent intent.</p><h5>Element-Specific Questions:</h5><ul><li><strong>(Possession)</strong> Document every item of identifying info found.</li><li><strong>(Without Consent)</strong> Contact the people whose names are on the items: 'Did you give [Suspect's Name] permission to have your credit card/ID?'</li><li><strong>(Intent to Defraud)</strong> To Suspect: 'Why do you have these items?' The lack of a plausible, lawful reason is evidence of fraudulent intent.</li></ul><h5>Dialogue Examples:</h5><i>To Suspect:</i><br>- 'I see you have several credit cards with different names on them. Can you explain why?'<br><br><strong>Potential Force Considerations:</strong> Low. Force is not related to the offense itself.</div>"
@@ -479,7 +714,7 @@
                 penalCodeDef: "<p>A public servant... commits an offense if he:</p><ol class='list-decimal list-inside space-y-1'><li>**Intentionally** subjects another to **mistreatment or to arrest, detention, search, or seizure** that he **knows is unlawful**; OR</li><li>**Intentionally** denies or impedes another in the exercise of any right... **knowing his conduct is unlawful**.</li></ol>",
                 plainEnglish: "An on-duty public servant who intentionally mistreats someone, illegally arrests or searches them, or denies their rights.",
                 baseLevel: "**Class A Misdemeanor**.",
-                enhancements: "This statute holds law enforcement accountable. All actions must be based on lawful justification.",
+                enhancements: "This statute holds law enforcement accountable. All actions must be based on lawful justification. Violation of this statute can result in civil rights lawsuits and termination.",
                 exampleScenarios: "An officer detains a person for a traffic stop. After the stop is concluded with no arrest, the officer continues to detain the person for an additional hour without any legal justification, knowing the continued detention is unlawful.",
                 enhancementScenarios: "",
                 officerResponse: "<div class='protocol-section'><h4>Initial Response & Mindset:</h4> This is an offense committed *by* an officer. If you observe another officer engaging in this conduct, you have a duty to intervene and report it. The mindset is about upholding the law and department policy.<h4>On-Scene Investigation & Dialogue:</h4><p>Investigation is conducted by Internal Affairs or other agencies.</p><h5>Element-Specific Questions (for IA investigation):</h5><ul><li><strong>(Knows is Unlawful)</strong> 'What was the officer's stated justification for the arrest/search?' 'Does the officer's training and experience support that they should have known their actions were unlawful?'</li><li><strong>(Intentional)</strong> 'Did the officer's actions appear to be a mistake or a deliberate act?'</li></ul><h5>Dialogue Examples (as an intervening officer):</h5>- 'Hey partner, let's take a step back for a second. What's going on?'<br>- 'Are we good to let this person go? We don't have anything to hold them on.'<br><br><strong>Potential Force Considerations:</strong> This statute governs the *unlawful* application of police authority, including force. Appropriate force must be objectively reasonable and based on law and policy.</div>"
@@ -490,10 +725,10 @@
                 title: "Murder",
                 tpc: "TPC §19.02",
                 url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.19.htm#19.02",
-                penalCodeDef: "<p>A person commits an offense if he:</p><ol class='list-decimal list-inside space-y-1'><li>**Intentionally or knowingly** causes the death of an individual; OR</li><li>Intends to cause **serious bodily injury** and commits an act clearly dangerous to human life that causes the death...; OR</li><li>Commits or attempts to commit a **felony**...and...commits an act clearly dangerous to human life that causes the death... (Felony Murder).</li></ol>",
+                penalCodeDef: "<p>A person commits an offense if he:</p><ol class='list-decimal list-inside space-y-1'><li>**Intentionally or knowingly** causes the death of an individual; OR</li><li>Intends to cause **serious bodily injury** and commits an act clearly dangerous to human life that causes the death...; OR</li><li>Commits or attempts to commit a **felony**...and...commits an act clearly dangerous to human life that causes thedeath... (Felony Murder).</li></ol>",
                 plainEnglish: "Intentionally killing someone; OR causing someone's death while trying to seriously injure them; OR causing someone's death while committing another felony (like robbery).",
-                baseLevel: "**1st Degree Felony**.",
-                enhancements: "The offense is enhanced to **Capital Murder (TPC §19.03)** if certain factors are present, such as murdering a peace officer, a child under 10, or during another felony like kidnapping.",
+                baseLevel: "**1st Degree Felony** (Arrest).",
+                enhancements: "The offense is enhanced to **Capital Murder (TPC §19.03)** if certain factors are present, such as murdering a **peace officer or firefighter**, a **child younger than 15**, or murdering **during another felony** (robbery, sexual assault, kidnapping, etc.).",
                 exampleScenarios: "**(Intentional):** Suspect A gets into an argument with Victim B and shoots them, causing their death.<br><br>** (Felony Murder):** Suspect C robs a store. During the robbery, he pushes the elderly clerk, who falls, hits his head, and dies. Even if he didn't intend to kill, the death occurred during the commission of a felony.",
                 enhancementScenarios: "A suspect robs a bank and intentionally shoots and kills a security guard (a peace officer) during the robbery. This is **Capital Murder**.",
                 officerResponse: "<div class='protocol-section'><h4>Initial Response & Mindset:</h4> Maximum vigilance. Your priorities are: 1. Stop the killing. 2. Render aid. 3. Apprehend the suspect. 4. SECURE THE SCENE. The mindset is about preservation. Everything is evidence.<h4>On-Scene Investigation & Dialogue:</h4><p>Patrol's role is to identify and separate witnesses, not to conduct detailed interviews.</p><h5>Element-Specific Questions (for initial report):</h5><ul><li><strong>(Cause of Death)</strong> Note observations: 'Victim had apparent gunshot wound to the chest.'</li><li><strong>(Mental State - for detectives)</strong> To Witness: 'What was the argument about?' 'Did it seem like the suspect intended to shoot them?'</li><li><strong>(Felony Murder)</strong> To Witness: 'Was the suspect robbing the store when the shooting happened?'</li></ul><h5>Dialogue Examples:</h5>- 'Who saw what happened? I need to talk to you over here.'<br>- 'Where is the person who did this? Which way did they go?'<br><br><strong>Potential Force Considerations:</strong> A murder suspect is a demonstrated deadly threat. If on scene and armed or non-compliant, deadly force may be justified. High-risk arrest procedures are mandatory.</div>"
@@ -506,8 +741,8 @@
                 url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.19.htm#19.04",
                 penalCodeDef: "<p>A person commits an offense if he **recklessly** causes the death of an individual.</p>",
                 plainEnglish: "Unintentionally killing someone by acting in a reckless way.",
-                baseLevel: "**2nd Degree Felony**.",
-                enhancements: "The key difference between Murder and Manslaughter is the *mental state* (Intentional/Knowing vs. Reckless).",
+                baseLevel: "**2nd Degree Felony** (Arrest).",
+                enhancements: "The key difference between Murder and Manslaughter is the *mental state* (Intentional/Knowing vs. Reckless). This is what distinguishes it from Murder.",
                 exampleScenarios: "A suspect is cleaning a handgun they know is loaded and recklessly points it at their friend as a joke, pulling the trigger and causing their death. They didn't intend to kill, but their conduct was reckless.",
                 enhancementScenarios: "",
                 officerResponse: "<div class='protocol-section'><h4>Initial Response & Mindset:</h4> The initial response is identical to a murder scene. Treat every death investigation as a homicide until proven otherwise. Secure the scene, render aid, identify parties.<h4>On-Scene Investigation & Dialogue:</h4><p>Your goal is to gather facts for detectives to determine the mental state.</p><h5>Element-Specific Questions:</h5><ul><li><strong>(Recklessly)</strong> To Suspect/Witness: 'Did the suspect know the gun was loaded?' 'Were they pointing it at the person intentionally, even as a joke?' 'Were they handling the weapon in an unsafe manner?' The goal is to articulate the suspect was aware of a substantial risk and consciously disregarded it.</li></ul><h5>Dialogue Examples:</h5><i>To Suspect (if on scene and compliant):</i><br>- 'I need you to tell me exactly what happened. Don't leave anything out.'<br><br><strong>Potential Force Considerations:</strong> The act is complete. Force considerations will depend on the suspect's behavior upon your arrival.</div>"
@@ -520,8 +755,8 @@
                 url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.71.htm#71.02",
                 penalCodeDef: "<p>A person commits an offense if, with the **intent to establish, maintain, or participate** in a **combination** (3+ people) or as a member of a **criminal street gang**, the person commits or conspires to commit one or more listed offenses.</p>",
                 plainEnglish: "Committing a crime *as part of a group of three or more people* or as a member of a known criminal street gang.",
-                baseLevel: "The offense is **enhanced one category higher** than the most serious offense committed.",
-                enhancements: "This is an \"enhancement\" statute. You arrest for the underlying crime and file the Engaging charge in addition.",
+                baseLevel: "The offense is **enhanced one category higher** than the most serious offense committed (Arrest).",
+                enhancements: "This is an \"enhancement\" statute. You arrest for the underlying crime (e.g., Theft) and file the Engaging charge in addition. If the underlying offense is a Class A Misdemeanor, this makes it a State Jail Felony.",
                 exampleScenarios: "Four individuals work together to commit a series of vehicle burglaries. They are acting as a 'combination.' If they commit a B.O.V. (Class A Misdemeanor), the Engaging charge elevates it to a State Jail Felony.",
                 enhancementScenarios: "",
                 officerResponse: "<div class='protocol-section'><h4>Initial Response & Mindset:</h4> Officer safety is heightened when dealing with groups. Be aware of multiple suspects and coordinated actions. The mindset is to identify all involved parties and articulate their collaborative criminal actions.<h4>On-Scene Investigation & Dialogue:</h4><p>Your goal is to establish that they acted together.</p><h5>Element-Specific Questions:</h5><ul><li><strong>(Combination)</strong> To Suspects (interviewed separately): 'Who was with you tonight?' 'Whose idea was this?' 'What was the plan?' 'Who was the lookout?' 'How were you going to split the money/property?'</li><li><strong>(Criminal Street Gang)</strong> Observe and document gang tattoos, colors, and hand signs. Check department intelligence databases.</li></ul><h5>Dialogue Examples:</h5>- 'I see you all have the same tattoo. What does that represent?'<br><br><strong>Potential Force Considerations:</strong> The presence of multiple suspects increases the potential threat. Control the scene with sufficient backup.</div>"
@@ -534,8 +769,8 @@
                 url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.71.htm#71.023",
                 penalCodeDef: "<p>A person commits an offense if the person, as part of an identifiable **criminal street gang**, **knowingly finances, directs, or supervises** the commission of... one or more listed offenses by members of the gang.</p>",
                 plainEnglish: "Being a leader of a gang and ordering or managing other members to commit serious crimes.",
-                baseLevel: "**1st Degree Felony**.",
-                enhancements: "This is a charge for the \"shot callers.\"",
+                baseLevel: "**1st Degree Felony** (Arrest).",
+                enhancements: "This is a charge for the \"shot callers.\" The listed offenses include felonies like Murder, Robbery, Sexual Assault, and Aggravated Assault.",
                 exampleScenarios: "The known leader of a local gang orders three of his members to commit a robbery to generate money for the gang.",
                 enhancementScenarios: "",
                 officerResponse: "<div class='protocol-section'><h4>Initial Response & Mindset:</h4> This charge is almost always the result of a long-term investigation by a specialized gang unit. Patrol's role is intelligence gathering. Mindset should be to document everything: who associates with whom, who seems to be giving orders, etc.<h4>On-Scene Investigation & Dialogue:</h4><p>Your goal is to gather intelligence for gang detectives.</p><h5>Element-Specific Questions (for Field Intelligence Reports):</h5><ul><li><strong>(Supervises/Directs)</strong> 'Who appears to be the leader of this group?' 'Who is everyone looking to for direction?' 'Who owns the car you're all in?' Document these observations.</li></ul><h5>Dialogue Examples:</h5><i>During routine calls with known gang members:</i><br>- 'Who do you hang out with?'<br>- 'Who is in charge of your set?'<br><br><strong>Potential Force Considerations:</strong> Gang leaders are often insulated from street-level crime but are dangerous. Any planned arrest would be high-risk and involve a tactical team.</div>"
@@ -548,7 +783,7 @@
                 url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.21.htm#21.11",
                 penalCodeDef: "<p>A person commits an offense if, with a child **younger than 17 years**...the person:</p><ol class='list-decimal list-inside space-y-1'><li>**Exposes** his or her genitals/anus with the **intent to arouse or gratify**...; OR</li><li>Engages in **sexual contact** with the child.</li></ol>",
                 plainEnglish: "Inappropriate touching of a child (under 17) or exposing oneself to them for sexual gratification.",
-                baseLevel: "**2nd Degree Felony**.",
+                baseLevel: "**2nd Degree Felony** (by sexual contact) (Arrest).<br>**3rd Degree Felony** (by exposure) (Arrest).",
                 enhancements: "This is the primary charge for sexual abuse of a child that does *not* involve penetration.",
                 exampleScenarios: "**(Sexual Contact):** A suspect touches the genital area of a 14-year-old child over their clothing.<br><br>** (Exposure):** A suspect exposes their genitals to a 10-year-old child.",
                 enhancementScenarios: "",
@@ -562,8 +797,8 @@
                 url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.43.htm#43.26",
                 penalCodeDef: "<p>**(Possession):** A person commits an offense if the person, knowing the character and content...**possesses** material that **visually depicts a child** younger than 18...engaging in **sexual conduct**.</p>",
                 plainEnglish: "Knowingly having or sharing images or videos that show children in a sexual way.",
-                baseLevel: "**Possession:** **3rd Degree Felony**.<br>**Promotion:** **2nd Degree Felony**.",
-                enhancements: "If discovered, **stop the search immediately.** Secure the device and notify specialized detectives (e.g., ICAC).",
+                baseLevel: "**Possession:** **3rd Degree Felony** (Arrest).<br>**Promotion:** **2nd Degree Felony** (Arrest).",
+                enhancements: "If discovered, **stop the search immediately.** Secure the device and notify specialized detectives (e.g., ICAC). Do not continue searching the device.",
                 exampleScenarios: "During a lawful search of a suspect's phone incident to arrest on another charge, you observe images that appear to be child pornography.",
                 enhancementScenarios: "",
                 officerResponse: "<div class='protocol-section'><h4>Initial Response & Mindset:</h4> This is a major crime discovery. The mindset is immediately about evidence preservation. Stop your search. The goal is to protect the digital evidence from being altered or destroyed.<h4>On-Scene Investigation & Dialogue:</h4><p>The investigation is observational and procedural.</p><h5>Element-Specific Questions (for your report):</h5><ul><li><strong>(Possession)</strong> 'What was I searching for?' 'Where on the device did I find the material?' 'What did the material depict?' 'What action did I take immediately after?' (e.g., 'I stopped the search and secured the phone.')</li></ul><h5>Dialogue Examples:</h5>- No on-scene dialogue with the suspect about the material is necessary or advised. Simply secure the device.<br><br><strong>Potential Force Considerations:</strong> Low. The offense is possession. Force is only relevant to the initial reason for the encounter.</div>"
@@ -576,8 +811,8 @@
                 url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.22.htm#22.01",
                 penalCodeDef: "<p>A person commits an offense if the person commits an assault...against a person in a family/dating relationship, and the person **intentionally, knowingly, or recklessly impedes the normal breathing or circulation of the blood**...by:</p><ul class='list-disc list-inside space-y-1'><li>Applying pressure to the person's throat or neck; OR</li><li>Blocking the person's nose or mouth.</li></ul>",
                 plainEnglish: "Choking or smothering a family member, household member, or someone they are in a dating relationship with.",
-                baseLevel: "**3rd Degree Felony**.",
-                enhancements: "**2nd Degree Felony:** If the actor has a previous conviction for this same offense. This is a major indicator of future lethality.",
+                baseLevel: "**3rd Degree Felony** (Arrest).",
+                enhancements: "**2nd Degree Felony:** If the actor has a **previous conviction** for this same offense. This is a major indicator of future lethality.",
                 exampleScenarios: "During an argument, a suspect places their hands around their partner's neck and squeezes, making it difficult for them to breathe.<br><br>A suspect puts a pillow over their family member's face during a physical altercation, causing them to gasp for air.",
                 enhancementScenarios: "",
                 officerResponse: "<div class='protocol-section'><h4>Initial Response & Mindset:</h4> Treat this as an extremely high-risk domestic violence call. Strangulation is a top predictor of future homicide. The mindset is to secure the suspect, ensure the victim is safe, and conduct a thorough investigation for signs of this specific act. Request EMS for the victim, even if they claim to be fine.<h4>On-Scene Investigation & Dialogue:</h4><p>Your goal is to specifically prove the act of impeding breath or circulation.</p><h5>Element-Specific Questions:</h5><ul><li><strong>(Impeding Breath/Circulation)</strong> To Victim: 'Did they put their hands on your neck or throat? Can you show me with one hand where they touched you?' 'Did they cover your mouth and nose?' 'Did you have trouble breathing? Did you feel like you were going to pass out?' 'Did you feel dizzy, see stars, or get a headache?' 'Is your voice raspy now?'</li><li><strong>(Family Relationship)</strong> 'What is your relationship to the suspect?'</li></ul><h5>Dialogue Examples:</h5><i>To Suspect:</i><br>- 'The victim is saying you put your hands on their neck and choked them. Is that what happened?'<br><br><strong>Potential Force Considerations:</strong> The suspect has committed a felony-level act of violence. They may be highly emotional and aggressive. Be prepared for a higher level of resistance than a simple assault.</div>"
@@ -587,11 +822,20 @@
         const navList = document.getElementById('nav-list');
         const contentDisplay = document.getElementById('content-display');
         const searchInput = document.getElementById('search-input');
+        const navContainer = document.querySelector('nav');
 
         let activeNavItem = null;
 
-        const renderContent = (offenseId) => {
-            const offense = offenses.find(o => o.id === parseInt(offenseId));
+        const renderContent = (contentId) => {
+            // Check if we're rendering the static reference page
+            if (contentId === 'reference_page') {
+                contentDisplay.innerHTML = referencePageContent;
+                contentDisplay.scrollTop = 0; // Scroll to top
+                return;
+            }
+
+            // Otherwise, render a dynamic offense
+            const offense = offenses.find(o => o.id === parseInt(contentId));
             if (!offense) {
                 contentDisplay.innerHTML = `<div class="p-8 text-center text-slate-500">Select an offense from the list to view details.</div>`;
                 return;
@@ -654,6 +898,7 @@
                     ${officerResponseCard}
                 </div>
             `;
+            contentDisplay.scrollTop = 0; // Scroll to top
         };
 
         const renderNav = (items) => {
@@ -677,8 +922,9 @@
                 </div>
             `).join('');
             
-            const navItems = document.querySelectorAll('.nav-item');
-            if(activeNavItem) {
+            // Re-apply active state if it's a dynamic item
+            if(activeNavItem && activeNavItem.classList.contains('nav-item')) {
+                const navItems = document.querySelectorAll('.nav-item');
                 const newActive = Array.from(navItems).find(item => item.dataset.id === activeNavItem.dataset.id);
                 if(newActive){
                     newActive.classList.add('bg-blue-500', 'text-white', 'font-semibold');
@@ -687,17 +933,29 @@
             }
         };
         
-        navList.addEventListener('click', (e) => {
+        // Use a single event listener on the nav container
+        navContainer.addEventListener('click', (e) => {
             e.preventDefault();
-            const target = e.target.closest('.nav-item');
+            const target = e.target.closest('.nav-item, .nav-item-static');
+            
             if (target) {
+                // Remove active state from the previous item
                 if (activeNavItem) {
                     activeNavItem.classList.remove('bg-blue-500', 'text-white', 'font-semibold');
                     activeNavItem.classList.add('hover:bg-slate-300');
+                    if(activeNavItem.classList.contains('nav-item-static')) {
+                        activeNavItem.classList.add('font-semibold');
+                    }
                 }
+                
+                // Render content based on the data-id
                 renderContent(target.dataset.id);
+                
+                // Add active state to the clicked item
                 target.classList.add('bg-blue-500', 'text-white', 'font-semibold');
                 target.classList.remove('hover:bg-slate-300');
+                
+                // Store the new active item
                 activeNavItem = target;
             }
         });
@@ -714,17 +972,20 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             renderNav(offenses);
-            const firstNavItem = document.querySelector('.nav-item');
-            if (firstNavItem) {
-                renderContent(firstNavItem.dataset.id);
-                firstNavItem.classList.add('bg-blue-500', 'text-white', 'font-semibold');
-                firstNavItem.classList.remove('hover:bg-slate-300');
-                activeNavItem = firstNavItem;
+            // Default to the reference page
+            const referenceLink = document.querySelector('.nav-item-static');
+            if (referenceLink) {
+                renderContent(referenceLink.dataset.id);
+                referenceLink.classList.add('bg-blue-500', 'text-white', 'font-semibold');
+                referenceLink.classList.remove('hover:bg-slate-300');
+                activeNavItem = referenceLink;
             } else {
-                 contentDisplay.innerHTML = `<div class="p-8 text-center text-slate-500">Select an offense from the list to view details.</div>`;
+                 contentDisplay.innerHTML = `<div class="p-8 text-center text-slate-500">Select an item from the list to view details.</div>`;
             }
         });
     </script>
 </body>
 </html>
+
+
 
