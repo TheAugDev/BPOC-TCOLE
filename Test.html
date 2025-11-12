@@ -1,0 +1,1988 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BPOC Unit 8 Exam Study App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom styles for checked radio buttons */
+        .correct-answer {
+            background-color: #dcfce7; /* green-100 */
+            border-color: #22c55e; /* green-500 */
+            color: #15803d; /* green-700 */
+        }
+        .dark .correct-answer {
+            background-color: #166534; /* dark green */
+            border-color: #4ade80; /* green-400 */
+            color: #ecfdf5; /* green-50 */
+        }
+        .wrong-answer {
+            background-color: #fee2e2; /* red-100 */
+            border-color: #ef4444; /* red-500 */
+            color: #b91c1c; /* red-700 */
+        }
+        .dark .wrong-answer {
+            background-color: #991b1b; /* dark red */
+            border-color: #f87171; /* red-400 */
+            color: #fef2f2; /* red-50 */
+        }
+        .rationale-box, .results-container {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .progress-bar-fill {
+            transition: width 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+
+    <div id="app" class="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8">
+        <header class="text-center mb-6">
+            <h1 class="text-3xl sm:text-4xl font-bold text-blue-600 dark:text-blue-400">BPOC Communications & Exam Review</h1>
+            <p id="header-subtitle" class="mt-2 text-lg text-gray-600 dark:text-gray-400">Select an answer to see the rationale and source.</p>
+            <div id="progress-container" class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 my-4">
+                <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full progress-bar-fill" style="width: 0%"></div>
+            </div>
+            <button id="back-to-results-btn" class="hidden my-4 px-6 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">Show Results</button>
+        </header>
+
+        <main id="quiz-container">
+            <!-- Questions will be dynamically inserted here -->
+        </main>
+
+        <div id="results-container" class="hidden text-center bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
+            <h2 class="text-3xl font-bold mb-4">Quiz Complete!</h2>
+            <div id="score-emoji" class="text-6xl mb-4"></div>
+            <p class="text-xl text-gray-600 dark:text-gray-400 mb-2">Your Score:</p>
+            <p id="score-percentage" class="text-5xl font-bold text-blue-600 dark:text-blue-400 mb-1"></p>
+            <p id="score-value" class="text-lg text-gray-500 dark:text-gray-300 mb-8"></p>
+
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="review-btn" class="px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                    Review Answers
+                </button>
+                <button id="retake-btn" class="px-8 py-3 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-semibold rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50">
+                    Retake Test
+                </button>
+            </div>
+        </div>
+        
+        <footer class="text-center mt-12 text-sm text-gray-500 dark:text-gray-400">
+            <p>Built with Gemini. For educational purposes only.</p>
+        </footer>
+    </div>
+
+    <script>
+        const quizData = [
+            // All 195 questions from previous steps
+            {
+                questionNumber: 1,
+                questionText: "Based on current case law, if a person refuses to submit to the taking of a specimen as authorized by TC Chapter 724, the arresting officer may:",
+                options: [
+                    "Force the person to take a blood test as long as there is probable cause of the person committing any DWI related offense.",
+                    "Force the person to give a blood specimen as long as there is probable cause of that someone has or may die as a result of the arrested person's actions.",
+                    "Not do anything as there is no legal way to compel a person to provide a specimen.",
+                    "Obtain a search warrant for the specimen and then compel the specimen."
+                ],
+                correctAnswerIndex: 3,
+                rationale: "The U.S. Supreme Court case Missouri v. McNeely established that the natural dissipation of alcohol in the bloodstream does not constitute a per se exigent circumstance. Therefore, in cases of a refusal where a mandatory blood draw is not authorized, officers must obtain a warrant to compel a blood specimen.",
+                source: { text: "Texas Transportation Code § 724.013", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.013" }
+            },
+            {
+                questionNumber: 2,
+                questionText: "During traffic direction, one long whistle blast is used to:",
+                options: ["start traffic.", "stop traffic.", "gain the attention of a distracted driver.", "give a warning signal."],
+                correctAnswerIndex: 1,
+                rationale: "Standard police whistle commands designate one long blast to mean \"stop.\" Two short blasts are used to mean \"start,\" and multiple short blasts are used to get the attention of a driver.",
+                source: { text: "TCOLE - Basic Traffic Direction PDF (Page 5)", url: "https://www.tcole.texas.gov/sites/default/files/files/publication-files/TrafficDirectionControl-Student-8-1-14_0.pdf" }
+            },
+            {
+                questionNumber: 3,
+                questionText: "A driver of a vehicle strikes an unattended vehicle, what identifying information must be provided and left on the unattended vehicle?",
+                options: [
+                    "Name and address for the operator",
+                    "Name, address, and driver's license number for the operator",
+                    "Name, address, and driver's license numbers for the operator and owner of the vehicle",
+                    "Name and address for the operator and owner of the vehicle"
+                ],
+                correctAnswerIndex: 3,
+                rationale: "The law requires the operator of a vehicle that strikes an unattended vehicle to leave a written notice in a conspicuous place, stating the name and address of the operator and the owner of the vehicle that struck the unattended vehicle.",
+                source: { text: "Texas Transportation Code § 550.024", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.550.htm#550.024" }
+            },
+            {
+                questionNumber: 4,
+                questionText: "In the figure above (one-way street intersecting with a two-way street), what location would be the safest and most efficient from which to direct traffic?",
+                options: ["Position A", "Position B", "Position C", "Position D"],
+                correctAnswerIndex: 2,
+                rationale: "The center of the intersection (Position C) generally provides the greatest visibility for the officer to see and be seen by all traffic flows. It allows the officer to clearly communicate with all approaching vehicles, making it the most effective point of control.",
+                source: { text: "FHWA - Manual on Uniform Traffic Control Devices", url: "https://mutcd.fhwa.dot.gov/htm/2009/part6/part6h.htm" }
+            },
+            {
+                questionNumber: 5,
+                questionText: "When taking the oath before testifying in court, the officer (witness) should look at:",
+                options: ["the person administering the oath.", "the judge.", "the prosecutor.", "the defendant."],
+                correctAnswerIndex: 0,
+                rationale: "As a matter of courtroom decorum and respect, the person taking an oath should direct their attention to the official administering it (e.g., the judge, clerk, or bailiff).",
+                source: { text: "Courtroom Testimony: A Law Enforcement Guide (Page 9)", url: "https://www.dps.texas.gov/sites/default/files/documents/director_staff/public_information/courtroomtestimonyguide.pdf" }
+            },
+            {
+                questionNumber: 6,
+                questionText: "Commas are REQUIRED in sentences:",
+                options: [
+                    "After all independent (main) clauses that end the sentence",
+                    "Before the \"and\" that links an independent clause with a dependent clause",
+                    "Before the \"and\" that links two independent clauses",
+                    "In all of the above situations"
+                ],
+                correctAnswerIndex: 2,
+                rationale: "A comma is used before a coordinating conjunction (for, and, nor, but, or, yet, so) that joins two independent clauses. An independent clause is a group of words that can stand alone as a complete sentence.",
+                source: { text: "Purdue OWL - Commas vs. Semicolons", url: "https://owl.purdue.edu/owl/general_writing/punctuation/commas/commas_vs_semicolons.html" }
+            },
+            {
+                questionNumber: 7,
+                questionText: "The sentence component that modifies or expresses some relation of manner or quality for a preposition, a phrase, a clause, or a sentence is called a/an:",
+                options: ["Adjective", "Adverb", "Independent clause", "Subjective clause"],
+                correctAnswerIndex: 1,
+                rationale: "This is the definition of an adverb. Adverbs modify verbs, adjectives, or other adverbs, often answering questions like how, when, where, and why.",
+                source: { text: "Grammarly - What Is an Adverb?", url: "https://www.grammarly.com/blog/adverb/" }
+            },
+            {
+                questionNumber: 8,
+                questionText: "Which of the following offense types would be eligible for victims to use a pseudonym form?",
+                options: ["Indecency with a Child", "Family Violence Assaults", "Trafficking of Persons", "All of the above"],
+                correctAnswerIndex: 3,
+                rationale: "Texas law allows victims of sexual offenses, trafficking, and family violence to use a pseudonym (a fictitious name) in all public files and records concerning the offense to protect their identity.",
+                source: { text: "Texas Code of Criminal Procedure - Art. 57.02", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.57.htm#57.02" }
+            },
+            {
+                questionNumber: 9,
+                questionText: "If a judge \"overruled\" an objection during courtroom testimony, the officer ___ answer the question.",
+                options: ["may", "may not", "must wait for instructions to", "should not"],
+                correctAnswerIndex: 0,
+                rationale: "When a judge overrules an objection, it means the objection is denied, and the question is deemed proper. The witness is then permitted and expected to answer the question.",
+                source: { text: "American Bar Association - How to Testify in Court", url: "https://www.americanbar.org/groups/public_education/resources/law_related_education_network/how_tos/testify/" }
+            },
+            {
+                questionNumber: 10,
+                questionText: "The second clue of the HGN test is?",
+                options: ["Equal tracking", "Resting nystagmus", "Distinct and sustained nystagmus at maximum deviation", "Smooth pursuit"],
+                correctAnswerIndex: 2,
+                rationale: "The Standardized Field Sobriety Test (SFST) protocol for Horizontal Gaze Nystagmus (HGN) involves checking for three clues in each eye in a specific order: (1) Lack of Smooth Pursuit, (2) Distinct and Sustained Nystagmus at Maximum Deviation, and (3) Onset of Nystagmus Prior to 45 Degrees.",
+                source: { text: "NHTSA - SFST Manual (Session VIII, Page 22)", url: "https://www.nhtsa.gov/sites/nhtsa.gov/files/documents/sfst_full_instructor_manual_2018.pdf" }
+            },
+             {
+                questionNumber: 11,
+                questionText: "Which of the following may contribute to a vehicle accident?",
+                options: ["Driver fatigue", "Weather conditions", "Speed", "All of the above"],
+                correctAnswerIndex: 3,
+                rationale: "Vehicle accidents are often caused by a combination of factors. Driver behavior (like fatigue and speed), environmental conditions (weather), and vehicle issues can all be contributing factors.",
+                source: { text: "Texas Department of Transportation - Factors in Motor Vehicle Crashes", url: "https://www.txdot.gov/driver/safety/crash-causes.html" }
+            },
+            {
+                questionNumber: 12,
+                questionText: "The officer obtained consent to search before searching for the ___ drugs.",
+                options: ["Lawful", "Elicit", "Illicit", "None of the above are correct"],
+                correctAnswerIndex: 2,
+                rationale: "\"Illicit\" means forbidden by law, rules, or custom, which correctly describes illegal drugs. \"Elicit\" is a verb meaning to evoke or draw out a response.",
+                source: { text: "Merriam-Webster Dictionary - Illicit vs. Elicit", url: "https://www.merriam-webster.com/dictionary/illicit" }
+            },
+            {
+                questionNumber: 13,
+                questionText: "Police reports are best and mostly written in ___ tense.",
+                options: ["Present", "First", "Past", "Passive"],
+                correctAnswerIndex: 2,
+                rationale: "Police reports document events that have already occurred. Therefore, they should be written in the past tense to accurately reflect that the actions took place in the past.",
+                source: { text: "Police Report Writing Manual - Tense (Page 15)", url: "https://www.austintexas.gov/sites/default/files/files/Police/APD_Report_Writing_Manual.pdf" }
+            },
+            {
+                questionNumber: 14,
+                questionText: "Any non-recurring event that causes a reduction of roadway capacity or an abnormal increase in demand and requires a law enforcement response is the definition of ___",
+                options: ["incident", "traffic crash", "traffic accident", "special event"],
+                correctAnswerIndex: 0,
+                rationale: "This is the standard definition of a \"traffic incident.\" It is a broad term that includes crashes, disabled vehicles, debris on the roadway, and other events that disrupt the normal flow of traffic.",
+                source: { text: "Federal Highway Administration - Traffic Incident Management", url: "https://ops.fhwa.dot.gov/eto_tim_program/about/tim.htm" }
+            },
+            {
+                questionNumber: 15,
+                questionText: "If a person gives a specimen upon the request of a peace officer, the person may have an independent specimen of ___ but it must be taken within a reasonable time after arrest not to exceed ___",
+                options: ["Blood... 4 hours", "Breath... 2 hours", "Blood or breath... 2 hours", "Blood... 2 hours"],
+                correctAnswerIndex: 3,
+                rationale: "A person who submits to a breath or urine test has the right to have a physician of their own choosing take an additional *blood* specimen. This must be done within two hours of the arrest.",
+                source: { text: "Texas Transportation Code § 724.019", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.019" }
+            },
+            {
+                questionNumber: 16,
+                questionText: "If a person refuses to submit to the taking of a specimen as authorized by TC Chapter 724, whether expressly or because of an intentional failure of the person to give the specimen, the peace officer shall:",
+                options: [
+                    "Request the person to sign the DIC form(s)",
+                    "Serve notice of license suspension or denial on the person.",
+                    "Make a written report of the refusal to the director of the DPS.",
+                    "All of the above"
+                ],
+                correctAnswerIndex: 3,
+                rationale: "The Transportation Code outlines specific duties for an officer following a specimen refusal. These include requesting the person to sign a statement of refusal, serving a notice of license suspension, and submitting a report to the DPS.",
+                source: { text: "Texas Transportation Code § 724.032", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.032" }
+            },
+            {
+                questionNumber: 17,
+                questionText: "The sentence \"Officer Jones found latent fingerprints on the bottle\" is written ___",
+                options: ["In active voice", "In passive voice", "As a run-on", "As a fragment"],
+                correctAnswerIndex: 0,
+                rationale: "The sentence is in the active voice because the subject (\"Officer Jones\") is performing the action (\"found\"). In passive voice, the subject is acted upon (e.g., \"Latent fingerprints were found on the bottle by Officer Jones\").",
+                source: { text: "Grammarly - Active vs. Passive Voice", url: "https://www.grammarly.com/blog/active-vs-passive-voice/" }
+            },
+            {
+                questionNumber: 18,
+                questionText: "\"Not having the normal use of mental or physical faculties by reason of the introduction of alcohol, a controlled substance, a drug, a dangerous drug, or any combination of two or more of those substances, or any other substance into the body\" is a definition of:",
+                options: ["0.08", "Alcoholism", "intoxicated", "DWI"],
+                correctAnswerIndex: 2,
+                rationale: "This is the legal definition of \"Intoxicated\" as provided in the Texas Penal Code. Driving While Intoxicated (DWI) is the offense, but this phrase specifically defines the state of intoxication.",
+                source: { text: "Texas Penal Code § 49.01(2)(A)", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.49.htm#49.01" }
+            },
+            {
+                questionNumber: 19,
+                questionText: "In order to inspect a licensed premise where alcoholic beverages are sold, a municipal peace officer:",
+                options: [
+                    "Must have permission from the licensee or permittee.",
+                    "Must have a valid search warrant for the premise.",
+                    "Must have an officer of the TABC present.",
+                    "May inspect the premises at any reasonable time."
+                ],
+                correctAnswerIndex: 3,
+                rationale: "The Texas Alcoholic Beverage Code grants peace officers the right to enter and inspect any licensed premises at any time to perform their duties. This is considered an administrative inspection and does not require a warrant.",
+                source: { text: "Texas Alcoholic Beverage Code § 101.04", url: "https://statutes.capitol.texas.gov/Docs/AL/htm/AL.101.htm#101.04" }
+            },
+            {
+                questionNumber: 20,
+                questionText: "One of the effects that a hazardous material event has on the environment is ___",
+                options: ["expense to governmental entities", "panic of the public", "exposure to carcinogens", "temporary damage to the water system"],
+                correctAnswerIndex: 3,
+                rationale: "While the other options are consequences of a HAZMAT event, damage to the water system is a direct effect on the *environment*. Exposure to carcinogens affects health, expenses affect finances, and panic is a social effect.",
+                source: { text: "Environmental Protection Agency - Hazardous Waste", url: "https://www.epa.gov/hw" }
+            },
+            {
+                questionNumber: 21,
+                questionText: "Read and assess the statement below... *After I saw that the bedroom was empty, I checked the bathroom.*",
+                options: [
+                    "The sentence is correct.",
+                    "It was confirmed that both the bedroom and bathroom were empty, I then investigated the bathroom area.",
+                    "After I saw that the bedroom was empty I checked the bathroom.",
+                    "After I saw that the bedroom was empty. I checked the bathroom."
+                ],
+                correctAnswerIndex: 0,
+                rationale: "The original sentence correctly uses a comma after an introductory dependent clause (\"After I saw that the bedroom was empty\"). Option C is a run-on, and Option D is a fragment. Option B is unnecessarily wordy and uses passive voice.",
+                source: { text: "Purdue OWL - Sentence Punctuation Patterns", url: "https://owl.purdue.edu/owl/general_writing/punctuation/commas/extended_rules_for_commas.html" }
+            },
+            {
+                questionNumber: 22,
+                questionText: "Upon approaching a stationary authorized emergency vehicle using authorized visual signals, an operator shall: vacate the lane closest to the vehicle when driving on a highway with ___ or more lanes traveling in the direction of the vehicle.",
+                options: ["1", "2", "3", "4"],
+                correctAnswerIndex: 1,
+                rationale: "The Texas \"Move Over\" law requires drivers to move out of the lane closest to the emergency vehicle if the highway has two or more lanes traveling in the same direction. If this is not possible, or if on a single-lane road, the driver must slow down.",
+                source: { text: "Texas Transportation Code § 545.157", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.545.htm#545.157" }
+            },
+            {
+                questionNumber: 23,
+                questionText: "For a juvenile to be taken into custody for driving under the influence of alcohol, they must have a blood alcohol content of:",
+                options: [".08 and above", "any detectable amount", "above a .10 BAC", "the same as an adult"],
+                correctAnswerIndex: 1,
+                rationale: "Texas has a zero-tolerance policy for minors and alcohol. The offense of Driving Under the Influence of Alcohol by a Minor (DUIA) is committed if a minor operates a motor vehicle in a public place with *any detectable amount* of alcohol in their system.",
+                source: { text: "Texas Alcoholic Beverage Code § 106.041", url: "https://statutes.capitol.texas.gov/Docs/AL/htm/AL.106.htm#106.041" }
+            },
+            {
+                questionNumber: 24,
+                questionText: "What is the first thing an officer does during the \"Scene Management\" stage?",
+                options: ["care for injured", "get the seriously injured out of their vehicles", "plan route of approach", "summon assistance"],
+                correctAnswerIndex: 0,
+                rationale: "While all are important steps, the immediate priority upon arriving at a crash scene is to render aid and care for any injured persons. This is the first step in managing the scene effectively.",
+                source: { text: "Texas Peace Officer's Crash Report Manual", url: "https://www.txdot.gov/data/forms/cr-3-instruction-manual.html" }
+            },
+            {
+                questionNumber: 25,
+                questionText: "The United States Department of Transportation (DOT) defines a ___ as: a substance or material capable of posing an unreasonable risk to health, safety, or property when transported in commerce.",
+                options: ["Toxicology", "Dangerous drugs", "Hazardous Material", "Hazard Class"],
+                correctAnswerIndex: 2,
+                rationale: "This is the official definition of a hazardous material according to the U.S. Department of Transportation (DOT).",
+                source: { text: "49 CFR § 171.8 - Definitions and abbreviations", url: "https://www.ecfr.gov/current/title-49/subtitle-B/chapter-I/subchapter-C/part-171/subpart-A/section-171.8" }
+            },
+            {
+                questionNumber: 26,
+                questionText: "According to the SFST curriculum what is the first phase of a DWI Investigation?",
+                options: ["Officer mindset", "Vehicle in Motion", "Personal Contact", "Pre-Arrest Screening"],
+                correctAnswerIndex: 1,
+                rationale: "The NHTSA DWI Detection process consists of three phases: Phase One is Vehicle in Motion (observing the driving), Phase Two is Personal Contact (face-to-face interaction), and Phase Three is Pre-Arrest Screening (field sobriety tests).",
+                source: { text: "NHTSA - SFST Manual (Session II, Page 3)", url: "https://www.nhtsa.gov/sites/nhtsa.gov/files/documents/sfst_full_instructor_manual_2018.pdf" }
+            },
+            {
+                questionNumber: 27,
+                questionText: "The ABC Commission or administrator may suspend for not more than 60 days or cancel an original or renewal permit if it is found:",
+                options: [
+                    "the permittee was intoxicated on the licensed premises.",
+                    "the permittee sold or delivered an alcoholic beverage to an insane person.",
+                    "the permittee failed to promptly report to the commission a breach of the peace occurring on the permittee's licensed premises.",
+                    "all of the above"
+                ],
+                correctAnswerIndex: 3,
+                rationale: "The Texas Alcoholic Beverage Code lists numerous reasons for which a TABC permit can be suspended or canceled. All the listed items are violations that can trigger such an action.",
+                source: { text: "Texas Alcoholic Beverage Code § 11.61", url: "https://statutes.capitol.texas.gov/Docs/AL/htm/AL.11.htm#11.61" }
+            },
+            {
+                questionNumber: 28,
+                questionText: "While backing his car onto the roadway from his driveway, the intoxicated driver hits a pedestrian, causing a bruise on the person's leg. What charge should the officer file against the driver?",
+                options: [
+                    "Driving while intoxicated",
+                    "Public intoxication",
+                    "Intoxication assault",
+                    "None: he is home; have him go back inside and sleep it off with the victim's approval."
+                ],
+                correctAnswerIndex: 0,
+                rationale: "The offense is Driving While Intoxicated. For it to be Intoxication Assault, the injury would need to be a \"serious bodily injury,\" which a bruise would not typically qualify as. The act occurred on a roadway, making it a public place for the purposes of the statute.",
+                source: { text: "Texas Penal Code § 49.04 (DWI)", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.49.htm#49.04" }
+            },
+            {
+                questionNumber: 29,
+                questionText: "Mary Smith arrives to work to find her boss Adam Jones dead in the office. Mary Smith calls the police and Officer Johnson responds to the call. Who should appear as the victim on the report?",
+                options: ["Officer Johnson", "Adam Jones", "Mary Smith", "State of Texas"],
+                correctAnswerIndex: 1,
+                rationale: "The victim of a crime is the person against whom the offense was committed. In this case, the deceased, Adam Jones, is the victim of the homicide. Mary Smith is the complainant or reporting person.",
+                source: { text: "Texas Uniform Crime Reporting (UCR) Program - Definitions", url: "https://www.dps.texas.gov/section/crime-records-service/ucr-definitions" }
+            },
+            {
+                questionNumber: 30,
+                questionText: "Field notes give an officer the advantage of being able to ___",
+                options: [
+                    "make repeated contact with witnesses and involved parties",
+                    "provide more details in reports. and testimony",
+                    "rely on memory for most of the details of an event",
+                    "record personal observations that should not appear in reports"
+                ],
+                correctAnswerIndex: 1,
+                rationale: "The primary purpose of field notes is to serve as a reliable record of an officer's observations and the information they gather during an investigation. This allows them to write more accurate and detailed reports and to refresh their memory before testifying.",
+                source: { text: "TCOLE - Basic Peace Officer Course Guide #1013", url: "https://www.tcole.texas.gov/sites/default/files/files/publication-files/1013_201702.pdf" }
+            },
+            {
+                questionNumber: 31,
+                questionText: "Which of the following was given as a \"route of exposure\" for CBRNE materials?",
+                options: ["exhalation", "absorption", "induction", "reduction"],
+                correctAnswerIndex: 1,
+                rationale: "The primary routes of exposure for chemical, biological, radiological, nuclear, and explosive (CBRNE) materials are Inhalation, Ingestion, Absorption (through the skin or eyes), and Injection.",
+                source: { text: "FEMA - Routes of Exposure", url: "https://www.ready.gov/hazardous-materials" }
+            },
+            {
+                questionNumber: 32,
+                questionText: "A pick-up crashes into a telephone pole resulting in damage to the driver's side's front side-panel. The damage description code to use on the report would be:",
+                options: ["LFQ", "FLQ", "LFP", "RFP"],
+                correctAnswerIndex: 0,
+                rationale: "On the Texas Peace Officer's Crash Report (CR-3), vehicle damage is coded with specific letters. 'L' stands for Left side, 'F' for Front, and 'Q' for Quarter Panel. Therefore, Left Front Quarter panel damage is coded as LFQ.",
+                source: { text: "Texas Peace Officer's Crash Report (CR-3) Instruction Manual", url: "https://ftp.txdot.gov/pub/txdot-info/trf/crash_reports/cr-3-instructions.pdf" }
+            },
+            {
+                questionNumber: 33,
+                questionText: "Police Officers have a diverse range of equipment because ___ trying to always be prepared for whatever may come.",
+                options: ["they're", "there", "their", "there's"],
+                correctAnswerIndex: 0,
+                rationale: "\"They're\" is a contraction of \"they are,\" which correctly fits the sentence (\"...because they are trying...\"). \"Their\" is possessive, and \"there\" refers to a place.",
+                source: { text: "Grammarly - Their vs. There vs. They're", url: "https://www.grammarly.com/blog/their-there-theyre/" }
+            },
+            {
+                questionNumber: 34,
+                questionText: "Alcohol concentration relates to:",
+                options: [
+                    "the number of grams of alcohol per 100 milliliters of blood",
+                    "the number of grams of alcohol per 210 liters of breath",
+                    "the number of grams of alcohol per 67 milliliters of urine",
+                    "all of the above"
+                ],
+                correctAnswerIndex: 3,
+                rationale: "The Texas Penal Code defines \"alcohol concentration\" (or BAC) using all three of these measurements: blood, breath, or urine. Any of the three can be used to establish a person's level of intoxication.",
+                source: { text: "Texas Penal Code § 49.01(1)", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.49.htm#49.01" }
+            },
+            {
+                questionNumber: 35,
+                questionText: "Which of the Levels of Personal Protection from a HAZMAT event would provide the LEAST amount of protection?",
+                options: ["Level A", "Level B", "Level C", "Level D"],
+                correctAnswerIndex: 3,
+                rationale: "HAZMAT Personal Protective Equipment (PPE) is categorized from Level A (most protection) to Level D (least protection). Level D is essentially a normal work uniform with minimal protection.",
+                source: { text: "OSHA - Personal Protective Equipment (PPE) Levels", url: "https://www.osha.gov/hazardous-waste/levels-protection" }
+            },
+            {
+                questionNumber: 36,
+                questionText: "In a criminal trial the court (judge), at the request of a party, may order the exclusion of a witness... This exclusion is also known as:",
+                options: ["Officially required witness exclusion", "Witness exclusion", "Invocation of the Rule", "Witness tampering"],
+                correctAnswerIndex: 2,
+                rationale: "In legal terminology, the rule that prevents witnesses from hearing the testimony of other witnesses is formally invoked by a party and is commonly referred to as \"invoking the rule\" or \"the rule of sequestration.\"",
+                source: { text: "Texas Rules of Evidence, Rule 614. Excluding Witnesses", url: "https://www.txcourts.gov/media/1452292/texas-rules-of-evidence-updated-with-amendments-effective-122021-final.pdf" }
+            },
+            {
+                questionNumber: 37,
+                questionText: "The word \"nystagmus\" means ___",
+                options: ["Uneven pupil size in comparing both eyes", "Gaze fixation ability", "Involuntary jerking of the eyes", "Fixed stare of the eyes"],
+                correctAnswerIndex: 2,
+                rationale: "Nystagmus is the medical term for the involuntary jerking of the eyes, which can be exaggerated by the presence of alcohol or certain drugs. This is what officers look for during the HGN test.",
+                source: { text: "NHTSA - SFST Manual (Glossary)", url: "https://www.nhtsa.gov/sites/nhtsa.gov/files/documents/sfst_full_instructor_manual_2018.pdf" }
+            },
+            {
+                questionNumber: 38,
+                questionText: "A ___ is a group of words that is only a piece of a complete sentence. Pieces of important information are left out of the sentence.",
+                options: ["Sentence Fragment", "Run-on Sentence", "Detailed Scheme", "Complete Sentence"],
+                correctAnswerIndex: 0,
+                rationale: "This is the definition of a sentence fragment. A complete sentence must contain a subject, a verb, and express a complete thought. A fragment is missing one or more of these elements.",
+                source: { text: "Purdue OWL - Sentence Fragments", url: "https://owl.purdue.edu/owl/general_writing/mechanics/sentence_fragments.html" }
+            },
+            {
+                questionNumber: 39,
+                questionText: "How many clues are assessed when a subject starts the One Leg Stand test but is unable to complete it?",
+                options: ["0, because they could not do the test", "2, because a score of 2 or more clues indicates a BAC above", "4, because they were not able to successfully complete the test", "Only the number of clues observed during the test"],
+                correctAnswerIndex: 3,
+                rationale: "Per TCOLE/NHTSA guidelines, an officer scores only the specific clues they observe (swaying, using arms for balance, hopping, putting the foot down). If a subject terminates the test early, the officer has still only observed a certain number of clues up to that point.",
+                source: { text: "NHTSA - SFST Manual (Session VIII, Page 40)", url: "https://www.nhtsa.gov/sites/nhtsa.gov/files/documents/sfst_full_instructor_manual_2018.pdf" }
+            },
+            {
+                questionNumber: 40,
+                questionText: "\"Chronological\" means:",
+                options: [
+                    "arrangement of information in order of occurrence.",
+                    "arrangement of information starting with the least important going to the most important.",
+                    "arrangement of information starting with the most important going to the least important.",
+                    "arrangement of information by category"
+                ],
+                correctAnswerIndex: 0,
+                rationale: "Chronological order refers to arranging events in the sequence in which they happened in time. This is the standard format for the narrative section of a police report.",
+                source: { text: "Merriam-Webster Dictionary - Chronological", url: "https://www.merriam-webster.com/dictionary/chronological" }
+            },
+            {
+                questionNumber: 41,
+                questionText: "During a criminal trial, the prosecutor's first chance to question a DEFENSE's witness (someone called by & testifying on behalf of the defendant) would be called a ___ examination.",
+                options: ["direct", "re-direct", "re-cross", "cross"],
+                correctAnswerIndex: 3,
+                rationale: "When a party questions a witness called by the opposing party, it is called cross-examination. Direct examination is when a party questions their own witness.",
+                source: { text: "Cornell Law School Legal Information Institute - Cross-Examination", url: "https://www.law.cornell.edu/wex/cross-examination" }
+            },
+            {
+                questionNumber: 42,
+                questionText: "According to TABC 105.03, a mixed beverage permittee may normally sell and offer for sale mixed beverages between the hours of ___",
+                options: ["7 a.m. and midnight", "1 a.m. and midnight", "10 a.m. and noon", "Noon and midnight"],
+                correctAnswerIndex: 0,
+                rationale: "The standard hours for the sale of mixed beverages are 7 a.m. to midnight, Monday through Saturday. The hours can be extended to 2 a.m. with a late-hours permit.",
+                source: { text: "Texas Alcoholic Beverage Code § 105.03", url: "https://statutes.capitol.texas.gov/Docs/AL/htm/AL.105.htm#105.03" }
+            },
+            {
+                questionNumber: 43,
+                questionText: "Which of the following would be the first thing given in a description?",
+                options: ["Race", "Shirt color", "Color of pants", "Hair color"],
+                correctAnswerIndex: 0,
+                rationale: "When broadcasting a description of a person, the standard practice is to start with the most general and permanent characteristics and move to the more specific ones. The sequence is typically: Race, Sex, Age, Height, Weight, then clothing and other features.",
+                source: { text: "TCOLE - Basic Peace Officer Course Guide #1013", url: "https://www.tcole.texas.gov/sites/default/files/files/publication-files/1013_201702.pdf" }
+            },
+            {
+                questionNumber: 44,
+                questionText: "When must a vehicle operator remove a vehicle from an accident scene if it can be safely driven?",
+                options: [
+                    "When a collision occurs in a congested downtown metropolitan area",
+                    "When a collision occurs in a rural agricultural area during harvest periods of the year",
+                    "When a collision occurs involving a bicycle and a motorcycle",
+                    "When a collision occurs on a freeway in a metropolitan area"
+                ],
+                correctAnswerIndex: 3,
+                rationale: "The Transportation Code specifies that if an accident occurs on a freeway in a metropolitan area and involves no apparent injury, the drivers must move their vehicles out of the main travel lanes to a safe location to avoid obstructing traffic.",
+                source: { text: "Texas Transportation Code § 550.022", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.550.htm#550.022" }
+            },
+            {
+                questionNumber: 45,
+                questionText: "What area of the work zone allows traffic to return to normal operation?",
+                options: ["Advanced warning area", "Work area", "Termination area", "Buffer space"],
+                correctAnswerIndex: 2,
+                rationale: "A traffic control work zone is divided into distinct areas. The termination area is the last section, used to allow traffic to transition back to its normal path and speed after passing the work area.",
+                source: { text: "FHWA - Manual on Uniform Traffic Control Devices (Part 6)", url: "https://mutcd.fhwa.dot.gov/htm/2009/part6/part6c.htm" }
+            },
+            {
+                questionNumber: 46,
+                questionText: "During the Walk and Turn test, the subject is directed to leave their ___ foot on the line at the turn, and then take several small steps around it.",
+                options: ["Front or lead", "Left", "Right", "Pivot"],
+                correctAnswerIndex: 0,
+                rationale: "The standardized instructions for the Walk and Turn test require the subject to keep their front, or lead, foot on the line while they turn. They then take a series of small steps with the other foot to turn around and continue walking back.",
+                source: { text: "NHTSA - SFST Manual (Session VIII, Page 35)", url: "https://www.nhtsa.gov/sites/nhtsa.gov/files/documents/sfst_full_instructor_manual_2018.pdf" }
+            },
+            {
+                questionNumber: 47,
+                questionText: "Read and assess the statement below... *The victim advised me that the suspect Williams slapped her in the face.*",
+                options: [
+                    "The sentence is correct",
+                    "The victim told me that the suspect Williams slapped her in the face.",
+                    "The victim told me that the suspect, Williams, slapped her in the face.",
+                    "The victim said that the suspect, Williams, had slapped her in the face."
+                ],
+                correctAnswerIndex: 2,
+                rationale: "The suspect's name, Williams, is used as an appositive (a noun phrase that renames another noun right beside it). Appositives should be set off with commas. \"Told me\" is also generally preferred over the more formal \"advised me\" in police report writing for clarity.",
+                source: { text: "Purdue OWL - Appositives", url: "https://owl.purdue.edu/owl/general_writing/mechanics/appositives.html" }
+            },
+            {
+                questionNumber: 48,
+                questionText: "What questions should be answered by any police report?",
+                options: ["Who, when, which, how, why", "Who, when, why, how, where, what", "Which, how, when, why, what", "When, time, location, which, what, how"],
+                correctAnswerIndex: 1,
+                rationale: "A complete and effective police report should answer the six fundamental questions of an investigation: Who? What? Where? When? Why? and How?",
+                source: { text: "TCOLE - Basic Peace Officer Course Guide #2102", url: "https://www.tcole.texas.gov/sites/default/files/files/publication-files/2102_201503.pdf" }
+            },
+            {
+                questionNumber: 49,
+                questionText: "When checking for the lack of smooth pursuit, the stimulus should be moved at approximately ___ seconds from center to side.",
+                options: ["2", "4", "2 to 4", "4 to 6"],
+                correctAnswerIndex: 0,
+                rationale: "The SFST protocol is very specific about the timing for the HGN test. To check for lack of smooth pursuit, the stimulus (such as a pen or fingertip) must be moved at a speed that takes approximately two seconds to go from the center of the suspect's nose to a 45-degree angle.",
+                source: { text: "NHTSA - SFST Manual (Session VIII, Page 21)", url: "https://www.nhtsa.gov/sites/nhtsa.gov/files/documents/sfst_full_instructor_manual_2018.pdf" }
+            },
+            {
+                questionNumber: 50,
+                questionText: "According to the Instruction Manual for Reporting Accidents, an officer investigating an accident NOT within an intersection should show the distance from the nearest reference point in ___",
+                options: ["Feet", "Miles", "Tenths of miles", "All of the above would be acceptable measurements."],
+                correctAnswerIndex: 3,
+                rationale: "The Texas Peace Officer's Crash Report (CR-3) allows for flexibility in measuring distances to locate a crash scene accurately. Depending on the location and available reference points, an officer may use feet (for short distances), tenths of a mile, or miles from a known marker.",
+                source: { text: "Texas Peace Officer's Crash Report (CR-3) Instruction Manual", url: "https://ftp.txdot.gov/pub/txdot-info/trf/crash_reports/cr-3-instructions.pdf" }
+            },
+           // Questions from Com review 2.pdf
+            {
+                questionNumber: 51,
+                questionText: "Which of the following was listed as a 'Characteristic of a Sentence?'",
+                options: [
+                    "A sentence is a group of words that expresses a complete thought.",
+                    "A sentence is a group of words that contains a subject, a predicate, and if required by the predicate's verb, a word following the verb that complete its meaning.",
+                    "Both of the above were listed as sentence characteristics.",
+                    "None of the above"
+                ],
+                correctAnswerIndex: 2,
+                rationale: "A sentence is defined as a group of words that expresses a complete thought and typically contains both a subject and a predicate.",
+                source: { text: "TCOLE BPOC Guide #15", url: "https://www.tcole.texas.gov/" }
+            },
+            {
+                questionNumber: 52,
+                questionText: "A '___' is a group of words that is only a piece, or fragment, of a complete sentence.",
+                options: ["Sentence fragment", "Complete sentence.", "Run-on sentence", "None of the above"],
+                correctAnswerIndex: 0,
+                rationale: "This is the definition of a sentence fragment. It's an incomplete sentence because it lacks a subject, verb, or complete thought.",
+                source: { text: "Purdue OWL - Sentence Fragments", url: "https://owl.purdue.edu/owl/general_writing/mechanics/sentence_fragments.html" }
+            },
+            {
+                questionNumber: 53,
+                questionText: "'___' are brief notations concerning specific events and circumstances that are recorded while fresh in the officer's mind and used to prepare a report.",
+                options: ["Official notes", "Field notes", "Permanent notes", "None of the above"],
+                correctAnswerIndex: 1,
+                rationale: "Field notes are contemporaneous notes taken by an officer at the scene of an incident to ensure accuracy when writing the formal report later.",
+                source: { text: "TCOLE BPOC Guide #15", url: "https://www.tcole.texas.gov/" }
+            },
+            {
+                questionNumber: 54,
+                questionText: "Which of the following statements is true concerning the use of field notes?",
+                options: [
+                    "Provides basis for report.",
+                    "Increases the need to re-contact parties involved.",
+                    "Provides less accuracy relative to time, statements, and events than memory alone.",
+                    "None of the above."
+                ],
+                correctAnswerIndex: 0,
+                rationale: "Field notes serve as the primary source material and foundation for writing a detailed and accurate police report.",
+                source: { text: "TCOLE BPOC Guide #15", url: "https://www.tcole.texas.gov/" }
+            },
+            {
+                questionNumber: 55,
+                questionText: "Which of the following statements is true concerning the use of field notes in court?",
+                options: [
+                    "Notes used in court are subject to scrutiny of the court.",
+                    "If placed in evidence, may not be available until released by court.",
+                    "Non-police information should not be written in the notebook.",
+                    "All of the above"
+                ],
+                correctAnswerIndex: 3,
+                rationale: "Field notes are discoverable evidence. They can be examined by the court and defense (A), can be held as evidence (B), and should only contain professional, factual information (C is true because personal info should be excluded).",
+                source: { text: "TCOLE BPOC Guide #15", url: "https://www.tcole.texas.gov/" }
+            },
+            {
+                questionNumber: 56,
+                questionText: "Several significant uses of the police report were listed. Which of the following were specifically listed?",
+                options: ["Basis for prosecution and defense.", "Permanent record of facts.", "Reference material.", "All of the above"],
+                correctAnswerIndex: 3,
+                rationale: "Police reports are crucial documents used by prosecutors, defense attorneys, for internal records, and as reference material for future investigations.",
+                source: { text: "TCOLE BPOC Guide #15", url: "https://www.tcole.texas.gov/" }
+            },
+            {
+                questionNumber: 57,
+                questionText: "Which of the following were specifically listed as essential characteristics of a police report?",
+                options: ["Accuracy and Correct Spelling.", "Completeness and Clarity.", "Legibility and Objectivity", "All of the above"],
+                correctAnswerIndex: 3,
+                rationale: "A professional police report must be accurate, complete, clear, legible, objective, and grammatically correct to be effective.",
+                source: { text: "TCOLE BPOC Guide #15", url: "https://www.tcole.texas.gov/" }
+            },
+            {
+                questionNumber: 58,
+                questionText: "Which of the following are common types of police reports?",
+                options: [
+                    "Arrest, Incident, Offender, and Secondary Reports.",
+                    "Preliminary, Follow-up, Incident, and Secretarial Reports.",
+                    "Arrest, Incident, Offense, and Supplemental Reports.",
+                    "None of the above"
+                ],
+                correctAnswerIndex: 2,
+                rationale: "Standard police reporting includes arrest reports, initial offense/incident reports, and supplemental reports for follow-up information.",
+                source: { text: "TCOLE BPOC Guide #15", url: "https://www.tcole.texas.gov/" }
+            },
+            {
+                questionNumber: 59,
+                questionText: "A victim may choose a 'pseudonym' to be used instead of the victim's name to designate the victim in all public files and records concerning a ___ offense.",
+                options: ["Robbery", "Sexual", "Assault", "None of the above"],
+                correctAnswerIndex: 1,
+                rationale: "Texas law specifically allows victims of sexual offenses to use a pseudonym to protect their identity in all public records.",
+                source: { text: "Texas Code of Criminal Procedure - Art. 57.02", url: "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.57.htm#57.02" }
+            },
+            // Questions from Com review 1.pdf
+            {
+                questionNumber: 60,
+                questionText: "In the sentence 'Officer Jones pulled a gun from his holster,' 'Officer Jones' is used as a/an:",
+                options: ["Noun", "Pronoun", "Verb", "Adjective"],
+                correctAnswerIndex: 0,
+                rationale: "'Officer Jones' is a proper noun, as it is the name of a specific person and serves as the subject of the sentence.",
+                source: { text: "Grammarly - What is a Noun?", url: "https://www.grammarly.com/blog/nouns/" }
+            },
+            {
+                questionNumber: 61,
+                questionText: "In the sentence 'Officer Jones pulled a gun from his holster,' 'pulled a gun' is an example of a/an:",
+                options: ["Predicate", "Prepositional Phrase", "Adverb", "Conjunction"],
+                correctAnswerIndex: 0,
+                rationale: "The predicate tells what the subject does. In this case, 'pulled a gun' is the action performed by the subject, 'Officer Jones'.",
+                source: { text: "Grammarly - What is a Predicate?", url: "https://www.grammarly.com/blog/predicate/" }
+            },
+            {
+                questionNumber: 62,
+                questionText: "In the sentence 'Officer Jones pulled a gun from his holster,' 'from his holster' is an example of a/an:",
+                options: ["Phrase", "Independent clause", "Subordinate clause", "Verb"],
+                correctAnswerIndex: 0,
+                rationale: "'From his holster' is a prepositional phrase. It's a group of words that lacks a verb and acts as a single part of speech.",
+                source: { text: "Grammarly - What is a Phrase?", url: "https://www.grammarly.com/blog/phrase/" }
+            },
+            {
+                questionNumber: 63,
+                questionText: "In the sentence 'Something happened to him,' 'him' is used as a/an:",
+                options: ["Pronoun", "Noun", "Adverb", "Preposition"],
+                correctAnswerIndex: 0,
+                rationale: "'Him' is a pronoun that takes the place of a noun (a specific male person).",
+                source: { text: "Grammarly - What is a Pronoun?", url: "https://www.grammarly.com/blog/pronouns/" }
+            },
+            {
+                questionNumber: 64,
+                questionText: "In the sentence 'The chief yelled loudly at the embarrassed sergeant,' 'loudly' is used as a/an:",
+                options: ["Adverb", "Adjective", "Verb", "Noun"],
+                correctAnswerIndex: 0,
+                rationale: "'Loudly' is an adverb because it modifies the verb 'yelled,' describing how the action was performed.",
+                source: { text: "Grammarly - What is an Adverb?", url: "https://www.grammarly.com/blog/adverbs/" }
+            },
+            {
+                questionNumber: 65,
+                questionText: "In the sentence 'The chief yelled loudly at the embarrassed sergeant,' 'embarrassed' is used as a/an:",
+                options: ["Adjective", "Adverb", "Verb", "Noun"],
+                correctAnswerIndex: 0,
+                rationale: "'Embarrassed' is an adjective because it modifies the noun 'sergeant,' describing the sergeant's state.",
+                source: { text: "Grammarly - What is an Adjective?", url: "https://www.grammarly.com/blog/adjectives/" }
+            },
+            {
+                questionNumber: 66,
+                questionText: "Jamie Jones goes to visit her mother, Tina Johnson, and finds Tina dead in her bedroom. Jamie calls the police. Officer Haynes responds. Who should appear as the victim on the report?",
+                options: ["Officer Haynes", "Tina Johnson", "Jamie Jones", "State of Texas"],
+                correctAnswerIndex: 1,
+                rationale: "The victim is the person against whom the crime (in this case, a death investigation/homicide) was committed. Tina Johnson is the deceased and therefore the victim.",
+                source: { text: "Texas Uniform Crime Reporting (UCR) Program - Definitions", url: "https://www.dps.texas.gov/section/crime-records-service/ucr-definitions" }
+            },
+            {
+                questionNumber: 67,
+                questionText: "Denton County Sheriff's Deputy Jake Dogg arrests Sammy Weasel for possessing cocaine. Who would appear as the complainant on the offense report?",
+                options: ["Deputy Dogg", "State of Texas", "Denton County", "Sammy Weasel"],
+                correctAnswerIndex: 1,
+                rationale: "For possessory offenses like drug possession, there is no individual victim. The 'State of Texas' is the complainant, as the crime is against the laws of the state.",
+                source: { text: "Texas Uniform Crime Reporting (UCR) Program - Definitions", url: "https://www.dps.texas.gov/section/crime-records-service/ucr-definitions" }
+            },
+            {
+                questionNumber: 68,
+                questionText: "The manager, Tom Haggard, for Kroger reports to Officer Clark that the business was broken into and several items were stolen. Who is the victim/complainant for the report?",
+                options: ["Officer Clark", "State of Texas", "Kroger", "Tom Haggard"],
+                correctAnswerIndex: 2,
+                rationale: "The business, 'Kroger,' is the entity that was burglarized and suffered the loss. Therefore, Kroger is the victim. Tom Haggard is the reporting person acting on behalf of the business.",
+                source: { text: "Texas Uniform Crime Reporting (UCR) Program - Definitions", url: "https://www.dps.texas.gov/section/crime-records-service/ucr-definitions" }
+            },
+            {
+                questionNumber: 69,
+                questionText: "Which of the following sentences is most suitable for a police report?",
+                options: [
+                    "The Suspect was seen crouched behind a dumpster in the parking lot.",
+                    "I saw Williams crouched behind a dumpster in the parking lot.",
+                    "This officer saw Williams crouched behind a dumpster in the parking lot."
+                ],
+                correctAnswerIndex: 1,
+                rationale: "Modern police reports prefer first-person, active voice ('I saw...') for clarity and directness. 'This officer' is a less preferred third-person construction, and passive voice ('was seen') can be ambiguous.",
+                source: { text: "Police Report Writing Manual", url: "https://www.austintexas.gov/sites/default/files/files/Police/APD_Report_Writing_Manual.pdf" }
+            },
+            {
+                questionNumber: 70,
+                questionText: "Which of the following sentences is grammatically correct?",
+                options: [
+                    "The house was empty all week because the Browns were on vacation in Miami.",
+                    "The house was empty all week because the Brown's were on vacation in Miami.",
+                    "The house was empty all week because the Browns' were on vacation in Miami."
+                ],
+                correctAnswerIndex: 0,
+                rationale: "'Browns' is the correct plural form of the proper noun Brown. 'Brown's' is singular possessive, and 'Browns'' is plural possessive. No possession is indicated in the sentence.",
+                source: { text: "Purdue OWL - Apostrophes", url: "https://owl.purdue.edu/owl/general_writing/punctuation/apostrophe/index.html" }
+            },
+            {
+                questionNumber: 71,
+                questionText: "Which of the following is punctuated correctly?",
+                options: [
+                    "I opened the box, it was empty.",
+                    "I opened the box it was empty.",
+                    "I opened the box. It was empty."
+                ],
+                correctAnswerIndex: 2,
+                rationale: "'I opened the box' and 'it was empty' are both independent clauses. They must be separated by a period or a semicolon. Using only a comma creates a 'comma splice,' which is a type of run-on sentence.",
+                source: { text: "Purdue OWL - Run-on Sentences", url: "https://owl.purdue.edu/owl/general_writing/mechanics/run_ons/index.html" }
+            },
+            {
+                questionNumber: 72,
+                questionText: "Which sentence uses the most professional language for a police report?",
+                options: [
+                    "Linda Santos advised me that she and her mother have lived in the apartment for five years.",
+                    "Linda Santos told me that she and her mother have lived in the apartment for five years.",
+                    "Linda Santos advised me that her and her Mother have lived in the apartment for five years."
+                ],
+                correctAnswerIndex: 1,
+                rationale: "Simple, clear language is preferred. 'Told me' is more direct than the overly formal 'advised me.' Option C incorrectly uses 'her' instead of the subject pronoun 'she'.",
+                source: { text: "Police Report Writing Manual", url: "https://www.austintexas.gov/sites/default/files/files/Police/APD_Report_Writing_Manual.pdf" }
+            },
+            {
+                questionNumber: 73,
+                questionText: "Which sentence uses 'its' correctly?",
+                options: [
+                    "The institution revised its policies after the accreditation review last July.",
+                    "The institution revised it's policies after the accreditation review last July.",
+                    "The institution revised its' policies after the accreditation review last July."
+                ],
+                correctAnswerIndex: 0,
+                rationale: "'Its' is the possessive form of 'it'. 'It's' is a contraction for 'it is'. 'Its'' is not a word.",
+                source: { text: "Grammarly - Its vs. It's", url: "https://www.grammarly.com/blog/its-vs-its/" }
+            },
+            {
+                questionNumber: 74,
+                questionText: "Which sentence is constructed most clearly?",
+                options: [
+                    "As the boyfriend ran into the hospital, he held the blanket wrapped victim in his arms.",
+                    "Wrapped in blanket, the boyfriend held her as he ran her into the hospital.",
+                    "The boyfriend held the victim, who was wrapped in a blanket, in his arms as he ran into the hospital."
+                ],
+                correctAnswerIndex: 2,
+                rationale: "Option C is the clearest. Option A has a misplaced modifier ('blanket wrapped victim'), and Option B could be ambiguous about who was wrapped in the blanket.",
+                source: { text: "Purdue OWL - Misplaced Modifiers", url: "https://owl.purdue.edu/owl/general_writing/mechanics/misplaced_modifiers_and_dangling_participles/index.html" }
+            },
+            {
+                questionNumber: 75,
+                questionText: "Which sentence correctly uses pronouns?",
+                options: [
+                    "When you choose the class that you want, notify Allen or myself.",
+                    "When you choose the class that you want, notify Allen or me."
+                ],
+                correctAnswerIndex: 1,
+                rationale: "'Me' is an object pronoun, which is correct here as it is the object of the verb 'notify.' 'Myself' is a reflexive pronoun and should only be used when the subject and object are the same person (e.g., 'I hurt myself').",
+                source: { text: "Grammarly - I vs. Me", url: "https://www.grammarly.com/blog/i-vs-me/" }
+            },
+            {
+                questionNumber: 76,
+                questionText: "Which sentence uses the correct wording?",
+                options: [
+                    "While making the suspect lay on the ground, Officer Smith used entirely to much force.",
+                    "While making the suspect lay on the ground, Officer Smith used entirely too much force.",
+                    "While making the suspect lie on the ground, Officer Smith used entirely to much force.",
+                    "While making the suspect lie on the ground, Officer Smith used entirely too much force."
+                ],
+                correctAnswerIndex: 3,
+                rationale: "'Lie' is the correct verb for a person reclining. 'Lay' requires a direct object (e.g., 'lay the book down'). 'Too' is an adverb meaning 'excessively,' while 'to' is a preposition.",
+                source: { text: "Grammarly - Lay vs. Lie", url: "https://www.grammarly.com/blog/lay-vs-lie/" }
+            },
+            // Questions from TABC Review.pdf
+            {
+                questionNumber: 77,
+                questionText: "Under the ABC Code, 'alcoholic beverage' means alcohol, or any beverage containing more than ___ percent of alcohol by volume, which is capable of use for beverage purposes, either alone or when diluted.",
+                options: ["Less than .08 of one", "Less than .5 of one", "One-half of one", "None of the above"],
+                correctAnswerIndex: 2,
+                rationale: "The Texas Alcoholic Beverage Code defines an alcoholic beverage as a beverage containing more than one-half of one percent of alcohol by volume.",
+                source: { text: "Texas Alcoholic Beverage Code § 1.04(1)", url: "https://statutes.capitol.texas.gov/Docs/AL/htm/AL.1.htm#1.04" }
+            },
+            {
+                questionNumber: 78,
+                questionText: "Under the ABC Code, 'premises' means the ___ if they are directly or indirectly under the control of the same person.",
+                options: ["Grounds and all buildings", "Vehicles", "Appurtenances pertaining to the grounds including any adjacent premises", "All of the above"],
+                correctAnswerIndex: 3,
+                rationale: "The definition of 'premises' under the TABC is broad and includes the grounds, all buildings, vehicles, and appurtenances.",
+                source: { text: "Texas Alcoholic Beverage Code § 1.04(16)", url: "https://statutes.capitol.texas.gov/Docs/AL/htm/AL.1.htm#1.04" }
+            },
+            {
+                questionNumber: 79,
+                questionText: "Under the ABC Code, 'minor' means anyone under ___ years of age.",
+                options: ["18", "19", "20", "21"],
+                correctAnswerIndex: 3,
+                rationale: "For the purposes of the Alcoholic Beverage Code, a minor is a person under 21 years of age.",
+                source: { text: "Texas Alcoholic Beverage Code § 106.01", url: "https://statutes.capitol.texas.gov/Docs/AL/htm/AL.106.htm#106.01" }
+            },
+            {
+                questionNumber: 80,
+                questionText: "A peace officer may seize without a warrant ___",
+                options: [
+                    "any illicit beverage, its container, and its packaging",
+                    "any vehicle, including an aircraft or watercraft, used to transport an illicit beverage",
+                    "any equipment designed for use in or used manufacturing an illicit beverage",
+                    "any material to be used in manufacturing an illicit beverage",
+                    "all of the above"
+                ],
+                correctAnswerIndex: 4,
+                rationale: "A peace officer is authorized to seize, without a warrant, illicit beverages and any vehicles, equipment, and materials used in their transport or manufacture.",
+                source: { text: "Texas Alcoholic Beverage Code § 103.03", url: "https://statutes.capitol.texas.gov/Docs/AL/htm/AL.103.htm#103.03" }
+            },
+            {
+                questionNumber: 81,
+                questionText: "A peace officer who makes a false report involving the seizure of illicit beverages commits a ___",
+                options: ["felony", "misdemeanor", "civil violation", "none of the above"],
+                correctAnswerIndex: 0,
+                rationale: "Making a false report in connection with a seizure under the ABC is a felony, punishable by 2 to 5 years in the penitentiary.",
+                source: { text: "Texas Alcoholic Beverage Code § 103.05", url: "https://statutes.capitol.texas.gov/Docs/AL/htm/AL.103.htm#103.05" }
+            },
+            {
+                questionNumber: 82,
+                questionText: "By accepting a license or permit, the holder consents that ___ may enter the licensed premises at any time to conduct an investigation or inspect the premises.",
+                options: [
+                    "an authorized representative of the Texas Alcoholic Beverage Commission.",
+                    "A peace officer",
+                    "Both A or B",
+                    "None of the above"
+                ],
+                correctAnswerIndex: 2,
+                rationale: "The TABC code explicitly states that both peace officers and authorized representatives of the TABC have the right to inspect any licensed premises.",
+                source: { text: "Texas Alcoholic Beverage Code § 101.04", url: "https://statutes.capitol.texas.gov/Docs/AL/htm/AL.101.htm#101.04" }
+            },
+            {
+                questionNumber: 83,
+                questionText: "A person commits 'Possession of Intoxicants on Public School Grounds' if the person possesses an intoxicating beverage for consumption, sale, or distribution while:",
+                options: ["on the grounds or in a building of a public school.", "Entering or inside any enclosure, field, or stadium where a public school athletic event is being held.", "Both A and B", "None of the above"],
+                correctAnswerIndex: 2,
+                rationale: "This offense covers possession on public school grounds at any time and at off-campus locations where a school-sponsored athletic event is taking place.",
+                source: { text: "Texas Alcoholic Beverage Code § 101.75", url: "https://statutes.capitol.texas.gov/Docs/AL/htm/AL.101.htm#101.75" }
+            },
+            {
+                questionNumber: 84,
+                questionText: "A person commits an offense if the person possesses an open container or consumes an alcoholic beverage on a public street, public alley or public sidewalk within ___ feet of the property line of a public or private school.",
+                options: ["1,000", "2,000", "3,000", "5,000"],
+                correctAnswerIndex: 0,
+                rationale: "The law establishes a 1,000-foot drug-free and alcohol-free zone around schools, making consumption or possession of an open container within this distance a punishable offense.",
+                source: { text: "Texas Alcoholic Beverage Code § 101.75", url: "https://statutes.capitol.texas.gov/Docs/AL/htm/AL.101.htm#101.75" }
+            },
+            {
+                questionNumber: 85,
+                questionText: "A person who sells a minor an alcoholic beverage does not commit an offense if the minor falsely represents himself to be ___ years or older by displaying an apparently valid Texas DL or ID card.",
+                options: ["18", "19", "20", "21"],
+                correctAnswerIndex: 3,
+                rationale: "This is the 'apparent validity' or 'Safe Harbor' defense. If a minor presents what reasonably appears to be a valid ID indicating they are 21 or older, the seller may have an affirmative defense against prosecution.",
+                source: { text: "Texas Alcoholic Beverage Code § 106.03", url: "https://statutes.capitol.texas.gov/Docs/AL/htm/AL.106.htm#106.03" }
+            },
+            {
+                questionNumber: 86,
+                questionText: "A minor commits an offense if he consumes an alcoholic beverage. It is an affirmative defense if the alcoholic beverage was consumed in the visible presence of the minor's ___",
+                options: ["Adult parent", "Guardian", "Spouse", "All of the above"],
+                correctAnswerIndex: 3,
+                rationale: "A minor is permitted to consume (but not purchase) alcohol if they are in the visible presence of their adult parent, guardian, or spouse.",
+                source: { text: "Texas Alcoholic Beverage Code § 106.04", url: "https://statutes.capitol.texas.gov/Docs/AL/htm/AL.106.htm#106.04" }
+            },
+            {
+                questionNumber: 87,
+                questionText: "A person may purchase an alcoholic beverage for or give an alcoholic beverage to a minor if he is the minor's ___ and he is visibly present when the minor possesses or consumes the beverage.",
+                options: ["Adult parent", "Guardian", "Spouse", "An adult in whose custody the minor has been committed by a court", "All of the above"],
+                correctAnswerIndex: 4,
+                rationale: "The law allows certain adults with a direct legal relationship to a minor to purchase and provide alcohol to that minor, provided they are visibly present during consumption.",
+                source: { text: "Texas Alcoholic Beverage Code § 106.06", url: "https://statutes.capitol.texas.gov/Docs/AL/htm/AL.106.htm#106.06" }
+            },
+            {
+                questionNumber: 88,
+                questionText: "Who can be charged with an offense if a person sells an alcoholic beverage to a minor without properly checking for I.D.?",
+                options: ["The person who sells the alcoholic beverage.", "The minor who purchased the alcoholic beverage.", "Both A and B", "None of the above."],
+                correctAnswerIndex: 0,
+                rationale: "The person who makes the sale to the minor is the one who commits the offense of Sale of Alcohol to a Minor. The minor would be charged with a separate offense (e.g., Purchase/Attempt to Purchase).",
+                source: { text: "Texas Alcoholic Beverage Code § 106.03", url: "https://statutes.capitol.texas.gov/Docs/AL/htm/AL.106.htm#106.03" }
+            },
+            {
+                questionNumber: 89,
+                questionText: "A minor takes a six-pack to the counter and attempts to pay. When the clerk asks for ID, the minor leaves the beer and the store. What offense, if any, has the minor committed?",
+                options: ["no offense has occurred.", "Purchase of alcohol by a minor.", "Misrepresentation of age by a minor.", "Attempt to purchase alcohol by a minor."],
+                correctAnswerIndex: 3,
+                rationale: "Even though the purchase was not completed, the minor took a substantial step towards purchasing the alcohol, which constitutes the offense of Attempt to Purchase Alcohol by a Minor.",
+                source: { text: "Texas Alcoholic Beverage Code § 106.025", url: "https://statutes.capitol.texas.gov/Docs/AL/htm/AL.106.htm#106.025" }
+            },
+            {
+                questionNumber: 90,
+                questionText: "The TABC may suspend or cancel a permit if it is found that the permittee was intoxicated on the premises, sold to an intoxicated person, or failed to report a breach of the peace.",
+                options: ["True", "False"],
+                correctAnswerIndex: 0,
+                rationale: "All listed items are serious violations of the TABC and are grounds for the suspension or cancellation of a license or permit.",
+                source: { text: "Texas Alcoholic Beverage Code § 11.61", url: "https://statutes.capitol.texas.gov/Docs/AL/htm/AL.11.htm#11.61" }
+            },
+            {
+                questionNumber: 91,
+                questionText: "A mixed beverage permittee may sell and offer for sale mixed beverages between 7 a.m. and midnight on any day except ___",
+                options: ["Monday", "Friday", "Sunday", "All of the above"],
+                correctAnswerIndex: 2,
+                rationale: "Standard hours for mixed beverage sales are 7 a.m. to midnight on Monday-Saturday. Sunday sales have different hours, typically starting at noon (or 10 a.m. with the service of food).",
+                source: { text: "Texas Alcoholic Beverage Code § 105.03", url: "https://statutes.capitol.texas.gov/Docs/AL/htm/AL.105.htm#105.03" }
+            },
+            {
+                questionNumber: 92,
+                questionText: "A person commits an offense if the person with criminal negligence sells an alcoholic beverage to a ___ person.",
+                options: ["Habitual drunkard", "Intoxicated", "insane", "all of the above"],
+                correctAnswerIndex: 3,
+                rationale: "It is an offense to sell an alcoholic beverage with criminal negligence to a person who is a habitual drunkard or an intoxicated or insane person.",
+                source: { text: "Texas Alcoholic Beverage Code § 101.63", url: "https://statutes.capitol.texas.gov/Docs/AL/htm/AL.101.htm#101.63" }
+            },
+            /* Questions from Patrol, Intoxication, court.pdf
+            {
+                questionNumber: 93,
+                questionText: "'___' is defined as a protected area that provides security from an assailant's firepower. Examples: large trees, fireplugs, mailboxes, etc.",
+                options: ["Cover", "Concealment", "Silhouetting", "None of the above"],
+                correctAnswerIndex: 0,
+                rationale: "Cover is any object that can stop a projectile. It is a key tactical concept for officer safety.",
+                source: { text: "TCOLE - Basic Peace Officer Course Guide #2040", url: "https://www.tcole.texas.gov/" }
+            },
+            {
+                questionNumber: 94,
+                questionText: "'___' is defined as any condition (such as darkness) or object (like a bush) that hides a person from view but does not necessarily provide protection from an assailant's firepower.",
+                options: ["Cover", "Concealment", "Silhouetting", "None of the above."],
+                correctAnswerIndex: 1,
+                rationale: "Concealment hides you from view but does not stop bullets. Understanding the difference between cover and concealment is critical for survival.",
+                source: { text: "TCOLE - Basic Peace Officer Course Guide #2040", url: "https://www.tcole.texas.gov/" }
+            },
+            {
+                questionNumber: 95,
+                questionText: "'___': One or more persons who participate in a random or systematic shooting or stabbing spree, demonstrating their intent to continuously harm others.",
+                options: ["Active shooter", "Reactive shooter", "Homicidal shooter", "None of the above"],
+                correctAnswerIndex: 0,
+                rationale: "This is the standard definition of an active shooter, focusing on the ongoing and indiscriminate nature of the attack.",
+                source: { text: "U.S. Department of Homeland Security - Active Shooter Preparedness", url: "https://www.dhs.gov/cisa/active-shooter-preparedness" }
+            },
+            {
+                questionNumber: 96,
+                questionText: "'HIPS' situations (Homicide in Progress School) involve:",
+                options: ["Random acts of violence committed by an active shooter.", "The shooter's intent appears to be that of mass murder.", "Acts are usually committed in public places, like a school or an office.", "All of the above"],
+                correctAnswerIndex: 3,
+                rationale: "HIPS is a term for active shooter events, which are characterized by random violence with an intent of mass murder in public locations.",
+                source: { text: "TCOLE - Active Shooter Response Training", url: "https://www.tcole.texas.gov/" }
+            },
+            {
+                questionNumber: 97,
+                questionText: "'___ crowd': Usually assembles for a common purpose without leadership, i.e., spectators at sporting events. They have a common interest but behave and think as individuals.",
+                options: ["Casual", "Cohesive", "Expressive", "Aggressive"],
+                correctAnswerIndex: 0,
+                rationale: "A casual crowd is a gathering of people with no common bond other than a momentary interest in an event.",
+                source: { text: "FEMA - Crowd Management", url: "https://www.fema.gov/" }
+            },
+            {
+                questionNumber: 98,
+                questionText: "'___ crowd': Assembled for some purpose. They have leadership and the intention of expressing an attitude for or against some person or idea, i.e., political rallies and picket lines.",
+                options: ["Casual", "Cohesive", "Expressive", "Aggressive"],
+                correctAnswerIndex: 2,
+                rationale: "An expressive crowd is gathered to express an emotion or viewpoint, such as at a protest or political rally. They are generally non-violent.",
+                source: { text: "FEMA - Crowd Management", url: "https://www.fema.gov/" }
+            },
+            {
+                questionNumber: 99,
+                questionText: "'___ crowd': Assembled for some purpose. They have positive leadership, are determined to accomplish a specific end, and move actively toward their objective. Usually high emotional tension is present.",
+                options: ["Casual", "Cohesive", "Expressive", "Aggressive"],
+                correctAnswerIndex: 3,
+                rationale: "An aggressive crowd has a common, strong purpose and may be on the verge of becoming a mob. Their actions are directed towards their objective.",
+                source: { text: "FEMA - Crowd Management", url: "https://www.fema.gov/" }
+            },
+            {
+                questionNumber: 100,
+                questionText: "Which statement is true in regards to 'mobs?'",
+                options: [
+                    "A crowd develops into a mob when members have been instilled with a purpose and intend to carry it out.",
+                    "Transformation from a crowd to a mob can be made by a forceful leader or an act of violence.",
+                    "A mob reaches the hot stage when acts of violence are committed.",
+                    "All of the above"
+                ],
+                correctAnswerIndex: 3,
+                rationale: "A mob is a crowd that becomes emotional, violent, and ready to act on a common purpose, often spurred by leadership or a triggering event.",
+                source: { text: "FEMA - Crowd Management", url: "https://www.fema.gov/" }
+            },
+            {
+                questionNumber: 101,
+                questionText: "An ___ mob riots and terrorizes as in the case of race riots, lynching, political riots, and prison riots.",
+                options: ["Aggressive", "Escape", "Acquisitive", "Expressive"],
+                correctAnswerIndex: 0,
+                rationale: "An aggressive mob is characterized by violence, rioting, and terrorizing, often directed at people or property.",
+                source: { text: "FEMA - Crowd Management", url: "https://www.fema.gov/" }
+            },
+            {
+                questionNumber: 102,
+                questionText: "A/An ___ mob is in a state of panic. In their attempt to secure safety by flight, members of this group may have lost their power of reasoning.",
+                options: ["Aggressive", "Escape", "Acquisitive", "Expressive"],
+                correctAnswerIndex: 1,
+                rationale: "An escape mob is a crowd in a state of panic, trying to flee a real or perceived danger, such as a fire in a crowded theater.",
+                source: { text: "FEMA - Crowd Management", url: "https://www.fema.gov/" }
+            },
+            {
+                questionNumber: 103,
+                questionText: "A/An ___ mob is motivated by a desire to acquire something, i.e., food riots.",
+                options: ["Aggressive", "Escape", "Acquisitive", "Expressive"],
+                correctAnswerIndex: 2,
+                rationale: "An acquisitive mob is motivated by a desire to gain possession of something, such as looting during a riot.",
+                source: { text: "FEMA - Crowd Management", url: "https://www.fema.gov/" }
+            },
+            {
+                questionNumber: 104,
+                questionText: "A person commits '___' if the person, alone or in concert with others intentionally engages in disruptive activity on the campus or property of any private or public school.",
+                options: ["Disruptive activities", "Disruption of Classes", "School Terrorism", "None of the above."],
+                correctAnswerIndex: 0,
+                rationale: "This is the definition of the offense of Disruptive Activities under the Texas Education Code.",
+                source: { text: "Texas Education Code § 37.123", url: "https://statutes.capitol.texas.gov/Docs/ED/htm/ED.37.htm#37.123" }
+            },
+            {
+                questionNumber: 105,
+                questionText: "A person commits 'Disruption of Classes' if the person on school property or on public property within ___ feet of school property... intentionally disrupts the conduct of classes or other school activities.",
+                options: ["500", "750", "1,000", "1,500"],
+                correctAnswerIndex: 0,
+                rationale: "The offense of Disruption of Classes applies to actions on school property or within 500 feet of it.",
+                source: { text: "Texas Education Code § 37.124", url: "https://statutes.capitol.texas.gov/Docs/ED/htm/ED.37.htm#37.124" }
+            },
+            {
+                questionNumber: 106,
+                questionText: "A person commits '___' if the person, by exhibiting, using, or threatening to exhibit or use a firearm, interferes with the normal use of a building or portion of a campus...",
+                options: ["School Terrorism.", "Unlawful Display", "Exhibition of Firearms", "None of the above."],
+                correctAnswerIndex: 2,
+                rationale: "The specific offense of using a firearm to interfere with school activities is titled 'Exhibition of Firearms' in the Education Code.",
+                source: { text: "Texas Education Code § 37.125", url: "https://statutes.capitol.texas.gov/Docs/ED/htm/ED.37.htm#37.125" }
+            },
+            {
+                questionNumber: 107,
+                questionText: "A person commits 'Disruption of Transportation' if the person intentionally disrupts, prevents, or interferes with the lawful transportation of children to or from ___ on a school vehicle.",
+                options: ["school", "an activity sponsored by a school", "Both A and B", "None of the above"],
+                correctAnswerIndex: 2,
+                rationale: "This offense covers the disruption of transporting children to or from school itself, as well as to or from any school-sponsored activity.",
+                source: { text: "Texas Education Code § 37.126", url: "https://statutes.capitol.texas.gov/Docs/ED/htm/ED.37.htm#37.126" }
+            },
+            {
+                questionNumber: 108,
+                questionText: "'Crime Prevention' is the proactive ___ of a crime risk and the action needed to remove or reduce that risk.",
+                options: ["anticipation", "recognition", "appraisal", "All of the above"],
+                correctAnswerIndex: 3,
+                rationale: "Crime prevention is a comprehensive approach that involves anticipating, recognizing, and appraising crime risks to take preventative action.",
+                source: { text: "TCOLE - Basic Peace Officer Course Guide #4001", url: "https://www.tcole.texas.gov/" }
+            },
+            {
+                questionNumber: 109,
+                questionText: "Which statement is true concerning law enforcement's relationship to 'crime prevention?'",
+                options: [
+                    "Crime prevention is a proactive anticipation and appraisal of a crime risk.",
+                    "An officer's primary responsibility is that of crime prevention.",
+                    "Every officer is a crime prevention officer.",
+                    "The opportunity for someone to commit the crime must be eliminated or reduced.",
+                    "All of the above."
+                ],
+                correctAnswerIndex: 4,
+                rationale: "All of these statements reflect the core principles of modern policing, where preventing crime is a primary and shared responsibility of every officer.",
+                source: { text: "TCOLE - Basic Peace Officer Course Guide #4001", url: "https://www.tcole.texas.gov/" }
+            },
+            */
+            {
+                questionNumber: 93,
+                questionText: "In a criminal trial, '___' is questioning of a witness by the party producing the witness.",
+                options: ["Cross examination", "Re-direct examination", "Direct examination", "None of the above"],
+                correctAnswerIndex: 2,
+                rationale: "Direct examination is the initial questioning of a witness by the attorney who called them to the stand.",
+                source: { text: "Texas Rules of Evidence", url: "https://www.txcourts.gov/rules-forms/rules-standards/" }
+            },
+            {
+                questionNumber: 94,
+                questionText: "As a witness in a criminal trial an officer should be perceived by the jury as:",
+                options: [
+                    "Very interested in seeing that the accused is convicted and punished.",
+                    "Hard on crime, and as such, will not tolerated the criminal behavior of the accused.",
+                    "Prejudicial",
+                    "An 'objective public servant' presenting only the facts of the case."
+                ],
+                correctAnswerIndex: 3,
+                rationale: "An officer's credibility depends on being seen as a neutral, objective, and professional fact-finder, not a biased advocate for a particular outcome.",
+                source: { text: "Courtroom Testimony: A Law Enforcement Guide", url: "https://www.dps.texas.gov/sites/default/files/documents/director_staff/public_information/courtroomtestimonyguide.pdf" }
+            },
+            {
+                questionNumber: 95,
+                questionText: "The rule that allows for the exclusion of a witness from the courtroom is also called '___'",
+                options: ["Officially required witness exclusion", "Witness exclusion", "Invocation of the Rule", "None of the above"],
+                correctAnswerIndex: 2,
+                rationale: "This is commonly referred to as 'invoking the rule' or 'the rule of sequestration' under Texas Rules of Evidence, Rule 614.",
+                source: { text: "Texas Rules of Evidence, Rule 614", url: "https://www.txcourts.gov/rules-forms/rules-standards/" }
+            },
+            {
+                questionNumber: 96,
+                questionText: "The '___' rule of evidence deals with facts and knowledge the court will accept as true without requiring proof.",
+                options: ["Judicial-notice", "Habeas Corpus", "Mandamus", "Certiorari"],
+                correctAnswerIndex: 0,
+                rationale: "Judicial notice (Texas Rules of Evidence, Rule 201) allows a court to accept certain facts as true without formal proof because they are commonly known or easily verifiable.",
+                source: { text: "Texas Rules of Evidence, Rule 201", url: "https://www.txcourts.gov/rules-forms/rules-standards/" }
+            },
+            {
+                questionNumber: 97,
+                questionText: "In PC Chapter 49, 'Alcohol Concentration' means the number of grams of alcohol per:",
+                options: ["210 liters of breath", "100 milliliters of blood", "67 milliliters of urine", "All of the above"],
+                correctAnswerIndex: 3,
+                rationale: "The Penal Code defines alcohol concentration by any of these three measures.",
+                source: { text: "Texas Penal Code § 49.01(1)", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.49.htm#49.01" }
+            },
+            {
+                questionNumber: 98,
+                questionText: "In PC Chapter 49, 'Intoxicated' means:",
+                options: [
+                    "not having the normal use of mental or physical faculties by reason of the introduction of alcohol, a controlled substance, a drug, etc.",
+                    "Having an alcohol concentration of '0.08' or more.",
+                    "Either A or B",
+                    "None of the above is correct."
+                ],
+                correctAnswerIndex: 2,
+                rationale: "Texas law defines intoxication in two ways: the 'per se' definition of 0.08 BAC or more, and the 'impairment' theory of not having the normal use of faculties.",
+                source: { text: "Texas Penal Code § 49.01(2)", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.49.htm#49.01" }
+            },
+            {
+                questionNumber: 99,
+                questionText: "'___' means a vessel, one or more water skis, an aquaplane, or another device used for transporting or carrying a person, on water...",
+                options: ["Watercraft", "Hydra plane", "Cigar boat", "None of the above"],
+                correctAnswerIndex: 0,
+                rationale: "This is the legal definition of a 'watercraft' as used in the Penal Code for offenses like Boating While Intoxicated.",
+                source: { text: "Texas Penal Code § 49.01(4)", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.49.htm#49.01" }
+            },
+            {
+                questionNumber: 100,
+                questionText: "In PC Chapter 49, 'Open Container' means any receptacle that contains any amount of alcoholic beverage and that is open, has a broken seal, or the contents are partially removed.",
+                options: ["True", "False"],
+                correctAnswerIndex: 0,
+                rationale: "This is the correct and broad definition of an open container under the Penal Code.",
+                source: { text: "Texas Penal Code § 49.031(a)(1)", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.49.htm#49.031" }
+            },
+            {
+                questionNumber: 101,
+                questionText: "In PC Chapter 49, 'Passenger area of a motor vehicle' means:",
+                options: [
+                    "the area of a motor vehicle designed for the seating of the operator and passengers of the vehicle.",
+                    "A glove compartment or similar storage container that is locked.",
+                    "The trunk of the vehicle.",
+                    "The area behind the last upright seat of the vehicle, if the vehicle does not have a trunk."
+                ],
+                correctAnswerIndex: 0,
+                rationale: "The law defines the passenger area as where people sit. The other options are listed as *exceptions* to the rule, meaning an open container *can* be legally stored there.",
+                source: { text: "Texas Penal Code § 49.031(c)", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.49.htm#49.031" }
+            },
+            {
+                questionNumber: 102,
+                questionText: "A person commits 'Possession of Alcoholic Beverage in Motor Vehicle' if the person knowingly possesses an open container in a passenger area of a motor vehicle on a public highway, regardless of whether the vehicle is being operated or is stopped or parked.",
+                options: ["True", "False"],
+                correctAnswerIndex: 0,
+                rationale: "This accurately describes the offense. The key elements are knowingly possessing, an open container, in the passenger area, on a public highway.",
+                source: { text: "Texas Penal Code § 49.031(b)", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.49.htm#49.031" }
+            },
+            {
+                questionNumber: 103,
+                questionText: "A peace officer charging a person with 'Possession of Alcoholic Beverage in Motor Vehicle' ___ issue to the person a written citation and notice to appear...",
+                options: ["shall", "may", "must arrest", "None of the above"],
+                correctAnswerIndex: 0,
+                rationale: "The law mandates that an officer *shall* issue a citation in lieu of a custodial arrest for this specific offense, provided the person signs the promise to appear.",
+                source: { text: "Texas Penal Code § 49.031(d)", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.49.htm#49.031" }
+            },
+            {
+                questionNumber: 104,
+                questionText: "A person commits 'Driving While Intoxicated' if the person is intoxicated while operating a motor vehicle ___",
+                options: ["in a public place.", "On a roadway only.", "On a public highway only.", "None of the above."],
+                correctAnswerIndex: 0,
+                rationale: "The DWI statute applies to operating a motor vehicle 'in a public place,' which is a broad term that includes more than just public roads (e.g., parking lots).",
+                source: { text: "Texas Penal Code § 49.04", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.49.htm#49.04" }
+            },
+            {
+                questionNumber: 105,
+                questionText: "A person commits 'Driving While Intoxicated with Child Passenger' if the person is intoxicated while operating a motor vehicle in a public place with a passenger who is younger than ___ years of age.",
+                options: ["18", "17", "16", "15"],
+                correctAnswerIndex: 3,
+                rationale: "The age for the enhancement to a state jail felony for DWI with Child Passenger is a passenger younger than 15.",
+                source: { text: "Texas Penal Code § 49.045", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.49.htm#49.045" }
+            },
+            {
+                questionNumber: 106,
+                questionText: "A person commits an offense if the person is intoxicated while operating an aircraft or watercraft.",
+                options: ["True", "False"],
+                correctAnswerIndex: 0,
+                rationale: "Flying While Intoxicated (PC 49.05) and Boating While Intoxicated (PC 49.06) are specific offenses similar to DWI.",
+                source: { text: "Texas Penal Code § 49.05 & § 49.06", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.49.htm" }
+            },
+            {
+                questionNumber: 107,
+                questionText: "A person commits an offense if the person is intoxicated while operating an amusement ride or assembling a mobile amusement ride.",
+                 options: ["True", "False"],
+                correctAnswerIndex: 0,
+                rationale: "This is a specific offense under the Penal Code to ensure public safety at carnivals and fairs.",
+                source: { text: "Texas Penal Code § 49.065", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.49.htm#49.065" }
+            },
+            {
+                questionNumber: 108,
+                questionText: "A person commits 'Intoxication Assault' if, by accident or mistake while intoxicated, by reason of that intoxication causes serious bodily injury to another while operating ___",
+                options: ["an aircraft", "a watercraft", "an amusement ride", "All of the above"],
+                correctAnswerIndex: 3,
+                rationale: "Intoxication Assault applies when SBI is caused by an intoxicated person operating a motor vehicle, aircraft, watercraft, or amusement ride.",
+                source: { text: "Texas Penal Code § 49.07", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.49.htm#49.07" }
+            },
+            {
+                questionNumber: 109,
+                questionText: "A person commits 'Intoxication Manslaughter' if the person operates ___ and is intoxicated and by reason of that intoxication causes the death of another by accident or mistake.",
+                options: ["a motor vehicle in a public place", "an aircraft", "a watercraft", "an amusement ride", "All of the above"],
+                correctAnswerIndex: 4,
+                rationale: "Intoxication Manslaughter applies when a death is caused by an intoxicated person operating any of the listed vehicles or rides.",
+                source: { text: "Texas Penal Code § 49.08", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.49.htm#49.08" }
+            },
+            {
+                questionNumber: 110,
+                questionText: "Which of the following are common characteristics of a vehicle operated by a DWI driver?",
+                options: ["Weaving - lane-to-lane or bumping curb.", "Inconsistent speed, fast and slow.", "Failure to dim headlights.", "All of the above"],
+                correctAnswerIndex: 3,
+                rationale: "These are all common driving cues identified by NHTSA for detecting intoxicated drivers.",
+                source: { text: "NHTSA - DWI Detection and Standardized Field Sobriety Testing", url: "https://www.nhtsa.gov/dwi-detection-and-standardized-field-sobriety-testing-sfst" }
+            },
+            {
+                questionNumber: 111,
+                questionText: "Which of the following is a Standardized Field Sobriety Test?",
+                options: ["Horizontal Gaze Nystagmus", "Index finger to nose test", "Walk heel to toe test", "One leg stand test", "A, C, and D"],
+                correctAnswerIndex: 4,
+                rationale: "The three scientifically validated and standardized field sobriety tests (SFSTs) approved by NHTSA are Horizontal Gaze Nystagmus (HGN), Walk-and-Turn, and the One-Leg Stand.",
+                source: { text: "NHTSA - SFST Manual", url: "https://www.nhtsa.gov/sites/nhtsa.gov/files/documents/sfst_full_instructor_manual_2018.pdf" }
+            },
+            {
+                questionNumber: 112,
+                questionText: "Of the standardized 'Field Sobriety Tests', which is considered to be the most accurate?",
+                options: ["Horizontal Gaze Nystagmus", "Walk heel to toe test", "One leg stand test", "Modified position of attention test"],
+                correctAnswerIndex: 0,
+                rationale: "According to NHTSA research, the Horizontal Gaze Nystagmus (HGN) test is the most reliable of the three SFSTs for indicating a BAC at or above the legal limit.",
+                source: { text: "NHTSA - SFST Manual", url: "https://www.nhtsa.gov/sites/nhtsa.gov/files/documents/sfst_full_instructor_manual_2018.pdf" }
+            },
+            {
+                questionNumber: 113,
+                questionText: "Which medical condition can have symptoms similar to intoxication?",
+                options: ["Diabetes", "Epilepsy", "Shock", "All of the above"],
+                correctAnswerIndex: 3,
+                rationale: "Officers must be aware that certain medical conditions can mimic signs of intoxication. It is important to rule these out during an investigation.",
+                source: { text: "TCOLE - BPOC Guide #10", url: "https://www.tcole.texas.gov/" }
+            },
+            {
+                questionNumber: 114,
+                questionText: "A person arrested for an offense...while operating a motor vehicle in a public place...is deemed (implied consent) to have consented, to the taking of one or more specimens of the person's:",
+                options: ["Breath", "Blood", "Saliva", "A and B but not C"],
+                correctAnswerIndex: 3,
+                rationale: "Texas's Implied Consent law applies to taking specimens of a person's breath and/or blood.",
+                source: { text: "Texas Transportation Code § 724.011", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.011" }
+            },
+            {
+                questionNumber: 115,
+                questionText: "A breath specimen taken at the request of a peace officer must be taken and analyzed by ___",
+                options: ["A licensed physician only.", "A Peace officer only.", "An individual possessing a certificate issued by the DPS.", "A chemist only."],
+                correctAnswerIndex: 2,
+                rationale: "To ensure reliability, breath tests must be administered by individuals who are certified by the Texas Department of Public Safety as qualified breath test operators.",
+                source: { text: "Texas Transportation Code § 724.016", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.016" }
+            },
+            {
+                questionNumber: 116,
+                questionText: "Only a physician, qualified technician, chemist, professional nurse, or licensed vocational nurse may take a ___ specimen from a living person at the request of a peace officer.",
+                options: ["breath", "blood", "breath and blood", "none of the above apply"],
+                correctAnswerIndex: 1,
+                rationale: "The law specifies that only qualified medical personnel can draw blood for evidentiary purposes to ensure the safety and integrity of the sample.",
+                source: { text: "Texas Transportation Code § 724.017", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.017" }
+            },
+            {
+                questionNumber: 117,
+                questionText: "On request, full information concerning the analysis of a specimen shall be made available to ___",
+                options: ["the requesting peace officer only", "the person who has given a specimen only", "the person who has given a specimen or the person's attorney.", "Prosecuting attorney only."],
+                correctAnswerIndex: 2,
+                rationale: "As part of the discovery process, the defendant and their legal counsel have the right to access the full results of any specimen analysis.",
+                source: { text: "Texas Transportation Code § 724.018", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.018" }
+            },
+            {
+                questionNumber: 118,
+                questionText: "If a person refuses to submit to the taking of a specimen, the peace officer shall request the person to sign a statement that:",
+                options: ["the officer requested the person submit", "The person was informed of the consequences of refusal", "The person refused to submit", "All of the above"],
+                correctAnswerIndex: 3,
+                rationale: "The written refusal statement (DIC-24) must document that the statutory warnings were given and the person subsequently refused.",
+                source: { text: "Texas Transportation Code § 724.032", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.032" }
+            },
+            {
+                questionNumber: 119,
+                questionText: "If a person refuses to submit to the taking of a specimen, the peace officer shall:",
+                options: [
+                    "serve notice of license suspension or denial on the person.",
+                    "Take possession of any license issued by this state and held by the person arrested.",
+                    "Issue a temporary driving permit.",
+                    "Make a written report of the refusal to the director of the DPS.",
+                    "All of the above"
+                ],
+                correctAnswerIndex: 4,
+                rationale: "These are all the administrative duties required of an officer following a refusal under the Implied Consent statute.",
+                source: { text: "Texas Transportation Code § 724.032", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.032" }
+            },
+            {
+                questionNumber: 120,
+                questionText: "A temporary driving permit issued after a DWI arrest refusal expires on the ___ day after the date of issuance.",
+                options: ["10th", "41st", "24th", "None of the above"],
+                correctAnswerIndex: 1,
+                rationale: "The temporary driving permit is valid for 40 days, meaning it expires on the 41st day after it is issued. This gives the driver time to request an Administrative License Revocation (ALR) hearing.",
+                source: { text: "Texas Transportation Code § 724.032(d)", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.724.htm#724.032" }
+            },
+             {
+                questionNumber: 121,
+                questionText: "A temporary driving permit for a commercial driver is not effective until ___ hours after the time of arrest.",
+                options: ["10", "41", "24", "12"],
+                correctAnswerIndex: 2,
+                rationale: "For commercial drivers, there is a 24-hour waiting period before a temporary permit becomes effective as a public safety measure.",
+                source: { text: "Texas Transportation Code § 522.103", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.522.htm#522.103" }
+            },
+             {
+                questionNumber: 122,
+                questionText: "Which of the following would not be considered a 'field sobriety test'?",
+                options: ["Alphabet Recital", "Counting Backwards", "Finger-to-Nose", "All of the above"],
+                correctAnswerIndex: 3,
+                rationale: "While these tests may be used by officers, they are not among the three validated and Standardized Field Sobriety Tests (SFSTs) recognized by NHTSA.",
+                source: { text: "NHTSA - SFST Manual", url: "https://www.nhtsa.gov/sites/nhtsa.gov/files/documents/sfst_full_instructor_manual_2018.pdf" }
+            },
+            {
+                questionNumber: 123,
+                questionText: "Which of the following is an element of 'Intoxication Assault'?",
+                options: ["Causes death to another", "Operates a motor vehicle in a private place", "Causes serious bodily injury to another", "Has a BAC of .15 or higher"],
+                correctAnswerIndex: 2,
+                rationale: "The key element that elevates a DWI to Intoxication Assault is causing 'serious bodily injury' to another person as a result of the intoxication.",
+                source: { text: "Texas Penal Code § 49.07", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.49.htm#49.07" }
+            },
+            {
+                questionNumber: 124,
+                questionText: "Which of the following is an element of 'Intoxication Manslaughter'?",
+                options: ["Causes serious bodily injury to another", "Causes the death of another", "Operates a motor vehicle in a private place", "Has a prior DWI conviction"],
+                correctAnswerIndex: 1,
+                rationale: "The key element that elevates a DWI to Intoxication Manslaughter is causing the death of another person as a result of the intoxication.",
+                source: { text: "Texas Penal Code § 49.08", url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.49.htm#49.08" }
+            },
+            // Questions from Hazmat, Accident, Substance.pdf
+            {
+                questionNumber: 125,
+                questionText: "The operator of a vehicle involved in an accident resulting in injury to or death of a person shall:",
+                options: ["Immediately stop the vehicle at the scene", "Immediately return to the scene if not stopped at the scene", "Remain at the scene until information is exchanged", "All of the above"],
+                correctAnswerIndex: 3,
+                rationale: "The operator is required to immediately stop, return to the scene if they passed it, and remain there to render aid and provide required information.",
+                source: { text: "Texas Transportation Code § 550.021", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.550.htm#550.021" }
+            },
+            {
+                questionNumber: 126,
+                questionText: "The operator of a vehicle involved in an accident resulting only in damage to a vehicle that is driven or attended by a person shall:",
+                options: ["Immediately go to the nearest police station to report it", "Immediately stop without obstructing traffic more than necessary", "Immediately return to the scene if not stopped at the scene", "Both B and C"],
+                correctAnswerIndex: 3,
+                rationale: "For an accident involving only damage to an attended vehicle, the operator must stop as close as possible without unnecessarily obstructing traffic and remain at the scene.",
+                source: { text: "Texas Transportation Code § 550.022", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.550.htm#550.022" }
+            },
+            {
+                questionNumber: 127,
+                questionText: "An operator involved in a collision shall give what information to the other person(s) involved?",
+                options: ["The operator's name and address", "The registration number of the vehicle", "The name of the motor vehicle liability insurer", "All of the above"],
+                correctAnswerIndex: 3,
+                rationale: "An operator is required to provide their name, address, vehicle registration number, and proof of financial responsibility (insurance) to any other person involved in the accident.",
+                source: { text: "Texas Transportation Code § 550.023", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.550.htm#550.023" }
+            },
+            {
+                questionNumber: 128,
+                questionText: "A peace officer may investigate a motor vehicle accident resulting in injury, death, or property damage of at least ___.",
+                options: ["$200", "$500", "$750", "$1,000"],
+                correctAnswerIndex: 3,
+                rationale: "A peace officer who is notified of an accident has the authority to investigate if the apparent property damage is at least $1,000.",
+                source: { text: "Texas Transportation Code § 550.061", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.550.htm#550.061" }
+            },
+            {
+                questionNumber: 129,
+                questionText: "A law enforcement officer who investigates a motor vehicle accident shall make a written report if it results in:",
+                options: ["Injury to a person", "Death of a person", "Damage to property of any one person to an apparent extent of $1,000 or more", "All of the above"],
+                correctAnswerIndex: 3,
+                rationale: "A written accident report (CR-3) is required if the accident results in any injury, a fatality, or property damage of $1,000 or more.",
+                source: { text: "Texas Transportation Code § 550.062", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.550.htm#550.062" }
+            },
+            {
+                questionNumber: 130,
+                questionText: "A person may not willfully fail or refuse to comply with a lawful order or direction of:",
+                options: ["A police officer", "A school crossing guard on duty", "An escort flagger for an oversize load", "Both A and B"],
+                correctAnswerIndex: 3,
+                rationale: "The law requires compliance with lawful orders from police officers and school crossing guards who are performing their duties.",
+                source: { text: "Texas Transportation Code § 542.501 & § 542.503", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.542.htm" }
+            },
+            {
+                questionNumber: 131,
+                questionText: "Which of the following are physical or environmental conditions that may contribute to an accident?",
+                options: ["Physical conditions of roadway", "Debris on roadway", "Weather and Nighttime", "All of the above"],
+                correctAnswerIndex: 3,
+                rationale: "All listed items are non-driver factors that can contribute to the cause of a motor vehicle accident.",
+                source: { text: "TCOLE - Basic Accident Investigation", url: "https://www.tcole.texas.gov/" }
+            },
+            {
+                questionNumber: 132,
+                questionText: "A ___ is a graph on which three or more scales are arranged so that a straight line drawn through values on any two will cross the third at a corresponding value.",
+                options: ["nomograph", "monograph", "seismograph", "none of the above"],
+                correctAnswerIndex: 0,
+                rationale: "This is the definition of a nomograph, which is a tool used in accident reconstruction to calculate vehicle speed based on skid marks and the drag factor of the road surface.",
+                source: { text: "TCOLE - Advanced Accident Investigation", url: "https://www.tcole.texas.gov/" }
+            },
+            {
+                questionNumber: 133,
+                questionText: "What is the first day an officer may issue a citation for an expired MVI certificate that expired on the last day of the preceding month?",
+                options: ["on the first day of the month", "on the fifth day of the month", "on the sixth day of the month", "on the tenth day of the month"],
+                correctAnswerIndex: 2,
+                rationale: "Texas law provides a five-day grace period for an expired vehicle inspection certificate. An officer may issue a citation on the sixth day after the expiration.",
+                source: { text: "Texas Transportation Code § 548.605", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.548.htm#548.605" }
+            },
+            {
+                questionNumber: 134,
+                questionText: "The minimum amounts of motor vehicle liability insurance coverage required are:",
+                options: ["$25k for one person, $50k for two+ persons, $25k for property", "$30k for one person, $60k for two+ persons, $25k for property", "$50k for one person, $100k for two+ persons, $50k for property", "$15k for one person, $30k for two+ persons, $10k for property"],
+                correctAnswerIndex: 1,
+                rationale: "The current required minimum liability coverage in Texas is 30/60/25: $30,000 for bodily injury to one person, $60,000 for bodily injury per accident, and $25,000 for property damage per accident. (Note: The question reflects older limits).",
+                source: { text: "Texas Transportation Code § 601.072", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.601.htm#601.072" }
+            },             
+            {
+                questionNumber: 135,
+                questionText: "The 'Controlled Substance Act' in Texas is found in the ___.",
+                options: ["Business and Professions Code", "Penal Code", "Health and Safety Code", "Narcotics Code"],
+                correctAnswerIndex: 2,
+                rationale: "The laws governing controlled substances, their classifications, and associated offenses are located in Chapter 481 of the Texas Health and Safety Code.",
+                source: { text: "Texas Health and Safety Code, Chapter 481", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm" }
+            },
+            {
+                questionNumber: 136,
+                questionText: "'Administer' means to directly apply a controlled substance to the body of a patient by:",
+                options: ["a practitioner", "the patient at the direction and in the presence of a practitioner", "Either A or B", "None of the above"],
+                correctAnswerIndex: 2,
+                rationale: "The definition of 'administer' includes application by a practitioner or by the patient themselves, but only under the direct supervision and order of a practitioner.",
+                source: { text: "Texas Health and Safety Code § 481.002(1)", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.002" }
+            },
+            {
+                questionNumber: 137,
+                questionText: "'___' means a substance listed in Schedules I-V or Penalty Groups 1-4, including the aggregate weight of any mixture containing the substance.",
+                options: ["Drug", "Cannabis sativa L.", "Controlled substance", "Narcotic drug"],
+                correctAnswerIndex: 2,
+                rationale: "This is the legal definition of a 'Controlled Substance' under the Texas Health and Safety Code.",
+                source: { text: "Texas Health and Safety Code § 481.002(5)", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.002" }
+            },
+            {
+                questionNumber: 138,
+                questionText: "'___' means a controlled substance that, without authorization, bears a simulated trademark or identifying mark of a manufacturer other than the person who in fact manufactured it.",
+                options: ["Controlled substance", "Controlled substance analogue", "Counterfeit substance", "Drug paraphernalia"],
+                correctAnswerIndex: 2,
+                rationale: "This is the legal definition of a 'Counterfeit Substance'.",
+                source: { text: "Texas Health and Safety Code § 481.002(6)", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.002" }
+            },
+            {
+                questionNumber: 139,
+                questionText: "'___' means to transfer, actually or constructively, to another a controlled substance, counterfeit substance, or drug paraphernalia. The term includes offering to sell.",
+                options: ["Deliver", "Manufacture", "Production", "None of the above"],
+                correctAnswerIndex: 0,
+                rationale: "This is the broad legal definition of 'Deliver', which encompasses more than just a simple hand-to-hand transaction.",
+                source: { text: "Texas Health and Safety Code § 481.002(8)", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.002" }
+            },
+            {
+                questionNumber: 140,
+                questionText: "'Dispense' means the delivery of a controlled substance by a practitioner, including the prescribing, administering, packaging, or compounding necessary to prepare it.",
+                options: ["True", "False"],
+                correctAnswerIndex: 0,
+                rationale: "This is the correct definition of 'dispense' as it relates to the actions of a medical practitioner.",
+                source: { text: "Texas Health and Safety Code § 481.002(10)", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.002" }
+            },
+            {
+                questionNumber: 141,
+                questionText: "'___' means to deliver a controlled substance other than by administering or dispensing the substance.",
+                options: ["Administer", "Dispense", "Distribute", "None of the above"],
+                correctAnswerIndex: 2,
+                rationale: "This is the legal definition of 'Distribute'. It typically refers to the wholesale transfer of controlled substances.",
+                source: { text: "Texas Health and Safety Code § 481.002(11)", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.002" }
+            },
+            {
+                questionNumber: 142,
+                questionText: "The definition of 'Drug' includes a substance intended for use in the diagnosis, cure, treatment, or prevention of disease, or intended to affect the structure or function of the body.",
+                options: ["True", "False"],
+                correctAnswerIndex: 0,
+                rationale: "This is the correct, broad definition of a 'drug' under the Health and Safety Code.",
+                source: { text: "Texas Health and Safety Code § 481.002(12)", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.002" }
+            },
+            {
+                questionNumber: 143,
+                questionText: "The definition of 'Drug paraphernalia' includes:",
+                options: ["A precursor chemical used to make a drug", "Equipment used to plant, propagate, cultivate, grow, or harvest a controlled substance", "Any object used for transportation of drugs", "All of the above"],
+                correctAnswerIndex: 1,
+                rationale: "'Drug Paraphernalia' refers to items used to grow, process, package, or consume controlled substances. It does not include the precursor chemicals themselves.",
+                source: { text: "Texas Health and Safety Code § 481.002(17)", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.002" }
+            },
+            {
+                questionNumber: 144,
+                questionText: "'___' means a principal compound commonly used or produced primarily for use in the manufacture of a controlled substance.",
+                options: ["immediate precursor", "drug paraphernalia", "counterfeit substance", "raw material"],
+                correctAnswerIndex: 0,
+                rationale: "This is the legal definition of an 'immediate precursor,' which are the key ingredients needed to manufacture a controlled substance.",
+                source: { text: "Texas Health and Safety Code § 481.002(22)", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.002" }
+            },
+            {
+                questionNumber: 145,
+                questionText: "Which of the following would be included in the definition of 'Narcotic Drug'?",
+                options: ["Opium and opiates", "Opium poppy and poppy straw", "Cocaine", "All of the above"],
+                correctAnswerIndex: 3,
+                rationale: "The legal definition of 'narcotic drug' in the Health and Safety Code specifically includes opium, its derivatives, poppy straw, and cocaine.",
+                source: { text: "Texas Health and Safety Code § 481.002(29)", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.002" }
+            },
+            {
+                questionNumber: 146,
+                questionText: "'___' means a substance that has an addiction-forming or addiction-sustaining liability similar to morphine.",
+                options: ["Marihuana", "LSD", "Depressant", "Opiate"],
+                correctAnswerIndex: 3,
+                rationale: "This is the legal definition of an 'Opiate'.",
+                source: { text: "Texas Health and Safety Code § 481.002(31)", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.002" }
+            },
+            {
+                questionNumber: 147,
+                questionText: "'___' means actual care, custody, control, or management.",
+                options: ["Delivery", "Dispense", "Manufacture", "Possession"],
+                correctAnswerIndex: 3,
+                rationale: "This is the legal definition of 'Possession', which is a key element in many drug offenses.",
+                source: { text: "Texas Health and Safety Code § 481.002(38)", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.002" }
+            },
+            {
+                questionNumber: 148,
+                questionText: "'___' includes the manufacturing, planting, cultivating, growing, or harvesting of a controlled substance.",
+                options: ["Production", "Manufacturing", "Distribute", "Deliver"],
+                correctAnswerIndex: 0,
+                rationale: "This is the legal definition of 'Production'.",
+                source: { text: "Texas Health and Safety Code § 481.002(39)", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.002" }
+            },
+            {
+                questionNumber: 149,
+                questionText: "The six major categories of controlled substances include narcotics, depressants, stimulants, marijuana, simulated controlled substances, and ___.",
+                options: ["tranquilizers", "hallucinogens", "PCP", "Psilocybin"],
+                correctAnswerIndex: 1,
+                rationale: "Hallucinogens are one of the six major classifications of drugs based on their effects.",
+                source: { text: "Drug Enforcement Administration - Drug Classes", url: "https://www.dea.gov/drug-information/drug-classes" }
+            },
+            {
+                questionNumber: 150,
+                questionText: "The offense 'Delivery of Marihuana' is a ___ if the amount delivered is one-fourth ounce or less and the person does not receive remuneration.",
+                options: ["Class 'C' Misdemeanor", "Class 'B' Misdemeanor", "Class 'A' Misdemeanor", "State Jail Felony"],
+                correctAnswerIndex: 1,
+                rationale: "The delivery of a small amount of marihuana (a quarter-ounce or less) for no money is a Class B Misdemeanor.",
+                source: { text: "Texas Health and Safety Code § 481.121(b)(1)", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.121" }
+            },
+            {
+                questionNumber: 151,
+                questionText: "What amount of marijuana is enough to possess in order to qualify as a criminal offense?",
+                options: ["a usable quantity", "over 2 ounces", "one pound", "any measurable amount"],
+                correctAnswerIndex: 0,
+                rationale: "Texas case law has established that for a possession offense, the amount must be a 'usable quantity.' This means an amount sufficient to be applied to the use commonly made thereof.",
+                source: { text: "Texas Health and Safety Code § 481.121", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.121" }
+            },
+            {
+                questionNumber: 152,
+                questionText: "A person that intentionally possesses more than 50 pounds but less than or equal to 2,000 lbs. of marijuana has committed a ___.",
+                options: ["1st Degree Felony", "2nd Degree Felony", "State Jail Felony", "Class 'A' Misdemeanor"],
+                correctAnswerIndex: 1,
+                rationale: "Possession of over 50 pounds but not more than 2,000 pounds of marihuana is a felony of the second degree.",
+                source: { text: "Texas Health and Safety Code § 481.121(b)(5)", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.121" }
+            },
+            {
+                questionNumber: 153,
+                questionText: "'Dangerous Drug' means a device or a drug that is unsafe for self-medication and bears the legend 'Caution: federal law prohibits dispensing without a prescription' or 'Rx only'.",
+                options: ["True", "False"],
+                correctAnswerIndex: 0,
+                rationale: "This is the correct definition. Dangerous drugs are essentially any prescription drug not already classified as a controlled substance.",
+                source: { text: "Texas Health and Safety Code § 483.001(2)", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.483.htm#483.001" }
+            },
+            {
+                questionNumber: 154,
+                questionText: "'___' means an order from a practitioner to a pharmacist for a dangerous drug to be dispensed.",
+                options: ["Administer", "Dispense", "Distribute", "Prescription"],
+                correctAnswerIndex: 3,
+                rationale: "This is the definition of a 'Prescription'.",
+                source: { text: "Texas Health and Safety Code § 483.001(12)", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.483.htm#483.001" }
+            },
+            {
+                questionNumber: 155,
+                questionText: "What are the usual methods of drug abuse?",
+                options: ["Injection", "Inhalation", "Ingestion", "All of the above"],
+                correctAnswerIndex: 3,
+                rationale: "Injection (intravenous), Inhalation (smoking, snorting), and Ingestion (oral) are the three primary routes of administration for drugs of abuse.",
+                source: { text: "National Institute on Drug Abuse (NIDA)", url: "https://www.drugabuse.gov/" }
+            },
+            {
+                questionNumber: 156,
+                questionText: "The penalty for 'Possession of Dangerous Drug' is a ___.",
+                options: ["Class 'B' Misdemeanor", "Class 'A' Misdemeanor", "State Jail Felony", "3rd Degree Felony"],
+                correctAnswerIndex: 1,
+                rationale: "Unlawful possession of a dangerous drug is a Class A Misdemeanor.",
+                source: { text: "Texas Health and Safety Code § 483.041", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.483.htm#483.041" }
+            },
+            {
+                questionNumber: 157,
+                questionText: "The penalty for 'Manufacture of Dangerous Drug' is a ___.",
+                options: ["Class 'B' Misdemeanor", "Class 'A' Misdemeanor", "State Jail Felony", "3rd Degree Felony"],
+                correctAnswerIndex: 2,
+                rationale: "The manufacture of a dangerous drug is a State Jail Felony.",
+                source: { text: "Texas Health and Safety Code § 483.042", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.483.htm#483.042" }
+            },
+            {
+                questionNumber: 158,
+                questionText: "A person commits an offense if the person:",
+                options: ["forges a prescription", "issues a prescription bearing a forged signature", "obtains a dangerous drug by using a forged prescription", "All of the above"],
+                correctAnswerIndex: 3,
+                rationale: "All of these actions constitute offenses related to prescription forgery under the Health and Safety Code.",
+                source: { text: "Texas Health and Safety Code § 483.045", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.483.htm#483.045" }
+            },
+            {
+                questionNumber: 159,
+                questionText: "What is the minimum number of peace officers that must be present when drugs are destroyed?",
+                options: ["1", "2", "3", "4"],
+                correctAnswerIndex: 1,
+                rationale: "When destroying seized controlled substances, the law requires the presence of at least two peace officers to witness and document the destruction.",
+                source: { text: "Texas Health and Safety Code § 481.159", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.159" }
+            },
+            {
+                questionNumber: 160,
+                questionText: "Which of the following are typical characteristics of drug smugglers?",
+                options: ["Extended travel without luggage", "Luggage carried on back seat", "Appears nervous upon contact with officer", "All of the above"],
+                correctAnswerIndex: 3,
+                rationale: "These are all common behavioral and situational indicators that law enforcement officers are trained to look for as potential signs of criminal activity, including drug smuggling.",
+                source: { text: "TCOLE - Drug Interdiction Training", url: "https://www.tcole.texas.gov/" }
+            },
+            {
+                questionNumber: 161,
+                questionText: "Which of the following field tests is used to make a tentative identification of controlled substances?",
+                options: ["Scots Reagent (for cocaine)", "Marquis Reagent (for opiates, amphetamines)", "Both A and B", "Wintergreen Test"],
+                correctAnswerIndex: 2,
+                rationale: "The Scots Reagent and Marquis Reagent are common chemical field tests used by officers to get a presumptive positive result for different classes of controlled substances.",
+                source: { text: "TCOLE - Basic Peace Officer Course", url: "https://www.tcole.texas.gov/" }
+            },
+            {
+                questionNumber: 162,
+                questionText: "The DOT defines a ___ as: A substance or material capable of posing an unreasonable risk to health, safety, or property when transported in commerce.",
+                options: ["Toxicology", "Dangerous drugs", "Hazardous Material", "None of the above."],
+                correctAnswerIndex: 2,
+                rationale: "This is the official definition of a 'Hazardous Material' according to the U.S. Department of Transportation.",
+                source: { text: "49 CFR 171.8", url: "https://www.ecfr.gov/current/title-49/subtitle-B/chapter-I/subchapter-C/part-171/section-171.8" }
+            },
+            {
+                questionNumber: 163,
+                questionText: "Which of the following are routes of exposure for hazardous materials?",
+                options: ["Inhalation", "Skin absorption", "Oral ingestion", "Injection", "All of the above"],
+                correctAnswerIndex: 4,
+                rationale: "The primary routes of exposure to hazardous materials are inhalation, absorption (skin/eyes), ingestion, and injection.",
+                source: { text: "OSHA - Routes of Exposure", url: "https://www.osha.gov/hazardous-waste" }
+            },
+            {
+                questionNumber: 164,
+                questionText: "Which of the following is NOT a route of exposure to hazardous materials?",
+                options: ["Injection", "Oral ingestion", "Skin and eye absorption", "Reduction"],
+                correctAnswerIndex: 3,
+                rationale: "'Reduction' is a chemical term and not a route of exposure for hazardous materials into the body.",
+                source: { text: "OSHA - Routes of Exposure", url: "https://www.osha.gov/hazardous-waste" }
+            },
+            {
+                questionNumber: 165,
+                questionText: "'___' is given as a route of exposure to hazardous material by being cut or abraded by a contaminated object.",
+                options: ["Inhalation", "Absorption", "Injection", "Ingestion"],
+                correctAnswerIndex: 2,
+                rationale: "Injection occurs when a sharp object punctures the skin, introducing a hazardous material directly into the bloodstream.",
+                source: { text: "OSHA - Routes of Exposure", url: "https://www.osha.gov/hazardous-waste" }
+            },
+            {
+                questionNumber: 166,
+                questionText: "'___' is a situation in which hazardous material is or may be released into the environment.",
+                options: ["Toxic event", "Hazardous materials event", "DOSE event", "None of the above are correct"],
+                correctAnswerIndex: 1,
+                rationale: "This is the standard definition of a hazardous materials event or incident.",
+                source: { text: "FEMA - Hazardous Materials", url: "https://www.fema.gov/" }
+            },
+            {
+                questionNumber: 167,
+                questionText: "The effects of a 'hazardous-materials event' on property and the environment may be:",
+                options: ["Temporary or long-lived damage to water systems", "Loss of the productive use of contaminated land", "Necessity to destroy contaminated food items", "All of the above"],
+                correctAnswerIndex: 3,
+                rationale: "A significant hazardous material release can have wide-ranging and long-lasting effects on the environment, including damage to water, land, and the food supply.",
+                source: { text: "EPA - Hazardous Waste Cleanup", url: "https://www.epa.gov/superfund" }
+            },
+            {
+                questionNumber: 168,
+                questionText: "'___' is the study of the nature and actions of poisons.",
+                options: ["Poisonology", "Toxicology", "Schizophrenia", "None of the above"],
+                correctAnswerIndex: 1,
+                rationale: "This is the definition of Toxicology.",
+                source: { text: "TCOLE - Basic Peace Officer Course", url: "https://www.tcole.texas.gov/" }
+            },
+            {
+                questionNumber: 169,
+                questionText: "Which of the following statements is true concerning the 'DOSE-response Concept?'",
+                options: ["It is the scientific study of poisons", "All substances, in the right amounts, become toxic", "It is the same as a 'Haz-Mat Event'", "None of the above"],
+                correctAnswerIndex: 1,
+                rationale: "The fundamental principle of toxicology is that the dose makes the poison. Any substance can be toxic if the dose is high enough.",
+                source: { text: "TCOLE - Basic Peace Officer Course", url: "https://www.tcole.texas.gov/" }
+            },
+            {
+                questionNumber: 170,
+                questionText: "Which of the following statements is true?",
+                options: ["Heat and poor ventilation increase the likelihood of exposure at a hazmat site", "Cool air and good ventilation increase the likelihood of exposure at a hazmat site", "Heat and good ventilation increase the likelihood of exposure at a hazmat site", "None of the above"],
+                correctAnswerIndex: 0,
+                rationale: "Heat increases the vaporization of many chemicals, and poor ventilation traps those vapors, significantly increasing the risk of inhalation exposure for first responders.",
+                source: { text: "TCOLE - Basic Peace Officer Course", url: "https://www.tcole.texas.gov/" }
+            },
+            {
+                questionNumber: 171,
+                questionText: "'Production' includes the manufacturing, planting, cultivating, growing, or harvesting of a controlled substance.",
+                options: ["True", "False"],
+                correctAnswerIndex: 0,
+                rationale: "This is the legal definition of 'Production' under the Health & Safety Code, covering all stages from planting to harvesting.",
+                source: { text: "Texas Health and Safety Code § 481.002(39)", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.002" }
+            },
+            {
+                questionNumber: 172,
+                questionText: "Which is NOT one of the six major categories of controlled substances?",
+                options: ["Dangerous drugs", "Narcotics", "Hallucinogens", "Marijuana"],
+                correctAnswerIndex: 0,
+                rationale: "'Dangerous Drugs' are a separate legal classification in Texas (HSC Ch. 483) from 'Controlled Substances' (HSC Ch. 481). The six major categories are narcotics, depressants, stimulants, hallucinogens, marihuana, and simulated controlled substances.",
+                source: { text: "Drug Enforcement Administration - Drug Classes", url: "https://www.dea.gov/drug-information/drug-classes" }
+            },
+            {
+                questionNumber: 173,
+                questionText: "The offense 'Delivery of Marihuana' is a ___ if the amount delivered is more than 50 pounds but 2,000 pounds or less.",
+                options: ["1st Degree Felony", "2nd Degree Felony", "State Jail Felony", "Class A Misdemeanor"],
+                correctAnswerIndex: 0,
+                rationale: "Delivery of this large quantity of marijuana is a first-degree felony, punishable by 5 to 99 years or life in prison.",
+                source: { text: "Texas Health and Safety Code § 481.120(d)(1)", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.481.htm#481.120" }
+            },
+            {
+                questionNumber: 174,
+                questionText: "The penalty for 'Manufacture of Dangerous Drug' is a ___.",
+                options: ["Class A Misdemeanor", "State Jail Felony", "3rd Degree Felony", "2nd Degree Felony"],
+                correctAnswerIndex: 1,
+                rationale: "The illegal manufacture of a dangerous drug is a State Jail Felony in Texas.",
+                source: { text: "Texas Health and Safety Code § 483.042", url: "https://statutes.capitol.texas.gov/Docs/HS/htm/HS.483.htm#483.042" }
+            },
+            {
+                questionNumber: 175,
+                questionText: "Factors contributing to probable cause during a traffic stop can include:",
+                options: ["Nervousness of suspect", "Lack of identification", "Conflicting stories from occupants", "All of the above"],
+                correctAnswerIndex: 3,
+                rationale: "While none of these factors alone is definitive proof of a crime, the 'totality of the circumstances,' including these indicators, can build probable cause for a search or further investigation.",
+                source: { text: "TCOLE - Drug Interdiction Training", url: "https://www.tcole.texas.gov/" }
+            },
+            {
+                questionNumber: 176,
+                questionText: "A peace officer who makes a false report involving the seizure of illicit beverages commits a felony punishable by confinement in the penitentiary for not less than ___ years and not more than ___ years.",
+                options: ["one, two", "two, five", "five, ten", "ten, twenty"],
+                correctAnswerIndex: 1,
+                rationale: "This is a serious offense, and the statute specifies a punishment range of two to five years' confinement.",
+                source: { text: "Texas Alcoholic Beverage Code § 103.05", url: "https://statutes.capitol.texas.gov/Docs/AL/htm/AL.103.htm#103.05" }
+            },
+            {
+                questionNumber: 177,
+                questionText: "A person may not willfully fail or refuse to comply with a lawful order of a police officer.",
+                options: ["True", "False"],
+                correctAnswerIndex: 0,
+                rationale: "This is a specific offense under the Transportation Code. A person is required to comply with any lawful order or direction of a police officer.",
+                source: { text: "Texas Transportation Code § 542.501", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.542.htm#542.501" }
+            },          
+            {
+                questionNumber: 178,
+                questionText: "In the course of investigating an accident, a peace officer may file justifiable charges relating to the accident.",
+                options: ["True", "False"],
+                correctAnswerIndex: 0,
+                rationale: "An officer's investigation of an accident can reveal traffic violations or other criminal offenses, and the officer has the authority to file appropriate charges based on the evidence found.",
+                source: { text: "Texas Transportation Code § 550.061", url: "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.550.htm#550.061" }
+            }            
+        ];
+
+        const quizContainer = document.getElementById('quiz-container');
+        const resultsContainer = document.getElementById('results-container');
+        const progressBar = document.getElementById('progress-bar');
+        const progressContainer = document.getElementById('progress-container');
+        const headerSubtitle = document.getElementById('header-subtitle');
+        const backToResultsBtn = document.getElementById('back-to-results-btn');
+
+
+        let score = 0;
+        let questionsAnswered = 0;
+
+        function renderQuiz() {
+            quizContainer.innerHTML = '';
+            quizData.sort((a, b) => a.questionNumber - b.questionNumber).forEach((q) => {
+                const questionCard = document.createElement('div');
+                questionCard.className = 'question-card bg-white dark:bg-gray-800 rounded-xl shadow-lg mb-6 p-6 transition-shadow duration-300 hover:shadow-xl';
+                questionCard.id = `card-${q.questionNumber}`;
+                
+                let optionsHTML;
+                 if (q.options.length === 2 && (q.options[0] === "True" || q.options[0] === "False")) {
+                     optionsHTML = `
+                        <label for="q${q.questionNumber}-o0" class="flex items-center space-x-3 mb-3 p-3 rounded-lg border border-gray-300 dark:border-gray-600 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
+                            <input type="radio" id="q${q.questionNumber}-o0" name="question-${q.questionNumber}" value="0" class="form-radio h-5 w-5 text-blue-600 focus:ring-blue-500">
+                            <span class="text-base">True</span>
+                        </label>
+                         <label for="q${q.questionNumber}-o1" class="flex items-center space-x-3 mb-3 p-3 rounded-lg border border-gray-300 dark:border-gray-600 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
+                            <input type="radio" id="q${q.questionNumber}-o1" name="question-${q.questionNumber}" value="1" class="form-radio h-5 w-5 text-blue-600 focus:ring-blue-500">
+                            <span class="text-base">False</span>
+                        </label>
+                    `;
+                } else {
+                    optionsHTML = q.options.map((option, i) => `
+                        <label for="q${q.questionNumber}-o${i}" class="flex items-center space-x-3 mb-3 p-3 rounded-lg border border-gray-300 dark:border-gray-600 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
+                            <input type="radio" id="q${q.questionNumber}-o${i}" name="question-${q.questionNumber}" value="${i}" class="form-radio h-5 w-5 text-blue-600 focus:ring-blue-500">
+                            <span class="text-base">${option}</span>
+                        </label>
+                    `).join('');
+                }
+
+                questionCard.innerHTML = `
+                    <div class="flex items-start space-x-4">
+                        <span class="text-xl font-bold text-blue-500">${q.questionNumber}.</span>
+                        <h2 class="text-lg font-semibold flex-1">${q.questionText.replace(/\*/g, '').replace(/\.\.\./g, '')}</h2>
+                    </div>
+                    <div class="mt-4 pl-8 options-container">
+                        ${optionsHTML}
+                    </div>
+                    <div id="rationale-${q.questionNumber}" class="rationale-box hidden mt-4 pl-8">
+                        <div class="bg-gray-50 dark:bg-gray-700/50 p-4 rounded-lg border border-gray-200 dark:border-gray-600">
+                            <h3 class="font-semibold text-green-700 dark:text-green-400 mb-2">Rationale:</h3>
+                            <p class="text-gray-700 dark:text-gray-300">${q.rationale}</p>
+                            <a href="${q.source.url}" target="_blank" rel="noopener noreferrer" class="inline-block mt-3 text-sm text-blue-600 dark:text-blue-400 hover:underline">
+                                Source: ${q.source.text} &rarr;
+                            </a>
+                        </div>
+                    </div>
+                `;
+                
+                quizContainer.appendChild(questionCard);
+
+                const optionsContainer = questionCard.querySelector('.options-container');
+                optionsContainer.addEventListener('change', (event) => {
+                    if (event.target.type === 'radio' && !event.target.dataset.answered) {
+                        event.target.dataset.answered = true; // Prevents re-triggering
+                        handleAnswer(event, q, questionCard);
+                    }
+                });
+            });
+        }
+
+        function handleAnswer(event, questionData, cardElement) {
+            const selectedIndex = parseInt(event.target.value);
+            const correctIndex = questionData.correctAnswerIndex;
+
+            if (selectedIndex === correctIndex) {
+                score++;
+            }
+            questionsAnswered++;
+            
+            updateProgressBar();
+
+            const radios = cardElement.querySelectorAll('input[type="radio"]');
+            radios.forEach(radio => radio.disabled = true);
+
+            const labels = cardElement.querySelectorAll('label');
+            const selectedLabel = labels[selectedIndex];
+            const correctLabel = labels[correctIndex];
+
+            if (correctLabel) {
+                 correctLabel.classList.add('correct-answer', 'font-semibold');
+            }
+            
+            if (selectedIndex !== correctIndex && selectedLabel) {
+                selectedLabel.classList.add('wrong-answer');
+            }
+
+            const rationaleDiv = cardElement.querySelector(`#rationale-${questionData.questionNumber}`);
+            rationaleDiv.classList.remove('hidden');
+            
+            if (questionsAnswered === quizData.length) {
+                setTimeout(showResults, 800);
+            }
+        }
+        
+        function updateProgressBar() {
+            const percentage = (questionsAnswered / quizData.length) * 100;
+            progressBar.style.width = `${percentage}%`;
+        }
+
+        function showResults() {
+            quizContainer.classList.add('hidden');
+            resultsContainer.classList.remove('hidden');
+            progressContainer.classList.add('hidden');
+            headerSubtitle.classList.add('hidden');
+            backToResultsBtn.classList.add('hidden');
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            document.getElementById('score-percentage').textContent = `${percentage}%`;
+            document.getElementById('score-value').textContent = `You answered ${score} out of ${quizData.length} questions correctly.`;
+
+            let emoji = '🤔';
+            if (percentage >= 90) emoji = '🏆';
+            else if (percentage >= 70) emoji = '🎉';
+            else if (percentage >= 50) emoji = '👍';
+            else emoji = '📚';
+            document.getElementById('score-emoji').textContent = emoji;
+        }
+        
+        function reviewAnswers() {
+            resultsContainer.classList.add('hidden');
+            quizContainer.classList.remove('hidden');
+            headerSubtitle.classList.remove('hidden');
+            progressContainer.classList.remove('hidden');
+            backToResultsBtn.classList.remove('hidden');
+        }
+
+        function retakeTest() {
+            score = 0;
+            questionsAnswered = 0;
+            updateProgressBar();
+
+            resultsContainer.classList.add('hidden');
+            quizContainer.classList.remove('hidden');
+            headerSubtitle.classList.remove('hidden');
+            progressContainer.classList.remove('hidden');
+            backToResultsBtn.classList.add('hidden');
+
+            const allCards = document.querySelectorAll('.question-card');
+            allCards.forEach(card => {
+                card.querySelectorAll('input[type="radio"]').forEach(radio => {
+                    radio.disabled = false;
+                    radio.checked = false;
+                    delete radio.dataset.answered;
+                });
+                card.querySelectorAll('label').forEach(label => {
+                    label.classList.remove('correct-answer', 'wrong-answer', 'font-semibold');
+                });
+                card.querySelector('.rationale-box').classList.add('hidden');
+            });
+
+            window.scrollTo(0, 0);
+        }
+
+        // Event Listeners for buttons
+        document.getElementById('review-btn').addEventListener('click', reviewAnswers);
+        document.getElementById('retake-btn').addEventListener('click', retakeTest);
+        backToResultsBtn.addEventListener('click', showResults);
+
+        // Initial render
+        renderQuiz();
+    </script>
+</body>
+</html>
+
